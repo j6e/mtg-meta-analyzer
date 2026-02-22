@@ -307,3 +307,39 @@ Not implemented (not needed — all endpoints work with direct HTTP). Can be add
 ### Verification
 - `bun run check` — 0 errors
 - `bun run test` — 84 tests passing (12 classifier + 7 knn + 10 cosine + 12 tfidf + 43 prior)
+
+---
+
+## Task 3.5 — Winrate Calculator & Matchup Matrix Builder
+**Status:** Completed
+**Date:** 2026-02-23
+
+### What was done
+- Created `src/lib/utils/winrate-calculator.ts` with 3 functions:
+  - `buildPlayerArchetypeMap(tournament, results)` — maps player IDs to archetypes via classifier output
+  - `buildMatchupMatrix(tournaments, playerArchetypes, options)` — builds N×N matchup matrix with winrates
+    - Supports `excludeMirrors` (default true), `excludePlayoffs`, `topN`, `minMetagameShare`
+    - "Other" aggregation: collapses small archetypes by top-N or min share threshold
+    - Returns both `MatchupMatrix` and `ArchetypeStats[]`
+  - `computeMetagameStats(tournaments, playerArchetypes)` — standalone stats (includes all matches)
+- Created `tests/unit/winrate-calculator.test.ts` — 20 tests covering:
+  - Player-to-archetype mapping (basic, unknown, multi-decklist)
+  - 2-archetype symmetric winrates
+  - Mirror match exclusion (default) and inclusion
+  - Bye skipping, draw handling
+  - "Other" aggregation via topN and minMetagameShare
+  - Playoff round exclusion
+  - Empty tournament, single match
+  - Archetype ordering by metagame share
+  - Unknown players in matrix
+  - Multi-tournament aggregation
+  - Metagame shares summing to 1.0
+  - computeMetagameStats standalone
+
+### Key files
+- `src/lib/utils/winrate-calculator.ts`
+- `tests/unit/winrate-calculator.test.ts`
+
+### Verification
+- `bun run check` — 0 errors, 0 warnings
+- `bun run test` — 104 tests passing (20 winrate + 12 classifier + 7 knn + 10 cosine + 12 tfidf + 43 prior)
