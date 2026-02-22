@@ -1,0 +1,2323 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+
+<title>Pro Tour Thunder Junction | Melee</title>
+<impact-site-verification value="4c243f18-8267-493f-a951-c8659ec151bc"></impact-site-verification>
+<meta content="@MeleePlatform" property="twitter:site"></meta>
+<meta content="0.3.63.85" name="version"></meta>
+<meta content="Magic: the Gathering,Magic Arena,MTGA" name="keywords"></meta>
+<meta content="https://cdn.melee.gg/userphotos/brandimages/62e1375e-71eb-4ecb-9637-621050e7f719.jpg" property="og:image"></meta>
+<meta content="A brand image for the tournament." property="twitter:image:alt"></meta>
+<meta content="https://melee.gg/Tournament/View/72980" property="og:url"></meta>
+<meta content="website" property="og:type"></meta>
+<meta content="summary" property="twitter:card"></meta>
+<meta content="Pro Tour Thunder Junction" property="og:title"></meta>
+<meta content="Pro Tour Thunder Junction" property="twitter:title"></meta>
+<meta content="Formats are Standard Constructed and Outlaws of Thunder Junction Booster Draft.
+
+More information about Pro Tour Thunder Junction can be found at https://magic.gg/events/pro-tour-thunder-junction-fact-sheet-for-competitors" name="description"></meta>
+<meta content="Formats are Standard Constructed and Outlaws of Thunder Junction Booster Draft.
+
+More information about Pro Tour Thunder Junction can be found at https://magic.gg/events/pro-tour-thunder-junction-fact-sheet-for-competitors" property="og:description"></meta>
+<link rel="apple-touch-icon" sizes="57x57" href="https://cdn.melee.gg/images/icons/apple-icon-57x57.png"/>
+<link rel="apple-touch-icon" sizes="60x60" href="https://cdn.melee.gg/images/icons/apple-icon-60x60.png"/>
+<link rel="apple-touch-icon" sizes="72x72" href="https://cdn.melee.gg/images/icons/apple-icon-72x72.png"/>
+<link rel="apple-touch-icon" sizes="76x76" href="https://cdn.melee.gg/images/icons/apple-icon-76x76.png"/>
+<link rel="apple-touch-icon" sizes="114x114" href="https://cdn.melee.gg/images/icons/apple-icon-114x114.png"/>
+<link rel="apple-touch-icon" sizes="120x120" href="https://cdn.melee.gg/images/icons/apple-icon-120x120.png"/>
+<link rel="apple-touch-icon" sizes="144x144" href="https://cdn.melee.gg/images/icons/apple-icon-144x144.png"/>
+<link rel="apple-touch-icon" sizes="152x152" href="https://cdn.melee.gg/images/icons/apple-icon-152x152.png"/>
+<link rel="apple-touch-icon" sizes="180x180" href="https://cdn.melee.gg/images/icons/apple-icon-180x180.png"/>
+<link rel="icon" type="image/png" sizes="192x192" href="https://cdn.melee.gg/images/icons/android-icon-192x192.png"/>
+<link rel="icon" type="image/png" sizes="32x32" href="https://cdn.melee.gg/images/icons/favicon-32x32.png"/>
+<link rel="icon" type="image/png" sizes="96x96" href="https://cdn.melee.gg/images/icons/favicon-96x96.png"/>
+<link rel="icon" type="image/png" sizes="16x16" href="https://cdn.melee.gg/images/icons/favicon-16x16.png"/>
+<link rel="manifest" href="https://cdn.melee.gg/images/icons/manifest.json"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<meta name="msapplication-TileColor" content="#ffffff"/>
+<meta name="msapplication-TileImage" content="https://cdn.melee.gg/images/icons/ms-icon-144x144.png"/>
+<meta name="theme-color" content="#ffffff"/>
+<meta name="author" content="Keyrune Incorporated"/>
+<meta property="og:site_name" content="Melee.gg"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <link href="https://cdn.melee.gg/content/site.dependencies.min.css?v=0.3.63.85" rel="stylesheet"/>
+
+<link href="/Content/site.min.css?v=0.3.63.85&lg=en" rel="stylesheet"/>
+
+    
+
+<script type="text/javascript">
+    const debug = { log: (message) => {
+    }}
+</script>
+
+<script id="data-tables-control-template" type="x-tmpl-mustache">    
+    {{#quickLookup}}
+    <div class="data-tables-quick-filter-input-wrapper">
+        <input id="{{tableId}}-quick-filter-input" class="form-control data-tables-quick-filter-input" placeholder="Quick search..." aria-quicksearch="{{tableId}}"/>
+    </div>
+    {{/quickLookup}}
+    
+    <div class="data-tables-filter-input-wrapper">
+        <input id="{{tableId}}-filter-input" class="form-control data-tables-filter-input" placeholder="Search results..." aria-controls="{{tableId}}"/>
+    </div>
+    {{#useFilters}}
+    <div class="dropdown data-tables-filter-dropdown data-tables-filter-dropdown-wrapper" id="accordion-{{tableId}}">
+        <button class="btn btn-secondary dropdown-toggle data-tables-filter-dropdown-button" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Filter</button>
+        <div class="dropdown-menu data-tables-filter-dropdown m-0 p-0">
+            {{#filters}}
+            <div class="card data-tables-filter-dropdown-card" data-column-index="{{columnIndex}}">
+                <div class="card-header pointer text-left data-tables-filter-dropdown-header" data-toggle="collapse" data-target="#{{uniqueId}}-filter-collapse" aria-expanded="false">
+                    <div id="{{uniqueId}}-filter-header" class="card-header-title">{{columnTitle}}</div>
+                    <i class="fa-solid fa-caret-up text-warning ml-auto"></i>
+                    <i class="fa-solid fa-caret-down text-warning ml-auto"></i>
+                </div>
+                <div id="{{uniqueId}}-filter-collapse" class="collapse" aria-labelledby="{{uniqueId}}-filter-header" data-parent="#accordion-{{tableId}}">
+                    <div class="card-body d-flex data-tables-filter-collapse-card-body">
+                        {{#values}}
+                        <div class="form-check pointer pr-3 m-0 pl-2">
+                            <label class="form-check-label text-nowrap ml-2">
+                                <input type="checkbox" class="form-check-input" data-column-index="{{columnIndex}}" data-column-default="{{isDefault}}" value="{{value}}" data-text="{{text}}" autocomplete="off"/>
+                                <span class="ml-2">{{text}}</span>
+                            </label>
+                        </div>
+                        {{/values}}
+                    </div>
+                </div>
+            </div>
+            {{/filters}}
+            <div class="d-grid data-tables-filter-apply-row">
+                <a class="d-flex data-tables-filter-reset-button" href="#">Reset</a>
+                <button class="btn btn-primary data-tables-filter-apply-button">Apply</button>
+            </div>
+        </div>
+    </div>
+    {{/useFilters}}
+    {{#serverSide}}
+    <div class="dropdown data-tables-settings-dropdown data-tables-settings-dropdown-wrapper" id="accordion-{{tableId}}">
+        <button class="btn btn-secondary dropdown-toggle data-tables-settings-dropdown-button" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Visibility</button>
+        <div class="dropdown-menu data-tables-settings-dropdown m-0 p-0">
+            <div class="card data-tables-settings-dropdown-card">
+                <div class="card-header pointer text-left data-tables-settings-dropdown-header" data-toggle="collapse" data-target="#table-{{uuid}}-page-settings-collapse" aria-expanded="false">
+                    <div id="table-{{uuid}}-page-settings-header" class="card-header-title">Results Per Page</div>
+                    <i class="fa-solid fa-caret-up text-warning ml-auto"></i>
+                    <i class="fa-solid fa-caret-down text-warning ml-auto"></i>
+                </div>
+                <div id="table-{{uuid}}-page-settings-collapse" class="collapse" aria-labelledby="table-{{uuid}}-page-settings-header" data-parent="#accordion-{{tableId}}">
+                    <div class="card-body d-flex data-tables-settings-collapse-card-body">
+                        {{#pageSizes}}
+                        <div class="form-check pointer pr-3 m-0 pl-2">
+                            <label class="form-check-label text-nowrap ml-2">
+                                <input type="radio" class="form-check-input" name="{{name}}" value="{{value}}" autocomplete="off"/>
+                                <span class="ml-2">{{text}}</span>
+                            </label>
+                        </div>
+                        {{/pageSizes}}
+                    </div>
+                </div>
+            </div>
+            <div class="card data-tables-settings-dropdown-card">
+                <div class="card-header pointer text-left data-tables-settings-dropdown-header" data-toggle="collapse" data-target="#table-{{uuid}}-column-settings-collapse" aria-expanded="false">
+                    <div id="table-{{uuid}}-column-settings-header" class="card-header-title">Column Visibility</div>
+                    <i class="fa-solid fa-caret-up text-warning ml-auto"></i>
+                    <i class="fa-solid fa-caret-down text-warning ml-auto"></i>
+                </div>
+                <div id="table-{{uuid}}-column-settings-collapse" class="collapse" aria-labelledby="table-{{uniqueId}}-column-settings-header" data-parent="#accordion-{{tableId}}">
+                    <div class="card-body d-flex data-tables-settings-collapse-card-body">
+                        {{#columns}}
+                        <div class="form-check pointer pr-3 m-0 pl-2">
+                            <label class="form-check label text-nowrap ml-2">
+                                <input type="checkbox" class="form-check-input" value="{{value}}" data-column-index="{{columnIndex}}" data-text="{{text}}" autocomplete="off" checked/>
+                                <span class="ml-2">{{text}}</span>
+                            </label>
+                        </div>
+                        {{/columns}}
+                    </div>
+                </div>
+            </div>
+            <div class="d-grid data-tables-settings-apply-row">
+                <a class="d-flex data-tables-settings-reset-button" href="#">Reset</a>
+                <button class="btn btn-primary data-tables-settings-apply-button">Apply</button>
+            </div>
+        </div>
+    </div>
+    {{/serverSide}}
+    {{#downloadable}}
+    <div class="dropdown data-tables-exports-dropdown data-tables-exports-dropdown-wrapper">
+        <button class="btn btn-secondary dropdown-toggle data-tables-exports-dropdown-button" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Exports</button>
+        <div class="dropdown-menu data-tables-exports-dropdown m-0 p-0">
+            <div class="card-body d-flex data-tables-exports-collapse-card-body">
+                <button class="btn btn-secondary data-tables-exports-button text-nowrap" data-format="csv">Download as CSV</button>
+                <button class="btn btn-secondary data-tables-exports-button text-nowrap" data-format="json">Download as JSON</button>
+            </div>
+        </div>
+    </div>
+    {{/downloadable}}
+    {{#serverSide}}
+    <button class="btn btn-sm btn-primary data-tables-refresh-button" title="Press to refresh this table's data">
+        <i class="fa-solid fa-sync"></i>
+    </button>
+    {{/serverSide}}
+</script><script id="data-tables-active-filters-template" type="x-tmpl-mustache">    {{#activeFilters}}
+    {{#selectedFilters}}
+    <div class="data-tables-active-filter-container">
+        {{column}}: {{text}}
+        <a class="data-tables-active-filter-remove" href="#" title="Clear this filter" data-column-index="{{columnIndex}}" data-value="{{value}}">
+            <span class="fa-solid fa-xmark-circle"></span>
+        </a>
+    </div>
+    {{/selectedFilters}}
+    {{/activeFilters}}
+</script><script id="data-tables-loading-rows-template" type="x-tmpl-mustache">        <tr role="row" class="even">
+            {{#columns}}
+            <td>
+                <div class="pulse-container">
+                    <div class="pulse">-</div>
+                </div>
+            </td>
+            {{/columns}}
+        </tr>
+        <tr role="row" class="odd">
+            {{#columns}}
+            <td>
+                <div class="pulse-container">
+                    <div class="pulse">-</div>
+                </div>
+            </td>
+            {{/columns}}
+        </tr>
+        <tr role="row" class="even">
+            {{#columns}}
+            <td>
+                <div class="pulse-container">
+                    <div class="pulse">-</div>
+                </div>
+            </td>
+            {{/columns}}
+        </tr>
+        <tr role="row" class="odd">
+            {{#columns}}
+            <td>
+                <div class="pulse-container">
+                    <div class="pulse">-</div>
+                </div>
+            </td>
+            {{/columns}}
+        </tr>
+        <tr role="row" class="even">
+            {{#columns}}
+            <td>
+                <div class="pulse-container">
+                    <div class="pulse">-</div>
+                </div>
+            </td>
+            {{/columns}}
+        </tr>
+        <tr role="row" class="odd">
+            {{#columns}}
+            <td>
+                <div class="pulse-container">
+                    <div class="pulse">-</div>
+                </div>
+            </td>
+            {{/columns}}
+        </tr>
+        <tr role="row" class="even">
+            {{#columns}}
+            <td>
+                <div class="pulse-container">
+                    <div class="pulse">-</div>
+                </div>
+            </td>
+            {{/columns}}
+        </tr>
+        <tr role="row" class="odd">
+            {{#columns}}
+            <td>
+                <div class="pulse-container">
+                    <div class="pulse">-</div>
+                </div>
+            </td>
+            {{/columns}}
+        </tr>
+        <tr role="row" class="even">
+            {{#columns}}
+            <td>
+                <div class="pulse-container">
+                    <div class="pulse">-</div>
+                </div>
+            </td>
+            {{/columns}}
+        </tr>
+        <tr role="row" class="odd">
+            {{#columns}}
+            <td>
+                <div class="pulse-container">
+                    <div class="pulse">-</div>
+                </div>
+            </td>
+            {{/columns}}
+        </tr>
+        <tr role="row" class="even">
+            {{#columns}}
+            <td>
+                <div class="pulse-container">
+                    <div class="pulse">-</div>
+                </div>
+            </td>
+            {{/columns}}
+        </tr>
+        <tr role="row" class="odd">
+            {{#columns}}
+            <td>
+                <div class="pulse-container">
+                    <div class="pulse">-</div>
+                </div>
+            </td>
+            {{/columns}}
+        </tr>
+        <tr role="row" class="even">
+            {{#columns}}
+            <td>
+                <div class="pulse-container">
+                    <div class="pulse">-</div>
+                </div>
+            </td>
+            {{/columns}}
+        </tr>
+        <tr role="row" class="odd">
+            {{#columns}}
+            <td>
+                <div class="pulse-container">
+                    <div class="pulse">-</div>
+                </div>
+            </td>
+            {{/columns}}
+        </tr>
+        <tr role="row" class="even">
+            {{#columns}}
+            <td>
+                <div class="pulse-container">
+                    <div class="pulse">-</div>
+                </div>
+            </td>
+            {{/columns}}
+        </tr>
+        <tr role="row" class="odd">
+            {{#columns}}
+            <td>
+                <div class="pulse-container">
+                    <div class="pulse">-</div>
+                </div>
+            </td>
+            {{/columns}}
+        </tr>
+        <tr role="row" class="even">
+            {{#columns}}
+            <td>
+                <div class="pulse-container">
+                    <div class="pulse">-</div>
+                </div>
+            </td>
+            {{/columns}}
+        </tr>
+        <tr role="row" class="odd">
+            {{#columns}}
+            <td>
+                <div class="pulse-container">
+                    <div class="pulse">-</div>
+                </div>
+            </td>
+            {{/columns}}
+        </tr>
+        <tr role="row" class="even">
+            {{#columns}}
+            <td>
+                <div class="pulse-container">
+                    <div class="pulse">-</div>
+                </div>
+            </td>
+            {{/columns}}
+        </tr>
+        <tr role="row" class="odd">
+            {{#columns}}
+            <td>
+                <div class="pulse-container">
+                    <div class="pulse">-</div>
+                </div>
+            </td>
+            {{/columns}}
+        </tr>
+        <tr role="row" class="even">
+            {{#columns}}
+            <td>
+                <div class="pulse-container">
+                    <div class="pulse">-</div>
+                </div>
+            </td>
+            {{/columns}}
+        </tr>
+        <tr role="row" class="odd">
+            {{#columns}}
+            <td>
+                <div class="pulse-container">
+                    <div class="pulse">-</div>
+                </div>
+            </td>
+            {{/columns}}
+        </tr>
+        <tr role="row" class="even">
+            {{#columns}}
+            <td>
+                <div class="pulse-container">
+                    <div class="pulse">-</div>
+                </div>
+            </td>
+            {{/columns}}
+        </tr>
+        <tr role="row" class="odd">
+            {{#columns}}
+            <td>
+                <div class="pulse-container">
+                    <div class="pulse">-</div>
+                </div>
+            </td>
+            {{/columns}}
+        </tr>
+        <tr role="row" class="even">
+            {{#columns}}
+            <td>
+                <div class="pulse-container">
+                    <div class="pulse">-</div>
+                </div>
+            </td>
+            {{/columns}}
+        </tr>
+</script><script id="data-tables-loading-rows-template-8-rows" type="x-tmpl-mustache">        <tr role="row" class="even">
+            {{#columns}}
+            <td>
+                <div class="pulse-container">
+                    <div class="pulse">-</div>
+                </div>
+            </td>
+            {{/columns}}
+        </tr>
+        <tr role="row" class="odd">
+            {{#columns}}
+            <td>
+                <div class="pulse-container">
+                    <div class="pulse">-</div>
+                </div>
+            </td>
+            {{/columns}}
+        </tr>
+        <tr role="row" class="even">
+            {{#columns}}
+            <td>
+                <div class="pulse-container">
+                    <div class="pulse">-</div>
+                </div>
+            </td>
+            {{/columns}}
+        </tr>
+        <tr role="row" class="odd">
+            {{#columns}}
+            <td>
+                <div class="pulse-container">
+                    <div class="pulse">-</div>
+                </div>
+            </td>
+            {{/columns}}
+        </tr>
+        <tr role="row" class="even">
+            {{#columns}}
+            <td>
+                <div class="pulse-container">
+                    <div class="pulse">-</div>
+                </div>
+            </td>
+            {{/columns}}
+        </tr>
+        <tr role="row" class="odd">
+            {{#columns}}
+            <td>
+                <div class="pulse-container">
+                    <div class="pulse">-</div>
+                </div>
+            </td>
+            {{/columns}}
+        </tr>
+        <tr role="row" class="even">
+            {{#columns}}
+            <td>
+                <div class="pulse-container">
+                    <div class="pulse">-</div>
+                </div>
+            </td>
+            {{/columns}}
+        </tr>
+        <tr role="row" class="odd">
+            {{#columns}}
+            <td>
+                <div class="pulse-container">
+                    <div class="pulse">-</div>
+                </div>
+            </td>
+            {{/columns}}
+        </tr>
+</script><script id="data-tables-match-teams-template" type="x-tmpl-mustache">    <div class="match-table-teams-container">
+        {{#Competitors}}
+        <div class="match-table-team-container">
+            {{#Team}}
+            {{#Name}}
+            Team Name: {{Name}}
+            {{/Name}}
+            {{#Players}}
+            <div class="match-table-player-container">
+                {{#CheckedIn}}
+                <i class="fa-solid fa-check mr-2 text-success check-in-enabled" title="Player/Team has checked in for their match"></i>
+                {{/CheckedIn}}
+                {{^CheckedIn}}
+                <i class="fa-solid fa-times mr-2 text-danger check-in-enabled" title="Player/Team has not checked in for their match"></i>
+                {{/CheckedIn}}
+                <a class="open-player-card-link" data-toggle="hovercard" data-id="{{ID}}" data-type="adminPlayer" href="#">{{NameLastFirst}}<i class="fa-solid fa-info-circle ml-2"></i><i class="fa-solid fa-pen-to-square ml-2"></i></a>
+                {{#PronounsDescription}}
+                <span class="text-muted font-size-sm ml-1">{{PronounsDescription}}</span>
+                {{/PronounsDescription}}
+            </div>
+            {{/Players}}
+            {{/Team}}
+        </div>
+        {{/Competitors}}
+    </div>
+</script><script id="data-tables-public-match-teams-template" type="x-tmpl-mustache">    <div class="match-table-teams-container">
+        {{#Competitors}}
+        <div class="match-table-team-container">
+            {{#Team}}
+            {{#Name}}
+            Team Name: {{Name}}
+            {{/Name}}
+            {{#Players}}
+            <div class="match-table-player-container">
+                <a data-toggle="hovercard" data-id="{{ID}}" data-type="player" href="/Profile/Index/{{Username}}">{{DisplayName}}<i class="fa-solid fa-info-circle ml-2"></i></a>
+                {{#PronounsDescription}}
+                <span class="text-muted font-size-sm ml-1">{{PronounsDescription}}</span>
+                {{/PronounsDescription}}
+            </div>
+            {{/Players}}
+            {{/Team}}
+        </div>
+        {{/Competitors}}
+    </div>
+</script><script id="data-tables-decklist-teams-template" type="x-tmpl-mustache">    <div class="match-table-teams-container">
+        {{#Competitors}}
+        <div class="match-table-team-container">
+            {{#Team}}
+            {{#Name}}
+            Team Name: {{Name}}
+            {{/Name}}
+            {{#Players}}
+            <div class="match-table-player-container">
+                {{#Decklists}}
+                <a data-toggle="hovercard" data-id="{{DecklistId}}" data-type="decklist" href="/Decklist/View/{{DecklistId}}">{{DecklistName}}<i class="fa-solid fa-info-circle ml-2"></i></a>
+                {{/Decklists}}
+                {{^Decklists}}
+                -
+                {{/Decklists}}
+            </div>
+            {{/Players}}
+            {{/Team}}
+        </div>
+        {{/Competitors}}
+    </div>
+</script><script id="standings-table-teams-column-template" type="x-tmpl-mustache">    <div class="standings-table-teams-container">
+        {{#Team.Players}}
+        <div class="match-table-player-container">
+            <a class="open-player-card-link" data-toggle="hovercard" data-id="{{ID}}" data-type="adminPlayer" href="#">{{NameLastFirst}}<i class="fa-solid fa-info-circle ml-2"></i><i class="fa-solid fa-pen-to-square ml-2"></i></a>
+            {{#PronounsDescription}}
+            <span class="text-muted font-size-sm ml-1">{{PronounsDescription}}</span>
+            {{/PronounsDescription}}
+        </div>
+        {{/Team.Players}}
+    </div>
+</script><script id="data-tables-public-standings-teams-template" type="x-tmpl-mustache">    <div class="standings-table-teams-container">
+        {{#Team.Players}}
+        <div class="match-table-player-container">
+            <a data-toggle="hovercard" data-id="{{ID}}" data-type="player" href="/Profile/Index/{{Username}}">{{DisplayName}}<i class="fa-solid fa-info-circle ml-2"></i></a>
+            {{#PronounsDescription}}
+            <span class="text-muted font-size-sm ml-1">{{PronounsDescription}}</span>
+            {{/PronounsDescription}}
+        </div>
+        {{/Team.Players}}
+    </div>
+</script><script id="data-tables-standing-decklists-template" type="x-tmpl-mustache">    <div class="standings-table-teams-container">
+        <div class="match-table-player-container">
+            {{#Decklists}}
+            <a data-toggle="hovercard" data-id="{{DecklistId}}" data-type="decklist" href="/Decklist/View/{{DecklistId}}">{{DecklistName}}<i class="fa-solid fa-info-circle ml-2"></i></a>
+            {{/Decklists}}
+            {{^Decklists}}
+            -
+            {{/Decklists}}
+        </div>
+    </div>
+</script><script id="data-tables-match-decklists-template" type="x-tmpl-mustache">    <div class="match-table-teams-container">
+        {{#Competitors}}
+        <div class="match-table-team-container">
+            {{#Team}}
+            {{#Name}}
+            Team Name: {{Name}}
+            {{/Name}}
+            {{#Players}}
+            <div class="match-table-player-container">
+                {{#Decklists}}
+                <a data-toggle="hovercard" data-id="{{DecklistId}}" data-type="decklist" href="/Decklist/View/{{DecklistId}}">{{DecklistName}}<i class="fa-solid fa-info-circle ml-2"></i></a>
+                {{/Decklists}}
+                {{^Decklists}}
+                -
+                {{/Decklists}}
+            </div>
+            {{/Players}}
+            {{/Team}}
+        </div>
+        {{/Competitors}}
+    </div>
+</script>
+
+<script src="https://cdn.melee.gg/scripts/site.min.js?v=0.3.63.85"></script>
+<script src="https://cdn.melee.gg/scripts/font-awesome.min.js?v=0.3.63.85"></script>
+<script src="/Scripts/flattsware.core.min.js?v=0.3.63.85&lg=en"></script>
+<script src="/Scripts/flattsware.filters.min.js?v=0.3.63.85&lg=en"></script>
+<script src="/Scripts/flattsware.enums.min.js?v=0.3.63.85&lg=en"></script>
+<script src="/Scripts/flattsware.standings.min.js?v=0.3.63.85&lg=en"></script>
+<script src="/Scripts/flattsware.datatables.min.js?v=0.3.63.85&lg=en"></script>
+<script src="/Scripts/flattsware.datetime.min.js?v=0.3.63.85&lg=en"></script>
+<script src="/Scripts/flattsware.encode.min.js?v=0.3.63.85&lg=en"></script>
+<script src="/Scripts/flattsware.regex.min.js?v=0.3.63.85&lg=en"></script>
+<script src="/Scripts/flattsware.notify.min.js?v=0.3.63.85&lg=en"></script>
+<script src="/Scripts/flattsware.spinner.min.js?v=0.3.63.85&lg=en"></script>
+<script src="/Scripts/flattsware.forms.min.js?v=0.3.63.85&lg=en"></script>
+<script src="/Scripts/flattsware.decklist.min.js?v=0.3.63.85&lg=en"></script>
+<script src="/Scripts/flattsware.idle.min.js?v=0.3.63.85&lg=en"></script>
+<script src="/Scripts/flattsware.hovercard.min.js?v=0.3.63.85&lg=en"></script>
+<script src="/Scripts/flattsware.chart.min.js?v=0.3.63.85&lg=en"></script>
+<script src="/Scripts/flattsware.formats.min.js?v=0.3.63.85&lg=en"></script>
+<script src="/Scripts/flattsware.star-rating.min.js?v=0.3.63.85&lg=en"></script>
+<script src="/Scripts/flattsware.progress.min.js?v=0.3.63.85&lg=en"></script>
+<script src="/Scripts/flattsware.location.min.js?v=0.3.63.85&lg=en"></script>
+<script src="/Scripts/flattsware.players.min.js?v=0.3.63.85&lg=en"></script>
+<script src="/signalr/hubs?v=0.3.63.85"></script>
+
+
+
+
+<script src="/Scripts/wp-banners.min.js?v=0.3.63.85&lg=en"></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-162951615-1"></script>
+<script src="/Scripts/google-analytics.min.js?v=0.3.63.85&lg=en"></script>
+
+<!-- Datadog RUM (CDN async) -->
+<script>
+    (function(h,o,u,n,d) {
+        h=h[d]=h[d]||{q:[],onReady:function(c){h.q.push(c)}}
+        d=o.createElement(u);d.async=1;d.src=n
+        n=o.getElementsByTagName(u)[0];n.parentNode.insertBefore(d,n)
+    })(window,document,'script','https://www.datadoghq-browser-agent.com/us5/v6/datadog-rum.js','DD_RUM')
+    window.DD_RUM.onReady(function() { 
+        window.DD_RUM.init({
+        clientToken: 'pub22e31ccd740f290ba9b4a07ad7565c22',
+        applicationId: '2e019cb6-dc4b-4076-b6e6-c2e701b2d0eb',
+        site: 'us5.datadoghq.com',
+        service: 'web',
+        env: 'prod',
+        sessionSampleRate: 1,
+        sessionReplaySampleRate: 1,
+        trackInteractions:  true,
+        defaultPrivacyLevel: 'mask-user-input', 
+        debug: true
+        });
+    })
+    </script>
+<!-- End Datadog RUM -->
+
+    
+</head>
+<body>
+
+
+<input id="current-language" type="hidden" value="English"/>
+<input id="current-language-tag" type="hidden" value="en"/>
+
+<link href="/Content/CookieConsentMessage.css" rel="stylesheet"/>
+
+
+
+
+<div class="cookies__modal" data-backdrop="static">
+    <div class="tab-header">
+        <ul class="nav nav-tabs container" id="cookies__tab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="content-tab" data-toggle="tab" data-target="#content" type="button"
+                        role="tab" aria-controls="content" aria-selected="true">
+                    Your Privacy Matters
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="detail-tab" data-toggle="tab" data-target="#detail" type="button"
+                        role="tab" aria-controls="detail" aria-selected="false">
+                    Cookie Preferences
+                </button>
+            </li>
+        </ul>   
+    </div>
+    <div class="tab-content container" id="cookies__tab__content">
+        <div class="tab-pane fade show active" id="content" role="tabpanel" aria-labelledby="content-tab">
+            <div class="title-tab">Your Privacy Matters</div>
+            <p>
+                When you click on "Accept All Cookies," you consent to <a href="https://melee.gg/">Melee.gg</a> saving cookies on your device. This enables us to enhance your user experience and manage data as outlined in our Cookie Guidelines.
+            </p>
+            <div class="button__section">
+                <button class="btn btn-warning" id="allowAllButton"> Accept all cookies</button>
+                <button class="btn btn-outline-warning" id="necessaryOnlyButton"> Necessary cookies only </button>
+                <button class="btn btn-outline-warning" id="customizeButton"> Customize settings </button>
+            </div>
+        </div>
+        <div class="tab-pane fade" id="detail" role="tabpanel" aria-labelledby="detail-tab">
+            <div class="container row">
+                <div class="col-md-12">
+                    <div class="text-container">
+                        <div class="text__content">
+                            <h3 class="title-tab">Cookie Preferences</h3>
+                            <p>When you browse any section of the website, we may collect or access information through your browser, primarily via cookies. This data may pertain to you, your browsing habits, or your device, and is primarily utilized to ensure that the website functions as you anticipate. While this information generally won't identify you personally, it can help create a more tailored browsing experience for you. We value your privacy and give you the option to opt-out of certain kinds of cookies. Feel free to navigate through the various cookie categories to learn more and adjust your settings. Be aware that opting out of some cookies may affect your experience and the services we can provide.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 checkbox-group">
+                    <div class="row">
+                        <div class="checkbox-container">
+                            <label class="checkbox-cookie">
+                                <input checked id="essential_cookies" type="checkbox" disabled>
+                                <span class="checkbox-custom rectangular"></span>
+                            </label>
+                            <div class="checkbox__content">
+                                <h3 class="checkbox__text">Essential Cookies</h3>
+                            </div>
+                            <div class="tooltip-container">
+                                <i class="fas fa-info-circle custom-icon"></i>
+                                <img src="/images/Vector.svg" />
+                                <div class="tooltip-text">
+                                    <div class="tooltip-text-title"> Essential Cookies</div>
+                                    <br />
+                                    <div class="tooltip-text-content">
+                                        <p>These cookies are crucial for the proper operation of the website and can't be deactivated within our system. They typically activate in response to certain actions you undertake, such as setting your privacy options, logging in, or completing forms. These cookies are essential for executing services that you've requested. Opting out of these cookies isn't possible through our settings, but you can configure your browser to block or notify you about them. Be advised that doing so may disrupt some functionalities of the site. These cookies don't collect identifiable personal information.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="checkbox-container">
+                            <label class="checkbox-cookie">
+                                <input id="analytical_cookies" type="checkbox">
+                                <span class="checkbox-custom rectangular"></span>
+                            </label>
+                            <div class="checkbox__content">
+                                <h3 class="checkbox__text">Analytical Cookies</h3>
+                            </div>
+                            <div class="tooltip-container">
+                                <i class="fas fa-info-circle custom-icon"></i>
+                                <img src="/images/Vector.svg" />
+                                <div class="tooltip-text">
+                                    <div class="tooltip-text-title"> Analytical Cookies</div>
+                                    <br />
+                                    <div class="tooltip-text-content">
+                                        <p>These cookies help us monitor the website's traffic and performance so that we can fine-tune the <a href="https://melee.gg/"> Melee.gg</a> experience for you. They let us identify the most and least frequented pages and track user navigation, aiding us in optimizing the site. The data collected is aggregated and remains anonymous. If you decide not to enable these cookies, we won't be able to use your data for performance improvement.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="checkbox-container">
+                            <label class="checkbox-cookie">
+                                <input id="functional_cookies" type="checkbox">
+                                <span class="checkbox-custom rectangular"></span>
+                            </label>
+                            <div class="checkbox__content">
+                                <h3 class="checkbox__text">Functional Cookies</h3>
+                            </div>
+                            <div class="tooltip-container">
+                                <i class="fas fa-info-circle custom-icon"></i>
+                                <img src="/images/Vector.svg" />
+                                <div id="functional_tooltip" class="tooltip-text">
+                                    <div class="tooltip-text-title"> Functional Cookies</div>
+                                    <br />
+                                    <div class="tooltip-text-content">
+                                        <p>These cookies add extra features and customizable options to the <a href="https://melee.gg/">Melee.gg</a>  website, enriching your user experience. They might be set by us or by third-party vendors providing services we've integrated into our site. Should you choose to disable these cookies, some or all of these enhanced functionalities may not operate as intended.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="validationMessage" style="color: red;"></div>
+                </div>               
+                <br />
+                <div class="col-md-12">
+                    <div class="button__section btn-preference-group">
+                        <button class="btn btn-warning" id="customSave">  Save Optional  </button>
+                        <button class="btn btn-outline-warning" id="acceptAllCookie">  Accept all cookies </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-backdrop" style="display: none;"></div>
+<script>
+    setCookieConsentClass();
+
+    function setCookieConsentClass() {
+        const currentPageUrl = window.location.pathname.split('/')?.[1];
+        let cookieConsentClass = '';
+
+        switch (currentPageUrl) {
+            case 'Lorcana':
+                cookieConsentClass = "cookies__modal__lorcana"
+                break;
+            case 'RCQ':
+                cookieConsentClass = "cookies__modal__rcq"
+                break;
+        }
+
+        $('.cookies__modal').addClass(cookieConsentClass);
+    }
+
+    $(() => {
+        $('.cookies__modal').modal('show')
+        $('.modal-backdrop').show();
+    })
+
+    $(document).ready(function () {
+        const allowAllButton = $("#allowAllButton");
+        const acceptAllCookie = $("#acceptAllCookie");
+        const customSave = $("#customSave");
+        const necessaryOnlyButton = $("#necessaryOnlyButton");
+        const functional_cookies = $("#functional_cookies");
+        const analytical_cookies = $("#analytical_cookies");        
+        const essential_cookies = $("#essential_cookies");  
+        const validationMessage = $("#validationMessage");
+        const customizeButton = $("#customizeButton");
+        const detailTabButton = $("#detail-tab");
+
+        customizeButton.on("click", function () {
+            detailTabButton.click();
+        });
+
+        allowAllButton.on("click", function () {
+            allowAllCookies();          
+        });
+
+        acceptAllCookie.on("click", function () {
+            allowAllCookies();            
+        });
+
+        if (false) {
+            functional_cookies.prop("checked", true);
+        }
+        else {
+            functional_cookies.prop("checked", false);          
+            showValidationMessage();
+        }
+        if (false) {
+            analytical_cookies.prop("checked", true);
+        } else {
+            analytical_cookies.prop("checked", false);
+        }
+
+        analytical_cookies.on("click", hideValidationMessage);
+        functional_cookies.on("click", hideValidationMessage);
+        functional_cookies.on("change", function () {            
+            if (!functional_cookies.prop("checked")) {
+                showValidationMessage();
+            }
+        });
+        
+        customSave.on("click", function () {
+            setCookies({
+                essentialCookie: essential_cookies.prop("checked"),
+                analyticalCookie: analytical_cookies.prop("checked"),
+                functionalCookie: functional_cookies.prop("checked")
+            });            
+        });
+
+        necessaryOnlyButton.on("click", function () {
+            setCookies({
+                essentialCookie: true,
+                analyticalCookie: false,
+                functionalCookie: false
+            });
+        });
+
+        function hideValidationMessage() {
+            validationMessage.text("");
+        }
+
+        function showValidationMessage() {
+            validationMessage.text(`To use Paypal services it is necessary to accept functional cookies.`);
+        }
+
+        function hideCookiesModal() {            
+            $('.cookies__modal').modal('hide');
+            $('.modal-backdrop').hide();
+            location.reload();
+        }
+
+        function allowAllCookies() {
+            const currentPageUrl = window.location.pathname;
+            const url = `/Home/AllowAllCookies`;           
+            const requestData = {                
+                returnUrl: currentPageUrl
+            };
+            $.ajax({
+                url: url,
+                method: "POST",
+                contentType: "application/json",
+                data: JSON.stringify(requestData),
+                success: function (data) {  
+                    hideCookiesModal();
+                }
+            });
+        }
+
+        function setCookies(cookieDto) {
+            const currentPageUrl = window.location.pathname;
+            const url = `/Home/SetCookies`;         
+            const requestData = {
+                returnUrl: currentPageUrl,
+                cookiesDto: cookieDto
+            };
+            $.ajax({
+                url: url,
+                method: "POST",
+                contentType: "application/json",
+                data: JSON.stringify(requestData),
+                success: function (data) {
+                    hideCookiesModal();
+                }
+            });
+        };
+    });
+</script>        
+
+<span id="hovercard"></span>
+
+<script id="hovercard-player-title" type="x-tmpl-mustache">    <a href="/Profile/Index/{{username}}">{{name}}</a>
+</script>
+<script id="hovercard-organization-title" type="x-tmpl-mustache">    <a href="/Hub/Organization/{{ID}}">{{Name}}</a>
+</script>
+<script id="hovercard-tournament-title" type="x-tmpl-mustache">    <a href="/Tournament/View/{{ID}}">{{Name}}</a>
+</script>
+<script id="hovercard-decklist-title" type="x-tmpl-mustache">    <a href="/Decklist/View/{{Guid}}">{{DecklistName}}</a>
+</script>
+<script id="hovercard-support-ticket-title" type="x-tmpl-mustache">    <span>{{Type}}</span>
+</script>
+<script id="hovercard-compare-decklist-title" type="x-tmpl-mustache">    <a href="/Decklist/View/{{Decklist.ID}}">{{Decklist.Name}}</a>
+</script>
+<script id="hovercard-format-title" type="x-tmpl-mustache">    <span>{{Name}}</span>
+</script>
+<script id="hovercard-venue-title" type="x-tmpl-mustache">    <span>{{Name}}</span>
+</script>
+<script id="hovercard-card-body" type="x-tmpl-mustache">    <img class="full-card-image" src="{{src}}" data-fallback="{{fallback}}" alt="{{name}}"/>
+    <div style="width: 250px;">
+        {{#tcgPlayerId}}
+        <a class="btn btn-sm btn-success w-100 mt-1" href="/Affiliate/Card/{{id}}?type=TcgPlayerCard">Buy at TCGPlayer.com</a>
+        {{/tcgPlayerId}}
+        {{#cardhoarderUrl}}
+        <a class="btn btn-sm btn-success w-100 mt-1" href="/Affiliate/Card/{{id}}?type=CardHoarderCard">Buy at Cardhoarder.com</a>
+        {{/cardhoarderUrl}}
+        {{#cardhoarderRentUrl}}
+        <a class="btn btn-sm btn-success w-100 mt-1" href="/Affiliate/Card/{{id}}?type=CardHoarderRent">Rent at Cardhoarder.com</a>
+        {{/cardhoarderRentUrl}}
+        {{#cardhorderFoilUrl}}
+        <a class="btn btn-sm btn-success w-100 mt-1" href="/Affiliate/Card/{{id}}?type=CardHoarderFoil">Buy Foil at Cardhoarder.com</a>
+        {{/cardhorderFoilUrl}}
+    </div>
+</script>
+<script id="hovercard-player-body" type="x-tmpl-mustache">    <table class="w-100">
+        <tbody>
+        <tr>
+            <td class="align-top">
+                {{#pronouns}}
+                <div title="Pronouns"><i class="fa-regular fa-user fa-fw text-muted mr-2"></i>{{pronouns}}</div>
+                {{/pronouns}}
+                {{#email}}
+                <div title="Email">
+                    <i class="fa-regular fa-envelope fa-fw text-muted mr-2"></i><a href="mailto:{{email}}">{{email}}</a>
+                </div>
+                {{/email}}
+                {{#screenName}}
+                <div title="Screen name"><i class="fa-brands fa-wizards-of-the-coast fa-fw text-muted mr-2"></i>{{screenName}}</div>
+                {{/screenName}}
+                {{#gemPlayerId}}
+                <div title="Flesh and Blood GEM Id"><i class="fa-regular fa-chess-king fa-fw text-muted mr-2"></i>{{gemPlayerId}}</div>
+                {{/gemPlayerId}}
+                {{#wizardsAccountEmail}}
+                <div title="Wizards Account Email">
+                    <i class="fa-brands fa-wizards-of-the-coast fa-fw text-muted mr-2"></i><a href="mailto:{{wizardsAccountEmail}}">{{wizardsAccountEmail}}</a>
+                </div>
+                {{/wizardsAccountEmail}}
+                {{#discordUsername}}
+                <div title="Discord"><i class="fa-brands fa-discord fa-fw text-muted mr-2"></i>{{discordUsername}}</div>
+                {{/discordUsername}}
+                {{#age}}
+                <div title="Age"><i class="fa-regular fa-calendar-days fa-fw text-muted mr-2"></i>{{age}}</div>
+                {{/age}}
+                {{#region}}
+                <div title="Country/Region"><i class="fa-regular fa-map fa-fw text-muted mr-2"></i>{{region}}</div>
+                {{/region}}
+                {{#language}}
+                <div title="Language"><i class="fa-regular fa-comment fa-fw text-muted mr-2"></i>{{language}}</div>
+                {{/language}}
+                {{#twitchChannel}}
+                <div>
+                    <i class="fa-brands fa-twitch fa-fw text-muted mr-2"></i><a target="_blank" rel="nofollow noopener noreferrer" href="https://www.twitch.tv/{{twitchChannel}}">{{twitchChannel}}</a>
+                </div>
+                {{/twitchChannel}}
+                {{#facebookPage}}
+                <div>
+                    <i class="fa-brands fa-facebook fa-fw text-muted mr-2"></i><a href="https://www.facebook.com/{{facebookPage}}">{{facebookPage}}</a>
+                </div>
+                {{/facebookPage}}
+                {{#patreonPage}}
+                <div>
+                    <i class="fa-brands fa-patreon fa-fw text-muted mr-2"></i><a href="https://www.patreon.com/{{patreonPage}}">{{patreonPage}}</a>
+                </div>
+                {{/patreonPage}}
+                {{#youTubeChannel}}
+                <div>
+                    <i class="fa-brands fa-youtube fa-fw text-muted mr-2"></i><a href="https://www.youtube.com/@{{youTubeChannel}}">{{youTubeChannel}}</a>
+                </div>
+                {{/youTubeChannel}}
+                {{#podcastUrl}}
+                <div>
+                    <i class="fa fa-podcast fa-fw text-muted mr-2"></i><a href="{{podcastUrl}}">{{podcastUrl}}</a>
+                </div>
+                {{/podcastUrl}}
+                {{#decklists}}
+                <div>
+                    <i class="fas fa-list-ul fa-fw text-muted mr-2"></i><a href="/Decklist/View/{{id}}">{{name}}</a>
+                </div>
+                {{/decklists}}
+            </td>
+            <td class="align-top">
+                <table>
+                    <tbody>
+                    <tr>
+                        <td>Status:</td>
+                        <td>{{status}}</td>
+                    </tr>
+                    {{#rank}}
+                    <tr>
+                        <td>Rank:</td>
+                        <td>{{rank}}</td>
+                    </tr>
+                    <tr>
+                        <td>Record:</td>
+                        <td>{{record}}</td>
+                    </tr>
+                    <tr>
+                        <td>Points:</td>
+                        <td>{{points}}</td>
+                    </tr>
+                    {{/rank}}
+                    {{#roundDropped}}
+                    <tr>
+                        <td>Round Dropped:</td>
+                        <td>{{roundDropped}}</td>
+                    </tr>
+                    {{/roundDropped}}
+                    {{#removalReason}}
+                    <tr>
+                        <td>Removal Reason:</td>
+                        <td>{{removalReason}}</td>
+                    </tr>
+                    {{/removalReason}}
+                    {{#metadata}}
+                    <tr>
+                        <td>{{Key}}:</td>
+                        <td>{{Value}}</td>
+                    </tr>
+                    {{/metadata}}
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <hr/>
+    <div>
+        <table class="w-100">
+            <thead>
+            <tr class="border-bottom">
+                <th>Round</th>
+                <th>Opponent</th>
+                <th>Decklist</th>
+                <th>Result</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#matches}}
+            <tr>
+                <td class="p-1">{{roundName}}</td>
+                <td class="p-1">
+                    {{#opponentUsername}}
+                    <a href="/Profile/Index/{{opponentUsername}}">{{#opponentFullName}}{{opponentFullName}}{{/opponentFullName}}{{^opponentFullName}}{{opponentName}}{{/opponentFullName}}</a>
+                    {{/opponentUsername}}
+                    {{^opponentUsername}}
+                        {{#opponentName}}
+                            {{opponentName}}
+                            {{/opponentName}}
+                            N/A
+                            {{^opponentName}}
+                        {{/opponentName}}
+                    {{/opponentUsername}}
+                </td>
+                <td class="p-1">
+                    {{#opponentDecklistId}}
+                    <a href="/Decklist/View/{{opponentDecklistId}}">{{opponentDecklistName}}</a>
+                    {{/opponentDecklistId}}
+                    {{^opponentDecklistId}}
+                    N/A
+                    {{/opponentDecklistId}}
+                </td>
+                <td class="p-1">
+                    {{^fullNameResult}}{{result}}{{/fullNameResult}}
+                    {{#fullNameResult}}{{fullNameResult}}{{/fullNameResult}}</td>
+            </tr>
+            {{/matches}}
+            </tbody>
+        </table>
+    </div>
+</script>
+<script id="hovercard-organization-body" type="x-tmpl-mustache">    <div class="d-flex flex-row">
+        {{#ProfileImageSource}}
+        <div class="pr-2" style="width: 200px">
+            <img class="w-100" src="{{ProfileImageSource}}" alt="{{Name}}" onerror="this.onerror=null;this.src='/images/blank-user-profile-photo.png';"/>
+        </div>
+        {{/ProfileImageSource}}
+
+        <div>
+            <div>
+                <i class="far fa-envelope fa-fw text-muted mr-2"></i><a href="mailto:{{ContactEmail}}">{{ContactEmail}}</a>
+            </div>
+            {{#DiscordServer}}
+            <div>
+                <i class="fa-brands fa-discord fa-fw text-muted mr-2"></i><a href="https://discord.gg/{{DiscordChannel}}">https://discord.gg/{{DiscordChannel}}</a>
+            </div>
+            {{/DiscordServer}}
+            {{#TwitterHandle}}
+            <div>
+                <i class="fa-brands fa-twitter fa-fw text-muted mr-2"></i><a href="https://twitter.com/{{TwitterHandle}}">{{TwitterHandle}}</a>
+            </div>
+            {{/TwitterHandle}}
+            {{#TwitchChannel}}
+            <div>
+                <i class="fa-brands fa-twitch fa-fw text-muted mr-2"></i><a href="https://www.twitch.tv/{{TwitchChannel}}">{{TwitchChannel}}</a>
+            </div>
+            {{/TwitchChannel}}
+            {{#FacebookPage}}
+            <div>
+                <i class="fa-brands fa-facebook fa-fw text-muted mr-2"></i><a href="https://www.facebook.com/{{FacebookPage}}">{{FacebookPage}}</a>
+            </div>
+            {{/FacebookPage}}
+            {{#PatreonPage}}
+            <div>
+                <i class="fa-brands fa-patreon fa-fw text-muted mr-2"></i><a href="https://www.patreon.com/{{PatreonPage}}">{{PatreonPage}}</a>
+            </div>
+            {{/PatreonPage}}
+            {{#YouTubeChannel}}
+            <div>
+                <i class="fa-brands fa-youtube fa-fw text-muted mr-2"></i><a href="https://www.youtube.com/@{{YouTubeChannel}}">{{YouTubeChannel}}</a>
+            </div>
+            {{/YouTubeChannel}}
+            {{#PodcastUrl}}
+            <div>
+                <i class="fa fa-podcast fa-fw text-muted mr-2"></i><a href="{{PodcastUrl}}">{{PodcastUrl}}</a>
+            </div>
+            {{/PodcastUrl}}
+            <div>
+                # of Tournaments: {{TournamentCount}}
+            </div>
+        </div>
+    </div>
+    <hr/>
+    <h5 class="text-info">Upcoming Tournaments</h5>
+    <table class="w-100">
+        <thead>
+        <tr class="border-bottom">
+            <th>Name</th>
+            <th>Start Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#UpcomingTournaments}}
+        <tr>
+            <td class="p-1">
+                <a href="/Tournament/View/{{ID}}">{{Name}}</a>
+            </td>
+            <td class="p-1">{{StartDate}}</td>
+        </tr>
+        {{/UpcomingTournaments}}
+        {{^UpcomingTournaments}}
+        <tr>
+            <td class="p-1" colspan="2">No Tournaments Found</td>
+        </tr>
+        {{/UpcomingTournaments}}
+        </tbody>
+    </table>
+    <hr/>
+    <h5 class="text-info">Past Tournaments</h5>
+    <table class="w-100">
+        <thead>
+        <tr class="border-bottom">
+            <th>Name</th>
+            <th>Start Date</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#PastTournaments}}
+        <tr>
+            <td class="p-1">
+                <a href="/Tournament/View/{{ID}}">{{Name}}</a>
+            </td>
+            <td class="p-1">{{StartDate}}</td>
+        </tr>
+        {{/PastTournaments}}
+        {{^PastTournaments}}
+        <tr>
+            <td class="p-1" colspan="2">No Tournaments Found</td>
+        </tr>
+        {{/PastTournaments}}
+        </tbody>
+    </table>
+</script>
+<script id="hovercard-tournament-body" type="x-tmpl-mustache">    <div class="d-flex flex-row">
+        {{#BrandImageSource}}
+        <div class="pr-2" style="width: 200px">
+            <img class="w-100" src="{{BrandImageSource}}" alt="{{Name}}" onerror="this.onerror=null;this.src='https://cdn.melee.gg/images/blankbrandimage.png';" />
+        </div>
+        {{/BrandImageSource}}
+        <div>
+            <div>
+                <i class="fas fa-users-cog fa-fw text-muted mr-2"></i><a href="/Hub/Organization/{{OrganizationId}}">{{OrganizationName}}</a>
+            </div>
+            <div>
+                <i class="fas fa-calendar-alt fa-fw text-muted mr-2"></i>{{StartDate}}
+            </div>
+            <div>
+                <i class="fa-brands fa-fort-awesome fa-fw text-muted mr-2"></i>{{Format}}
+            </div>
+            <div>
+                <i class="far fa-clock fa-fw text-muted mr-2"></i>{{Status}}
+            </div>
+            <div>
+                <i class="fas fa-users fa-fw text-muted mr-2"></i>{{ParticipatorCount}} Players
+            </div>
+        </div>
+    </div>
+    <hr/>
+    <div class="d-flex flex-row">
+        <div class="w-50 pr-1">
+            <a class="btn btn-sm btn-success w-100 mb-2" href="/Tournament/View/{{ID}}#pairings">Pairings</a>
+        </div>
+        <div class="w-50 pl-1">
+            <a class="btn btn-sm btn-success w-100 mb-2" href="/Tournament/View/{{ID}}#standings">Standings</a>
+        </div>
+    </div>
+</script>
+<script id="hovercard-decklist-body" type="x-tmpl-mustache">    <div class="flex-gap-1" style="column-count: 2;">
+        {{#Components}}
+        <div class="mb-2 mr-2" style="page-break-inside: avoid; break-inside: avoid;">
+            <div class="text-info pl-1">{{CardQuantity}} {{ComponentDescription}}</div>
+            {{#CardRecords}}
+            <div>
+                {{#LinkToCards}}
+                {{q}} <a href="/Card/View/{{l}}">{{n}}</a>
+                {{/LinkToCards}}
+                {{^LinkToCards}}
+                {{q}} {{n}}
+                {{/LinkToCards}}
+            </div>
+            {{/CardRecords}}
+        </div>
+        {{/Components}}
+    </div>
+</script>
+<script id="hovercard-support-ticket-body" type="x-tmpl-mustache">    <div>
+        <div>
+            <i class="fas fa-info-circle fa-fw text-muted mr-2"></i>{{Type}}
+        </div>
+        <div>
+            <i class="fas fa-calendar-alt fa-fw text-muted mr-2"></i>{{DateCreated}}
+        </div>
+        <div>
+            <i class="fas fa-exclamation-triangle fa-fw text-muted mr-2"></i>{{Severity}}
+        </div>
+        <div>
+            <i class="fas fa-info-circle fa-fw text-muted mr-2"></i>{{Status}}
+        </div>
+        <div>
+            <i class="fas fa-user fa-fw text-muted mr-2"></i><a href="/Profile/Index/{{RequesterUsername}}">{{RequesterName}}</a>
+        </div>
+        <div>
+            <i class="fas fa-gavel fa-fw text-muted mr-2"></i>{{#AssigneeName}}<a href="/Profile/Index/{{AssigneeUsername}}">{{AssigneeName}}</a>{{/AssigneeName}}{{^AssigneeName}}Unassigned{{/AssigneeName}}
+        </div>
+        <div>
+            <i class="fas fa-code fa-fw text-muted mr-2"></i>{{Url}}
+        </div>
+        <div>
+            <i class="fas fa-file fa-fw text-muted mr-2"></i>{{Via}}
+        </div>
+        <hr/>
+        <div>Content:</div>
+        <div>
+            {{Content}}
+        </div>
+    </div>
+</script>
+<script id="hovercard-compare-decklist-body" type="x-tmpl-mustache">    <div class="d-flex flex-row">
+        <div class="w-50">
+            {{#Decklist.PlaneswalkerCount}}
+            <div class="text-info mt-2 pl-1">{{Decklist.PlaneswalkerCount}} Planeswalkers</div>
+            {{#Decklist.Planeswalkers}}
+            <div>
+                {{Quantity}} <a href="/Card/View/{{CardId}}">{{Name}}</a>
+            </div>
+            {{/Decklist.Planeswalkers}}
+            {{/Decklist.PlaneswalkerCount}}
+
+            {{#Decklist.CreatureCount}}
+            <div class="text-info mt-2 pl-1">{{Decklist.CreatureCount}} Creatures</div>
+            {{#Decklist.Creatures}}
+            <div>
+                {{Quantity}} <a href="/Card/View/{{CardId}}">{{Name}}</a>
+            </div>
+            {{/Decklist.Creatures}}
+            {{/Decklist.CreatureCount}}
+
+            {{#Decklist.SpellCount}}
+            <div class="text-info mt-2 pl-1">{{Decklist.SpellCount}} Spells</div>
+            {{#Decklist.Spells}}
+            <div>
+                {{Quantity}} <a href="/Card/View/{{CardId}}">{{Name}}</a>
+            </div>
+            {{/Decklist.Spells}}
+            {{/Decklist.SpellCount}}
+
+            {{#Decklist.ArtifactCount}}
+            <div class="text-info mt-2 pl-1">{{Decklist.ArtifactCount}} Artifacts</div>
+            {{#Decklist.Artifacts}}
+            <div>
+                {{Quantity}} <a href="/Card/View/{{CardId}}">{{Name}}</a>
+            </div>
+            {{/Decklist.Artifacts}}
+            {{/Decklist.ArtifactCount}}
+
+            {{#Decklist.EnchantmentCount}}
+            <div class="text-info mt-2 pl-1">{{Decklist.EnchantmentCount}} Enchantments</div>
+            {{#Decklist.Enchantments}}
+            <div>
+                {{Quantity}} <a href="/Card/View/{{CardId}}">{{Name}}</a>
+            </div>
+            {{/Decklist.Enchantments}}
+            {{/Decklist.EnchantmentCount}}
+        </div>
+        <div class="w-50">
+            {{#Decklist.LandCount}}
+            <div class="text-info mt-2 pl-1">{{Decklist.LandCount}} Lands</div>
+            {{#Decklist.Lands}}
+            <div>
+                {{Quantity}} <a href="/Card/View/{{CardId}}">{{Name}}</a>
+            </div>
+            {{/Decklist.Lands}}
+            {{/Decklist.LandCount}}
+
+            {{#Decklist.SideboardCount}}
+            <div class="text-info mt-2 pl-1">{{Decklist.SideboardCount}} Sideboard</div>
+            {{#Decklist.Sideboard}}
+            <div>
+                {{Quantity}} <a href="/Card/View/{{CardId}}">{{Name}}</a>
+            </div>
+            {{/Decklist.Sideboard}}
+            {{/Decklist.SideboardCount}}
+        </div>
+    </div>
+    <div class="d-flex flex-row mt-4">
+        <button class="btn btn-sm btn-primary copy-hovercard-decklist-button mr-2" data-clipboard-text="{{Decklist.ArenaDecklistString}}"><i class="fas fa-copy mr-2"></i>Copy to clipboard</button>
+        <a class="btn btn-sm btn-success" role="button" href="{{Decklist.ScreenshotUrl}}"><i class="fas fa-search mr-2"></i>View image</a>
+    </div>
+    <hr/>
+    <div>
+        <h5 class="text-decoration-underline">Differences from current decklist</h5>
+        <div class="d-flex flex-row">
+            <div class="w-50">
+                <div class="text-info mt-2 pl-1">Main Deck</div>
+                {{#MainDeckDifferences}}
+                <div>
+                    {{Sign}}{{Quantity}} <a href="/Card/View/{{CardId}}">{{CardName}}</a>
+                </div>
+                {{/MainDeckDifferences}}
+                {{^MainDeckDifferences}}
+                Main decks are identical.
+                {{/MainDeckDifferences}}
+            </div>
+            <div class="w-50">
+                <div class="text-info mt-2 pl-1">Sideboard</div>
+                {{#SideboardDifferences}}
+                <div>
+                    {{Sign}}{{Quantity}} <a href="/Card/View/{{CardId}}">{{CardName}}</a>
+                </div>
+                {{/SideboardDifferences}}
+                {{^SideboardDifferences}}
+                Sideboards are identical.
+                {{/SideboardDifferences}}
+            </div>
+        </div>
+    </div>
+</script>
+<style>
+    .format-hovercard-body {
+        max-height: 400px;
+        overflow-y: auto;
+    }
+</style>
+
+<script id="hovercard-format-body" type="x-tmpl-mustache">    <div class="format-hovercard-body">{{{Explanation}}}</div>
+</script>
+<script id="hovercard-venue-body" type="x-tmpl-mustache">    <div>
+        <div>
+            <i class="fa-solid fa-location-dot text-muted mr-2"></i>Click for Directions<a href="{{AddressUrl}}"><div>
+    {{AddressStreetAddress}}
+</div>
+<div>
+    {{AddressLine2}}
+</div>
+<div>
+    {{AddressCity}}, {{AddressState}} {{AddressPostalCode}}
+</div>
+<div>
+    {{AddressCountry}}
+</div></a>
+        </div>
+        <hr/>
+        <h5 class="text-info">Venue Contact Information:</h5>
+        {{#ContactEmail}}
+        <div>
+            <i class="fa-solid fa-envelope text-muted mr-2"></i><a href="mailto:{{ContactEmail}}">{{ContactEmail}}</a>
+        </div>
+        {{/ContactEmail}}
+        {{#Url}}
+        <div>
+            <i class="fa-solid fa-link text-muted mr-2"></i><a href="{{Url}}">{{Url}}</a>
+        </div>
+        {{/Url}}
+        {{#PhoneNumber}}
+        <div>
+            <i class="fa-solid fa-phone text-muted mr-2"></i>{{PhoneNumber}}
+        </div>
+        {{/PhoneNumber}}
+    </div>
+</script>
+
+
+<!-- Navbar -->
+<nav class="navbar navbar-custom navbar-expand-lg fixed-top font-weight-bold main-nav">
+    <!-- Navbar collapse toggle -->
+    <button type="button" class="navbar-toggler my-auto" data-toggle="collapse" data-target="#main-navbar-collapse">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand d-lg-none m-0" href="/">
+        <img src="/images/logo.png" alt="Melee Logo"/>
+    </a>
+    <div class="container">
+        <!-- Home link -->
+        <a class="navbar-brand d-none d-lg-block" href="/">
+            <img src="/images/logo.png" alt="Melee Logo"/>
+        </a>
+        <!-- Navbar collapse -->
+        <div id="main-navbar-collapse" class="navbar-collapse collapse">
+            <!-- Links -->
+            <ul class="navbar-nav mr-auto h-42">
+                <li class="nav-item">
+                    <a class="nav-link" href="/Home/WhatsNew">What&#39;s New</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Search">Find Events</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/Decklists">Decklists</a>
+                </li>
+                <!-- Organizers -->
+                <li class="nav-item dropdown mega-dropdown">
+                    <a id="organizers-dropdown-link" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false" aria-haspopup="true">Organizers</a>
+                    <div class="dropdown-menu mega-dropdown-menu" aria-labelledby="organizers-dropdown-link">
+                        <div class="container">
+                            <div class="row pl-lg-3 pr-lg-3 w-100">
+                                <div class="col-md-6 col-sm-12">
+                                    <strong class="dropdown-header">Organize</strong>
+                                    <hr class="mt-0"/>
+                                    <a class="mega-menu-dropdown-link add-organization-modal" href="#">
+                                        <i class="fas fa-caret-right"></i><span class="ml-3">Create an Organization</span>
+                                    </a>
+                                    <a class="mega-menu-dropdown-link" href="/RCQ/Apply"><i class="fas fa-caret-right"></i><span class="ml-3">Apply to host SCG RCQs</span></a>
+                                    <a class="mega-menu-dropdown-link" href="https://help.melee.gg"><i class="fas fa-caret-right"></i><span class="ml-3">Documentation</span></a>
+                                    <a class="mega-menu-dropdown-link" href="/Organization/Index"><i class="fas fa-caret-right"></i><span class="ml-3">All Organizers</span></a>
+                                    <a class="mega-menu-dropdown-link" href="/Profile/Organizations"><i class="fas fa-caret-right"></i><span class="ml-3">Your Organizations</span></a>
+                                    <a class="mega-menu-dropdown-link" href="/Organization/Dashboard"><i class="fas fa-caret-right"></i><span class="ml-3">Your Organizer Dashboard</span></a>
+                                    <a class="mega-menu-dropdown-link tournament-create-modal" href="#">
+                                        <i class="fas fa-caret-right"></i><span class="ml-3">Create a Tournament</span>
+                                    </a>
+                                    <a class="mega-menu-dropdown-link" href="/TournamentHub/Edit"><i class="fas fa-caret-right"></i><span class="ml-3">Create a Tournament Hub</span></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <!-- RCQs -->
+                <li class="nav-item dropdown mega-dropdown">
+                    <a id="rcq-dropdown-link" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false" aria-haspopup="true">MTG RCQs</a>
+                    <div class="dropdown-menu mega-dropdown-menu" aria-labelledby="rcq-dropdown-link">
+                        <div class="container">
+                            <div class="row pl-lg-3 pr-lg-3 w-100">
+                                <div class="col-md-6 col-sm-12">
+                                    <strong class="dropdown-header">Star City Games Regional Championships</strong>
+                                    <hr class="mt-0"/>
+                                    <a class="mega-menu-dropdown-link" href="/RCQ"><i class="fas fa-caret-right"></i><span class="ml-3">Info on SCG RCQ Event Kits</span></a>
+                                    <a class="mega-menu-dropdown-link" href="/RCQ/Apply"><i class="fas fa-caret-right"></i><span class="ml-3">Apply to host SCG RCQs</span></a>
+                                    <a class="mega-menu-dropdown-link" href="/RCQ/Purchase"><i class="fas fa-caret-right"></i><span class="ml-3">Purchase SCG RCQ Event Kits</span></a>
+                                    <a class="mega-menu-dropdown-link" href="/RCQ/Winners"><i class="fas fa-caret-right"></i><span class="ml-3">Submit/Edit RCQ Winner Info</span></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                
+<li class="nav-item dropdown">
+    <a id="language-dropdown-link" class="nav-link dropdown-toggle text-warning" data-toggle="dropdown" href="#" aria-expanded="false" aria-haspopup="true">
+        <i class="fa-duotone fa-globe mr-2" style="font-size: 20px"></i>Language
+    </a>
+    <div id="language-partial-language-dropdown-menu" class="dropdown-menu dropdown-menu-right" aria-labelledby="language-dropdown-link">
+                <a class="dropdown-item language-partial-language-selector language-selector" href="#" data-language="Chinese">中文 (Chinese)</a>
+                <a class="dropdown-item disabled" href="#">
+                    <i class="fa-duotone fa-check-circle mr-2 text-success"></i>English (English)
+                </a>
+                <a class="dropdown-item language-partial-language-selector language-selector" href="#" data-language="French">Fran&#231;ais (French)</a>
+                <a class="dropdown-item language-partial-language-selector language-selector" href="#" data-language="German">Deutsch (German)</a>
+                <a class="dropdown-item language-partial-language-selector language-selector" href="#" data-language="Italian">Italiano (Italian)</a>
+                <a class="dropdown-item language-partial-language-selector language-selector" href="#" data-language="Japanese">日本語 (Japanese)</a>
+                <a class="dropdown-item language-partial-language-selector language-selector" href="#" data-language="Korean">한국어 (Korean)</a>
+                <a class="dropdown-item language-partial-language-selector language-selector" href="#" data-language="Portuguese">Portugu&#234;s (Portuguese)</a>
+                <a class="dropdown-item language-partial-language-selector language-selector" href="#" data-language="Russian">русский (Russian)</a>
+                <a class="dropdown-item language-partial-language-selector language-selector" href="#" data-language="Spanish">Espa&#241;ol (Spanish)</a>
+                <a class="dropdown-item language-partial-language-selector language-selector" href="#" data-language="Czech">Čeština (Czech)</a>
+    </div>
+</li>
+            </ul>
+            
+    <ul class="navbar-nav">
+        <li class="nav-item dropdown">
+            <a id="account-dropdown-link" class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false" aria-haspopup="true">
+                <i class="fa-solid fa-user fa-2x"></i>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="account-dropdown-link">
+                <a class="dropdown-item" href="/Account/SignIn" id="loginLink">Sign in</a>
+                <a class="dropdown-item" href="/Account/Create?stage=PrivacyPolicy&amp;returnUrl=%2FTournament%2FView%2F72980" id="loginLink">Create an account</a>
+            </div>
+        </li>
+    </ul>
+
+        </div>
+    </div>
+</nav>
+<script>
+
+    $(() => {
+        //selector needs to have no classes on them or the wont trigger
+        $('nav div li').on('click', function() {
+            
+            if ($(this).parents('nav').hasClass('navbar-active')){
+                $('.navbar-collapse').collapse('hide');
+
+                $('.navbar').removeClass('navbar-active');
+                $('body').removeClass('overflow-hidden');
+            }
+        });
+    });
+</script>
+
+
+
+
+
+<style>
+    .match-table-team-container:not(:last-child) .match-table-player-container:after {
+        content: "vs";
+    }
+</style>
+
+<input id="tournament-id" name="tournament-id" type="hidden" value="72980" />
+<input id="TournamentGuid" name="TournamentGuid" type="hidden" value="d2413066-8dd7-41ce-9902-87fb8863043f" />
+<input id="IsCheckInEnabled" name="IsCheckInEnabled" type="hidden" value="True" />
+<input data-val="true" data-val-required="The DecklistEnabled field is required." id="DecklistEnabled" name="DecklistEnabled" type="hidden" value="true" />
+
+<div class="content page-with-container">
+    <div class="container">
+        <div class="d-flex flex-column flex-md-row card">
+        <div id="tournament-headline-brand-image-container" class="d-flex flex-grow-1">
+            <img id="tournament-headline-brand-image" src="https://cdn.melee.gg/userphotos/brandimages/62e1375e-71eb-4ecb-9637-621050e7f719.jpg" alt="Pro Tour Thunder Junction - tournament brand image"/>
+        </div>
+    <div id="tournament-headline-details-card" class="flex-grow-1">
+        <p id="tournament-headline-start-date-field">
+            <i class="fa fa-calendar-alt mr-1"></i><span data-toggle="datetime" data-value="4/26/2024 4:00:00 PM"></span>
+        </p>
+        <a href="/Tournament/View/72980">
+            <h3 class="mb-1">
+                <i class="fa-duotone fa-trophy-star mr-2"></i>Pro Tour Thunder Junction
+            </h3>
+        </a>
+        <p id="tournament-headline-game">Game: Magic: The Gathering</p>
+        <p id="tournament-headline-organization">Organized by: <a href="/Hub/Organization/588">Wizards of the Coast</a></p>
+        <p id="tournament-headline-platform">Tournament Type: Tabletop</p>
+            <p id="tournament-headline-brand">Formats are Standard Constructed and Outlaws of Thunder Junction Booster Draft.
+
+More information about Pro Tour Thunder Junction can be found at https://magic.gg/events/pro-tour-thunder-junction-fact-sheet-for-competitors</p>
+        <p id="tournament-headline-registration">
+                Free to Play |
+            <i class="fa fa-user-check mr-1"></i>Invite Only |
+                Format: Draft, Standard, Draft2 |
+            <i class="fa fa-info-circle mr-1"></i>Ended |
+            <i class="fa fa-user mr-1"></i>207 of 250 Enrolled Players
+        </p>
+        <div class="d-flex flex-row">
+                                </div>
+    </div>
+</div>
+
+
+
+    <div class="d-flex flex-column flex-md-row card p-2">
+        <div id="tournament-headline-button-row" class="d-flex button-row flex-column flex-md-row">
+<a class="btn btn-success text-nowrap submit-button " href="/Account/SignIn" role="button">Sign in</a><a class="btn btn-success text-nowrap submit-button " href="/Account/Create?stage=PrivacyPolicy" role="button">Create account</a>        </div>
+    </div>
+
+
+    <div class="tournament-description-container d-flex flex-column mt-1">
+        <ul class="nav nav-tabs flex-column flex-md-row" role="tablist"><li class="nav-item"><button aria-controls="tournament-description" aria-selected="True" class="nav-link active " data-toggle="tab" href="#tournament-description-tab" role="tab"><img class="fa fa-info-circle mr-2"></img>Description</button></li><li class="nav-item"><button aria-controls="tournament-rules" aria-selected="False" class="nav-link  " data-toggle="tab" href="#tournament-rules-tab" role="tab"><img class="fas fa-book mr-2"></img>Rules</button></li><li class="nav-item"><button aria-controls="tournament-schedule" aria-selected="False" class="nav-link  " data-toggle="tab" href="#tournament-schedule-tab" role="tab"><img class="fas fa-calendar-alt mr-2"></img>Schedule</button></li><li class="nav-item"><button aria-controls="tournament-prizes" aria-selected="False" class="nav-link  " data-toggle="tab" href="#tournament-prizes-tab" role="tab"><img class="fas fa-award mr-2"></img>Prizes</button></li><li class="nav-item"><button aria-controls="tournament-contact" aria-selected="False" class="nav-link  " data-toggle="tab" href="#tournament-contact-tab" role="tab"><img class="fas fa-comments mr-2"></img>Contact</button></li></ul>
+        
+        <div class="tournament-description-container-card card tab-content pt-3 px-3" style="overflow-y: scroll;">
+<div id="tournament-description-tab" class="tab-pane fade show active" role="tabpanel" aria-labelledby="tournament-description-tab"><p><a href="https://magic.gg/events/pro-tour-thunder-junction-fact-sheet-for-competitors">Pro Tour Thunder Junction Fact Sheet</a></p>
+                            <p>For paper printouts generated for this tournament, participants' names will be displayed using their full real names, irrespective of their profile's name display settings. This specification applies solely to printed materials.</p>
+</div>            
+<div id="tournament-rules-tab" class="tab-pane fade show " role="tabpanel" aria-labelledby="tournament-rules-tab"><p><a href="https://magic.gg/events/pro-tour-thunder-junction-fact-sheet-for-competitors">Pro Tour Thunder Junction Fact Sheet</a></p>
+</div>            
+<div id="tournament-schedule-tab" class="tab-pane fade show " role="tabpanel" aria-labelledby="tournament-schedule-tab"><p><a href="https://magic.gg/events/pro-tour-thunder-junction-fact-sheet-for-competitors">Pro Tour Thunder Junction Fact Sheet</a></p>
+</div>            
+<div id="tournament-prizes-tab" class="tab-pane fade show " role="tabpanel" aria-labelledby="tournament-prizes-tab">                            <p>The organizer has agreed to pay out prizes in 9 days or less.</p>
+<p><a href="https://magic.gg/events/pro-tour-thunder-junction-fact-sheet-for-competitors">Pro Tour Thunder Junction Fact Sheet</a></p>
+</div>            
+<div id="tournament-contact-tab" class="tab-pane fade show " role="tabpanel" aria-labelledby="tournament-contact-tab"><p>PremierPlay@wizards.com</p>
+</div>        </div>
+    </div>
+
+<div id="register-modal" class="modal fade" tabindex="-1" role="dialog"><div class="modal-dialog modal-xl" role="document"><div class="modal-content"><div class="modal-header"><h5 id="register-modal-title" class="modal-title">Registration</h5> <button type="button" class="close close-modal" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div id="register-modal-body" class="modal-body"></div></div></div></div>
+
+<link href="/Content/Views/Tournament/tournament.headline.css" rel="stylesheet"/>
+
+
+<script>
+$(() => {
+    const tournamentId = $('#tournament-id').val()
+    const $countdown = $('#tournament-headline-countdown')
+
+    if ($countdown.length) {
+        const date = Flattsware.dateTime.netDateTimeToJsDateTime($countdown.data('value'))
+
+        let interval = setInterval(() => {
+            const now = new Date().getTime()
+            const distance = date - now
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24))
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000)
+
+            let timer = ''
+
+            if (days) timer += `${days.toString().padStart(2, 0)}d `
+            if (days || hours) timer += `${hours.toString().padStart(2, 0)}h `
+            if (days || hours || minutes) timer += `${minutes.toString().padStart(2, 0)}m `
+            if (days || hours || minutes || seconds) timer += `${seconds.toString().padStart(2, 0)}s`
+
+            $countdown.html(timer)
+            $('#tournament-headline-countdown-label').show()
+
+            if (distance < 0) {
+                clearInterval(interval)
+                $('#tournament-headline-countdown-container').hide()
+            }
+        }, 1000)
+    }
+
+    $('#register-modal-show-button').click(function () {
+        const $this = $(this)
+
+        Flattsware.spinner.start($this)
+
+        $('#register-modal-body').load(`/Registration/Index`, {
+            tournamentId: tournamentId, 
+            userId: ''
+        }, () => {
+            $('#register-modal').modal('show')
+            Flattsware.spinner.end($this)
+        })
+    })
+
+    if (window.location.hash === "#registerPrompt") {
+        $("#register-modal-show-button").trigger("click");
+    }
+})
+</script>
+    </div>
+                <div id="standings" class="horizontal-section">
+            <div class="container">
+<div class="d-flex flex-column flex-md-row "><div class="flex-grow-1"><h4 class="text-info">Standings</h4></div><div class="flex-grow-2 button-container"></div></div>                <div class="card border-0 shadow pt-3 mb-3">
+    <div id="standings-round-selector-container" class="round-selector-container">
+                <button class="btn btn-gray round-selector" data-id="242279" data-name="Round 1" data-is-completed="True">Round 1</button>
+                <button class="btn btn-gray round-selector" data-id="242280" data-name="Round 2" data-is-completed="True">Round 2</button>
+                <button class="btn btn-gray round-selector" data-id="242281" data-name="Round 3" data-is-completed="True">Round 3</button>
+                <button class="btn btn-gray round-selector" data-id="242282" data-name="Round 4" data-is-completed="True">Round 4</button>
+                <button class="btn btn-gray round-selector" data-id="242283" data-name="Round 5" data-is-completed="True">Round 5</button>
+                <button class="btn btn-gray round-selector" data-id="242284" data-name="Round 6" data-is-completed="True">Round 6</button>
+                <button class="btn btn-gray round-selector" data-id="242285" data-name="Round 7" data-is-completed="True">Round 7</button>
+                <button class="btn btn-gray round-selector" data-id="242286" data-name="Round 8" data-is-completed="True">Round 8</button>
+                <button class="btn btn-gray round-selector" data-id="242287" data-name="Round 9" data-is-completed="True">Round 9</button>
+                <button class="btn btn-gray round-selector" data-id="242288" data-name="Round 10" data-is-completed="True">Round 10</button>
+                <button class="btn btn-gray round-selector" data-id="242289" data-name="Round 11" data-is-completed="True">Round 11</button>
+                <button class="btn btn-gray round-selector" data-id="242290" data-name="Round 12" data-is-completed="True">Round 12</button>
+                <button class="btn btn-gray round-selector" data-id="242291" data-name="Round 13" data-is-completed="True">Round 13</button>
+                <button class="btn btn-gray round-selector" data-id="242292" data-name="Round 14" data-is-completed="True">Round 14</button>
+                <button class="btn btn-gray round-selector" data-id="242293" data-name="Round 15" data-is-completed="True">Round 15</button>
+                <button class="btn btn-gray round-selector" data-id="242294" data-name="Round 16" data-is-completed="True">Round 16</button>
+                <button class="btn btn-gray round-selector" data-id="242295" data-name="Round 17" data-is-completed="True">Round 17</button>
+                <button class="btn btn-gray round-selector" data-id="242296" data-name="Round 18" data-is-completed="True">Round 18</button>
+                <button class="btn btn-gray round-selector" data-id="242297" data-name="Round 19" data-is-completed="True">Round 19</button>
+    </div>
+</div>
+
+<table class="table dataTable display full-width    " id="tournament-standings-table"></table>
+
+<script src="/Scripts/Views/Tournament/standings-section.min.js?v=0.3.63.85&lg=en"></script>
+
+            </div>
+        </div>
+        <div id="pairings" class="horizontal-section bg-darker">
+            <div class="container">
+<div class="d-flex flex-column flex-md-row "><div class="flex-grow-1"><h4 class="text-info">Matches</h4></div><div class="flex-grow-2 button-container"></div></div>                <div class="card border-0 shadow pt-3 mb-3">
+    <div id="pairings-round-selector-container" class="round-selector-container">
+            <button class="btn btn-gray round-selector" data-id="242279" data-name="Round 1" data-is-started="True">Round 1</button>
+            <button class="btn btn-gray round-selector" data-id="242280" data-name="Round 2" data-is-started="True">Round 2</button>
+            <button class="btn btn-gray round-selector" data-id="242281" data-name="Round 3" data-is-started="True">Round 3</button>
+            <button class="btn btn-gray round-selector" data-id="242282" data-name="Round 4" data-is-started="True">Round 4</button>
+            <button class="btn btn-gray round-selector" data-id="242283" data-name="Round 5" data-is-started="True">Round 5</button>
+            <button class="btn btn-gray round-selector" data-id="242284" data-name="Round 6" data-is-started="True">Round 6</button>
+            <button class="btn btn-gray round-selector" data-id="242285" data-name="Round 7" data-is-started="True">Round 7</button>
+            <button class="btn btn-gray round-selector" data-id="242286" data-name="Round 8" data-is-started="True">Round 8</button>
+            <button class="btn btn-gray round-selector" data-id="242287" data-name="Round 9" data-is-started="True">Round 9</button>
+            <button class="btn btn-gray round-selector" data-id="242288" data-name="Round 10" data-is-started="True">Round 10</button>
+            <button class="btn btn-gray round-selector" data-id="242289" data-name="Round 11" data-is-started="True">Round 11</button>
+            <button class="btn btn-gray round-selector" data-id="242290" data-name="Round 12" data-is-started="True">Round 12</button>
+            <button class="btn btn-gray round-selector" data-id="242291" data-name="Round 13" data-is-started="True">Round 13</button>
+            <button class="btn btn-gray round-selector" data-id="242292" data-name="Round 14" data-is-started="True">Round 14</button>
+            <button class="btn btn-gray round-selector" data-id="242293" data-name="Round 15" data-is-started="True">Round 15</button>
+            <button class="btn btn-gray round-selector" data-id="242294" data-name="Round 16" data-is-started="True">Round 16</button>
+            <button class="btn btn-gray round-selector" data-id="242295" data-name="Round 17" data-is-started="True">Round 17</button>
+            <button class="btn btn-gray round-selector" data-id="242296" data-name="Round 18" data-is-started="True">Round 18</button>
+            <button class="btn btn-gray round-selector" data-id="242297" data-name="Round 19" data-is-started="False">Round 19</button>
+    </div>
+</div>
+
+<table class="table dataTable display full-width    " id="tournament-pairings-table"></table>
+
+<script src="/Scripts/Views/Tournament/pairings-section.min.js?v=0.3.63.85&lg=en"></script>
+
+            </div>
+        </div>
+</div>
+
+<div id="tournament-view-support-container" class="bg-warning" data-toggle="modal" data-target="#support-ticket-modal">
+    <div></div>
+</div>
+
+<div id="help-button-container">
+    <div class="card">
+        <div class="card-body">
+            <a class="text-warning" href="https://discord.melee.gg" target="_blank" rel="nofollow noopener noreferrer">
+                <i class="fas fa-3x fa-headset"></i>
+                <div class="font-weight-bold pt-2">
+                    GET HELP
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+<style>
+    .support-ticket-issue-container {
+        width: 100%;
+        padding: 15px;
+        cursor: pointer;
+        border: #999 solid 1px;
+        border-radius: 5px;
+        text-align: center;
+        margin-top: 8px;
+        background-color: #222;
+    }
+    
+    .support-ticket-issue-container:hover {
+        background-color: transparent;
+    }
+</style>
+
+<div id="support-ticket-modal" class="modal fade" tabindex="-1" role="dialog"><div class="modal-dialog modal-md" role="document"><div class="modal-content"><div class="modal-header"><h5 id="support-ticket-modal-title" class="modal-title">Send a message to the organizer</h5> <button type="button" class="close close-modal" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div id="support-ticket-modal-body" class="modal-body">    <div id="support-ticket-modal-issue-selector-container">
+        <p class="text-success">We apologize for any inconvenience. Please select the issue type that best describes your problem to help us assist you more effectively.</p>
+        <p class="text-success">Upon selecting an issue, an email will be automatically sent to the tournament organizer, who will contact you as soon as possible.</p>
+        <p class="text-success">By submitting this form, you consent to share your Melee account email with the tournament organizer.</p>
+        
+            <div class="support-ticket-issue-container" data-parent-type="Tournament" data-ticket-type="RegistrationIssue">
+                <div>Issue Registering</div>
+                <div>
+                    <small class="text-muted">Select this if you&#39;re experiencing difficulties while trying to register for the tournament.</small>
+                </div>
+            </div>
+            <div class="support-ticket-issue-container" data-parent-type="Tournament" data-ticket-type="TournamentCoverageIssue">
+                <div>Pairings/Standings Incorrect</div>
+                <div>
+                    <small class="text-muted">If you see incorrect information in the matches or standings, report it here.</small>
+                </div>
+            </div>
+            <div class="support-ticket-issue-container" data-parent-type="Tournament" data-ticket-type="DecklistIncorrect">
+                <div>Decklist Incorrect</div>
+                <div>
+                    <small class="text-muted">Choose this if your submitted decklist is incorrect and needs revision.</small>
+                </div>
+            </div>
+            <div class="support-ticket-issue-container" data-parent-type="Tournament" data-ticket-type="GeneralTournamentQuestion">
+                <div>General Question</div>
+                <div>
+                    <small class="text-muted">For all other general queries related to the tournament.</small>
+                </div>
+            </div>
+            <div class="support-ticket-issue-container" data-parent-type="Tournament" data-ticket-type="TournamentRulesQuestion">
+                <div>Question about Tournament Rules</div>
+                <div>
+                    <small class="text-muted">If you&#39;re uncertain or confused about specific tournament rules, ask here.</small>
+                </div>
+            </div>
+            <div class="support-ticket-issue-container" data-parent-type="Tournament" data-ticket-type="FixedTable">
+                <div>Fixed Table</div>
+                <div>
+                    <small class="text-muted">Select this if there&#39;s an issue with your assigned table.</small>
+                </div>
+            </div>
+    </div>
+    <div id="support-ticket-modal-check-container"></div>
+    <div id="support-ticket-modal-content-container">
+        <input id="Via" name="Via" type="hidden" value="TournamentView" />
+        <p class="text-success">To resolve your issue more efficiently, please provide a detailed description below.</p>
+        <p class="text-success">By submitting this form, you consent to share your Melee account email with the tournament organizer.</p>
+        <textarea id="support-ticket-modal-content-field" class="form-control mb-3" name="Content"></textarea>
+        <button class=" btn btn-primary text-nowrap " id="support-ticket-modal-content-submit-button" type="submit"><i class="fa-solid fa-check mr-2"></i>Submit Support Ticket</button>
+    </div>
+</div></div></div></div>
+<script id="waitlist-template" type="x-tmpl-mustache">    <div>
+        {{#isParticipating}}
+        {{#isOnWaitlist}}
+        <p>You are player #{{ranking}} of the {{playerCap}} player cap.<br/>You may be added to the tournament if {{playersInFrontCount}} players unenroll or fail to check-in.</p>
+        {{/isOnWaitlist}}
+        {{^isOnWaitlist}}
+        <p>You are player #{{ranking}} of the {{playerCap}} player cap.</p>
+        {{/isOnWaitlist}}
+        {{/isParticipating}}
+        {{^isParticipating}}
+        <p>There are currently {{registrationsCount}} players of the {{playerCap}} player cap enrolled.</p>
+        {{/isParticipating}}
+        <div class="progress" style="height: 20px;">
+            <div class="progress-bar bg-success overflow-hidden pointer" role="progressbar" style="width: {{playersCheckedInPercentage}}%" aria-valuenow="{{playersCheckedInPercentage}}" aria-valuemin="0" aria-valuemax="100" title="{{playersCheckedIn}} Checked-in">{{playersCheckedIn}} Checked-in</div>
+            <div class="progress-bar bg-danger overflow-hidden pointer" role="progressbar" style="width: {{playersNotCheckedInPercentage}}%" aria-valuenow="{{playersNotCheckedInPercentage}}" aria-valuemin="0" aria-valuemax="100" title="{{playersNotCheckedIn}} Not Checked-in">{{playersNotCheckedIn}} Not Checked-in</div>
+            {{#isParticipating}}
+            {{#isOnWaitlist}}
+            <div class="progress-bar bg-warning overflow-hidden pointer" role="progressbar" style="width: {{playersInFrontPercentage}}%" aria-valuenow="{{playersInFrontPercentage}}" aria-valuemin="0" aria-valuemax="100" title="{{playersInFrontCount}} Ahead of you">{{playersInFrontCount}} Ahead of You</div>
+            <div class="progress-bar bg-secondary overflow-hidden pointer" role="progressbar" style="width: {{playersBehindPercentage}}%" aria-valuenow="{{playersBehindPercentage}}" aria-valuemin="0" aria-valuemax="100" title="{{playersBehindCount}} Behind you">{{playersBehindCount}} Behind You</div>
+            {{/isOnWaitlist}}
+            {{^isOnWaitlist}}
+            <div class="progress-bar bg-warning overflow-hidden pointer" role="progressbar" style="width: {{waitlistPercentage}}%" aria-valuenow="{{waitlistPercentage}}" aria-valuemin="0" aria-valuemax="100" title="{{waitlistCount}} On Waitlist">{{waitlistCount}} On Waitlist</div>
+            {{/isOnWaitlist}}
+            {{/isParticipating}}
+            {{^isParticipating}}
+            <div class="progress-bar bg-warning overflow-hidden pointer" role="progressbar" style="width: {{waitlistPercentage}}%" aria-valuenow="{{waitlistPercentage}}" aria-valuemin="0" aria-valuemax="100" title="{{waitlistCount}} On Waitlist">{{waitlistCount}} On Waitlist</div>
+            {{/isParticipating}}
+        </div>
+    </div>
+</script>
+<script id="registrations-progress-template" type="x-tmpl-mustache">    <div>
+        <p>There are currently {{registrationsCount}} players of the {{playerCap}} player cap enrolled.</p>
+        <div class="progress" style="height: 20px;">
+            <div class="progress-bar bg-success overflow-hidden pointer" role="progressbar" style="width: {{percentage}}%" aria-valuenow="{{percentage}}" aria-valuemin="0" aria-valuemax="100" title="{{registrationsCount}} Players">{{registrationsCount}} Players</div>
+        </div>
+    </div>
+</script>
+<script id="entry-requirement-template" type="x-tmpl-mustache">    <div><i class="fas fa-{{iType}} text-{{colorClass}} mr-2"></i>{{text}}</div>
+</script>
+<style>
+    .tournament-card-container { width: 270px; }
+    
+    .tournament-card-link { text-decoration: none; }
+    
+    .tournament-card-link:hover { text-decoration: none; }
+    
+    .tournament-card {
+        border: 1px solid;
+        height: 100%
+    }
+    
+    .tournament-card-body { padding: 1rem; }
+    
+    .tournament-card-brand-image-container {
+        overflow: hidden;
+        padding-top: 50%;
+        position: relative;
+        width: 100%;
+    }
+    
+    .tournament-card-brand-image {
+        -webkit-transform: translateX(-50%) translateY(-50%);
+        bottom: 0;
+        display: block;
+        height: auto;
+        left: 50%;
+        max-width: 100%;
+        object-fit: contain;
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateX(-50%) translateY(-50%);
+    }
+    
+    .tournament-title {
+        color: white;
+        font-size: large;
+        font-weight: bold;
+        text-decoration: none;
+    }
+    
+    .tournament-start-date {
+        color: #FF7A0E;
+        font-size: 1rem;
+        font-weight: 600;
+        line-height: 1.25rem;
+    }
+    
+    .tournament-card-organizer, .tournament-card-player-count {
+        color: #989ea4 !important;
+        font-weight: 500;
+    }    
+    
+    .tournament-card-button-row {
+        display: flex;
+        justify-content: center;
+        padding: 0 1rem 1rem 1rem;
+    }
+    
+    .tournament-card-button-row > a { margin: 0 0.5rem; }
+</style>
+
+<script id="tournament-card-template" type="x-tmpl-mustache">    <div class="tournament-card-container scrolling-wrapper-card p-1">
+        <div class="tournament-card d-block border-primary">
+            <a class="tournament-card-link" href="/Tournament/View/{{id}}">
+                <div class="tournament-card-brand-image-container">
+                    <img class="tournament-card-brand-image" src="{{imageSource}}" alt="{{name}}" onerror="this.onerror=null;this.src='/images/blankbrandimage.png';"/>
+                </div>
+                <div class="tournament-card-body">
+                    <div class="tournament-start-date" data-toggle="datetime" data-value="{{startDate}}"></div>
+                    <div class="tournament-title">{{name}}</div>
+                    <div class="tournament-card-organizer">{{organization}} &#183; {{registrationType}}</div>
+                    <div class="tournament-card-player-count">{{participatorCount}} Enrolled Players</div>
+                </div>
+            </a>
+            <div class="tournament-card-button-row">
+                {{#isEnrolled}}
+                <a class="btn btn-primary text-nowrap btn-circle " data-toggle="tooltip" href="/Player/Control/{{id}}" title="Player Controller"><i class="fa-solid fa-gamepad mr-2"></i></a>
+                {{/isEnrolled}}
+                {{#canEdit}}
+                <a class="btn btn-primary text-nowrap btn-circle " data-toggle="tooltip" href="/Tournament/Control/{{id}}" title="Tournament Controller"><i class="fa-solid fa-gamepad mr-2"></i></a>
+                <a class="btn btn-primary text-nowrap btn-circle " data-toggle="tooltip" href="/Tournament/Edit/{{id}}" title="Edit Tournament"><i class="fa-duotone fa-pen-to-square mr-2"></i></a>
+                {{/canEdit}}
+            </div>
+        </div>
+    </div>
+</script>
+<script id="twitch-card-template" type="x-tmpl-mustache">    <div class="tournament-card-container scrolling-wrapper-card p-1">
+        <a class="tournament-card-link" href="https://www.twitch.tv/{{username}}" target="_blank" rel="nofollow noopener noreferrer">
+            <div class="tournament-card-brand-image-container">
+                <img class="tournament-card-brand-image" src="{{thumbnailUrl}}" alt="{{username}} Twitch Stream"/>
+            </div>
+            <div class="tournament-card-body">
+                <div class="tournament-start-date">{{username}}</div>
+            </div>
+        </a>
+    </div>
+</script>
+
+<link href="/Content/Views/Tournament/tournament.view.css" rel="stylesheet"/>
+
+
+<script>
+$(() => {
+    const $supportTicketModal = $(`#support-ticket-modal`)
+    const tournamentGuid = $(`input[name=TournamentGuid]`).val()
+    const $supportTicketModalContentContainer = $(`#support-ticket-modal-content-container`)
+    const $supportTicketModalIssueSelectorContainer = $(`#support-ticket-modal-issue-selector-container`)
+    const $supportTicketModalSubmitButton = $(`#support-ticket-modal-content-submit-button`)
+
+    let newSupportTicketModel = {
+        url: window.location.href,
+        contextType: `Tournament`,
+        contextGuid: tournamentGuid,
+        via: `TournamentView`,
+    }
+
+    //region Support Functions   
+
+    $supportTicketModal.on(`show.bs.modal`, () => {
+        $supportTicketModalIssueSelectorContainer.show()
+        $supportTicketModalContentContainer.hide()
+    })
+
+    $(`.support-ticket-issue-container`, $supportTicketModal).click(function () {
+        const $this = $(this)
+
+        newSupportTicketModel.ticketType = $this.data(`ticket-type`)
+        newSupportTicketModel.parentType = $this.data(`parent-type`)
+        newSupportTicketModel.parentGuid = tournamentGuid
+
+        $supportTicketModalIssueSelectorContainer.hide()
+        $('#support-ticket-modal-content-field').val(''); //clear out old values
+        $supportTicketModalContentContainer.show()
+    })
+
+    $supportTicketModalSubmitButton.click(() => {
+        newSupportTicketModel.content = _.trim($(`#support-ticket-modal-content-field`).val())
+
+        $.post(`/Ticket/SubmitSupportTicket`, newSupportTicketModel, (response) => {
+            Flattsware.notify.handleResponse(response, (data) => {
+                if (data.Message === `Chat`) {
+                    Flattsware.notify.showPersistentMessage(`A staff member will send you a message whenever they are able. Keep an eye on your messages page. Find the link to that page on the main menu bar.`)
+                    $supportTicketModal.modal(`hide`)
+                } else {
+                    Flattsware.notify.showPersistentMessage(`An email was sent to the tournament staff on your behalf. Check your email to communicate with the organizer.`)
+                    $supportTicketModal.modal(`hide`)
+                }
+            })
+        }).fail(Flattsware.showFail).always(() => {
+            Flattsware.spinner.end($supportTicketModalSubmitButton)
+        })
+    })
+
+    //endregion
+
+    //region Progress Bar Functions
+
+    const $registrationsProgressContainer = $(`#registrations-progress-container`)
+
+    let registrationsProgressTemplate = $(`#registrations-progress-template`).html()
+    Mustache.parse(registrationsProgressTemplate)
+
+    if ($registrationsProgressContainer.length) {
+        Flattsware.spinner.initContainer($registrationsProgressContainer)
+
+        $.get(`/Registration/GetRegistrationCounts/${tournamentGuid}`, (response) => {
+            if (response.Error) {
+                displayRegistrationsProgressError(response.Message)
+                return
+            }
+
+            let data = response
+
+            data.percentage = _.round(_.min([100, ((data.registrationsCount / data.playerCap) * 100)]))
+
+            $registrationsProgressContainer.html(Mustache.render(registrationsProgressTemplate, data))
+        }).fail(() => {
+            Flattsware.showDefaultFailMessage()
+            displayRegistrationsProgressError(`An error occurred.`)
+        })
+    }
+
+    function displayRegistrationsProgressError(message) {
+        $registrationsProgressContainer.html(`<div class="custom-alert text-danger border-danger">${message}</div>`)
+    }
+
+    //endregion
+
+    //region Waitlist Functions
+
+    const $waitlistRefreshButton = $(`#waitlist-refresh-button`)
+    const $waitlistProgressContainer = $(`#waitlist-progress-container`)
+
+    let waitlistTemplate = $(`#waitlist-template`).html()
+    Mustache.parse(waitlistTemplate)
+
+    function refreshProgressContainer() {
+        if (!$waitlistProgressContainer.length) return
+
+        Flattsware.spinner.initContainer($waitlistProgressContainer)
+
+        $.get(`/Registration/GetWaitlistStatus/${tournamentGuid}`, (response) => {
+            if (response.Error) {
+                displayWaitlistError(response.Message)
+                return
+            }
+
+            let data = response
+
+            data.waitlistCount = data.registrationsCount - data.playerCap
+            data.percentage = _.round(_.min([100, ((data.playerCap / data.registrationsCount) * 100)]))
+            data.waitlistPercentage = 100 - data.percentage
+            data.playersInFrontCount = data.ranking - data.playerCap - 1
+            data.playersBehindCount = data.registrationsCount - data.ranking
+            data.playersCheckedInPercentage = _.round((data.playersCheckedIn / data.registrationsCount) * 100)
+            data.playersNotCheckedInPercentage = data.percentage - data.playersCheckedInPercentage
+            data.playersInFrontPercentage = _.round((data.playersInFrontCount / (data.playersInFrontCount + data.playersBehindCount)) * 100) - data.percentage
+            data.playersBehindPercentage = data.waitlistPercentage - data.playersInFrontPercentage
+
+            $waitlistProgressContainer.html(Mustache.render(waitlistTemplate, data))
+        }).fail(() => {
+            Flattsware.showDefaultFailMessage()
+            displayWaitlistError(`An error occurred.`)
+        })
+    }
+
+    refreshProgressContainer()
+
+    $waitlistRefreshButton.click(() => {
+        refreshProgressContainer()
+    })
+
+    function displayWaitlistError(message) {
+        $waitlistProgressContainer.html(`<div class="custom-alert text-danger border-danger">${message}</div>`)
+    }
+
+    //endregion
+
+    //region Entry Requirements
+
+    const $entryRequirementsContainer = $(`#entry-requirements-container`)
+
+    let entryRequirementTemplate = $(`#entry-requirement-template`).html()
+    Mustache.parse(entryRequirementTemplate)
+
+    if ($entryRequirementsContainer.length) {
+        Flattsware.spinner.initContainer($entryRequirementsContainer)
+
+        $.get(`/Registration/GetEntryRequirements/${tournamentGuid}`, (response) => {
+            if (response.Error) {
+                displayEntryRequirementsError(response.Message)
+                return
+            }
+
+            $entryRequirementsContainer.html(``)
+
+            let count = 0;
+            if (response.length) {
+                _.each(response, (requirement) => {
+                    
+                    if (!requirement.optional){
+                        count++;
+                        switch (requirement.isMet) {
+                            case null:
+                                requirement.iType = `dot-circle`
+                                requirement.colorClass = `secondary`
+                                break
+                            case true:
+                                requirement.iType = `check-circle`
+                                requirement.colorClass = `success`
+                                break
+                            case false:
+                                requirement.iType = `times-circle`
+                                requirement.colorClass = `danger`
+                                break
+                        }
+
+                        $entryRequirementsContainer.append(Mustache.render(entryRequirementTemplate, requirement));
+                    }
+                })
+            }
+            
+            if (count == 0) {
+                $entryRequirementsContainer.append(`<span class="text-success">None</span>`)
+            }
+        }).fail(() => {
+            Flattsware.showDefaultFailMessage()
+            displayEntryRequirementsError(`An error occurred.`)
+        })
+    }
+
+    function displayEntryRequirementsError(message) {
+        $entryRequirementsContainer.html(`<div class="custom-alert text-danger border-danger">${message}</div>`)
+    }
+
+    //endregion
+}) 
+</script>
+<footer class="footer">
+    <div class="container pt-5">
+    <div class="row">
+        <div class="footer-column col-12 col-md-6 col-lg-3 text-center">
+            <h6>Follow Us</h6>
+            <div class="m-2">
+                <a class="text-facebook" target="_blank" rel="nofollow noopener noreferrer" href="https://www.facebook.com/Melee.gg">
+                    <span class="fa-brands fa-2x fa-facebook"></span>
+                </a>
+                <a class="ml-3 text-discord" target="_blank" rel="nofollow noopener noreferrer" href="https://discord.melee.gg">
+                    <span class="fa-brands fa-2x fa-discord"></span>
+                </a>
+                <a class="ml-3 text-youtube" target="_blank" rel="nofollow noopener noreferrer" href="https://www.youtube.com/@mtgmelee5454">
+                    <span class="fa-brands fa-2x fa-youtube"></span>
+                </a>
+            </div>
+        </div>
+        <div class="footer-column col-12 col-md-6 col-lg-3">
+            <h6>Tournaments</h6>
+            <div>
+                <a class="footer-link" href="/Tournament/Index">Tournaments</a>
+                <a class="footer-link" href="/Organization/Create">Become an Organizer</a>
+                <a class="footer-link" href="/Decklists">Decklists</a>
+            </div>
+        </div>
+        <div class="footer-column col-12 col-md-6 col-lg-3">
+            <h6>Helpful Links</h6>
+            <div>
+                <a class="footer-link" href="https://help.melee.gg">Documentation and Guides</a>
+                <a class="footer-link" href="https://help.melee.gg/docs/faq/">Frequently Asked Questions</a>
+                <a class="footer-link" href="/Policy/Payments">Entry Fees and Payments</a>
+                <a class="footer-link" href="/Policy/SLA">Service Level Agreements</a>
+                <a class="footer-link" href="/swagger">Data API</a>
+            </div>
+        </div>
+        <div class="footer-column col-12 col-md-6 col-lg-3">
+            <h6>Melee</h6>
+            <div>
+                <a class="footer-link" href="https://help.melee.gg/docs/contact-melee/">Contact</a>
+                <a class="footer-link" href="/Home/WhatsNew">What's New</a>
+                <a class="footer-link" href="/Home/About">About Us</a>
+                <a class="footer-link" href="/Home/Careers">Careers and Opportunities</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="footer-corp">
+    <img width="40" height="54" src="/images/keyrune-logo.png"/>
+    <span>
+        All original content on this page is &copy; 2019-2026 Keyrune Incorporated, its licensors, or its partners and may not be used or reproduced without explicit permission. All trademarks are the property of their respective owners. v0.3.63.85
+    </span>
+</div>
+
+<div class="footer-legal">
+    <span>Legal Information</span>
+    <div class="legal-links">
+        <a class="privacy-policy-button" href="/Policy/Privacy">Privacy Policy</a>
+        <a class="d-none d-md-block">|</a>
+        <a href="/Policy/Terms">Terms of Service</a>
+        <a class="d-none d-md-block">|</a>
+        <a href="/Policy/Cookies">Cookies Policy</a>
+        <a class="d-none d-md-block">|</a>
+        <a href="#" class="cookie-settings-link" data-return-url="/Tournament/View/72980">Cookies Settings</a>
+        <a class="d-none d-md-block">|</a>
+        <a href="/Policy/SubmitPrivacyReport">Report Unauthorized Data Sharing</a>
+    </div>
+</div>
+
+    <script>
+        $(document).on('click', '.add-organization-modal, .tournament-create-modal', (e) => { 
+            e.preventDefault(); 
+            window.location.href = '/Account/SignIn'; 
+        });
+    </script>
+
+</footer>
+
+<div id="snackbar" class="alert" style="white-space: pre-line;"></div>
+
+<div id="persistent-message-modal" class="modal fade" tabindex="-1" role="dialog"><div class="modal-dialog modal-md" role="document"><div class="modal-content"><div id="persistent-message-modal-body" class="modal-body">    <p id="persistent-message-modal-field" class="">
+    </p>
+</div><div class="modal-footer"><button id="persistent-message-modal-close-button" type="button" class="btn btn-secondary" data-dismiss="modal">Ok</button></div></div></div></div>
+<div id="confirmation-modal" class="modal fade" tabindex="-1" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div id="confirmation-modal-body" class="modal-body text-center">
+                <p id="confirmation-modal-confirmation-field">
+                    <i id="confirmation-modal-danger-icon" class="fa-solid fa-exclamation-circle mr-2"></i>Are you sure?
+                </p>
+                <div id="confirmation-modal-message-field"></div>
+            </div>
+            <div class="modal-footer d-flex justify-content-between">
+                <button id="confirmation-modal-close-button" type="button" class="btn text-nowrap btn-outline-secondary"><i class="fa-solid fa-arrow-left mr-2"></i>Cancel</button>
+                <button id="confirmation-modal-submit-button" type="button" class="btn text-nowrap">Confirm</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="submission-modal" class="modal fade" tabindex="-1" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div id="submission-modal-body" class="modal-body text-center">
+                <p id="submission-modal-message-field"></p>
+                <input id="submission-modal-value-field" class="form-control"/>
+            </div>
+            <div class="modal-footer d-flex justify-content-between">
+                <button id="submission-modal-close-button" type="button" class="btn text-nowrap btn-outline-secondary"><i class="fa-solid fa-arrow-left mr-2"></i>Cancel</button>
+                <button id="submission-modal-submit-button" type="button" class="btn text-nowrap">Submit</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="popup-form-modal" class="modal fade" tabindex="-1" role="dialog"><div class="modal-dialog modal-xl" role="document"><div class="modal-content"><div class="modal-header"><h5 id="popup-form-modal-title" class="modal-title">-</h5> <button type="button" class="close close-modal" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div id="popup-form-modal-body" class="modal-body"></div></div></div></div>
+<div id="audit-logging-modal" class="modal fade" tabindex="-1" role="dialog"><div class="modal-dialog modal-xl" role="document"><div class="modal-content"><div class="modal-header"><h5 id="audit-logging-modal-title" class="modal-title">Audit Logs</h5> <button type="button" class="close close-modal" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></div><div id="audit-logging-modal-body" class="modal-body"></div></div></div></div>
+<div id="site-persistent-notification-modal" class="modal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="d-flex flex-row flex-gap-1 mb-3">
+                    <div id="site-persistent-notification-modal-icon"></div>
+                    <div id="site-persistent-notification-modal-content" class="flex-grow-1"></div>
+                </div>
+                <div class="w-100 text-center">
+                    <button type="button" class="btn btn-outline-warning" data-dismiss="modal">Ok</button>
+                </div>
+                <hr class="modal-divider my-3"/>
+                <div id="site-persistent-notification-modal-content-buttons" class="d-flex flex-row flex-gap-1 w-100">
+                    <div class="gateway-button-help-links flex-grow-1 my-auto">
+                        <a class="my-auto" href="https://discord.melee.gg/">Get help via Discord</a>
+                        &bullet;
+                        <a class="my-auto" href="mailto:contact@melee.gg">Get help via email</a>
+                    </div>
+                    <a type="button" class="btn btn-outline-warning" href="https://help.melee.gg">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

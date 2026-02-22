@@ -122,3 +122,26 @@ Not implemented (not needed — all endpoints work with direct HTTP). Can be add
 ### Verification
 - `bun run test` — 19 tests passing (13 melee-client + 6 smoke)
 - `bun run scripts/test-melee-access.ts` — all 5 endpoints return valid data
+
+---
+
+## Task 2.2 — HTML Parser for Tournament & Decklist Pages
+**Status:** Completed
+**Date:** 2026-02-23
+
+### What was done
+- Installed `node-html-parser` v7.0.2
+- Created `scripts/lib/html-parser.ts` with 3 functions:
+  - `parseTournamentPage(html)` — extracts name, date, formats, and round IDs from tournament HTML
+  - `parseDecklistString(text)` — parses Arena-format decklist strings (Deck/Sideboard/Companion sections)
+  - `parseDecklistRecords(details)` — converts melee.gg JSON Records (c=0 mainboard, c=99 sideboard) to ParsedDecklist
+- Created test fixtures: `tournament-minimal.html`, `tournament-no-decklists.html`, `tournament-72980.html` (real Pro Tour page)
+- Decklist HTML parsing NOT implemented (not needed — JSON endpoint provides structured data, HTML uses Mustache templates)
+
+### Key files
+- `scripts/lib/html-parser.ts` — parser implementation
+- `tests/integration/html-parser.test.ts` — 16 tests
+- `tests/fixtures/` — HTML test fixtures
+
+### Verification
+- `bun run test` — 35 tests passing (16 html-parser + 13 melee-client + 6 smoke)
