@@ -218,3 +218,45 @@ Not implemented (not needed — all endpoints work with direct HTTP). Can be add
 ### Verification
 - Both JSON files validated: correct schema, player counts match, decklists have mainboards, rounds have matches
 - Archetype YAML signature cards derived from actual tournament decklist analysis
+
+---
+
+## Task 3.1 — TF-IDF Implementation
+**Status:** Completed
+**Date:** 2026-02-23
+
+### What was done
+- Created `src/lib/algorithms/tfidf.ts`:
+  - `buildCorpus(decklists)` — builds vocabulary, computes IDF = ln(N/df) for each card
+  - `vectorize(decklist, corpus)` — computes sparse TF-IDF vector (TF = qty/totalCards)
+  - `toDense(sparse, size)` — converts sparse to Float64Array for dense operations
+  - Uses `Float64Array` for IDF storage (memory efficient)
+  - Sparse vector format: `[vocabIndex, tfidfValue][]`
+- Created `tests/unit/tfidf.test.ts` — 12 tests
+
+### Key files
+- `src/lib/algorithms/tfidf.ts`
+- `tests/unit/tfidf.test.ts`
+
+### Verification
+- 12 tests passing: vocabulary building, IDF computation, TF proportionality, edge cases
+
+---
+
+## Task 3.2 — Cosine Similarity
+**Status:** Completed
+**Date:** 2026-02-23
+
+### What was done
+- Created `src/lib/algorithms/cosine-similarity.ts`:
+  - `cosineSimilarity(a, b)` — dense Float64Array cosine similarity
+  - `cosineSimilaritySparse(a, b)` — sparse vector cosine similarity (more efficient for TF-IDF vectors)
+  - Handles zero vectors, different-length vectors
+- Created `tests/unit/cosine-similarity.test.ts` — 10 tests
+
+### Key files
+- `src/lib/algorithms/cosine-similarity.ts`
+- `tests/unit/cosine-similarity.test.ts`
+
+### Verification
+- 10 tests passing: identical vectors (1.0), orthogonal (0.0), known computation, zero vectors, sparse/dense equivalence
