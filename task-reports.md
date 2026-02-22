@@ -194,3 +194,27 @@ Not implemented (not needed — all endpoints work with direct HTTP). Can be add
 - `bun run check` — 0 errors, 0 warnings
 - `bun run test` — 43 tests passing (8 assembler + 16 html-parser + 13 melee-client + 6 smoke)
 - `bun run scripts/fetch-tournament.ts 72980 --dry-run` — completes successfully
+
+---
+
+## Task 2.4 — Sample Data + Fixture Setup
+**Status:** Completed
+**Date:** 2026-02-23
+
+### What was done
+- Fetched 2 real tournaments and saved as JSON in `data/tournaments/`:
+  1. **Pro Tour Thunder Junction** (72980) — multi-format (Draft/Standard), 207 players, 207 decklists, 19 rounds, 1327 matches (877KB)
+  2. **Magic Spotlight Series - Lyon 2026** (392401) — Standard, 753 players, 746 decklists, 18 rounds, 3440 matches (2.8MB)
+- Created `data/archetypes/standard.yaml` — 5 Standard archetypes with signature cards:
+  - Izzet Lessons, Simic Rhythm, Dimir Midrange, Jeskai Control, Mono-Red Aggro
+  - Each has 4 signature cards with minCopies thresholds based on real tournament data
+- Validated both JSON files pass structural checks (meta, players, decklists, rounds, matches)
+
+### Key files
+- `data/tournaments/72980.json` — Pro Tour Thunder Junction
+- `data/tournaments/392401.json` — Magic Spotlight Series Lyon 2026
+- `data/archetypes/standard.yaml` — Standard archetype definitions
+
+### Verification
+- Both JSON files validated: correct schema, player counts match, decklists have mainboards, rounds have matches
+- Archetype YAML signature cards derived from actual tournament decklist analysis
