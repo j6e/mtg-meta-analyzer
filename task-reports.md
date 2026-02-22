@@ -145,3 +145,52 @@ Not implemented (not needed — all endpoints work with direct HTTP). Can be add
 
 ### Verification
 - `bun run test` — 35 tests passing (16 html-parser + 13 melee-client + 6 smoke)
+
+---
+
+## Task 2.3 — Tournament Fetch CLI Script
+**Status:** Completed
+**Date:** 2026-02-23
+
+### What was done
+- Created `scripts/lib/assembler.ts` — converts raw API data (standings, decklists, matches) into `TournamentData` schema
+  - `assembleTournament()` — main assembly function
+  - `parseMatchResult()` — extracts winner from Competitors array, handles byes/draws
+  - `extractRoundNumber()` — parses "Round N" names, assigns high numbers to playoff rounds
+  - `isPlayoffRound()` — detects quarterfinals, semifinals, finals, top 8/4, playoff
+- Created `scripts/fetch-tournament.ts` — CLI entry point with 4-step pipeline:
+  1. Fetch & parse tournament HTML page
+  2. Fetch standings from last completed round
+  3. Fetch all decklists (with progress reporting)
+  4. Fetch matches for all completed rounds
+  - Supports `--dry-run` flag (prints summary without writing file)
+  - Outputs JSON to `data/tournaments/{id}.json`
+- Updated `src/lib/types/tournament.ts` to match real API data:
+  - `PlayerInfo.decklistIds` changed from `number | null` to `string[]` (GUIDs)
+  - `PlayerInfo.username` added
+  - `PlayerInfo.reportedArchetypes` changed from `string | null` to `string[]`
+  - `TournamentMeta.formats` changed from `string` to `string[]`
+- Installed `@types/node@25.3.0` (needed for fs/path in tests)
+- Created `tests/integration/assembler.test.ts` — 8 tests covering:
+  - Basic tournament assembly (players, decklists, rounds, matches)
+  - Bye matches, draw matches, empty competitors
+  - Playoff round detection and numbering
+  - Round number extraction
+  - Players with no decklists
+  - Multi-format tournaments with multiple decklists per player
+
+### Real tournament test (dry run)
+- Tested against Pro Tour Thunder Junction (ID 72980):
+  - 207 players, 207 decklists (100% success), 19 rounds, 1327 matches
+  - JSON output: 876,575 bytes
+  - All data fetched successfully with no errors
+
+### Key files
+- `scripts/fetch-tournament.ts` — CLI script
+- `scripts/lib/assembler.ts` — data assembly module
+- `tests/integration/assembler.test.ts` — 8 assembler tests
+
+### Verification
+- `bun run check` — 0 errors, 0 warnings
+- `bun run test` — 43 tests passing (8 assembler + 16 html-parser + 13 melee-client + 6 smoke)
+- `bun run scripts/fetch-tournament.ts 72980 --dry-run` — completes successfully

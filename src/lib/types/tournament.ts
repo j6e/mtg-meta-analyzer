@@ -4,7 +4,7 @@ export interface TournamentMeta {
 	id: number;
 	name: string;
 	date: string; // ISO date
-	format: string; // "Standard", "Modern", etc.
+	formats: string[]; // ["Standard"], ["Draft", "Standard", "Draft2"]
 	url: string; // original melee.gg URL
 	fetchedAt: string; // ISO timestamp
 	playerCount: number;
@@ -13,12 +13,12 @@ export interface TournamentMeta {
 
 export interface PlayerInfo {
 	name: string;
+	username: string;
 	rank: number;
 	points: number;
 	matchRecord: string; // "7-2-0"
-	gameRecord: string; // "15-6-1"
-	decklistId: number | null;
-	reportedArchetype: string | null;
+	decklistIds: string[]; // GUIDs — may have multiple for multi-format tournaments
+	reportedArchetypes: string[]; // archetype per decklist
 }
 
 export interface MatchResult {
