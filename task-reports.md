@@ -260,3 +260,50 @@ Not implemented (not needed — all endpoints work with direct HTTP). Can be add
 
 ### Verification
 - 10 tests passing: identical vectors (1.0), orthogonal (0.0), known computation, zero vectors, sparse/dense equivalence
+
+---
+
+## Task 3.3 — KNN Classifier
+**Status:** Completed
+**Date:** 2026-02-23
+
+### What was done
+- Created `src/lib/algorithms/knn.ts`:
+  - `knnClassify(target, labeled, k)` — K-Nearest Neighbors using cosine similarity
+  - Returns majority label among k nearest neighbors
+  - Tie-breaking by highest average similarity
+  - Returns confidence score (avg similarity of winning label's neighbors)
+- Created `tests/unit/knn.test.ts` — 7 tests
+
+### Key files
+- `src/lib/algorithms/knn.ts`
+- `tests/unit/knn.test.ts`
+
+### Verification
+- 7 tests passing: k=1, majority voting, tie-breaking, fewer points than k, empty set, multi-class
+
+---
+
+## Task 3.4 — Archetype Classifier
+**Status:** Completed
+**Date:** 2026-02-23
+
+### What was done
+- Installed `yaml` v2.8.2
+- Created `src/lib/algorithms/archetype-classifier.ts`:
+  - `parseArchetypeYaml(yamlContent)` — parses YAML into ArchetypeDefinition[]
+  - `classifyBySignatureCards(mainboard, archetypeDefs)` — rule-based matching (pass 1)
+  - `classifyAll(decklists, archetypeDefs, options)` — two-pass pipeline:
+    1. Signature card matching (confidence=1.0)
+    2. KNN classification using TF-IDF vectors from pass-1 labeled data
+    3. Unknown for low-confidence or unclassifiable decklists
+  - Options: `k` (default 5), `minConfidence` (default 0.3)
+- Created `tests/unit/archetype-classifier.test.ts` — 12 tests
+
+### Key files
+- `src/lib/algorithms/archetype-classifier.ts`
+- `tests/unit/archetype-classifier.test.ts`
+
+### Verification
+- `bun run check` — 0 errors
+- `bun run test` — 84 tests passing (12 classifier + 7 knn + 10 cosine + 12 tfidf + 43 prior)
