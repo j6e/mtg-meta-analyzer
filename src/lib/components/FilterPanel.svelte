@@ -131,7 +131,19 @@
 	</div>
 
 	<div class="filter-section">
-		<h3>Matrix Options</h3>
+		<h3>Options</h3>
+
+		<div class="filter-row">
+			<label>
+				Archetype config
+				<select onchange={handleConfigChange} value={$activeConfigId}>
+					<option value={BUILTIN_CONFIG_ID}>Built-in: Standard</option>
+					{#each $savedConfigs as config}
+						<option value={config.id}>{config.name} ({config.format})</option>
+					{/each}
+				</select>
+			</label>
+		</div>
 
 		<div class="filter-row">
 			<label class="toggle">
@@ -195,22 +207,6 @@
 					%
 				</label>
 			{/if}
-		</div>
-	</div>
-
-	<div class="filter-section">
-		<h3>Archetype Config</h3>
-
-		<div class="filter-row">
-			<label>
-				Active config
-				<select onchange={handleConfigChange} value={$activeConfigId}>
-					<option value={BUILTIN_CONFIG_ID}>Built-in: Standard</option>
-					{#each $savedConfigs as config}
-						<option value={config.id}>{config.name} ({config.format})</option>
-					{/each}
-				</select>
-			</label>
 		</div>
 	</div>
 </div>
