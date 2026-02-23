@@ -58,6 +58,25 @@ describe('ArchetypeEditor component', () => {
 		expect(deleteBtn.disabled).toBe(true);
 	});
 
+	it('renders line numbers matching line count', () => {
+		const { container } = render(ArchetypeEditor);
+		const lineNums = container.querySelector('.line-numbers pre');
+		expect(lineNums).toBeTruthy();
+		const textarea = container.querySelector('textarea')!;
+		const expectedLines = textarea.value.split('\n').length;
+		const renderedLines = lineNums!.textContent!.trim().split('\n').length;
+		expect(renderedLines).toBe(expectedLines);
+	});
+
+	it('renders syntax-highlighted overlay', () => {
+		const { container } = render(ArchetypeEditor);
+		const highlightPre = container.querySelector('.highlight-pre');
+		expect(highlightPre).toBeTruthy();
+		// Should contain highlighted spans (at least keys from the YAML)
+		const keys = highlightPre!.querySelectorAll('.hl-key');
+		expect(keys.length).toBeGreaterThan(0);
+	});
+
 	it('save as flow creates a config', async () => {
 		const { container, getByText, getByPlaceholderText } = render(ArchetypeEditor);
 		// Open save form

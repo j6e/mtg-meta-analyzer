@@ -18,9 +18,90 @@
 	let showSaveForm = $state(false);
 	let saveName = $state('');
 	let saveFormat = $state('Standard');
+	let cageEl = $state<HTMLElement | null>(null);
+	let lineNumEl = $state<HTMLElement | null>(null);
+	let highlightEl = $state<HTMLElement | null>(null);
 
 	const isBuiltin = $derived(selectedConfigId === BUILTIN_CONFIG_ID);
 	const isActive = $derived(selectedConfigId === $activeConfigId);
+
+	// --- YAML syntax highlighting ---
+
+	function escapeHtml(text: string): string {
+		return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+	}
+
+	function highlightYamlLine(line: string): string {
+		// Comment line (possibly indented)
+		const commentMatch = line.match(/^(\s*)(#.*)$/);
+		if (commentMatch) {
+			return escapeHtml(commentMatch[1]) + '<span class="hl-comment">' + escapeHtml(commentMatch[2]) + '</span>';
+		}
+
+		// Key: value line
+		const kvMatch = line.match(/^(\s*-?\s*)([\w][\w\s.]*?)(\s*:\s*)(.*)?$/);
+		if (kvMatch) {
+			const [, indent, key, colon, value = ''] = kvMatch;
+			let result = escapeHtml(indent) + '<span class="hl-key">' + escapeHtml(key) + '</span>' + escapeHtml(colon);
+			if (value) result += highlightValue(value);
+			return result;
+		}
+
+		// List item without key (bare value like "- value")
+		const listMatch = line.match(/^(\s*-\s+)(.+)$/);
+		if (listMatch) {
+			return '<span class="hl-punct">' + escapeHtml(listMatch[1]) + '</span>' + highlightValue(listMatch[2]);
+		}
+
+		return escapeHtml(line);
+	}
+
+	function highlightValue(value: string): string {
+		// Check for inline comment
+		const commentIdx = value.indexOf(' #');
+		let main = value;
+		let comment = '';
+		if (commentIdx >= 0) {
+			main = value.substring(0, commentIdx);
+			comment = value.substring(commentIdx);
+		}
+
+		let result = '';
+		const trimmed = main.trim();
+
+		if (/^".*"$/.test(trimmed) || /^'.*'$/.test(trimmed)) {
+			result = '<span class="hl-string">' + escapeHtml(main) + '</span>';
+		} else if (/^(true|false|null|~)$/i.test(trimmed)) {
+			result = '<span class="hl-bool">' + escapeHtml(main) + '</span>';
+		} else if (/^-?\d[\d.]*$/.test(trimmed)) {
+			result = '<span class="hl-number">' + escapeHtml(main) + '</span>';
+		} else {
+			result = escapeHtml(main);
+		}
+
+		if (comment) {
+			result += '<span class="hl-comment">' + escapeHtml(comment) + '</span>';
+		}
+		return result;
+	}
+
+	function highlightYaml(text: string): string {
+		return text.split('\n').map(highlightYamlLine).join('\n') + '\n';
+	}
+
+	const highlightedHtml = $derived(highlightYaml(editorYaml));
+	const lineCount = $derived(editorYaml.split('\n').length);
+	const lineNumbers = $derived(Array.from({ length: lineCount }, (_, i) => i + 1).join('\n') + '\n');
+
+	// --- Scroll sync ---
+
+	function handleScroll(e: Event) {
+		const textarea = e.target as HTMLTextAreaElement;
+		if (lineNumEl) lineNumEl.scrollTop = textarea.scrollTop;
+		if (highlightEl) highlightEl.scrollTop = textarea.scrollTop;
+	}
+
+	// --- Config management ---
 
 	function loadConfig(id: string) {
 		selectedConfigId = id;
@@ -103,15 +184,20 @@
 			{/if}
 		</div>
 
-		<div class="textarea-cage">
-			<textarea
-				bind:value={editorYaml}
-				onkeydown={handleKeydown}
-				spellcheck="false"
-				autocomplete="off"
-				autocorrect="off"
-				autocapitalize="off"
-			></textarea>
+		<div class="textarea-cage" bind:this={cageEl}>
+			<div class="line-numbers" bind:this={lineNumEl}><pre>{lineNumbers}</pre></div>
+			<div class="code-area">
+				<pre class="highlight-pre" bind:this={highlightEl} aria-hidden="true">{@html highlightedHtml}</pre>
+				<textarea
+					bind:value={editorYaml}
+					onkeydown={handleKeydown}
+					onscroll={handleScroll}
+					spellcheck="false"
+					autocomplete="off"
+					autocorrect="off"
+					autocapitalize="off"
+				></textarea>
+			</div>
 		</div>
 
 		<div class="actions">
@@ -154,6 +240,7 @@
 
 	<div class="spec-panel">
 		<h3>Specification</h3>
+		<p class="yaml-note">Uses <a href="https://yaml.org/" target="_blank" rel="noopener">YAML</a> syntax</p>
 
 		<table class="spec-table">
 			<thead>
@@ -257,14 +344,63 @@
 	}
 
 	.textarea-cage {
+		display: flex;
 		max-height: 60vh;
-		overflow-y: auto;
+		overflow: hidden;
 		border: 1px solid var(--color-border);
 		border-radius: var(--radius);
 		background: var(--color-bg);
 	}
 
+	.line-numbers {
+		flex-shrink: 0;
+		overflow: hidden;
+		padding: 0.75rem 0;
+		user-select: none;
+		pointer-events: none;
+		border-right: 1px solid var(--color-border);
+		background: var(--color-surface);
+	}
+
+	.line-numbers pre {
+		margin: 0;
+		padding: 0 0.5rem;
+		font-family: var(--font-mono);
+		font-size: 0.7rem;
+		line-height: 1.5;
+		color: var(--color-text-muted);
+		text-align: right;
+		white-space: pre;
+	}
+
+	.code-area {
+		position: relative;
+		flex: 1;
+		min-width: 0;
+		overflow: hidden;
+	}
+
+	.highlight-pre {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		margin: 0;
+		padding: 0.75rem;
+		font-family: var(--font-mono);
+		font-size: 0.8rem;
+		line-height: 1.5;
+		tab-size: 2;
+		white-space: pre;
+		pointer-events: none;
+		overflow: hidden;
+		color: var(--color-text);
+		background: transparent;
+	}
+
 	textarea {
+		position: relative;
 		display: block;
 		width: 100%;
 		min-height: 550px;
@@ -276,13 +412,27 @@
 		line-height: 1.5;
 		tab-size: 2;
 		white-space: pre;
-		resize: vertical;
-		color: var(--color-text);
+		resize: none;
+		color: transparent;
+		caret-color: var(--color-text);
+		overflow-y: auto;
 	}
 
 	textarea:focus {
 		outline: none;
 	}
+
+	textarea::selection {
+		background: rgba(79, 70, 229, 0.2);
+	}
+
+	/* Syntax highlighting tokens */
+	:global(.hl-comment) { color: var(--color-text-muted); font-style: italic; }
+	:global(.hl-key) { color: var(--color-accent); }
+	:global(.hl-string) { color: #059669; }
+	:global(.hl-number) { color: #d97706; }
+	:global(.hl-bool) { color: #d97706; }
+	:global(.hl-punct) { color: var(--color-text-muted); }
 
 	.actions {
 		display: flex;
@@ -398,7 +548,22 @@
 		text-transform: uppercase;
 		letter-spacing: 0.04em;
 		color: var(--color-text-muted);
+		margin-bottom: 0.25rem;
+	}
+
+	.yaml-note {
+		font-size: 0.75rem;
+		color: var(--color-text-muted);
 		margin-bottom: 0.5rem;
+	}
+
+	.yaml-note a {
+		color: var(--color-accent);
+		text-decoration: none;
+	}
+
+	.yaml-note a:hover {
+		text-decoration: underline;
 	}
 
 	.spec-panel h4 {
