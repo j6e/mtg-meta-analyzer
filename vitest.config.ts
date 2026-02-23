@@ -9,5 +9,8 @@ export default defineConfig({
 		environment: 'node',
 		environmentMatchGlobs: [['tests/component/**', 'jsdom']],
 		setupFiles: ['tests/setup.ts']
+	},
+	resolve: {
+		conditions: ['browser']
 	}
 });

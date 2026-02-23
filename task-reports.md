@@ -427,3 +427,35 @@ Not implemented (not needed — all endpoints work with direct HTTP). Can be add
 ### Verification
 - `bun run check` — 0 errors, 0 warnings
 - `bun run test` — 126 tests passing (5 stores + 121 prior)
+
+---
+
+## Task 4.3 — Matchup Matrix Component
+**Status:** Completed
+**Date:** 2026-02-23
+
+### What was done
+- Created `src/lib/components/MatchupMatrix.svelte`:
+  - Props: `matrix: MatchupMatrix`, `stats?: ArchetypeStats[]`
+  - N×N HTML table with row/column headers = archetype names
+  - Each cell: winrate (1 decimal) + match count in parentheses
+  - Color gradient: red (low winrate) → white (50%) → green (high winrate)
+  - Diagonal cells show "Mirror" with hatched background pattern
+  - Hover: highlights entire row + column, cross-cell gets accent border
+  - Sticky first column + header row for scrollability
+  - Row headers include metagame share % when stats are provided
+  - Responsive: horizontal scroll wrapper on small screens
+- Added `resolve.conditions: ['browser']` to `vitest.config.ts` to fix Svelte 5 component tests (mount requires client bundle, not server)
+- Created `tests/component/MatchupMatrix.test.ts` — 8 tests:
+  - Row/column count, archetype name display, winrate format
+  - Mirror cell detection + styling, background color application
+  - Metagame share in row headers, empty matrix, no-match cells
+
+### Key files
+- `src/lib/components/MatchupMatrix.svelte`
+- `tests/component/MatchupMatrix.test.ts`
+- `vitest.config.ts` (resolve conditions fix)
+
+### Verification
+- `bun run check` — 0 errors, 0 warnings
+- `bun run test` — 134 tests passing (8 MatchupMatrix + 126 prior)
