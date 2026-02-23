@@ -93,11 +93,13 @@ export function buildMatchupMatrix(
 	const hasOther = otherSet.size > 0;
 	if (hasOther) displayArchetypes.push('Other');
 	const hasUnknown = (rawPlayerSets.get('Unknown')?.size ?? 0) > 0;
-	if (hasUnknown) displayArchetypes.push('Unknown');
+	// Merge Unknown into Other when Other exists; only show standalone Unknown if no Other bucket
+	if (hasUnknown && !hasOther) displayArchetypes.push('Unknown');
 
 	// Resolve raw archetype to display archetype
 	function resolve(raw: string): string {
 		if (otherSet.has(raw)) return 'Other';
+		if (raw === 'Unknown' && hasOther) return 'Other';
 		return raw;
 	}
 

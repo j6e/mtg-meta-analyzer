@@ -106,7 +106,6 @@
 		border-collapse: separate;
 		border-spacing: 0;
 		width: max-content;
-		min-width: 100%;
 		font-size: 0.8rem;
 	}
 
@@ -135,20 +134,19 @@
 	}
 
 	.col-header {
-		padding: 0.5rem 0.375rem;
-		text-align: center;
+		padding: 0.25rem;
 		font-weight: 600;
 		font-size: 0.75rem;
-		min-width: 5.5rem;
 		border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+		height: 9rem;
+		vertical-align: bottom;
+		min-width: 2.5rem;
 	}
 
 	.header-content {
-		writing-mode: horizontal-tb;
+		writing-mode: vertical-rl;
+		transform: rotate(180deg);
 		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		max-width: 7rem;
 	}
 
 	.row-header {
@@ -158,7 +156,6 @@
 		font-size: 0.8rem;
 		white-space: nowrap;
 		border-right: 2px solid var(--color-border);
-		min-width: 10rem;
 	}
 
 	.archetype-name {
@@ -173,7 +170,7 @@
 	}
 
 	.cell {
-		padding: 0.375rem 0.25rem;
+		padding: 0.25rem 0.125rem;
 		text-align: center;
 		border: 1px solid rgba(0, 0, 0, 0.06);
 		cursor: default;

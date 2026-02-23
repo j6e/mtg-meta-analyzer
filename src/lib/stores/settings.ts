@@ -26,9 +26,9 @@ const defaults: MetaSettings = {
 	dateTo: '',
 	selectedTournamentIds: [],
 	excludeMirrors: true,
-	otherMode: 'topN',
+	otherMode: 'minShare',
 	topN: 0,
-	minMetagameShare: 0,
+	minMetagameShare: 2,
 };
 
 export const settings = writable<MetaSettings>({ ...defaults });
