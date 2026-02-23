@@ -1,8 +1,11 @@
 <script lang="ts">
 	import { base } from '$app/paths';
 	import type { MatchupMatrix, MatchupCell, ArchetypeStats } from '../types/metagame';
+	import { exportElementAsImage } from '../utils/export-image';
 
 	let { matrix, stats = [] }: { matrix: MatchupMatrix; stats?: ArchetypeStats[] } = $props();
+
+	let matrixWrapper: HTMLDivElement;
 
 	let hoveredRow = $state(-1);
 	let hoveredCol = $state(-1);
@@ -142,7 +145,7 @@
 	}
 </script>
 
-<div class="matrix-wrapper">
+<div class="matrix-wrapper" bind:this={matrixWrapper}>
 	<table class="matchup-matrix" role="grid">
 		<thead>
 			<tr>
@@ -221,6 +224,13 @@
 		</tbody>
 	</table>
 </div>
+
+<button class="export-btn" onclick={() => exportElementAsImage(matrixWrapper, 'matchup-matrix.png', {
+	width: 'fit-content',
+	overflow: 'visible',
+})}>
+	Export as image
+</button>
 
 {#if tooltipVisible && tooltipData}
 	<div class="matchup-tooltip" style="left: {tooltipX}px; top: {tooltipY}px;" role="tooltip">
@@ -449,5 +459,20 @@
 		font-weight: 400;
 		font-style: italic;
 		color: var(--color-text-muted);
+	}
+
+	.export-btn {
+		margin-top: 0.5rem;
+		padding: 0.3rem 0.75rem;
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius);
+		background: var(--color-surface);
+		cursor: pointer;
+		font-size: 0.8rem;
+		color: var(--color-text);
+	}
+
+	.export-btn:hover {
+		background: var(--color-bg);
 	}
 </style>
