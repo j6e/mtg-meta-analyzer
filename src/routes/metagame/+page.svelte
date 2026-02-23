@@ -45,7 +45,7 @@
 	</section>
 
 	<section>
-		<h2>Matchup Matrix</h2>
+		<h2>Matchup Matrix <span class="info-icon" title="Win rates = wins / (wins + losses + draws). Draws count against both sides, so opposing win rates may not sum to 100%. Byes are excluded.">?</span></h2>
 		<MatchupMatrix matrix={$metagameData.matrix} stats={$metagameData.stats} />
 	</section>
 {:else}
@@ -76,6 +76,22 @@
 
 	.warning {
 		color: #b45309;
+	}
+
+	.info-icon {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 1.1rem;
+		height: 1.1rem;
+		border-radius: 50%;
+		border: 1px solid var(--color-text-muted);
+		color: var(--color-text-muted);
+		font-size: 0.65rem;
+		font-weight: 600;
+		cursor: help;
+		vertical-align: middle;
+		margin-left: 0.25rem;
 	}
 
 	.no-data {
