@@ -22,6 +22,27 @@
 
 ---
 
+## Task 6.2 — GitHub Actions: Fetch Tournament Workflow
+**Status:** Completed
+**Date:** 2026-02-23
+
+### What was done
+- Created `.github/workflows/fetch-tournament.yml`:
+  - Trigger: `workflow_dispatch` with `tournament_url` input (URL or ID)
+  - Option `create_pr` (default: true) — create a PR or push directly to master
+  - Steps: checkout, setup Bun, install deps, run `fetch-tournament.ts`, detect changes
+  - PR mode: creates branch `fetch-tournament-{id}`, commits data, opens PR
+  - Direct mode: commits and pushes to master (triggers deploy workflow)
+  - No-op if tournament file already exists
+
+### Key files
+- `.github/workflows/fetch-tournament.yml` — fetch workflow
+
+### Verification
+- Trigger from Actions tab with a tournament URL. New JSON file committed via PR or direct push.
+
+---
+
 ## Task 6.1 — GitHub Actions: Deploy to GitHub Pages
 **Status:** Completed
 **Date:** 2026-02-23

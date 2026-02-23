@@ -1,0 +1,80 @@
+name: Fetch Tournament
+
+on:
+  workflow_dispatch:
+    inputs:
+      tournament_url:
+        description: 'Tournament URL or ID (e.g. https://melee.gg/Tournament/View/392401 or 392401)'
+        required: true
+        type: string
+      create_pr:
+        description: 'Create a pull request instead of pushing directly'
+        required: false
+        type: boolean
+        default: true
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - run: bun install --frozen-lockfile
+
+      - name: Fetch tournament data
+        run: bun run scripts/fetch-tournament.ts "${{ inputs.tournament_url }}"
+
+      - name: Check for changes
+        id: changes
+        run: |
+          if git diff --quiet data/; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            FILENAME=$(git diff --name-only data/)
+            ID=$(basename "$FILENAME" .json)
+            echo "tournament_id=$ID" >> "$GITHUB_OUTPUT"
+            echo "filename=$FILENAME" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Commit and push directly
+        if: steps.changes.outputs.changed == 'true' && inputs.create_pr == false
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/
+          git commit -m "Add tournament data: ${{ steps.changes.outputs.tournament_id }}"
+          git push
+
+      - name: Create pull request
+        if: steps.changes.outputs.changed == 'true' && inputs.create_pr == true
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          BRANCH="fetch-tournament-${{ steps.changes.outputs.tournament_id }}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$BRANCH"
+          git add data/
+          git commit -m "Add tournament data: ${{ steps.changes.outputs.tournament_id }}"
+          git push -u origin "$BRANCH"
+          gh pr create \
+            --title "Add tournament ${{ steps.changes.outputs.tournament_id }}" \
+            --body "Fetched tournament data from melee.gg.
+
+          **File:** \`${{ steps.changes.outputs.filename }}\`
+
+          Triggered by workflow_dispatch." \
+            --base master
+
+      - name: No changes
+        if: steps.changes.outputs.changed == 'false'
+        run: echo "No new data — tournament file may already exist."
