@@ -137,3 +137,39 @@ archetypes:
         minCopies: 3
       - name: Moonshadow
         minCopies: 3
+
+  - name: Izzet Blink
+    signatureCards:
+      - name: Thundertrap Trainer
+        minCopies: 4
+      - name: Quantum Riddler
+        minCopies: 4
+      - name: Splash Portal
+        minCopies: 2
+
+  - name: Sultai Reanimator
+    signatureCards:
+      - name: "Bringer of the Last Gift"
+        minCopies: 3
+      - name: "Superior Spider-Man"
+        minCopies: 4
+      - name: "Ardyn, the Usurper"
+        minCopies: 2
+  
+  - name: Esper Pixie
+    signatureCards:
+      - name: "Nurturing Pixie"
+        minCopies: 4
+      - name: "Stormchaser's Talent"
+        minCopies: 4
+      - name: "Kaito, Bane of Nightmares"
+        minCopies: 1
+  
+  - name: Simic Kona
+    signatureCards:
+      - name: "Kona, Rescue Beastie"
+        minCopies: 4
+      - name: "Omniscience"
+        minCopies: 4
+      - name: "Uthros, Titanic Godcore"
+        minCopies: 3
