@@ -78,11 +78,37 @@
 </svelte:head>
 
 <h1>Aggregated Decklist</h1>
-<p class="description">
-	Build a consensus decklist from all decklists of an archetype using
-	<strong>Nth Order Karsten Aggregation</strong>. Order 1 ranks each card copy by popularity.
-	Higher orders also consider card synergies (pairs at order 2, triplets at order 3).
-</p>
+
+<section class="algorithm-info">
+	<p>
+		Build a consensus decklist using
+		<strong>Nth Order Karsten Aggregation</strong>
+		(<a href="https://elvishjerricco.github.io/2015/09/24/automatically-generating-magic-decks.html"
+			target="_blank" rel="noopener">Fancher's extension</a>
+		of <a href="https://strategy.channelfireball.com/all-strategy/tag/frank-karstens-magic-math/"
+			target="_blank" rel="noopener">Karsten's original</a>).
+		Each <em>nth copy</em> of a card is treated as an independent candidate &mdash;
+		the 1st copy of a staple ranks higher than the 4th copy of a flex slot.
+		The top 60 card-copies become the mainboard; top 15 the sideboard.
+	</p>
+	<div class="orders">
+		<div class="order-card">
+			<h3>Order 1</h3>
+			<p>Pure popularity. Each card-copy scored by how many decklists include it.</p>
+			<p class="formula">score = freq <span class="op">&times;</span> &frac12;</p>
+		</div>
+		<div class="order-card">
+			<h3>Order 2</h3>
+			<p>Adds pair synergy &mdash; cards that appear together get a boost, keeping coherent packages intact.</p>
+			<p class="formula">score = freq <span class="op">&times;</span> &frac12; <span class="op">+</span> avg pair freq <span class="op">&times;</span> &frac14;</p>
+		</div>
+		<div class="order-card">
+			<h3>Order 3</h3>
+			<p>Adds triple synergy on top of pairs, capturing deeper three-card interactions.</p>
+			<p class="formula">score = freq <span class="op">&times;</span> &frac12; <span class="op">+</span> avg pair freq <span class="op">&times;</span> &frac14; <span class="op">+</span> avg triple freq <span class="op">&times;</span> &frac18;</p>
+		</div>
+	</div>
+</section>
 
 <div class="controls">
 	<div class="field">
@@ -138,15 +164,73 @@
 
 <style>
 	h1 {
-		margin-bottom: 0.25rem;
+		margin-bottom: 0.5rem;
 	}
 
-	.description {
+	.algorithm-info {
+		margin-bottom: 1.75rem;
+	}
+
+	.algorithm-info > p {
 		color: var(--color-text-muted);
 		font-size: 0.875rem;
-		margin-bottom: 1.5rem;
-		max-width: 640px;
+		line-height: 1.6;
+		max-width: 720px;
+		margin-bottom: 1rem;
+	}
+
+	.algorithm-info a {
+		color: var(--color-accent);
+		text-decoration: underline;
+		text-decoration-color: rgba(79, 70, 229, 0.3);
+		text-underline-offset: 2px;
+	}
+
+	.algorithm-info a:hover {
+		text-decoration-color: var(--color-accent);
+	}
+
+	.orders {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+		gap: 0.75rem;
+	}
+
+	.order-card {
+		padding: 0.75rem;
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius);
+	}
+
+	.order-card h3 {
+		font-size: 0.75rem;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.03em;
+		color: var(--color-text);
+		margin-bottom: 0.3rem;
+	}
+
+	.order-card p {
+		font-size: 0.8rem;
+		color: var(--color-text-muted);
 		line-height: 1.5;
+		margin-bottom: 0.35rem;
+	}
+
+	.order-card p:last-child {
+		margin-bottom: 0;
+	}
+
+	.formula {
+		font-family: var(--font-mono);
+		font-size: 0.75rem;
+	}
+
+	.formula .op {
+		color: var(--color-accent);
+		font-weight: 600;
 	}
 
 	.controls {
@@ -275,4 +359,5 @@
 		color: var(--color-text-muted);
 		margin-bottom: 0.75rem;
 	}
+
 </style>

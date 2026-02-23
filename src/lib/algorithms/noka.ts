@@ -202,7 +202,9 @@ function higherOrderAggregate(
 		}
 	}
 
-	// Iteratively remove lowest-scored card-copy until target size
+	// Iteratively remove lowest-scored card-copy until target size.
+	// Each order's contribution is normalized by the number of combinations
+	// so the 1/2^size weight controls relative importance across orders.
 	while (pool.length > targetSize) {
 		const uniqueNames = new Set(pool.map((c) => c.name));
 		let minScore = Infinity;
@@ -212,24 +214,32 @@ function higherOrderAggregate(
 			const copy = pool[idx];
 			let score = 0;
 
-			// 1st order component: instance frequency weighted 1/2
+			// 1st order component: instance frequency × 1/2
 			const instKey = `${copy.name}|${copy.instance}`;
 			score += (instanceFreq.get(instKey) ?? 0) * 0.5;
 
-			// 2nd order component: pair frequencies weighted 1/4
+			// 2nd order component: average pair frequency × 1/4
 			if (pairFreq) {
+				let pairSum = 0;
+				let pairCount = 0;
 				for (const other of uniqueNames) {
 					if (other === copy.name) continue;
 					const pairKey =
 						copy.name < other
 							? `${copy.name}|${other}`
 							: `${other}|${copy.name}`;
-					score += (pairFreq.get(pairKey) ?? 0) * 0.25;
+					pairSum += pairFreq.get(pairKey) ?? 0;
+					pairCount++;
+				}
+				if (pairCount > 0) {
+					score += (pairSum / pairCount) * 0.25;
 				}
 			}
 
-			// 3rd order component: triple frequencies weighted 1/8
+			// 3rd order component: average triple frequency × 1/8
 			if (tripleFreq) {
+				let tripleSum = 0;
+				let tripleCount = 0;
 				const others = [...uniqueNames]
 					.filter((n) => n !== copy.name)
 					.sort();
@@ -237,8 +247,12 @@ function higherOrderAggregate(
 					for (let j = i + 1; j < others.length; j++) {
 						const triple = [copy.name, others[i], others[j]].sort();
 						const key = `${triple[0]}|${triple[1]}|${triple[2]}`;
-						score += (tripleFreq.get(key) ?? 0) * 0.125;
+						tripleSum += tripleFreq.get(key) ?? 0;
+						tripleCount++;
 					}
+				}
+				if (tripleCount > 0) {
+					score += (tripleSum / tripleCount) * 0.125;
 				}
 			}
 
