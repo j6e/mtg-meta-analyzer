@@ -364,3 +364,33 @@ Not implemented (not needed — all endpoints work with direct HTTP). Can be add
 ### Verification
 - `bun run check` — 0 errors, 0 warnings
 - `bun run test` — 121 tests passing (17 card-normalizer + 104 prior)
+
+---
+
+## Task 4.1 — App Layout & Navigation
+**Status:** Completed
+**Date:** 2026-02-23
+
+### What was done
+- Created `src/app.css` — global CSS reset, custom properties (colors, fonts, spacing), base typography
+- Updated `src/routes/+layout.svelte` — app shell with sticky header nav:
+  - Logo linking to home, 4 nav links (Metagame, Tournaments, Archetypes, Players)
+  - Active link highlighting via `$app/state` page URL
+  - `$app/paths` base support for GitHub Pages deployment
+  - Responsive: stacks vertically on small screens
+- Updated `src/routes/+page.svelte` — home page with 3 card-style links to main sections
+- Created `src/lib/data/loader.ts` — build-time data loading via Vite's `import.meta.glob`:
+  - Eagerly imports all `/data/tournaments/*.json` at build time
+  - `loadTournaments()` returns a `Map<number, TournamentData>`
+- SPA mode was already configured (`+layout.ts`: `prerender = true`, `ssr = false`)
+
+### Key files
+- `src/app.css`
+- `src/routes/+layout.svelte`
+- `src/routes/+page.svelte`
+- `src/lib/data/loader.ts`
+
+### Verification
+- `bun run check` — 0 errors, 0 warnings
+- `bun run test` — 121 tests passing (all prior tests still pass)
+- Dev server starts and loads correctly
