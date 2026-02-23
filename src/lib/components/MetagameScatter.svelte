@@ -21,12 +21,47 @@
 
 	/** Loaded card art images keyed by archetype name. */
 	const loadedImages = new Map<string, HTMLImageElement>();
+	/** Dominant color extracted from each archetype's card art. */
+	const dominantColors = new Map<string, string>();
+
+	const OTHER_COLOR = '#555555';
 
 	const COLORS = [
 		'#2563eb', '#e11d48', '#16a34a', '#ea580c', '#7c3aed',
 		'#0891b2', '#ca8a04', '#be185d', '#059669', '#d97706',
 		'#6366f1', '#dc2626', '#65a30d', '#0d9488', '#a855f7',
 	];
+
+	/** Extract the dominant color from an image by sampling center pixels. */
+	function extractDominantColor(img: HTMLImageElement): string {
+		const size = 32;
+		const offscreen = document.createElement('canvas');
+		offscreen.width = size;
+		offscreen.height = size;
+		const ctx = offscreen.getContext('2d');
+		if (!ctx) return '#888888';
+
+		// Draw a small center crop of the image
+		const imgW = img.naturalWidth;
+		const imgH = img.naturalHeight;
+		const cropSize = Math.min(imgW, imgH);
+		const sx = (imgW - cropSize) / 2;
+		const sy = (imgH - cropSize) / 2;
+		ctx.drawImage(img, sx, sy, cropSize, cropSize, 0, 0, size, size);
+
+		const data = ctx.getImageData(0, 0, size, size).data;
+		let rSum = 0, gSum = 0, bSum = 0, count = 0;
+		for (let i = 0; i < data.length; i += 4) {
+			rSum += data[i];
+			gSum += data[i + 1];
+			bSum += data[i + 2];
+			count++;
+		}
+		const r = Math.round(rSum / count);
+		const g = Math.round(gSum / count);
+		const b = Math.round(bSum / count);
+		return `rgb(${r}, ${g}, ${b})`;
+	}
 
 	/** Load art_crop images for all archetypes that have a signature card. */
 	function loadArchetypeImages(archetypeNames: string[]) {
@@ -35,13 +70,26 @@
 			const cardName = archetypeCardMap.get(name);
 			if (!cardName) continue;
 
+			const url = getScryfallImageUrl(cardName, 'art_crop');
+
+			// Try with CORS first (needed for color extraction via getImageData)
 			const img = new Image();
+			img.crossOrigin = 'anonymous';
 			img.onload = () => {
 				loadedImages.set(name, img);
-				// Re-render chart to show the newly loaded image
+				dominantColors.set(name, extractDominantColor(img));
 				if (chart) chart.update('none');
 			};
-			img.src = getScryfallImageUrl(cardName, 'art_crop');
+			img.onerror = () => {
+				// CORS failed — retry without (can draw but can't extract color)
+				const fallback = new Image();
+				fallback.onload = () => {
+					loadedImages.set(name, fallback);
+					if (chart) chart.update('none');
+				};
+				fallback.src = url;
+			};
+			img.src = url;
 		}
 	}
 
@@ -101,12 +149,12 @@
 
 					ctx.restore();
 
-					// Draw border ring
+					// Draw border ring using dominant color from the card art
 					ctx.save();
 					ctx.beginPath();
 					ctx.arc(x, y, r, 0, Math.PI * 2);
-					ctx.strokeStyle = 'rgba(255, 255, 255, 0.6)';
-					ctx.lineWidth = 2;
+					ctx.strokeStyle = dominantColors.get(archName) ?? 'rgba(255, 255, 255, 0.6)';
+					ctx.lineWidth = 2.5;
 					ctx.stroke();
 					ctx.restore();
 				}
@@ -137,12 +185,14 @@
 			type: 'bubble',
 			data: {
 				datasets: data.map((d, i) => {
+					const isOther = d.label === 'Other';
+					const color = isOther ? OTHER_COLOR : COLORS[i % COLORS.length];
 					return {
 						label: d.label,
 						data: [{ x: d.x, y: d.y, r: d.r }],
 						// Colored fill always — card art plugin draws on top when image loads
-						backgroundColor: COLORS[i % COLORS.length] + 'bb',
-						borderColor: COLORS[i % COLORS.length],
+						backgroundColor: color + 'bb',
+						borderColor: color,
 						borderWidth: 2,
 						hoverBorderWidth: 3,
 						hoverBorderColor: '#fff',
@@ -225,7 +275,7 @@
 					alt={s.name}
 				/>
 			{:else}
-				<span class="dot" style="background: {COLORS[i % COLORS.length]}"></span>
+				<span class="dot" style="background: {s.name === 'Other' ? OTHER_COLOR : COLORS[i % COLORS.length]}"></span>
 			{/if}
 			{s.name}
 		</span>
