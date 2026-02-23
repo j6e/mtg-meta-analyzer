@@ -9,7 +9,6 @@
 		{ href: '/metagame', label: 'Metagame' },
 		{ href: '/tournaments', label: 'Tournaments' },
 		{ href: '/archetypes', label: 'Archetypes' },
-		{ href: '/players', label: 'Players' },
 	];
 
 	function isActive(href: string): boolean {

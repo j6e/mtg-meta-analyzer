@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { base } from '$app/paths';
 	import { tournamentList } from '$lib/stores/tournaments';
 
 	type SortKey = 'name' | 'date' | 'formats' | 'playerCount' | 'roundCount';
@@ -76,7 +75,7 @@
 				{#each sorted as t}
 					<tr>
 						<td>
-							<a href="{base}/tournaments/{t.id}">{t.name}</a>
+							<a href={t.url} target="_blank" rel="noopener">{t.name}</a>
 						</td>
 						<td class="mono">{t.date}</td>
 						<td>{t.formats.join(', ')}</td>
