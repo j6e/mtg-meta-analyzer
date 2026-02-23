@@ -62,7 +62,7 @@ describe('MatchupMatrix component', () => {
 		expect(colNames).toEqual(['Overall', 'Aggro', 'Control', 'Midrange']);
 
 		const rowHeaders = container.querySelectorAll('tbody th.row-header');
-		const rowNames = [...rowHeaders].map((th) => th.querySelector('.archetype-name')?.textContent?.trim());
+		const rowNames = [...rowHeaders].map((th) => th.querySelector('.archetype-link')?.textContent?.trim());
 		expect(rowNames).toEqual(['Aggro', 'Control', 'Midrange']);
 	});
 
@@ -122,6 +122,20 @@ describe('MatchupMatrix component', () => {
 
 		const bodyRows = container.querySelectorAll('tbody tr');
 		expect(bodyRows.length).toBe(0);
+	});
+
+	it('links archetype names to detail pages', () => {
+		const { container } = render(MatchupMatrix, {
+			props: { matrix: sampleMatrix, stats: sampleStats },
+		});
+
+		const rowHeaders = container.querySelectorAll('tbody th.row-header');
+		const links = [...rowHeaders].map((th) => th.querySelector('a')?.getAttribute('href'));
+		expect(links).toEqual([
+			'/archetypes/Aggro',
+			'/archetypes/Control',
+			'/archetypes/Midrange',
+		]);
 	});
 
 	it('handles cells with no matches', () => {

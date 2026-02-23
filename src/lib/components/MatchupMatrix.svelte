@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	import type { MatchupMatrix, MatchupCell, ArchetypeStats } from '../types/metagame';
 
 	let { matrix, stats = [] }: { matrix: MatchupMatrix; stats?: ArchetypeStats[] } = $props();
@@ -166,7 +167,7 @@
 						class="row-header"
 						class:highlight-row={hoveredRow === i}
 					>
-						<span class="archetype-name">{rowName}</span>
+						<a href="{base}/archetypes/{encodeURIComponent(rowName)}" class="archetype-link">{rowName}</a>
 						{#if getStatForArchetype(rowName)}
 							{@const s = getStatForArchetype(rowName)!}
 							<span class="meta-share">{(s.metagameShare * 100).toFixed(1)}%</span>
@@ -323,8 +324,14 @@
 		border-right: 2px solid var(--color-border);
 	}
 
-	.archetype-name {
-		display: inline;
+	.archetype-link {
+		color: inherit;
+		text-decoration: none;
+	}
+
+	.archetype-link:hover {
+		text-decoration: underline;
+		color: var(--color-accent);
 	}
 
 	.meta-share {
