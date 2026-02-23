@@ -9,6 +9,8 @@
 		Legend,
 	} from 'chart.js';
 	import type { ArchetypeStats } from '../types/metagame';
+	import { archetypeCardMap } from '../stores/tournaments';
+	import { getScryfallImageUrl } from '../utils/card-normalizer';
 
 	Chart.register(BubbleController, LinearScale, PointElement, Tooltip, Legend);
 
@@ -17,11 +19,31 @@
 	let canvas: HTMLCanvasElement;
 	let chart: Chart | null = null;
 
+	/** Loaded card art images keyed by archetype name. */
+	const loadedImages = new Map<string, HTMLImageElement>();
+
 	const COLORS = [
 		'#2563eb', '#e11d48', '#16a34a', '#ea580c', '#7c3aed',
 		'#0891b2', '#ca8a04', '#be185d', '#059669', '#d97706',
 		'#6366f1', '#dc2626', '#65a30d', '#0d9488', '#a855f7',
 	];
+
+	/** Load art_crop images for all archetypes that have a signature card. */
+	function loadArchetypeImages(archetypeNames: string[]) {
+		for (const name of archetypeNames) {
+			if (loadedImages.has(name)) continue;
+			const cardName = archetypeCardMap.get(name);
+			if (!cardName) continue;
+
+			const img = new Image();
+			img.onload = () => {
+				loadedImages.set(name, img);
+				// Re-render chart to show the newly loaded image
+				if (chart) chart.update('none');
+			};
+			img.src = getScryfallImageUrl(cardName, 'art_crop');
+		}
+	}
 
 	/** Reference line plugin: draws a horizontal dashed line at 50% winrate. */
 	const refLinePlugin = {
@@ -42,11 +64,64 @@
 		},
 	};
 
+	/** Card art plugin: draws circular-cropped card art over each bubble. */
+	const cardArtPlugin = {
+		id: 'cardArt',
+		afterDatasetsDraw(chart: Chart) {
+			const ctx = chart.ctx;
+			for (let dsIndex = 0; dsIndex < chart.data.datasets.length; dsIndex++) {
+				const ds = chart.data.datasets[dsIndex] as any;
+				const archName = ds.label as string;
+				const img = loadedImages.get(archName);
+				if (!img) continue;
+
+				const meta = chart.getDatasetMeta(dsIndex);
+				for (let ptIndex = 0; ptIndex < meta.data.length; ptIndex++) {
+					const element = meta.data[ptIndex] as any;
+					const { x, y } = element;
+					// Bubble radius from the resolved element (Chart.js PointElement)
+					const r = element.options?.pointRadius ?? element.options?.radius ?? element.radius ?? ds.data[ptIndex]?.r ?? 10;
+
+					ctx.save();
+
+					// Clip to circle
+					ctx.beginPath();
+					ctx.arc(x, y, r, 0, Math.PI * 2);
+					ctx.closePath();
+					ctx.clip();
+
+					// Draw art_crop (landscape 626×457) — take centered square crop
+					const imgW = img.naturalWidth;
+					const imgH = img.naturalHeight;
+					const cropSize = Math.min(imgW, imgH);
+					const sx = (imgW - cropSize) / 2;
+					const sy = (imgH - cropSize) / 2;
+
+					ctx.drawImage(img, sx, sy, cropSize, cropSize, x - r, y - r, r * 2, r * 2);
+
+					ctx.restore();
+
+					// Draw border ring
+					ctx.save();
+					ctx.beginPath();
+					ctx.arc(x, y, r, 0, Math.PI * 2);
+					ctx.strokeStyle = 'rgba(255, 255, 255, 0.6)';
+					ctx.lineWidth = 2;
+					ctx.stroke();
+					ctx.restore();
+				}
+			}
+		},
+	};
+
 	function buildChart() {
 		if (chart) chart.destroy();
 
 		const filtered = stats.filter((s) => s.name !== 'Unknown' && s.totalMatches > 0);
 		if (filtered.length === 0) return;
+
+		// Start loading images for all visible archetypes
+		loadArchetypeImages(filtered.map((s) => s.name));
 
 		const maxMatches = Math.max(...filtered.map((s) => s.totalMatches), 1);
 
@@ -61,16 +136,20 @@
 		chart = new Chart(canvas, {
 			type: 'bubble',
 			data: {
-				datasets: data.map((d, i) => ({
-					label: d.label,
-					data: [{ x: d.x, y: d.y, r: d.r }],
-					backgroundColor: COLORS[i % COLORS.length] + 'bb',
-					borderColor: COLORS[i % COLORS.length],
-					borderWidth: 2,
-					hoverBorderWidth: 3,
-					// Store archetype stats for tooltip
-					metadata: d.raw,
-				})),
+				datasets: data.map((d, i) => {
+					return {
+						label: d.label,
+						data: [{ x: d.x, y: d.y, r: d.r }],
+						// Colored fill always — card art plugin draws on top when image loads
+						backgroundColor: COLORS[i % COLORS.length] + 'bb',
+						borderColor: COLORS[i % COLORS.length],
+						borderWidth: 2,
+						hoverBorderWidth: 3,
+						hoverBorderColor: '#fff',
+						// Store archetype stats for tooltip
+						metadata: d.raw,
+					};
+				}),
 			},
 			options: {
 				responsive: true,
@@ -112,7 +191,7 @@
 					},
 				},
 			},
-			plugins: [refLinePlugin],
+			plugins: [refLinePlugin, cardArtPlugin],
 		});
 	}
 
@@ -139,7 +218,15 @@
 <div class="legend">
 	{#each stats.filter((s) => s.name !== 'Unknown' && s.totalMatches > 0) as s, i}
 		<span class="legend-item">
-			<span class="dot" style="background: {COLORS[i % COLORS.length]}"></span>
+			{#if archetypeCardMap.has(s.name)}
+				<img
+					class="legend-art"
+					src={getScryfallImageUrl(archetypeCardMap.get(s.name)!, 'art_crop')}
+					alt={s.name}
+				/>
+			{:else}
+				<span class="dot" style="background: {COLORS[i % COLORS.length]}"></span>
+			{/if}
 			{s.name}
 		</span>
 	{/each}
@@ -174,5 +261,13 @@
 		height: 10px;
 		border-radius: 50%;
 		display: inline-block;
+	}
+
+	.legend-art {
+		width: 18px;
+		height: 18px;
+		border-radius: 50%;
+		object-fit: cover;
+		border: 1px solid var(--color-border);
 	}
 </style>

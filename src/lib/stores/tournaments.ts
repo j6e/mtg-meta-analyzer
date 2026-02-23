@@ -98,6 +98,13 @@ export const decklistMap = derived(
 /** Archetype definitions parsed from YAML. */
 const archetypeDefs = parseArchetypeYaml(archetypeYaml);
 
+/** Mapping of archetype name → first signature card name (for representative art). */
+export const archetypeCardMap: Map<string, string> = new Map(
+	archetypeDefs
+		.filter((d) => d.signatureCards.length > 0)
+		.map((d) => [d.name, d.signatureCards[0].name]),
+);
+
 /** Classification results for all filtered tournaments. */
 export const classificationResults = derived(
 	filteredTournaments,
