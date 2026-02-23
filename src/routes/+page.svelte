@@ -19,7 +19,7 @@
 		</a>
 		<a href="{base}/tournaments" class="card">
 			<h2>Tournaments</h2>
-			<p>Browse tournament results and round-by-round match data from melee.gg.</p>
+			<p>Browse tournament results and round-by-round match data.</p>
 		</a>
 		<a href="{base}/archetypes" class="card">
 			<h2>Archetypes</h2>
