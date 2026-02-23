@@ -35,11 +35,12 @@ jobs:
       - name: Check for changes
         id: changes
         run: |
-          if git diff --quiet data/; then
+          git add data/
+          if git diff --cached --quiet; then
             echo "changed=false" >> "$GITHUB_OUTPUT"
           else
             echo "changed=true" >> "$GITHUB_OUTPUT"
-            FILENAME=$(git diff --name-only data/)
+            FILENAME=$(git diff --cached --name-only)
             ID=$(basename "$FILENAME" .json)
             echo "tournament_id=$ID" >> "$GITHUB_OUTPUT"
             echo "filename=$FILENAME" >> "$GITHUB_OUTPUT"
@@ -50,7 +51,6 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/
           git commit -m "Add tournament data: ${{ steps.changes.outputs.tournament_id }}"
           git push
 
@@ -63,7 +63,6 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git checkout -b "$BRANCH"
-          git add data/
           git commit -m "Add tournament data: ${{ steps.changes.outputs.tournament_id }}"
           git push -u origin "$BRANCH"
           gh pr create \
