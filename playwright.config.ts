@@ -11,7 +11,7 @@ export default defineConfig({
 		baseURL: 'http://localhost:4173'
 	},
 	webServer: {
-		command: 'bunx --bun vite build && bunx --bun vite preview',
+		command: 'npx vite build && npx vite preview',
 		port: 4173,
 		reuseExistingServer: !process.env.CI
 	}

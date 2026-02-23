@@ -1,5 +1,44 @@
 # Task Reports
 
+## Task 7.2 — E2E Tests
+**Status:** Completed
+**Date:** 2026-02-23
+
+### What was done
+- Created `tests/e2e/metagame-report.test.ts` — 8 tests:
+  - Page title and filter panel render
+  - Tournament info summary with player/decklist counts
+  - Scatter plot canvas renders
+  - Matchup matrix with archetype headers
+  - Matrix cells show winrate and mirror labels
+  - Matrix hover highlights row and column
+  - Format filter changes update the matrix
+  - Mirror match checkbox toggle works
+- Created `tests/e2e/navigation.test.ts` — 10 tests:
+  - Homepage loads with navigation links
+  - Navigate to metagame, tournaments, archetypes pages
+  - Tournaments page shows table with melee.gg links
+  - Archetypes page shows table, click through to detail
+  - Archetype detail shows stats, matchups, and decklists
+  - Non-existent archetype shows "not found" message
+  - Logo navigates back to home
+- Updated Playwright config to use `npx vite` for cross-platform compatibility
+- Fixed existing unit tests to match recent settings/matrix changes (Overall column, minShare default)
+
+### Key files
+- `tests/e2e/metagame-report.test.ts` — metagame page E2E tests
+- `tests/e2e/navigation.test.ts` — navigation and page E2E tests
+- `playwright.config.ts` — updated webServer command
+- `tests/component/MatchupMatrix.test.ts` — updated for Overall column
+- `tests/unit/stores.test.ts` — updated for minShare default
+
+### Verification
+- 19 E2E tests pass (`npx playwright test`)
+- 160 unit/component tests pass (`bun run test`)
+- 0 type errors (`svelte-check`)
+
+---
+
 ## Task 7.1 — Error Handling & Edge Cases
 **Status:** Completed
 **Date:** 2026-02-23

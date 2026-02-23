@@ -52,15 +52,15 @@ describe('MatchupMatrix component', () => {
 		});
 
 		const headerCells = container.querySelectorAll('thead th');
-		// 3 archetype columns + 1 corner cell = 4
-		expect(headerCells.length).toBe(4);
+		// 3 archetype columns + 1 overall column + 1 corner cell = 5
+		expect(headerCells.length).toBe(5);
 
 		const bodyRows = container.querySelectorAll('tbody tr');
 		expect(bodyRows.length).toBe(3);
 
-		// Each row has 1 row-header + 3 data cells
+		// Each row has 1 row-header + 1 overall cell + 3 data cells = 4 td
 		const firstRowCells = bodyRows[0].querySelectorAll('td');
-		expect(firstRowCells.length).toBe(3);
+		expect(firstRowCells.length).toBe(4);
 	});
 
 	it('displays archetype names in headers', () => {
@@ -70,7 +70,7 @@ describe('MatchupMatrix component', () => {
 
 		const colHeaders = container.querySelectorAll('thead th.col-header');
 		const colNames = [...colHeaders].map((th) => th.textContent?.trim());
-		expect(colNames).toEqual(['Aggro', 'Control', 'Midrange']);
+		expect(colNames).toEqual(['Overall', 'Aggro', 'Control', 'Midrange']);
 
 		const rowHeaders = container.querySelectorAll('tbody th.row-header');
 		const rowNames = [...rowHeaders].map((th) => th.querySelector('.archetype-name')?.textContent?.trim());
