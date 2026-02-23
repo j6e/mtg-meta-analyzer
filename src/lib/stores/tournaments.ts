@@ -25,10 +25,13 @@ export const selectedTournamentId = writable<number | null>(
 
 // --- Derived stores ---
 
-/** List of all tournament metadata, sorted by date descending. */
-export const tournamentList = derived([], (): TournamentMeta[] => {
+/** List of all tournament metadata (with computed match count), sorted by date descending. */
+export const tournamentList = derived([], (): (TournamentMeta & { matchCount: number })[] => {
 	return [...allTournaments.values()]
-		.map((t) => t.meta)
+		.map((t) => ({
+			...t.meta,
+			matchCount: Object.values(t.rounds).reduce((sum, r) => sum + r.matches.length, 0),
+		}))
 		.sort((a, b) => b.date.localeCompare(a.date));
 });
 

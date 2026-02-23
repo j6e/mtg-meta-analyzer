@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { tournamentList } from '$lib/stores/tournaments';
 
-	type SortKey = 'name' | 'date' | 'formats' | 'playerCount' | 'roundCount';
+	type SortKey = 'name' | 'date' | 'formats' | 'playerCount' | 'roundCount' | 'matchCount';
 	type SortDir = 'asc' | 'desc';
 
 	let sortKey: SortKey = $state('date');
@@ -31,6 +31,8 @@
 					return dir * (a.playerCount - b.playerCount);
 				case 'roundCount':
 					return dir * (a.roundCount - b.roundCount);
+				case 'matchCount':
+					return dir * (a.matchCount - b.matchCount);
 			}
 		});
 	});
@@ -69,6 +71,9 @@
 					<th class="sortable num" onclick={() => toggleSort('roundCount')}>
 						Rounds{sortIndicator('roundCount')}
 					</th>
+					<th class="sortable num" onclick={() => toggleSort('matchCount')}>
+						Matches{sortIndicator('matchCount')}
+					</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -81,6 +86,7 @@
 						<td>{t.formats.join(', ')}</td>
 						<td class="num">{t.playerCount}</td>
 						<td class="num">{t.roundCount}</td>
+						<td class="num">{t.matchCount}</td>
 					</tr>
 				{/each}
 			</tbody>
