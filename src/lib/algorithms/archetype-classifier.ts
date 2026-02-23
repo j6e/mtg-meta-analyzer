@@ -3,6 +3,7 @@ import type { ArchetypeDefinition, ArchetypeYaml } from '../types/archetype';
 import type { CardEntry, DecklistInfo } from '../types/decklist';
 import { buildCorpus, vectorize, type SparseVector } from './tfidf';
 import { knnClassify, type LabeledPoint } from './knn';
+import { getFrontFace } from '../utils/card-normalizer';
 
 export interface ClassificationResult {
 	decklistId: string;
@@ -32,7 +33,8 @@ export function classifyBySignatureCards(
 ): string | null {
 	const cardQuantities = new Map<string, number>();
 	for (const entry of mainboard) {
-		cardQuantities.set(entry.cardName, (cardQuantities.get(entry.cardName) ?? 0) + entry.quantity);
+		const name = getFrontFace(entry.cardName);
+		cardQuantities.set(name, (cardQuantities.get(name) ?? 0) + entry.quantity);
 	}
 
 	let bestMatch: string | null = null;
