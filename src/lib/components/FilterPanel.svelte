@@ -5,7 +5,7 @@
 		savedConfigs,
 		activeConfigId,
 		setActiveConfig,
-		BUILTIN_CONFIG_ID,
+		BUILTIN_CONFIGS,
 	} from '../stores/archetype-configs';
 
 	let {
@@ -137,7 +137,9 @@
 			<label>
 				Archetype config
 				<select onchange={handleConfigChange} value={$activeConfigId}>
-					<option value={BUILTIN_CONFIG_ID}>Built-in: Standard</option>
+					{#each BUILTIN_CONFIGS as cfg}
+						<option value={cfg.id}>Built-in: {cfg.displayName}</option>
+					{/each}
 					{#each $savedConfigs as config}
 						<option value={config.id}>{config.name} ({config.format})</option>
 					{/each}

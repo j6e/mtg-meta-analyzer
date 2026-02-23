@@ -5,12 +5,50 @@
 import { writable, derived, get } from 'svelte/store';
 import { parseArchetypeYaml } from '../algorithms/archetype-classifier';
 import type { ArchetypeDefinition } from '../types/archetype';
-import builtinYaml from '/data/archetypes/standard.yaml?raw';
+// --- Built-in config auto-discovery ---
+
+export interface BuiltinArchetypeConfig {
+	id: string;
+	filename: string;
+	displayName: string;
+	yamlContent: string;
+}
+
+const builtinModules = import.meta.glob<string>('/data/archetypes/*.yaml', {
+	eager: true,
+	query: '?raw',
+	import: 'default',
+});
+
+function stemToDisplayName(stem: string): string {
+	return stem.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+}
+
+export const BUILTIN_CONFIGS: BuiltinArchetypeConfig[] = Object.entries(builtinModules)
+	.map(([path, yamlContent]) => {
+		const filename = path.split('/').pop()!;
+		const stem = filename.replace(/\.yaml$/, '');
+		return {
+			id: `builtin:${stem}`,
+			filename,
+			displayName: stemToDisplayName(stem),
+			yamlContent,
+		};
+	})
+	.sort((a, b) => {
+		if (a.filename === 'standard.yaml') return -1;
+		if (b.filename === 'standard.yaml') return 1;
+		return a.filename.localeCompare(b.filename);
+	});
 
 // --- Constants ---
 
-export const BUILTIN_CONFIG_ID = 'builtin:standard';
-export const builtinArchetypeYaml: string = builtinYaml;
+export const DEFAULT_BUILTIN_ID = 'builtin:standard';
+/** @deprecated Use DEFAULT_BUILTIN_ID and BUILTIN_CONFIGS instead. */
+export const BUILTIN_CONFIG_ID = DEFAULT_BUILTIN_ID;
+/** @deprecated Use BUILTIN_CONFIGS instead. */
+export const builtinArchetypeYaml: string =
+	BUILTIN_CONFIGS.find((c) => c.id === DEFAULT_BUILTIN_ID)?.yamlContent ?? '';
 
 const CONFIGS_KEY = 'mtg-archetype-configs';
 const ACTIVE_KEY = 'mtg-active-config-id';
@@ -85,9 +123,10 @@ activeConfigId.subscribe(persistActiveId);
 export const activeArchetypeYaml = derived(
 	[activeConfigId, savedConfigs],
 	([$id, $configs]): string => {
-		if ($id === BUILTIN_CONFIG_ID) return builtinYaml;
+		const builtin = BUILTIN_CONFIGS.find((c) => c.id === $id);
+		if (builtin) return builtin.yamlContent;
 		const config = $configs.find((c) => c.id === $id);
-		return config?.yamlContent ?? builtinYaml;
+		return config?.yamlContent ?? builtinArchetypeYaml;
 	},
 );
 

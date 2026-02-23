@@ -1,6 +1,7 @@
 <script lang="ts">
 	import {
-		BUILTIN_CONFIG_ID,
+		BUILTIN_CONFIGS,
+		DEFAULT_BUILTIN_ID,
 		builtinArchetypeYaml,
 		savedConfigs,
 		activeConfigId,
@@ -12,7 +13,7 @@
 	} from '../stores/archetype-configs';
 	import { validateArchetypeYaml, type ValidationResult } from '../utils/yaml-validator';
 
-	let selectedConfigId = $state(BUILTIN_CONFIG_ID);
+	let selectedConfigId = $state(DEFAULT_BUILTIN_ID);
 	let editorYaml = $state(builtinArchetypeYaml);
 	let validationResult = $state<ValidationResult | null>(null);
 	let showSaveForm = $state(false);
@@ -22,7 +23,7 @@
 	let lineNumEl = $state<HTMLElement | null>(null);
 	let highlightEl = $state<HTMLElement | null>(null);
 
-	const isBuiltin = $derived(selectedConfigId === BUILTIN_CONFIG_ID);
+	const isBuiltin = $derived(BUILTIN_CONFIGS.some((c) => c.id === selectedConfigId));
 	const isActive = $derived(selectedConfigId === $activeConfigId);
 
 	// --- YAML syntax highlighting ---
@@ -107,8 +108,9 @@
 		selectedConfigId = id;
 		validationResult = null;
 		showSaveForm = false;
-		if (id === BUILTIN_CONFIG_ID) {
-			editorYaml = builtinArchetypeYaml;
+		const builtin = BUILTIN_CONFIGS.find((c) => c.id === id);
+		if (builtin) {
+			editorYaml = builtin.yamlContent;
 		} else {
 			const config = $savedConfigs.find((c) => c.id === id);
 			editorYaml = config?.yamlContent ?? builtinArchetypeYaml;
@@ -143,7 +145,7 @@
 		if (isBuiltin) return;
 		if (!confirm('Delete this configuration?')) return;
 		deleteConfig(selectedConfigId);
-		loadConfig(BUILTIN_CONFIG_ID);
+		loadConfig(DEFAULT_BUILTIN_ID);
 	}
 
 	function handleSetActive() {
@@ -171,7 +173,9 @@
 			<label class="config-select">
 				Config
 				<select onchange={handleConfigChange} value={selectedConfigId}>
-					<option value={BUILTIN_CONFIG_ID}>Built-in: Standard</option>
+					{#each BUILTIN_CONFIGS as cfg}
+						<option value={cfg.id}>Built-in: {cfg.displayName}</option>
+					{/each}
 					{#each $savedConfigs as config}
 						<option value={config.id}>{config.name} ({config.format})</option>
 					{/each}
