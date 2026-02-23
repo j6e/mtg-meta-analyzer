@@ -489,3 +489,33 @@ Not implemented (not needed — all endpoints work with direct HTTP). Can be add
 ### Verification
 - `bun run check` — 0 errors, 0 warnings
 - `bun run test` — 137 tests passing (3 MetagameScatter + 134 prior)
+
+---
+
+## Task 4.5 — Card Tooltip Component (Scryfall Images)
+**Status:** Completed
+**Date:** 2026-02-23
+
+### What was done
+- Created `src/lib/components/CardTooltip.svelte`:
+  - Wraps any child content (snippet) as a hover trigger
+  - On hover: shows floating tooltip with Scryfall card image (normal size, 252px wide)
+  - Uses `getScryfallImageUrl` for DFC front-face resolution
+  - Lazy loading: image only fetched when tooltip becomes visible
+  - Viewport-aware positioning: avoids overflow on right/bottom edges
+  - Loading state with "Loading..." placeholder
+  - Error fallback: shows card name as text if image fails
+  - Dotted underline on trigger to indicate interactivity
+- Created `tests/component/CardTooltip.test.ts` — 6 tests:
+  - Trigger renders, tooltip hidden by default
+  - Shows/hides on mouseenter/mouseleave
+  - Correct Scryfall URL in img src
+  - DFC front-face extraction in URL
+
+### Key files
+- `src/lib/components/CardTooltip.svelte`
+- `tests/component/CardTooltip.test.ts`
+
+### Verification
+- `bun run check` — 0 errors, 0 warnings
+- `bun run test` — 143 tests passing (6 CardTooltip + 137 prior)
