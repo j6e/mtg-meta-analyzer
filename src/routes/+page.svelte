@@ -12,6 +12,12 @@
 		Tournament metagame analysis for competitive Magic: The Gathering.
 	</p>
 
+	<p class="beta-notice">
+		This project is in beta — data may be incomplete or inaccurate.
+		Found a bug or have feedback?
+		<a href="https://github.com/j6e/mtg-meta-analyzer/issues" target="_blank" rel="noopener">Open an issue on GitHub</a>.
+	</p>
+
 	<div class="cards">
 		<a href="{base}/metagame" class="card">
 			<h2>Metagame</h2>
@@ -40,6 +46,12 @@
 	}
 
 	.subtitle {
+		color: var(--color-text-muted);
+		margin-bottom: 2rem;
+	}
+
+	.beta-notice {
+		font-size: 0.85rem;
 		color: var(--color-text-muted);
 		margin-bottom: 2rem;
 	}
