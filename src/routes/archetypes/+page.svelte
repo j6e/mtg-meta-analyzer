@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { globalAttributionMatrix } from '$lib/stores/tournaments';
 	import AttributionMatrix from '$lib/components/AttributionMatrix.svelte';
+	import ArchetypeEditor from '$lib/components/ArchetypeEditor.svelte';
 </script>
 
 <svelte:head>
@@ -8,6 +9,15 @@
 </svelte:head>
 
 <h1>Archetypes</h1>
+
+<section class="editor-section">
+	<h2>Archetype Configuration</h2>
+	<p class="section-desc">
+		View and edit archetype signature card definitions. Save custom configs
+		and set one as active to re-run classification across all tournaments.
+	</p>
+	<ArchetypeEditor />
+</section>
 
 {#if $globalAttributionMatrix}
 	<section class="attribution-section">
@@ -25,11 +35,15 @@
 		margin-bottom: 1rem;
 	}
 
+	.editor-section {
+		margin-bottom: 2rem;
+	}
+
 	.attribution-section {
 		margin-top: 0.5rem;
 	}
 
-	.attribution-section h2 {
+	h2 {
 		font-size: 1.15rem;
 		font-weight: 600;
 		margin-bottom: 0.5rem;

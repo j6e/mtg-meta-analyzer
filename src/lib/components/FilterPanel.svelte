@@ -1,6 +1,12 @@
 <script lang="ts">
 	import type { TournamentMeta } from '../types/tournament';
 	import { settings, type OtherMode } from '../stores/settings';
+	import {
+		savedConfigs,
+		activeConfigId,
+		setActiveConfig,
+		BUILTIN_CONFIG_ID,
+	} from '../stores/archetype-configs';
 
 	let {
 		tournaments,
@@ -65,6 +71,10 @@
 		debounceUpdate(() => {
 			settings.update((s) => ({ ...s, minMetagameShare: value }));
 		});
+	}
+
+	function handleConfigChange(e: Event) {
+		setActiveConfig((e.target as HTMLSelectElement).value);
 	}
 </script>
 
@@ -185,6 +195,22 @@
 					%
 				</label>
 			{/if}
+		</div>
+	</div>
+
+	<div class="filter-section">
+		<h3>Archetype Config</h3>
+
+		<div class="filter-row">
+			<label>
+				Active config
+				<select onchange={handleConfigChange} value={$activeConfigId}>
+					<option value={BUILTIN_CONFIG_ID}>Built-in: Standard</option>
+					{#each $savedConfigs as config}
+						<option value={config.id}>{config.name} ({config.format})</option>
+					{/each}
+				</select>
+			</label>
 		</div>
 	</div>
 </div>

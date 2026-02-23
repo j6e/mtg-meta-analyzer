@@ -2,17 +2,17 @@
  * Tournament data store — loads all tournament JSON at build time and provides
  * reactive derived data (player lists, decklists, classifications, metagame stats).
  */
-import { writable, derived } from 'svelte/store';
+import { writable, derived, get } from 'svelte/store';
 import { loadTournaments } from '../data/loader';
 import type { TournamentData, TournamentMeta } from '../types/tournament';
 import type { DecklistInfo } from '../types/decklist';
 import type { ArchetypeStats } from '../types/metagame';
 import type { ArchetypeDefinition } from '../types/archetype';
 import type { ClassificationResult } from '../algorithms/archetype-classifier';
-import { parseArchetypeYaml, classifyAll } from '../algorithms/archetype-classifier';
+import { classifyAll } from '../algorithms/archetype-classifier';
 import { buildPlayerArchetypeMap, buildMatchupMatrix, buildAttributionMatrix, type MatrixOptions } from '../utils/winrate-calculator';
 import { settings } from './settings';
-import archetypeYaml from '/data/archetypes/standard.yaml?raw';
+import { activeArchetypeDefs } from './archetype-configs';
 
 // --- Raw data (loaded once at build time) ---
 
@@ -96,25 +96,26 @@ export const decklistMap = derived(
 	},
 );
 
-/** Archetype definitions parsed from YAML. */
-const archetypeDefs = parseArchetypeYaml(archetypeYaml);
-
 /** Mapping of archetype name → first signature card name (for representative art). */
-export const archetypeCardMap: Map<string, string> = new Map(
-	archetypeDefs
-		.filter((d) => d.signatureCards.length > 0)
-		.map((d) => [d.name, d.signatureCards[0].name]),
+export const archetypeCardMap = derived(
+	activeArchetypeDefs,
+	($defs): Map<string, string> =>
+		new Map(
+			$defs
+				.filter((d) => d.signatureCards.length > 0)
+				.map((d) => [d.name, d.signatureCards[0].name]),
+		),
 );
 
 /** Classification results for all filtered tournaments. */
 export const classificationResults = derived(
-	filteredTournaments,
-	($tournaments): Map<number, ClassificationResult[]> => {
+	[filteredTournaments, activeArchetypeDefs],
+	([$tournaments, $defs]): Map<number, ClassificationResult[]> => {
 		const map = new Map<number, ClassificationResult[]>();
 		for (const t of $tournaments) {
 			map.set(
 				t.meta.id,
-				classifyAll(t.decklists, archetypeDefs, { k: 5, minConfidence: 0.3 }),
+				classifyAll(t.decklists, $defs, { k: 5, minConfidence: 0.3 }),
 			);
 		}
 		return map;
@@ -164,10 +165,10 @@ export const archetypeStats = derived(
 
 /** Player ID → archetype for the currently selected single tournament. */
 export const currentTournamentArchetypes = derived(
-	currentTournament,
-	($tournament): Map<string, string> => {
+	[currentTournament, activeArchetypeDefs],
+	([$tournament, $defs]): Map<string, string> => {
 		if (!$tournament) return new Map();
-		const results = classifyAll($tournament.decklists, archetypeDefs, {
+		const results = classifyAll($tournament.decklists, $defs, {
 			k: 5,
 			minConfidence: 0.3,
 		});
@@ -186,13 +187,16 @@ export function getTournament(id: number): TournamentData | null {
 const allTournamentArray = [...allTournaments.values()];
 
 /** Classification results across ALL tournaments. */
-export const globalClassificationResults = derived([], (): Map<number, ClassificationResult[]> => {
-	const map = new Map<number, ClassificationResult[]>();
-	for (const t of allTournamentArray) {
-		map.set(t.meta.id, classifyAll(t.decklists, archetypeDefs, { k: 5, minConfidence: 0.3 }));
-	}
-	return map;
-});
+export const globalClassificationResults = derived(
+	activeArchetypeDefs,
+	($defs): Map<number, ClassificationResult[]> => {
+		const map = new Map<number, ClassificationResult[]>();
+		for (const t of allTournamentArray) {
+			map.set(t.meta.id, classifyAll(t.decklists, $defs, { k: 5, minConfidence: 0.3 }));
+		}
+		return map;
+	},
+);
 
 /** Player ID → archetype across ALL tournaments. */
 export const globalPlayerArchetypes = derived(
@@ -230,9 +234,9 @@ export const globalAttributionMatrix = derived(
 	},
 );
 
-/** Look up an archetype definition by name (non-reactive). */
+/** Look up an archetype definition by name (non-reactive snapshot). */
 export function getArchetypeDefinition(name: string): ArchetypeDefinition | null {
-	return archetypeDefs.find((d) => d.name === name) ?? null;
+	return get(activeArchetypeDefs).find((d) => d.name === name) ?? null;
 }
 
 /** All tournament data values (for player pages). */

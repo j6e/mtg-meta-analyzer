@@ -67,7 +67,7 @@
 	function loadArchetypeImages(archetypeNames: string[]) {
 		for (const name of archetypeNames) {
 			if (loadedImages.has(name)) continue;
-			const cardName = archetypeCardMap.get(name);
+			const cardName = $archetypeCardMap.get(name);
 			if (!cardName) continue;
 
 			const url = getScryfallImageUrl(cardName, 'art_crop');
@@ -268,10 +268,10 @@
 <div class="legend">
 	{#each stats.filter((s) => s.name !== 'Unknown' && s.totalMatches > 0) as s, i}
 		<span class="legend-item">
-			{#if archetypeCardMap.has(s.name)}
+			{#if $archetypeCardMap.has(s.name)}
 				<img
 					class="legend-art"
-					src={getScryfallImageUrl(archetypeCardMap.get(s.name)!, 'art_crop')}
+					src={getScryfallImageUrl($archetypeCardMap.get(s.name)!, 'art_crop')}
 					alt={s.name}
 				/>
 			{:else}

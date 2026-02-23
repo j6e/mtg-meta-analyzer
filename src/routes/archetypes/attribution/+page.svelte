@@ -4,8 +4,8 @@
 	import {
 		globalClassificationResults,
 		getAllTournaments,
-		getArchetypeDefinition,
 	} from '$lib/stores/tournaments';
+	import { activeArchetypeDefs } from '$lib/stores/archetype-configs';
 	import DecklistView from '$lib/components/DecklistView.svelte';
 	import CardTooltip from '$lib/components/CardTooltip.svelte';
 	import type { DecklistInfo } from '$lib/types/decklist';
@@ -13,7 +13,9 @@
 	const classifiedName = $derived(page.url.searchParams.get('classified') ?? '');
 	const reportedName = $derived(page.url.searchParams.get('reported') ?? '');
 
-	const archetypeDef = $derived(getArchetypeDefinition(classifiedName));
+	const archetypeDef = $derived(
+		$activeArchetypeDefs.find((d) => d.name === classifiedName) ?? null,
+	);
 
 	// Find decklists where classified === classifiedName AND reported === reportedName
 	const decklists = $derived.by(() => {
