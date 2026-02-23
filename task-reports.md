@@ -22,6 +22,40 @@
 
 ---
 
+## Task 5.3 — Archetype & Player Pages
+**Status:** Completed
+**Date:** 2026-02-23
+
+### What was done
+- Created `/archetypes` list page with sortable table (name, meta share, win rate, players, matches)
+  - Win rates colored green (>=50%) or red (<50%)
+  - Links to archetype detail pages
+- Created `/archetypes/[name]` detail page with:
+  - Stat cards (meta share, win rate, players, matches)
+  - Matchup breakdown table vs other archetypes (win rate, record, match count)
+  - Decklist grid showing decklists classified as this archetype (lazy-load with "show all" button)
+- Created `/players` list page with:
+  - Search bar filtering by name or archetype
+  - Sortable table (name, archetype, best finish, tournaments)
+  - Player count indicator
+- Created `/players/[id]` detail page with:
+  - Stat cards (overall record, win rate, tournaments, total matches)
+  - Tournament history table with rank, record, points, archetype, expandable decklist
+  - Links to tournament detail and archetype pages
+- Added global stores (`globalPlayerArchetypes`, `globalMetagameData`, `getAllTournaments()`) for archetype/player pages that operate across ALL tournaments (independent of metagame page filters)
+
+### Key files
+- `src/routes/archetypes/+page.svelte` — archetype list
+- `src/routes/archetypes/[name]/+page.svelte` — archetype detail
+- `src/routes/players/+page.svelte` — player list with search
+- `src/routes/players/[id]/+page.svelte` — player detail
+- `src/lib/stores/tournaments.ts` — added global stores
+
+### Verification
+- 0 type errors (`svelte-check`), 161 tests pass
+
+---
+
 ## Task 5.2 — Tournament List & Detail Pages
 **Status:** Completed
 **Date:** 2026-02-23

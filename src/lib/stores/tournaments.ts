@@ -172,3 +172,38 @@ export const currentTournamentArchetypes = derived(
 export function getTournament(id: number): TournamentData | null {
 	return allTournaments.get(id) ?? null;
 }
+
+// --- Global stores (all tournaments, independent of metagame page filters) ---
+
+/** All tournaments as an array. */
+const allTournamentArray = [...allTournaments.values()];
+
+/** Player ID → archetype across ALL tournaments. */
+export const globalPlayerArchetypes = derived([], (): Map<string, string> => {
+	const combined = new Map<string, string>();
+	for (const t of allTournamentArray) {
+		const results = classifyAll(t.decklists, archetypeDefs, { k: 5, minConfidence: 0.3 });
+		const map = buildPlayerArchetypeMap(t, results);
+		for (const [playerId, archetype] of map) {
+			combined.set(playerId, archetype);
+		}
+	}
+	return combined;
+});
+
+/** Matchup matrix and stats across ALL tournaments (no "Other" collapsing). */
+export const globalMetagameData = derived(
+	globalPlayerArchetypes,
+	($archetypes) => {
+		if (allTournamentArray.length === 0 || $archetypes.size === 0) return null;
+		return buildMatchupMatrix(allTournamentArray, $archetypes, {
+			excludeMirrors: true,
+			excludePlayoffs: true,
+		});
+	},
+);
+
+/** All tournament data values (for player pages). */
+export function getAllTournaments(): TournamentData[] {
+	return allTournamentArray;
+}

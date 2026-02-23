@@ -12,7 +12,7 @@
 
 	// Sync route param → store
 	$effect(() => {
-		const id = parseInt(page.params.id);
+		const id = parseInt(page.params.id ?? '');
 		if (!isNaN(id)) selectedTournamentId.set(id);
 	});
 
