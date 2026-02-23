@@ -9,6 +9,7 @@
 		{ href: '/metagame', label: 'Metagame' },
 		{ href: '/tournaments', label: 'Tournaments' },
 		{ href: '/archetypes', label: 'Archetypes' },
+		{ href: '/aggregated-decklist', label: 'Aggregate' },
 	];
 
 	function isActive(href: string): boolean {
