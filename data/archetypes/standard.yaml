@@ -1,5 +1,5 @@
 format: Standard
-date: "2026-01-10"
+date: "2026-02-22"
 archetypes:
   - name: Izzet Lessons
     signatureCards:
@@ -9,49 +9,131 @@ archetypes:
         minCopies: 4
       - name: Gran-Gran
         minCopies: 4
-      - name: Monument to Endurance
+
+  - name: Mono-Green Landfall
+    signatureCards:
+      - name: Mightform Harmonizer
+        minCopies: 3
+      - name: "Sazh's Chocobo"
+        minCopies: 4
+      - name: Fabled Passage
+        minCopies: 4
+      - name: Earthbender Ascension
+        minCopies: 3
+
+  - name: Dimir Excruciator
+    signatureCards:
+      - name: Doomsday Excruciator
+        minCopies: 3
+      - name: Superior Spider-Man
         minCopies: 3
 
   - name: Simic Rhythm
     signatureCards:
-      - name: Gene Pollinator
-        minCopies: 3
       - name: Badgermole Cub
         minCopies: 4
-      - name: Llanowar Elves
-        minCopies: 4
       - name: "Nature's Rhythm"
+        minCopies: 4
+      - name: Gene Pollinator
+        minCopies: 3
+      - name: Llanowar Elves
         minCopies: 4
 
   - name: Dimir Midrange
     signatureCards:
-      - name: Floodpits Drowner
-        minCopies: 3
       - name: Kaito, Bane of Nightmares
         minCopies: 2
       - name: Enduring Curiosity
         minCopies: 2
+      - name: Floodpits Drowner
+        minCopies: 3
       - name: Spyglass Siren
         minCopies: 3
 
+  - name: Azorius Tempo
+    signatureCards:
+      - name: "Aang, Swift Savior"
+        minCopies: 3
+      - name: High Noon
+        minCopies: 3
+
+  - name: Izzet Spellementals
+    signatureCards:
+      - name: Sunderflock
+        minCopies: 4
+      - name: Hearth Elemental
+        minCopies: 4
+      - name: Eddymurk Crab
+        minCopies: 4
+
+  - name: Izzet Elementals
+    signatureCards:
+      - name: Sunderflock
+        minCopies: 2
+      - name: "Ashling, Rekindled"
+        minCopies: 4
+      - name: Vibrance
+        minCopies: 4
+
   - name: Jeskai Control
     signatureCards:
-      - name: Lightning Helix
+      - name: No More Lies
         minCopies: 2
-      - name: Stock Up
-        minCopies: 2
-      - name: Day of Judgment
-        minCopies: 1
       - name: Jeskai Revelation
         minCopies: 1
+      - name: Lightning Helix
+        minCopies: 1
+      - name: Stock Up
+        minCopies: 2
+
+  - name: Boros Dragons
+    signatureCards:
+      - name: Twinmaw Stormbrood
+        minCopies: 3
+      - name: "Sarkhan, Dragon Ascendant"
+        minCopies: 3
+      - name: "Momo, Friendly Flier"
+        minCopies: 3
+
+  - name: Izzet Prowess
+    signatureCards:
+      - name: "Stormchaser's Talent"
+        minCopies: 4
+      - name: Elusive Otter
+        minCopies: 3
+      - name: Slickshot Show-Off
+        minCopies: 4
+
+  - name: Bant Airbending
+    signatureCards:
+      - name: "Aang, at the Crossroads"
+        minCopies: 2
+      - name: "Appa, Steadfast Guardian"
+        minCopies: 3
+      - name: Doc Aurlock, Grizzled Genius
+        minCopies: 3
+
+  - name: Temur Harmonizer
+    signatureCards:
+      - name: Mightform Harmonizer
+        minCopies: 3
+      - name: Full Bore
+        minCopies: 3
 
   - name: Mono-Red Aggro
     signatureCards:
-      - name: Razorkin Needlehead
+      - name: Hired Claw
         minCopies: 3
       - name: Burst Lightning
         minCopies: 3
-      - name: Hired Claw
+      - name: Hexing Squelcher
         minCopies: 3
-      - name: Nova Hellkite
+
+  - name: Rakdos Monument
+    signatureCards:
+      - name: Monument to Endurance
+        minCopies: 3
+      - name: Bloodghast
+        minCopies: 3
+      - name: Moonshadow
         minCopies: 3
