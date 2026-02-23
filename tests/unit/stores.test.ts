@@ -15,8 +15,8 @@ describe('settings store', () => {
 		expect(s.dateFrom).toBe('');
 		expect(s.dateTo).toBe('');
 		expect(s.selectedTournamentIds).toEqual([]);
-		expect(s.otherMode).toBe('topN');
-		expect(s.minMetagameShare).toBe(0);
+		expect(s.otherMode).toBe('minShare');
+		expect(s.minMetagameShare).toBe(2);
 	});
 
 	it('can update individual settings', () => {
@@ -44,9 +44,9 @@ describe('settings store', () => {
 
 	it('can switch other mode', () => {
 		resetSettings();
-		settings.update((s) => ({ ...s, otherMode: 'minShare', minMetagameShare: 5 }));
+		settings.update((s) => ({ ...s, otherMode: 'topN', minMetagameShare: 5 }));
 		const s = get(settings);
-		expect(s.otherMode).toBe('minShare');
+		expect(s.otherMode).toBe('topN');
 		expect(s.minMetagameShare).toBe(5);
 	});
 
@@ -59,7 +59,7 @@ describe('settings store', () => {
 			format: 'Standard',
 			dateFrom: '2025-01-01',
 			selectedTournamentIds: [123],
-			otherMode: 'minShare' as const,
+			otherMode: 'topN' as const,
 			minMetagameShare: 5,
 		}));
 		resetSettings();
@@ -69,7 +69,7 @@ describe('settings store', () => {
 
 		expect(s.format).toBe('');
 		expect(s.selectedTournamentIds).toEqual([]);
-		expect(s.otherMode).toBe('topN');
+		expect(s.otherMode).toBe('minShare');
 	});
 });
 

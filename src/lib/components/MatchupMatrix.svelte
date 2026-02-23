@@ -33,6 +33,14 @@
 	function getStatForArchetype(name: string): ArchetypeStats | undefined {
 		return stats.find((s) => s.name === name);
 	}
+
+	function overallStyle(name: string): string {
+		const s = getStatForArchetype(name);
+		if (s && s.totalMatches > 0) {
+			return `background-color: ${winrateColor(s.overallWinrate)}`;
+		}
+		return '';
+	}
 </script>
 
 <div class="matrix-wrapper">
@@ -40,6 +48,9 @@
 		<thead>
 			<tr>
 				<th class="corner-cell"></th>
+				<th class="col-header overall-col-header">
+					<div class="header-content">Overall</div>
+				</th>
 				{#each matrix.archetypes as colName, j}
 					<th
 						class="col-header"
@@ -63,6 +74,19 @@
 							<span class="meta-share">{(s.metagameShare * 100).toFixed(1)}%</span>
 						{/if}
 					</th>
+					<td
+						class="cell overall-cell"
+						class:highlight-row={hoveredRow === i}
+						style={overallStyle(rowName)}
+					>
+						{#if getStatForArchetype(rowName)?.totalMatches}
+							{@const s = getStatForArchetype(rowName)!}
+							<span class="winrate">{formatWinrate(s.overallWinrate)}</span>
+							<span class="match-count">({s.totalMatches})</span>
+						{:else}
+							<span class="no-data">—</span>
+						{/if}
+					</td>
 					{#each matrix.cells[i] as cell, j}
 						{@const isMirror = i === j}
 						<td
@@ -147,6 +171,16 @@
 		writing-mode: vertical-rl;
 		transform: rotate(180deg);
 		white-space: nowrap;
+		margin: 0 auto;
+	}
+
+	.overall-col-header {
+		border-right: 2px solid rgba(255, 255, 255, 0.2);
+		background: #212140;
+	}
+
+	.overall-cell {
+		border-right: 2px solid var(--color-border);
 	}
 
 	.row-header {
@@ -240,6 +274,7 @@
 	}
 
 	th.highlight-col {
-		background: rgba(255, 255, 255, 0.15);
+		background: var(--color-accent);
+		color: #fff;
 	}
 </style>
