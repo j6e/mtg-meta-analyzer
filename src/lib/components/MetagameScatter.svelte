@@ -18,9 +18,9 @@
 	let chart: Chart | null = null;
 
 	const COLORS = [
-		'#4f46e5', '#e11d48', '#16a34a', '#ea580c', '#8b5cf6',
-		'#0891b2', '#ca8a04', '#dc2626', '#059669', '#7c3aed',
-		'#d97706', '#2563eb', '#be185d', '#65a30d', '#0d9488',
+		'#2563eb', '#e11d48', '#16a34a', '#ea580c', '#7c3aed',
+		'#0891b2', '#ca8a04', '#be185d', '#059669', '#d97706',
+		'#6366f1', '#dc2626', '#65a30d', '#0d9488', '#a855f7',
 	];
 
 	/** Reference line plugin: draws a horizontal dashed line at 50% winrate. */
@@ -82,9 +82,12 @@
 					},
 					y: {
 						title: { display: true, text: 'Win Rate (%)', font: { size: 13 } },
-						min: Math.max(0, Math.min(...data.map((d) => d.y)) - 5),
-						max: Math.min(100, Math.max(...data.map((d) => d.y)) + 5),
-						ticks: { callback: (v) => v + '%' },
+						min: Math.max(0, Math.floor(Math.min(...data.map((d) => d.y)) / 5) * 5 - 5),
+						max: Math.min(100, Math.ceil(Math.max(...data.map((d) => d.y)) / 5) * 5 + 5),
+						ticks: {
+							callback: (v) => v + '%',
+							stepSize: 5,
+						},
 						grid: { color: '#f0f0f0' },
 					},
 				},
