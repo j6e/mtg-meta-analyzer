@@ -1,18 +1,13 @@
 <script lang="ts">
 	import MatchupMatrix from '$lib/components/MatchupMatrix.svelte';
 	import MetagameScatter from '$lib/components/MetagameScatter.svelte';
+	import FilterPanel from '$lib/components/FilterPanel.svelte';
 	import {
 		metagameData,
-		currentTournament,
-		selectedTournamentId,
+		filteredTournaments,
 		tournamentList,
+		availableFormats,
 	} from '$lib/stores/tournaments';
-	import { settings } from '$lib/stores/settings';
-
-	function handleTournamentChange(e: Event) {
-		const select = e.target as HTMLSelectElement;
-		$selectedTournamentId = Number(select.value);
-	}
 </script>
 
 <svelte:head>
@@ -21,36 +16,12 @@
 
 <h1>Metagame</h1>
 
-<div class="controls">
-	<label>
-		Tournament
-		<select onchange={handleTournamentChange}>
-			{#each $tournamentList as t}
-				<option value={t.id} selected={t.id === $selectedTournamentId}>{t.name}</option>
-			{/each}
-		</select>
-	</label>
+<FilterPanel tournaments={$tournamentList} formats={$availableFormats} />
 
-	<label>
-		<input type="checkbox" bind:checked={$settings.excludeMirrors} />
-		Exclude mirrors
-	</label>
-
-	<label>
-		<input type="checkbox" bind:checked={$settings.excludePlayoffs} />
-		Exclude playoffs
-	</label>
-
-	<label>
-		Top N
-		<input type="number" bind:value={$settings.topN} min="0" max="20" style="width: 4rem" />
-		<span class="hint">(0 = all)</span>
-	</label>
-</div>
-
-{#if $currentTournament}
+{#if $filteredTournaments.length > 0}
 	<p class="tournament-info">
-		{$currentTournament.meta.name} — {Object.keys($currentTournament.players).length} players, {Object.keys($currentTournament.rounds).length} rounds
+		{$filteredTournaments.length} tournament{$filteredTournaments.length !== 1 ? 's' : ''} —
+		{$filteredTournaments.reduce((sum, t) => sum + Object.keys(t.players).length, 0)} players
 	</p>
 {/if}
 
@@ -65,7 +36,7 @@
 		<MatchupMatrix matrix={$metagameData.matrix} stats={$metagameData.stats} />
 	</section>
 {:else}
-	<p>No data available.</p>
+	<p class="no-data">No data available for the current filters.</p>
 {/if}
 
 <style>
@@ -74,42 +45,10 @@
 		margin-bottom: 1rem;
 	}
 
-	.controls {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 1rem;
-		align-items: center;
-		margin-bottom: 1rem;
-		padding: 0.75rem 1rem;
-		background: var(--color-surface);
-		border: 1px solid var(--color-border);
-		border-radius: var(--radius);
-		font-size: 0.875rem;
-	}
-
-	.controls label {
-		display: flex;
-		align-items: center;
-		gap: 0.375rem;
-	}
-
-	.controls select,
-	.controls input[type='number'] {
-		padding: 0.25rem 0.5rem;
-		border: 1px solid var(--color-border);
-		border-radius: var(--radius);
-		font-size: 0.875rem;
-	}
-
-	.hint {
-		color: var(--color-text-muted);
-		font-size: 0.75rem;
-	}
-
 	.tournament-info {
 		color: var(--color-text-muted);
 		font-size: 0.85rem;
-		margin-bottom: 1rem;
+		margin: 1rem 0;
 	}
 
 	section {
@@ -120,5 +59,10 @@
 		font-size: 1.15rem;
 		font-weight: 600;
 		margin-bottom: 0.75rem;
+	}
+
+	.no-data {
+		color: var(--color-text-muted);
+		margin-top: 1rem;
 	}
 </style>

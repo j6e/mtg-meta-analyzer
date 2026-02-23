@@ -11,23 +11,65 @@ describe('settings store', () => {
 		expect(s.excludeMirrors).toBe(true);
 		expect(s.topN).toBe(0);
 		expect(s.excludePlayoffs).toBe(true);
+		expect(s.format).toBe('');
+		expect(s.dateFrom).toBe('');
+		expect(s.dateTo).toBe('');
+		expect(s.selectedTournamentIds).toEqual([]);
+		expect(s.otherMode).toBe('topN');
+		expect(s.minMetagameShare).toBe(0);
 	});
 
 	it('can update individual settings', () => {
 		resetSettings();
-		settings.update((s) => ({ ...s, excludeMirrors: false, topN: 5 }));
+		settings.update((s) => ({ ...s, excludeMirrors: false, topN: 5, format: 'Standard' }));
 		const s = get(settings);
 		expect(s.excludeMirrors).toBe(false);
 		expect(s.topN).toBe(5);
+		expect(s.format).toBe('Standard');
+	});
+
+	it('can update tournament filters', () => {
+		resetSettings();
+		settings.update((s) => ({
+			...s,
+			dateFrom: '2025-01-01',
+			dateTo: '2025-12-31',
+			selectedTournamentIds: [123, 456],
+		}));
+		const s = get(settings);
+		expect(s.dateFrom).toBe('2025-01-01');
+		expect(s.dateTo).toBe('2025-12-31');
+		expect(s.selectedTournamentIds).toEqual([123, 456]);
+	});
+
+	it('can switch other mode', () => {
+		resetSettings();
+		settings.update((s) => ({ ...s, otherMode: 'minShare', minMetagameShare: 5 }));
+		const s = get(settings);
+		expect(s.otherMode).toBe('minShare');
+		expect(s.minMetagameShare).toBe(5);
 	});
 
 	it('resets to defaults', () => {
-		settings.update((s) => ({ ...s, excludeMirrors: false, topN: 10, excludePlayoffs: false }));
+		settings.update((s) => ({
+			...s,
+			excludeMirrors: false,
+			topN: 10,
+			excludePlayoffs: false,
+			format: 'Standard',
+			dateFrom: '2025-01-01',
+			selectedTournamentIds: [123],
+			otherMode: 'minShare' as const,
+			minMetagameShare: 5,
+		}));
 		resetSettings();
 		const s = get(settings);
 		expect(s.excludeMirrors).toBe(true);
 		expect(s.topN).toBe(0);
 		expect(s.excludePlayoffs).toBe(true);
+		expect(s.format).toBe('');
+		expect(s.selectedTournamentIds).toEqual([]);
+		expect(s.otherMode).toBe('topN');
 	});
 });
 

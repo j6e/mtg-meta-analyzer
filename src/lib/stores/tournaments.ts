@@ -17,21 +17,63 @@ import archetypeYaml from '/data/archetypes/standard.yaml?raw';
 
 const allTournaments = loadTournaments();
 
-/** Writable store for the currently selected tournament ID. */
+/** Writable store for the currently selected tournament ID (single-select for decklist view). */
 export const selectedTournamentId = writable<number | null>(
 	allTournaments.size > 0 ? [...allTournaments.keys()][0] : null,
 );
 
 // --- Derived stores ---
 
-/** List of tournament metadata, sorted by date descending. */
+/** List of all tournament metadata, sorted by date descending. */
 export const tournamentList = derived([], (): TournamentMeta[] => {
 	return [...allTournaments.values()]
 		.map((t) => t.meta)
 		.sort((a, b) => b.date.localeCompare(a.date));
 });
 
-/** The currently selected tournament data. */
+/** All unique formats across all tournaments. */
+export const availableFormats = derived([], (): string[] => {
+	const formats = new Set<string>();
+	for (const t of allTournaments.values()) {
+		for (const f of t.meta.formats) {
+			formats.add(f);
+		}
+	}
+	return [...formats].sort();
+});
+
+/** Tournaments filtered by the current settings (format, date range, selection). */
+export const filteredTournaments = derived(
+	[settings],
+	([$settings]): TournamentData[] => {
+		let tournaments = [...allTournaments.values()];
+
+		// Filter by explicitly selected tournaments
+		if ($settings.selectedTournamentIds.length > 0) {
+			const idSet = new Set($settings.selectedTournamentIds);
+			tournaments = tournaments.filter((t) => idSet.has(t.meta.id));
+		}
+
+		// Filter by format
+		if ($settings.format) {
+			tournaments = tournaments.filter((t) =>
+				t.meta.formats.includes($settings.format),
+			);
+		}
+
+		// Filter by date range
+		if ($settings.dateFrom) {
+			tournaments = tournaments.filter((t) => t.meta.date >= $settings.dateFrom);
+		}
+		if ($settings.dateTo) {
+			tournaments = tournaments.filter((t) => t.meta.date <= $settings.dateTo);
+		}
+
+		return tournaments;
+	},
+);
+
+/** The currently selected single tournament (for decklist/player views). */
 export const currentTournament = derived(selectedTournamentId, ($id): TournamentData | null => {
 	if ($id === null) return null;
 	return allTournaments.get($id) ?? null;
@@ -56,39 +98,54 @@ export const decklistMap = derived(
 /** Archetype definitions parsed from YAML. */
 const archetypeDefs = parseArchetypeYaml(archetypeYaml);
 
-/** Classification results for the current tournament. */
+/** Classification results for all filtered tournaments. */
 export const classificationResults = derived(
-	currentTournament,
-	($tournament): ClassificationResult[] => {
-		if (!$tournament) return [];
-		return classifyAll($tournament.decklists, archetypeDefs, { k: 5, minConfidence: 0.3 });
+	filteredTournaments,
+	($tournaments): Map<number, ClassificationResult[]> => {
+		const map = new Map<number, ClassificationResult[]>();
+		for (const t of $tournaments) {
+			map.set(
+				t.meta.id,
+				classifyAll(t.decklists, archetypeDefs, { k: 5, minConfidence: 0.3 }),
+			);
+		}
+		return map;
 	},
 );
 
-/** Player ID → archetype mapping for the current tournament. */
+/** Player ID → archetype mapping across all filtered tournaments. */
 export const playerArchetypes = derived(
-	[currentTournament, classificationResults],
-	([$tournament, $results]): Map<string, string> => {
-		if (!$tournament) return new Map();
-		return buildPlayerArchetypeMap($tournament, $results);
+	[filteredTournaments, classificationResults],
+	([$tournaments, $resultsMap]): Map<string, string> => {
+		const combined = new Map<string, string>();
+		for (const t of $tournaments) {
+			const results = $resultsMap.get(t.meta.id) ?? [];
+			const map = buildPlayerArchetypeMap(t, results);
+			for (const [playerId, archetype] of map) {
+				combined.set(playerId, archetype);
+			}
+		}
+		return combined;
 	},
 );
 
 /** Matchup matrix and archetype stats, reactive to settings changes. */
 export const metagameData = derived(
-	[currentTournament, playerArchetypes, settings],
-	([$tournament, $playerArchetypes, $settings]) => {
-		if (!$tournament || $playerArchetypes.size === 0) {
+	[filteredTournaments, playerArchetypes, settings],
+	([$tournaments, $playerArchetypes, $settings]) => {
+		if ($tournaments.length === 0 || $playerArchetypes.size === 0) {
 			return null;
 		}
 
 		const options: MatrixOptions = {
 			excludeMirrors: $settings.excludeMirrors,
-			topN: $settings.topN,
 			excludePlayoffs: $settings.excludePlayoffs,
+			topN: $settings.otherMode === 'topN' ? $settings.topN : 0,
+			minMetagameShare:
+				$settings.otherMode === 'minShare' ? $settings.minMetagameShare / 100 : 0,
 		};
 
-		return buildMatchupMatrix([$tournament], $playerArchetypes, options);
+		return buildMatchupMatrix($tournaments, $playerArchetypes, options);
 	},
 );
 

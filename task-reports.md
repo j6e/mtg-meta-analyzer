@@ -545,3 +545,43 @@ Not implemented (not needed — all endpoints work with direct HTTP). Can be add
 ### Verification
 - `bun run check` — 0 errors, 0 warnings
 - `bun run test` — 150 tests passing (7 DecklistView + 143 prior)
+
+---
+
+## Task 4.7 — Filter Panel Component
+**Status:** Completed
+**Date:** 2026-02-23
+
+### What was done
+- Extended `src/lib/stores/settings.ts` with full filter fields:
+  - `format` (string), `dateFrom`/`dateTo` (ISO date strings), `selectedTournamentIds` (number[])
+  - `otherMode` ('topN' | 'minShare'), `minMetagameShare` (0-100 percentage)
+- Updated `src/lib/stores/tournaments.ts`:
+  - Added `availableFormats` derived store (all unique formats across tournaments)
+  - Added `filteredTournaments` derived store (filters by format, date range, tournament selection)
+  - Classification and matrix now computed across all filtered tournaments (multi-tournament support)
+  - `metagameData` respects `otherMode`/`minMetagameShare` settings
+- Created `src/lib/components/FilterPanel.svelte`:
+  - Tournament section: format dropdown, date range pickers, tournament multi-select with checkboxes
+  - Matrix options: mirror match toggle, playoff toggle
+  - "Other" threshold: radio buttons (Top N vs Min share %) with numeric input
+  - Debounced numeric inputs to avoid excessive recomputation
+  - "Clear selection" link button when tournaments are explicitly selected
+  - Scrollable tournament list, responsive two-column layout
+- Updated `src/routes/metagame/+page.svelte` to use FilterPanel (replaced inline controls)
+- Updated `tests/unit/stores.test.ts` — 7 tests (added new filter fields)
+- Created `tests/component/FilterPanel.test.ts` — 9 tests:
+  - Panel renders, format options, date inputs, tournament checkboxes
+  - Toggle checkboxes, radio buttons, store updates on change
+
+### Key files
+- `src/lib/components/FilterPanel.svelte`
+- `src/lib/stores/settings.ts`
+- `src/lib/stores/tournaments.ts`
+- `src/routes/metagame/+page.svelte`
+- `tests/component/FilterPanel.test.ts`
+- `tests/unit/stores.test.ts`
+
+### Verification
+- `bun run check` — 0 errors, 0 warnings
+- `bun run test` — 161 tests passing (9 FilterPanel + 2 new stores + 150 prior)
