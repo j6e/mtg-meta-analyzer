@@ -3,11 +3,11 @@ date: "2026-02-22"
 archetypes:
   - name: Izzet Lessons
     signatureCards:
+      - name: Gran-Gran
+        minCopies: 4
       - name: Firebending Lesson
         minCopies: 4
       - name: Accumulate Wisdom
-        minCopies: 4
-      - name: Gran-Gran
         minCopies: 4
 
   - name: Mono-Green Landfall
@@ -20,12 +20,48 @@ archetypes:
         minCopies: 4
       - name: Earthbender Ascension
         minCopies: 3
+      - name: Stomping Ground
+        exactCopies: 0
+      - name: Temple Garden
+        exactCopies: 0
+      - name: Breeding Pool
+        exactCopies: 0
+      - name: Overgrown Tomb
+        exactCopies: 0
+
+  - name: Gruul Landfall
+    signatureCards:
+      - name: Mightform Harmonizer
+        minCopies: 3
+      - name: "Sazh's Chocobo"
+        minCopies: 4
+      - name: Fabled Passage
+        minCopies: 4
+      - name: Earthbender Ascension
+        minCopies: 3
+      - name: Stomping Ground
+        minCopies: 4
+
+  - name: Selesnia Landfall
+    signatureCards:
+      - name: Mightform Harmonizer
+        minCopies: 3
+      - name: "Sazh's Chocobo"
+        minCopies: 4
+      - name: Fabled Passage
+        minCopies: 4
+      - name: Earthbender Ascension
+        minCopies: 3
+      - name: Temple Garden
+        minCopies: 4
 
   - name: Dimir Excruciator
     signatureCards:
       - name: Doomsday Excruciator
-        minCopies: 3
+        minCopies: 1
       - name: Superior Spider-Man
+        minCopies: 3
+      - name: Deceit
         minCopies: 3
 
   - name: Simic Rhythm
@@ -59,28 +95,28 @@ archetypes:
 
   - name: Izzet Spellementals
     signatureCards:
+      - name: Eddymurk Crab
+        minCopies: 4
       - name: Sunderflock
         minCopies: 4
       - name: Hearth Elemental
         minCopies: 4
-      - name: Eddymurk Crab
-        minCopies: 4
 
   - name: Izzet Elementals
     signatureCards:
-      - name: Sunderflock
-        minCopies: 2
       - name: "Ashling, Rekindled"
         minCopies: 4
+      - name: Sunderflock
+        minCopies: 2
       - name: Vibrance
         minCopies: 4
 
   - name: Jeskai Control
     signatureCards:
-      - name: No More Lies
-        minCopies: 2
       - name: Jeskai Revelation
         minCopies: 1
+      - name: No More Lies
+        minCopies: 2
       - name: Lightning Helix
         minCopies: 1
       - name: Stock Up
@@ -97,12 +133,12 @@ archetypes:
 
   - name: Izzet Prowess
     signatureCards:
+      - name: Slickshot Show-Off
+        minCopies: 4
       - name: "Stormchaser's Talent"
         minCopies: 4
       - name: Elusive Otter
         minCopies: 3
-      - name: Slickshot Show-Off
-        minCopies: 4
 
   - name: Bant Airbending
     signatureCards:
@@ -131,21 +167,21 @@ archetypes:
 
   - name: Rakdos Monument
     signatureCards:
+      - name: Moonshadow
+        minCopies: 3
       - name: Monument to Endurance
         minCopies: 3
       - name: Bloodghast
         minCopies: 3
-      - name: Moonshadow
-        minCopies: 3
 
   - name: Izzet Blink
     signatureCards:
+      - name: Splash Portal
+        minCopies: 2
       - name: Thundertrap Trainer
         minCopies: 4
       - name: Quantum Riddler
         minCopies: 4
-      - name: Splash Portal
-        minCopies: 2
 
   - name: Sultai Reanimator
     signatureCards:
@@ -155,7 +191,7 @@ archetypes:
         minCopies: 4
       - name: "Ardyn, the Usurper"
         minCopies: 2
-  
+
   - name: Esper Pixie
     signatureCards:
       - name: "Nurturing Pixie"
@@ -164,7 +200,7 @@ archetypes:
         minCopies: 4
       - name: "Kaito, Bane of Nightmares"
         minCopies: 1
-  
+
   - name: Simic Kona
     signatureCards:
       - name: "Kona, Rescue Beastie"
@@ -172,4 +208,26 @@ archetypes:
       - name: "Omniscience"
         minCopies: 4
       - name: "Uthros, Titanic Godcore"
+        minCopies: 3
+
+  - name: Dimir Control
+    signatureCards:
+      - name: "Deadly Cover-Up"
+        minCopies: 2
+      - name: "Demolition Field"
+        minCopies: 2
+      - name: "Three Steps Ahead"
+        minCopies: 2
+      - name: "Consult the Star Charts"
+        minCopies: 3
+
+  - name: Azorius Control
+    signatureCards:
+      - name: No More Lies
+        minCopies: 3
+      - name: "Seam Rip"
+        minCopies: 3
+      - name: "Get Lost"
+        minCopies: 3
+      - name: "Consult the Star Charts"
         minCopies: 3
