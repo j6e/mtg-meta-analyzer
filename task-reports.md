@@ -343,3 +343,24 @@ Not implemented (not needed — all endpoints work with direct HTTP). Can be add
 ### Verification
 - `bun run check` — 0 errors, 0 warnings
 - `bun run test` — 104 tests passing (20 winrate + 12 classifier + 7 knn + 10 cosine + 12 tfidf + 43 prior)
+
+---
+
+## Task 3.6 — Card Name Normalizer
+**Status:** Completed
+**Date:** 2026-02-23
+
+### What was done
+- Created `src/lib/utils/card-normalizer.ts` with 3 functions:
+  - `normalizeCardName(name)` — trims whitespace, normalizes curly quotes to straight, normalizes `//` separator spacing
+  - `getFrontFace(name)` — extracts front face from DFC/split card names (e.g. "Aclazotz, Deepest Betrayal // Temple of the Dead" → "Aclazotz, Deepest Betrayal")
+  - `getScryfallImageUrl(cardName, version?)` — builds Scryfall image URL using front face name
+- Analyzed real tournament data: 47/697 unique cards are DFCs with `//` separator (main concern), 1 accented character, all apostrophes/hyphens already consistent ASCII
+
+### Key files
+- `src/lib/utils/card-normalizer.ts`
+- `tests/unit/card-normalizer.test.ts`
+
+### Verification
+- `bun run check` — 0 errors, 0 warnings
+- `bun run test` — 121 tests passing (17 card-normalizer + 104 prior)
