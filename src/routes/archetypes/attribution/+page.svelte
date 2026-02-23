@@ -86,7 +86,7 @@
 				<thead>
 					<tr>
 						<th>Card Name</th>
-						<th class="num">Min Copies</th>
+						<th class="num">Copies</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -97,7 +97,13 @@
 									<span class="card-name">{card.name}</span>
 								</CardTooltip>
 							</td>
-							<td class="num">{card.minCopies}</td>
+							<td class="num">
+								{#if card.exactCopies !== undefined}
+									= {card.exactCopies}
+								{:else}
+									≥ {card.minCopies ?? 1}
+								{/if}
+							</td>
 						</tr>
 					{/each}
 				</tbody>
