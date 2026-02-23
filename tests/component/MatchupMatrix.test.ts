@@ -4,12 +4,13 @@ import { render } from '@testing-library/svelte';
 import MatchupMatrix from '../../src/lib/components/MatchupMatrix.svelte';
 import type { MatchupMatrix as MatrixType, ArchetypeStats } from '../../src/lib/types/metagame';
 
-function makeCell(wins: number, losses: number, draws = 0) {
+function makeCell(wins: number, losses: number, draws = 0, intentionalDraws = 0) {
 	const total = wins + losses + draws;
 	return {
 		wins,
 		losses,
 		draws,
+		intentionalDraws,
 		total,
 		winrate: total > 0 ? wins / total : null,
 	};
@@ -28,21 +29,9 @@ const sampleMatrix: MatrixType = {
 };
 
 const sampleStats: ArchetypeStats[] = [
-	{ name: 'Aggro', metagameShare: 0.4, overallWinrate: 0.55, totalMatches: 20, playerCount: 8 },
-	{
-		name: 'Control',
-		metagameShare: 0.35,
-		overallWinrate: 0.45,
-		totalMatches: 20,
-		playerCount: 7,
-	},
-	{
-		name: 'Midrange',
-		metagameShare: 0.25,
-		overallWinrate: 0.5,
-		totalMatches: 20,
-		playerCount: 5,
-	},
+	{ name: 'Aggro', metagameShare: 0.4, overallWinrate: 0.55, wins: 11, losses: 9, draws: 0, totalMatches: 20, playerCount: 8, byes: 0, intentionalDraws: 0 },
+	{ name: 'Control', metagameShare: 0.35, overallWinrate: 0.45, wins: 9, losses: 11, draws: 0, totalMatches: 20, playerCount: 7, byes: 0, intentionalDraws: 0 },
+	{ name: 'Midrange', metagameShare: 0.25, overallWinrate: 0.5, wins: 10, losses: 10, draws: 0, totalMatches: 20, playerCount: 5, byes: 0, intentionalDraws: 0 },
 ];
 
 describe('MatchupMatrix component', () => {

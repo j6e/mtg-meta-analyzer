@@ -45,10 +45,10 @@ beforeEach(() => {
 });
 
 const sampleStats: ArchetypeStats[] = [
-	{ name: 'Aggro', metagameShare: 0.35, overallWinrate: 0.55, totalMatches: 100, playerCount: 14 },
-	{ name: 'Control', metagameShare: 0.25, overallWinrate: 0.48, totalMatches: 80, playerCount: 10 },
-	{ name: 'Midrange', metagameShare: 0.2, overallWinrate: 0.52, totalMatches: 60, playerCount: 8 },
-	{ name: 'Unknown', metagameShare: 0.2, overallWinrate: 0.45, totalMatches: 40, playerCount: 8 },
+	{ name: 'Aggro', metagameShare: 0.35, overallWinrate: 0.55, wins: 55, losses: 45, draws: 0, totalMatches: 100, playerCount: 14, byes: 0, intentionalDraws: 0 },
+	{ name: 'Control', metagameShare: 0.25, overallWinrate: 0.48, wins: 38, losses: 42, draws: 0, totalMatches: 80, playerCount: 10, byes: 0, intentionalDraws: 0 },
+	{ name: 'Midrange', metagameShare: 0.2, overallWinrate: 0.52, wins: 31, losses: 29, draws: 0, totalMatches: 60, playerCount: 8, byes: 0, intentionalDraws: 0 },
+	{ name: 'Unknown', metagameShare: 0.2, overallWinrate: 0.45, wins: 18, losses: 22, draws: 0, totalMatches: 40, playerCount: 8, byes: 0, intentionalDraws: 0 },
 ];
 
 describe('MetagameScatter component', () => {

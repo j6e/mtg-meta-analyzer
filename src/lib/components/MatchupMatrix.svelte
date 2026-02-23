@@ -1,22 +1,27 @@
 <script lang="ts">
-	import type { MatchupMatrix, ArchetypeStats } from '../types/metagame';
+	import type { MatchupMatrix, MatchupCell, ArchetypeStats } from '../types/metagame';
 
 	let { matrix, stats = [] }: { matrix: MatchupMatrix; stats?: ArchetypeStats[] } = $props();
 
 	let hoveredRow = $state(-1);
 	let hoveredCol = $state(-1);
 
+	// Tooltip state
+	let tooltipVisible = $state(false);
+	let tooltipX = $state(0);
+	let tooltipY = $state(0);
+	let tooltipData: { cell?: MatchupCell; stat?: ArchetypeStats; isOverall: boolean } | null = $state(null);
+	let hoverTimer: ReturnType<typeof setTimeout> | null = null;
+
 	/** Color gradient: red (0%) → white (50%) → green (100%). */
 	function winrateColor(wr: number): string {
 		if (wr < 0.5) {
-			// Red to white: 0% → 50%
 			const t = wr / 0.5;
 			const r = 220;
 			const g = Math.round(80 + t * 175);
 			const b = Math.round(80 + t * 175);
 			return `rgb(${r}, ${g}, ${b})`;
 		} else {
-			// White to green: 50% → 100%
 			const t = (wr - 0.5) / 0.5;
 			const r = Math.round(255 - t * 175);
 			const g = Math.round(255 - t * 30);
@@ -40,6 +45,86 @@
 			return `background-color: ${winrateColor(s.overallWinrate)}`;
 		}
 		return '';
+	}
+
+	/** Wilson score 95% CI bounds. */
+	function wilsonCI(wins: number, total: number): [number, number] {
+		if (total === 0) return [0, 0];
+		const z = 1.96;
+		const p = wins / total;
+		const denom = 1 + z * z / total;
+		const centre = p + z * z / (2 * total);
+		const margin = z * Math.sqrt((p * (1 - p) + z * z / (4 * total)) / total);
+		return [
+			Math.max(0, (centre - margin) / denom),
+			Math.min(1, (centre + margin) / denom),
+		];
+	}
+
+	function formatCI(lo: number, hi: number): string {
+		return `${(lo * 100).toFixed(1)}% – ${(hi * 100).toFixed(1)}%`;
+	}
+
+	function updateTooltipPosition(e: MouseEvent) {
+		const padding = 12;
+		const tooltipWidth = 200;
+		const tooltipHeight = 160;
+
+		let newX = e.clientX + padding;
+		let newY = e.clientY + padding;
+
+		if (newX + tooltipWidth > window.innerWidth) {
+			newX = e.clientX - tooltipWidth - padding;
+		}
+		if (newY + tooltipHeight > window.innerHeight) {
+			newY = e.clientY - tooltipHeight - padding;
+		}
+
+		tooltipX = Math.max(0, newX);
+		tooltipY = Math.max(0, newY);
+	}
+
+	function startCellHover(e: MouseEvent, cell: MatchupCell, row: number, col: number) {
+		hoveredRow = row;
+		hoveredCol = col;
+		clearTooltipTimer();
+		if (cell.total === 0 || row === col) return;
+		updateTooltipPosition(e);
+		hoverTimer = setTimeout(() => {
+			tooltipData = { cell, isOverall: false };
+			tooltipVisible = true;
+		}, 300);
+	}
+
+	function startOverallHover(e: MouseEvent, archName: string, row: number) {
+		hoveredRow = row;
+		clearTooltipTimer();
+		const s = getStatForArchetype(archName);
+		if (!s || s.totalMatches === 0) return;
+		updateTooltipPosition(e);
+		hoverTimer = setTimeout(() => {
+			tooltipData = { stat: s, isOverall: true };
+			tooltipVisible = true;
+		}, 300);
+	}
+
+	function handleMouseMove(e: MouseEvent) {
+		if (tooltipVisible) updateTooltipPosition(e);
+	}
+
+	function clearTooltipTimer() {
+		if (hoverTimer) {
+			clearTimeout(hoverTimer);
+			hoverTimer = null;
+		}
+		tooltipVisible = false;
+		tooltipData = null;
+	}
+
+	function endHover() {
+		hoveredRow = -1;
+		hoveredCol = -1;
+		clearTooltipTimer();
 	}
 </script>
 
@@ -78,6 +163,9 @@
 						class="cell overall-cell"
 						class:highlight-row={hoveredRow === i}
 						style={overallStyle(rowName)}
+						onmouseenter={(e) => startOverallHover(e, rowName, i)}
+						onmousemove={handleMouseMove}
+						onmouseleave={endHover}
 					>
 						{#if getStatForArchetype(rowName)?.totalMatches}
 							{@const s = getStatForArchetype(rowName)!}
@@ -98,8 +186,9 @@
 							style={!isMirror && cell.winrate !== null
 								? `background-color: ${winrateColor(cell.winrate)}`
 								: ''}
-							onmouseenter={() => { hoveredRow = i; hoveredCol = j; }}
-							onmouseleave={() => { hoveredRow = -1; hoveredCol = -1; }}
+							onmouseenter={(e) => startCellHover(e, cell, i, j)}
+							onmousemove={handleMouseMove}
+							onmouseleave={endHover}
 							role="gridcell"
 							data-testid="cell-{i}-{j}"
 						>
@@ -118,6 +207,35 @@
 		</tbody>
 	</table>
 </div>
+
+{#if tooltipVisible && tooltipData}
+	<div class="matchup-tooltip" style="left: {tooltipX}px; top: {tooltipY}px;" role="tooltip">
+		{#if tooltipData.isOverall && tooltipData.stat}
+			{@const s = tooltipData.stat}
+			{@const [lo, hi] = wilsonCI(s.wins, s.totalMatches)}
+			<div class="tooltip-grid">
+				<span class="tooltip-label">Wins</span><span class="tooltip-value">{s.wins}</span>
+				<span class="tooltip-label">Losses</span><span class="tooltip-value">{s.losses}</span>
+				<span class="tooltip-label">Draws</span><span class="tooltip-value">{s.draws}</span>
+				<span class="tooltip-label">Byes</span><span class="tooltip-value tooltip-excluded">{s.byes} excl.</span>
+				<span class="tooltip-label">IDs</span><span class="tooltip-value tooltip-excluded">{s.intentionalDraws} excl.</span>
+				<span class="tooltip-label">Winrate</span><span class="tooltip-value">{formatWinrate(s.overallWinrate)}</span>
+				<span class="tooltip-label">95% CI</span><span class="tooltip-value">{formatCI(lo, hi)}</span>
+			</div>
+		{:else if tooltipData.cell}
+			{@const c = tooltipData.cell}
+			{@const [lo, hi] = wilsonCI(c.wins, c.total)}
+			<div class="tooltip-grid">
+				<span class="tooltip-label">Wins</span><span class="tooltip-value">{c.wins}</span>
+				<span class="tooltip-label">Losses</span><span class="tooltip-value">{c.losses}</span>
+				<span class="tooltip-label">Draws</span><span class="tooltip-value">{c.draws}</span>
+				<span class="tooltip-label">IDs</span><span class="tooltip-value tooltip-excluded">{c.intentionalDraws} excl.</span>
+				<span class="tooltip-label">Winrate</span><span class="tooltip-value">{formatWinrate(c.winrate)}</span>
+				<span class="tooltip-label">95% CI</span><span class="tooltip-value">{formatCI(lo, hi)}</span>
+			</div>
+		{/if}
+	</div>
+{/if}
 
 <style>
 	.matrix-wrapper {
@@ -276,5 +394,40 @@
 	th.highlight-col {
 		background: var(--color-accent);
 		color: #fff;
+	}
+
+	/* Tooltip */
+	.matchup-tooltip {
+		position: fixed;
+		z-index: 1000;
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
+		border-radius: 6px;
+		padding: 0.5rem 0.65rem;
+		box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+		pointer-events: none;
+		font-size: 0.75rem;
+	}
+
+	.tooltip-grid {
+		display: grid;
+		grid-template-columns: auto auto;
+		gap: 0.15rem 0.75rem;
+	}
+
+	.tooltip-label {
+		color: var(--color-text-muted);
+	}
+
+	.tooltip-value {
+		text-align: right;
+		font-weight: 600;
+		color: var(--color-text);
+	}
+
+	.tooltip-excluded {
+		font-weight: 400;
+		font-style: italic;
+		color: var(--color-text-muted);
 	}
 </style>

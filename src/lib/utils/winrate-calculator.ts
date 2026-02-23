@@ -1,6 +1,11 @@
-import type { TournamentData } from '../types/tournament';
+import type { TournamentData, MatchResult } from '../types/tournament';
 import type { MatchupCell, MatchupMatrix, ArchetypeStats } from '../types/metagame';
 import type { ClassificationResult } from '../algorithms/archetype-classifier';
+
+/** Intentional draws are recorded as 0-0-3 — no games played, just drawn rounds. */
+function isIntentionalDraw(match: MatchResult): boolean {
+	return match.result === '0-0-3';
+}
 
 export interface MatrixOptions {
 	excludeMirrors?: boolean; // default true — mirror matches excluded from matrix
@@ -110,7 +115,7 @@ export function buildMatchupMatrix(
 	}
 	const n = displayArchetypes.length;
 	const cells: MatchupCell[][] = Array.from({ length: n }, () =>
-		Array.from({ length: n }, () => ({ wins: 0, losses: 0, draws: 0, total: 0, winrate: null })),
+		Array.from({ length: n }, () => ({ wins: 0, losses: 0, draws: 0, intentionalDraws: 0, total: 0, winrate: null })),
 	);
 
 	// Step 4: Count players per display archetype
@@ -127,11 +132,21 @@ export function buildMatchupMatrix(
 	const overallWins = new Map<string, number>();
 	const overallLosses = new Map<string, number>();
 	const overallDraws = new Map<string, number>();
+	const overallByes = new Map<string, number>();
+	const overallIDs = new Map<string, number>();
 
 	for (const tournament of tournaments) {
 		for (const round of Object.values(tournament.rounds)) {
 			for (const match of round.matches) {
-				if (!match.player2Id) continue; // skip byes
+				// Count byes per archetype (no opponent)
+				if (!match.player2Id) {
+					const raw = playerArchetypes.get(match.player1Id);
+					if (raw) {
+						const arch = resolve(raw);
+						overallByes.set(arch, (overallByes.get(arch) ?? 0) + 1);
+					}
+					continue;
+				}
 
 				const raw1 = playerArchetypes.get(match.player1Id);
 				const raw2 = playerArchetypes.get(match.player2Id);
@@ -139,6 +154,21 @@ export function buildMatchupMatrix(
 
 				const arch1 = resolve(raw1);
 				const arch2 = resolve(raw2);
+
+				// Count IDs per cell and per archetype, but exclude from W/L/D
+				if (isIntentionalDraw(match)) {
+					overallIDs.set(arch1, (overallIDs.get(arch1) ?? 0) + 1);
+					overallIDs.set(arch2, (overallIDs.get(arch2) ?? 0) + 1);
+					if (!(excludeMirrors && arch1 === arch2)) {
+						const i = archIndex.get(arch1);
+						const j = archIndex.get(arch2);
+						if (i !== undefined && j !== undefined) {
+							cells[i][j].intentionalDraws++;
+							cells[j][i].intentionalDraws++;
+						}
+					}
+					continue;
+				}
 
 				if (excludeMirrors && arch1 === arch2) continue;
 
@@ -187,8 +217,13 @@ export function buildMatchupMatrix(
 			name,
 			metagameShare: totalPlayers > 0 ? playerCount / totalPlayers : 0,
 			overallWinrate: totalMatches > 0 ? w / totalMatches : 0,
+			wins: w,
+			losses: l,
+			draws: d,
 			totalMatches,
 			playerCount,
+			byes: overallByes.get(name) ?? 0,
+			intentionalDraws: overallIDs.get(name) ?? 0,
 		};
 	});
 
@@ -215,15 +250,27 @@ export function computeMetagameStats(
 	const wins = new Map<string, number>();
 	const losses = new Map<string, number>();
 	const draws = new Map<string, number>();
+	const byes = new Map<string, number>();
+	const ids = new Map<string, number>();
 
 	for (const tournament of tournaments) {
 		for (const round of Object.values(tournament.rounds)) {
 			for (const match of round.matches) {
-				if (!match.player2Id) continue;
+				if (!match.player2Id) {
+					const arch = playerArchetypes.get(match.player1Id);
+					if (arch) byes.set(arch, (byes.get(arch) ?? 0) + 1);
+					continue;
+				}
 
 				const arch1 = playerArchetypes.get(match.player1Id);
 				const arch2 = playerArchetypes.get(match.player2Id);
 				if (!arch1 || !arch2) continue;
+
+				if (isIntentionalDraw(match)) {
+					ids.set(arch1, (ids.get(arch1) ?? 0) + 1);
+					ids.set(arch2, (ids.get(arch2) ?? 0) + 1);
+					continue;
+				}
 
 				if (match.winnerId === match.player1Id) {
 					wins.set(arch1, (wins.get(arch1) ?? 0) + 1);
@@ -254,8 +301,13 @@ export function computeMetagameStats(
 			name,
 			metagameShare: totalPlayers > 0 ? playerCount / totalPlayers : 0,
 			overallWinrate: totalMatches > 0 ? w / totalMatches : 0,
+			wins: w,
+			losses: l,
+			draws: d,
 			totalMatches,
 			playerCount,
+			byes: byes.get(name) ?? 0,
+			intentionalDraws: ids.get(name) ?? 0,
 		};
 	});
 }
