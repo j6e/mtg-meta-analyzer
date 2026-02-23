@@ -519,3 +519,29 @@ Not implemented (not needed — all endpoints work with direct HTTP). Can be add
 ### Verification
 - `bun run check` — 0 errors, 0 warnings
 - `bun run test` — 143 tests passing (6 CardTooltip + 137 prior)
+
+---
+
+## Task 4.6 — Decklist View Component
+**Status:** Completed
+**Date:** 2026-02-23
+
+### What was done
+- Created `src/lib/components/DecklistView.svelte`:
+  - Props: `decklist: DecklistInfo`, optional `playerName` and `archetype`
+  - Sections: Companion (if present), Mainboard (with card count), Sideboard (with card count, hidden if empty)
+  - Each card entry: `{qty}x {CardName}` wrapped in CardTooltip for Scryfall image hover
+  - Metadata header: player name (bold) + archetype badge (pill style)
+  - Tabular-numeric quantities, compact card-style layout (max-width 360px)
+- Created `tests/component/DecklistView.test.ts` — 7 tests:
+  - Renders cards with quantities, shows mainboard/sideboard counts
+  - Shows/hides metadata, hides empty sideboard
+  - Companion section, CardTooltip trigger count
+
+### Key files
+- `src/lib/components/DecklistView.svelte`
+- `tests/component/DecklistView.test.ts`
+
+### Verification
+- `bun run check` — 0 errors, 0 warnings
+- `bun run test` — 150 tests passing (7 DecklistView + 143 prior)
