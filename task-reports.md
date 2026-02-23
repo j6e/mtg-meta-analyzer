@@ -1,5 +1,30 @@
 # Task Reports
 
+## Task 7.1 — Error Handling & Edge Cases
+**Status:** Completed
+**Date:** 2026-02-23
+
+### What was done
+- Created `src/routes/+error.svelte` — error page for unmatched routes (shows status code, message, link home)
+- Fixed CardTooltip to reset loaded/error state when `cardName` prop changes (prevents stale image on reuse)
+- Added low-sample-size indicator to MatchupMatrix — cells with <20 matches are italicized and dimmed
+- Added empty data guard to MetagameScatter — early return when no archetypes to display (prevents `Math.max(...[])` error)
+- Enhanced metagame page info bar — now shows player count, decklist count, and unclassified count (amber warning)
+- Updated Playwright config to use `bunx --bun vite` commands for reliable builds
+
+### Key files
+- `src/routes/+error.svelte` — new error page
+- `src/lib/components/CardTooltip.svelte` — state reset on cardName change
+- `src/lib/components/MatchupMatrix.svelte` — low-sample styling
+- `src/lib/components/MetagameScatter.svelte` — empty data guard
+- `src/routes/metagame/+page.svelte` — enhanced info bar
+- `playwright.config.ts` — updated webServer command
+
+### Verification
+- 160 tests pass, 0 type errors
+
+---
+
 ## Task 5.1 — Metagame Report Page
 **Status:** Completed
 **Date:** 2026-02-23

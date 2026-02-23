@@ -46,6 +46,8 @@
 		if (chart) chart.destroy();
 
 		const filtered = stats.filter((s) => s.name !== 'Unknown' && s.totalMatches > 0);
+		if (filtered.length === 0) return;
+
 		const maxMatches = Math.max(...filtered.map((s) => s.totalMatches), 1);
 
 		const data = filtered.map((s, i) => ({

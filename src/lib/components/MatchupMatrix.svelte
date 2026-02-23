@@ -84,8 +84,8 @@
 							{:else if cell.total === 0}
 								<span class="no-data">—</span>
 							{:else}
-								<span class="winrate">{formatWinrate(cell.winrate)}</span>
-								<span class="match-count">({cell.total})</span>
+								<span class="winrate" class:low-sample={cell.total < 20}>{formatWinrate(cell.winrate)}</span>
+								<span class="match-count" class:low-sample={cell.total < 20}>({cell.total})</span>
 							{/if}
 						</td>
 					{/each}
@@ -197,6 +197,12 @@
 
 	.no-data {
 		color: var(--color-text-muted);
+	}
+
+	/* Low sample size indicator (<20 matches) */
+	.low-sample {
+		opacity: 0.5;
+		font-style: italic;
 	}
 
 	/* Mirror cells */

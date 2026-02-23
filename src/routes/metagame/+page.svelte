@@ -7,7 +7,18 @@
 		filteredTournaments,
 		tournamentList,
 		availableFormats,
+		archetypeStats,
 	} from '$lib/stores/tournaments';
+
+	const playerCount = $derived(
+		$filteredTournaments.reduce((sum, t) => sum + Object.keys(t.players).length, 0),
+	);
+	const decklistCount = $derived(
+		$filteredTournaments.reduce((sum, t) => sum + Object.keys(t.decklists).length, 0),
+	);
+	const unknownCount = $derived(
+		$archetypeStats.find((s) => s.name === 'Unknown')?.playerCount ?? 0,
+	);
 </script>
 
 <svelte:head>
@@ -21,7 +32,9 @@
 {#if $filteredTournaments.length > 0}
 	<p class="tournament-info">
 		{$filteredTournaments.length} tournament{$filteredTournaments.length !== 1 ? 's' : ''} —
-		{$filteredTournaments.reduce((sum, t) => sum + Object.keys(t.players).length, 0)} players
+		{playerCount} players, {decklistCount} decklists{#if unknownCount > 0}
+			<span class="warning"> ({unknownCount} unclassified)</span>
+		{/if}
 	</p>
 {/if}
 
@@ -59,6 +72,10 @@
 		font-size: 1.15rem;
 		font-weight: 600;
 		margin-bottom: 0.75rem;
+	}
+
+	.warning {
+		color: #b45309;
 	}
 
 	.no-data {

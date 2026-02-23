@@ -12,6 +12,13 @@
 	/** Use 'normal' size (488×680) for good quality without being too large. */
 	const imageUrl = $derived(getScryfallImageUrl(cardName, 'normal'));
 
+	// Reset loaded/error state when card name changes
+	$effect(() => {
+		void cardName;
+		loaded = false;
+		error = false;
+	});
+
 	function show(e: MouseEvent) {
 		visible = true;
 		updatePosition(e);
