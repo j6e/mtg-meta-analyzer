@@ -133,16 +133,6 @@
 			</label>
 		</div>
 
-		<div class="filter-row">
-			<label class="toggle">
-				<input
-					type="checkbox"
-					bind:checked={$settings.excludePlayoffs}
-				/>
-				Exclude playoff rounds
-			</label>
-		</div>
-
 		<div class="filter-row other-threshold">
 			<span class="label">"Other" threshold</span>
 			<div class="radio-group">

@@ -139,7 +139,6 @@ export const metagameData = derived(
 
 		const options: MatrixOptions = {
 			excludeMirrors: $settings.excludeMirrors,
-			excludePlayoffs: $settings.excludePlayoffs,
 			topN: $settings.otherMode === 'topN' ? $settings.topN : 0,
 			minMetagameShare:
 				$settings.otherMode === 'minShare' ? $settings.minMetagameShare / 100 : 0,
@@ -198,7 +197,6 @@ export const globalMetagameData = derived(
 		if (allTournamentArray.length === 0 || $archetypes.size === 0) return null;
 		return buildMatchupMatrix(allTournamentArray, $archetypes, {
 			excludeMirrors: true,
-			excludePlayoffs: true,
 		});
 	},
 );

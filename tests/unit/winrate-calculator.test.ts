@@ -324,32 +324,6 @@ describe('buildMatchupMatrix', () => {
 		expect(matrix.archetypes).not.toContain('Combo');
 	});
 
-	it('excludes playoff rounds when option is set', () => {
-		const tournament = makeTournament({
-			players: { p1: makePlayer('Alice'), p2: makePlayer('Bob') },
-			rounds: {
-				r1: makeRound('Round 1', 1, [makeMatch('p1', 'p2', 'p1')]),
-				r2: makeRound('Quarterfinals', 100, [makeMatch('p1', 'p2', 'p2')], true),
-			},
-		});
-
-		const playerArchetypes = new Map([['p1', 'Aggro'], ['p2', 'Control']]);
-
-		// With playoffs
-		const withPlayoffs = buildMatchupMatrix([tournament], playerArchetypes, { excludePlayoffs: false });
-		const aggIdx = withPlayoffs.matrix.archetypes.indexOf('Aggro');
-		const ctrlIdx = withPlayoffs.matrix.archetypes.indexOf('Control');
-		expect(withPlayoffs.matrix.cells[aggIdx][ctrlIdx].wins).toBe(1);
-		expect(withPlayoffs.matrix.cells[aggIdx][ctrlIdx].losses).toBe(1);
-
-		// Without playoffs
-		const noPlayoffs = buildMatchupMatrix([tournament], playerArchetypes, { excludePlayoffs: true });
-		const aggIdx2 = noPlayoffs.matrix.archetypes.indexOf('Aggro');
-		const ctrlIdx2 = noPlayoffs.matrix.archetypes.indexOf('Control');
-		expect(noPlayoffs.matrix.cells[aggIdx2][ctrlIdx2].wins).toBe(1);
-		expect(noPlayoffs.matrix.cells[aggIdx2][ctrlIdx2].losses).toBe(0);
-	});
-
 	it('returns empty matrix for empty tournament', () => {
 		const tournament = makeTournament({});
 		const playerArchetypes = new Map<string, string>();

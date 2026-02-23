@@ -10,7 +10,7 @@ describe('settings store', () => {
 		const s = get(settings);
 		expect(s.excludeMirrors).toBe(true);
 		expect(s.topN).toBe(0);
-		expect(s.excludePlayoffs).toBe(true);
+
 		expect(s.format).toBe('');
 		expect(s.dateFrom).toBe('');
 		expect(s.dateTo).toBe('');
@@ -55,7 +55,7 @@ describe('settings store', () => {
 			...s,
 			excludeMirrors: false,
 			topN: 10,
-			excludePlayoffs: false,
+
 			format: 'Standard',
 			dateFrom: '2025-01-01',
 			selectedTournamentIds: [123],
@@ -66,7 +66,7 @@ describe('settings store', () => {
 		const s = get(settings);
 		expect(s.excludeMirrors).toBe(true);
 		expect(s.topN).toBe(0);
-		expect(s.excludePlayoffs).toBe(true);
+
 		expect(s.format).toBe('');
 		expect(s.selectedTournamentIds).toEqual([]);
 		expect(s.otherMode).toBe('topN');

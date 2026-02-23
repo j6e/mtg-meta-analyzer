@@ -15,7 +15,6 @@ export interface MetaSettings {
 
 	// Matrix options
 	excludeMirrors: boolean;
-	excludePlayoffs: boolean;
 	otherMode: OtherMode;
 	topN: number; // 0 = show all (only used when otherMode = 'topN')
 	minMetagameShare: number; // 0-100 as percentage (only used when otherMode = 'minShare')
@@ -27,7 +26,6 @@ const defaults: MetaSettings = {
 	dateTo: '',
 	selectedTournamentIds: [],
 	excludeMirrors: true,
-	excludePlayoffs: true,
 	otherMode: 'topN',
 	topN: 0,
 	minMetagameShare: 0,

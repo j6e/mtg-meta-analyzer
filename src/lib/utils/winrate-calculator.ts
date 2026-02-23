@@ -6,7 +6,6 @@ export interface MatrixOptions {
 	excludeMirrors?: boolean; // default true — mirror matches excluded from matrix
 	minMetagameShare?: number; // 0-1, archetypes below this threshold → "Other"
 	topN?: number; // 0 = no limit, otherwise keep only top N archetypes
-	excludePlayoffs?: boolean; // default false
 }
 
 /**
@@ -54,7 +53,6 @@ export function buildMatchupMatrix(
 		excludeMirrors = true,
 		minMetagameShare = 0,
 		topN = 0,
-		excludePlayoffs = false,
 	} = options;
 
 	// Step 1: Count players per raw archetype
@@ -130,8 +128,6 @@ export function buildMatchupMatrix(
 
 	for (const tournament of tournaments) {
 		for (const round of Object.values(tournament.rounds)) {
-			if (excludePlayoffs && round.isPlayoff) continue;
-
 			for (const match of round.matches) {
 				if (!match.player2Id) continue; // skip byes
 

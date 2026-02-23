@@ -71,12 +71,12 @@ describe('FilterPanel component', () => {
 		expect(checks[1].textContent).toContain('Tournament B');
 	});
 
-	it('shows mirror match and playoff toggles', () => {
+	it('shows mirror match toggle', () => {
 		const { container } = render(FilterPanel, {
 			props: { tournaments: sampleTournaments, formats: sampleFormats },
 		});
 		const checkboxes = container.querySelectorAll('.toggle input[type="checkbox"]');
-		expect(checkboxes.length).toBe(2);
+		expect(checkboxes.length).toBe(1);
 	});
 
 	it('shows "Other" threshold radio buttons', () => {
