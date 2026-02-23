@@ -459,3 +459,33 @@ Not implemented (not needed — all endpoints work with direct HTTP). Can be add
 ### Verification
 - `bun run check` — 0 errors, 0 warnings
 - `bun run test` — 134 tests passing (8 MatchupMatrix + 126 prior)
+
+---
+
+## Task 4.4 — Metagame Scatter Plot Component
+**Status:** Completed
+**Date:** 2026-02-23
+
+### What was done
+- Installed `chart.js` v4.5.1
+- Created `src/lib/components/MetagameScatter.svelte`:
+  - Chart.js bubble chart: X = metagame share (%), Y = win rate (%), bubble size = match count
+  - Horizontal dashed reference line at 50% winrate (custom Chart.js plugin)
+  - Custom tooltip: archetype name, share, win rate, players, matches
+  - Custom legend below chart (excludes "Unknown" archetype)
+  - Reactive: rebuilds chart when stats prop changes via `$effect`
+  - Responsive sizing with `maintainAspectRatio: false`
+- Added scatter plot to `/metagame` page above the matchup matrix
+- Created `tests/component/MetagameScatter.test.ts` — 3 tests:
+  - Canvas element mounts
+  - Legend items for non-Unknown archetypes
+  - Empty stats handling
+
+### Key files
+- `src/lib/components/MetagameScatter.svelte`
+- `tests/component/MetagameScatter.test.ts`
+- `src/routes/metagame/+page.svelte` (updated)
+
+### Verification
+- `bun run check` — 0 errors, 0 warnings
+- `bun run test` — 137 tests passing (3 MetagameScatter + 134 prior)

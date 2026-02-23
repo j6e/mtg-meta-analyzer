@@ -1,5 +1,6 @@
 <script lang="ts">
 	import MatchupMatrix from '$lib/components/MatchupMatrix.svelte';
+	import MetagameScatter from '$lib/components/MetagameScatter.svelte';
 	import {
 		metagameData,
 		currentTournament,
@@ -54,7 +55,15 @@
 {/if}
 
 {#if $metagameData}
-	<MatchupMatrix matrix={$metagameData.matrix} stats={$metagameData.stats} />
+	<section>
+		<h2>Metagame Share vs Win Rate</h2>
+		<MetagameScatter stats={$metagameData.stats} />
+	</section>
+
+	<section>
+		<h2>Matchup Matrix</h2>
+		<MatchupMatrix matrix={$metagameData.matrix} stats={$metagameData.stats} />
+	</section>
 {:else}
 	<p>No data available.</p>
 {/if}
@@ -101,5 +110,15 @@
 		color: var(--color-text-muted);
 		font-size: 0.85rem;
 		margin-bottom: 1rem;
+	}
+
+	section {
+		margin-bottom: 2rem;
+	}
+
+	h2 {
+		font-size: 1.15rem;
+		font-weight: 600;
+		margin-bottom: 0.75rem;
 	}
 </style>
