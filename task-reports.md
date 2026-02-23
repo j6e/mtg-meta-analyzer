@@ -394,3 +394,36 @@ Not implemented (not needed — all endpoints work with direct HTTP). Can be add
 - `bun run check` — 0 errors, 0 warnings
 - `bun run test` — 121 tests passing (all prior tests still pass)
 - Dev server starts and loads correctly
+
+---
+
+## Task 4.2 — Tournament Data Store & Loading
+**Status:** Completed
+**Date:** 2026-02-23
+
+### What was done
+- Created `src/lib/stores/settings.ts` — user preferences store:
+  - `excludeMirrors` (default true), `topN` (default 0 = all), `excludePlayoffs` (default true)
+  - `resetSettings()` helper to restore defaults
+- Created `src/lib/stores/tournaments.ts` — reactive tournament data store:
+  - Loads all tournament JSON at build time via `loadTournaments()`
+  - Imports archetype YAML and parses definitions once
+  - `selectedTournamentId` — writable store for current tournament selection
+  - `tournamentList` — derived: all tournament metadata sorted by date
+  - `currentTournament` — derived: full data for selected tournament
+  - `playerList` — derived: players sorted by rank
+  - `decklistMap` — derived: decklists keyed by ID
+  - `classificationResults` — derived: runs archetype classifier on current tournament
+  - `playerArchetypes` — derived: player ID → archetype mapping
+  - `metagameData` — derived: matchup matrix + stats, reactive to settings changes
+  - `archetypeStats` — derived: just the stats array
+- Created `tests/unit/stores.test.ts` — 5 tests (settings defaults, update, reset, derived reactivity)
+
+### Key files
+- `src/lib/stores/tournaments.ts`
+- `src/lib/stores/settings.ts`
+- `tests/unit/stores.test.ts`
+
+### Verification
+- `bun run check` — 0 errors, 0 warnings
+- `bun run test` — 126 tests passing (5 stores + 121 prior)
