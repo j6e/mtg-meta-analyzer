@@ -43,7 +43,10 @@ export function classifyBySignatureCards(
 	for (const archetype of archetypeDefs) {
 		const allMatch = archetype.signatureCards.every((sig) => {
 			const qty = cardQuantities.get(sig.name) ?? 0;
-			return qty >= sig.minCopies;
+			if (sig.exactCopies !== undefined) {
+				return qty === sig.exactCopies;
+			}
+			return qty >= (sig.minCopies ?? 1);
 		});
 
 		if (allMatch && archetype.signatureCards.length > bestMatchCount) {
@@ -97,9 +100,14 @@ export function classifyAll(
 	const allMainboards = decklistEntries.map(([, d]) => d.mainboard);
 	const corpus = buildCorpus(allMainboards);
 
-	// Build labeled training set from signature-classified decklists
+	// Build labeled training set from signature-classified decklists,
+	// excluding strict-mode archetypes so KNN cannot produce those labels
+	const strictArchetypes = new Set(
+		archetypeDefs.filter((d) => d.strictMode).map((d) => d.name),
+	);
 	const labeledPoints: LabeledPoint[] = [];
 	for (const [id, archetype] of classified) {
+		if (strictArchetypes.has(archetype)) continue;
 		const decklist = decklists[id];
 		const vector = vectorize(decklist.mainboard, corpus);
 		labeledPoints.push({ vector, label: archetype });

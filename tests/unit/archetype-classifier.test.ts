@@ -70,6 +70,26 @@ describe('parseArchetypeYaml', () => {
 		const result = parseArchetypeYaml('format: Standard\ndate: "2026-01-01"');
 		expect(result).toEqual([]);
 	});
+
+	it('parses exactCopies and strictMode fields', () => {
+		const yaml = `
+format: Standard
+date: "2026-01-10"
+archetypes:
+  - name: Combo
+    strictMode: true
+    signatureCards:
+      - name: Combo Piece
+        exactCopies: 4
+      - name: Enabler
+        minCopies: 2
+`;
+		const result = parseArchetypeYaml(yaml);
+		expect(result).toHaveLength(1);
+		expect(result[0].strictMode).toBe(true);
+		expect(result[0].signatureCards[0]).toEqual({ name: 'Combo Piece', exactCopies: 4 });
+		expect(result[0].signatureCards[1]).toEqual({ name: 'Enabler', minCopies: 2 });
+	});
 });
 
 describe('classifyBySignatureCards', () => {
@@ -131,6 +151,70 @@ describe('classifyBySignatureCards', () => {
 
 		const result = classifyBySignatureCards(mainboard, defs);
 		expect(result).toBe('Mono Red'); // more signature cards
+	});
+
+	it('matches when deck has exactly the specified exactCopies', () => {
+		const defs: ArchetypeDefinition[] = [
+			{
+				name: 'Exact Combo',
+				signatureCards: [
+					{ name: 'Combo Piece', exactCopies: 4 },
+					{ name: 'Enabler', minCopies: 2 },
+				],
+			},
+		];
+		const mainboard = cards(['Combo Piece', 4], ['Enabler', 3], ['Land', 17]);
+		expect(classifyBySignatureCards(mainboard, defs)).toBe('Exact Combo');
+	});
+
+	it('rejects when deck has more copies than exactCopies', () => {
+		const defs: ArchetypeDefinition[] = [
+			{
+				name: 'Exact Combo',
+				signatureCards: [{ name: 'Combo Piece', exactCopies: 3 }],
+			},
+		];
+		const mainboard = cards(['Combo Piece', 4], ['Land', 20]);
+		expect(classifyBySignatureCards(mainboard, defs)).toBeNull();
+	});
+
+	it('rejects when deck has fewer copies than exactCopies', () => {
+		const defs: ArchetypeDefinition[] = [
+			{
+				name: 'Exact Combo',
+				signatureCards: [{ name: 'Combo Piece', exactCopies: 4 }],
+			},
+		];
+		const mainboard = cards(['Combo Piece', 3], ['Land', 21]);
+		expect(classifyBySignatureCards(mainboard, defs)).toBeNull();
+	});
+
+	it('exactCopies 0 matches when card is absent from deck', () => {
+		const defs: ArchetypeDefinition[] = [
+			{
+				name: 'No Combo',
+				signatureCards: [
+					{ name: 'Key Card', minCopies: 4 },
+					{ name: 'Banned Card', exactCopies: 0 },
+				],
+			},
+		];
+		const mainboard = cards(['Key Card', 4], ['Land', 20]);
+		expect(classifyBySignatureCards(mainboard, defs)).toBe('No Combo');
+	});
+
+	it('exactCopies 0 rejects when card is present in deck', () => {
+		const defs: ArchetypeDefinition[] = [
+			{
+				name: 'No Combo',
+				signatureCards: [
+					{ name: 'Key Card', minCopies: 4 },
+					{ name: 'Banned Card', exactCopies: 0 },
+				],
+			},
+		];
+		const mainboard = cards(['Key Card', 4], ['Banned Card', 1], ['Land', 19]);
+		expect(classifyBySignatureCards(mainboard, defs)).toBeNull();
 	});
 });
 
@@ -200,5 +284,52 @@ describe('classifyAll', () => {
 		const results = classifyAll(decklists, archetypeDefs, { minConfidence: 0.99 });
 		const d2Result = results.find((r) => r.decklistId === 'd2');
 		expect(d2Result!.archetype).toBe('Unknown');
+	});
+
+	it('strict-mode archetype matches via signature cards normally', () => {
+		const strictDefs: ArchetypeDefinition[] = [
+			{
+				name: 'Strict Combo',
+				strictMode: true,
+				signatureCards: [
+					{ name: 'Combo Piece', minCopies: 4 },
+					{ name: 'Enabler', minCopies: 2 },
+				],
+			},
+		];
+		const decklists: Record<string, DecklistInfo> = {
+			'd1': makeDecklist(cards(['Combo Piece', 4], ['Enabler', 3], ['Land', 17])),
+		};
+
+		const results = classifyAll(decklists, strictDefs);
+		const d1Result = results.find((r) => r.decklistId === 'd1');
+		expect(d1Result!.archetype).toBe('Strict Combo');
+		expect(d1Result!.method).toBe('signature');
+	});
+
+	it('strict-mode archetype is not assigned via KNN', () => {
+		const strictDefs: ArchetypeDefinition[] = [
+			{
+				name: 'Strict Combo',
+				strictMode: true,
+				signatureCards: [
+					{ name: 'Combo Piece', minCopies: 4 },
+					{ name: 'Enabler', minCopies: 3 },
+				],
+			},
+		];
+		const decklists: Record<string, DecklistInfo> = {
+			// Matches Strict Combo via signature cards
+			'd1': makeDecklist(cards(['Combo Piece', 4], ['Enabler', 3], ['Land', 17])),
+			'd2': makeDecklist(cards(['Combo Piece', 4], ['Enabler', 3], ['Land', 17])),
+			// Very similar but missing one copy of Enabler — would KNN to Strict Combo if allowed
+			'd3': makeDecklist(cards(['Combo Piece', 4], ['Enabler', 2], ['Land', 18])),
+		};
+
+		const results = classifyAll(decklists, strictDefs, { k: 3, minConfidence: 0 });
+		const d3Result = results.find((r) => r.decklistId === 'd3');
+		// KNN cannot assign Strict Combo because it's excluded from training set
+		expect(d3Result!.archetype).toBe('Unknown');
+		expect(d3Result!.method).toBe('unknown');
 	});
 });
