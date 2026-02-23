@@ -22,6 +22,31 @@
 
 ---
 
+## Task 6.1 — GitHub Actions: Deploy to GitHub Pages
+**Status:** Completed
+**Date:** 2026-02-23
+
+### What was done
+- Created `.github/workflows/deploy.yml`:
+  - Triggers on push to `master` and manual `workflow_dispatch`
+  - Steps: checkout, setup Bun, install deps, build with `BASE_PATH`, upload artifact, deploy to Pages
+  - Uses `actions/upload-pages-artifact@v3` + `actions/deploy-pages@v4`
+  - Concurrency group prevents parallel deploys
+- Fixed `svelte.config.js`: added `prerender.handleUnseenRoutes: 'ignore'` for SPA dynamic routes
+- Created GitHub repo `j6e/mtg-meta-analyzer` (public)
+- Enabled GitHub Pages with Actions as build source
+- Verified build succeeds locally with `BASE_PATH`
+
+### Key files
+- `.github/workflows/deploy.yml` — deploy workflow
+- `svelte.config.js` — added prerender config
+
+### Verification
+- `bun run build` succeeds with `BASE_PATH="/mtg-meta-analyzer"`
+- Site will be at https://j6e.me/mtg-meta-analyzer/
+
+---
+
 ## Task 5.3 — Archetype & Player Pages
 **Status:** Completed
 **Date:** 2026-02-23
