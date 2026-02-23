@@ -154,3 +154,21 @@ export const archetypeStats = derived(
 	metagameData,
 	($data): ArchetypeStats[] => $data?.stats ?? [],
 );
+
+/** Player ID → archetype for the currently selected single tournament. */
+export const currentTournamentArchetypes = derived(
+	currentTournament,
+	($tournament): Map<string, string> => {
+		if (!$tournament) return new Map();
+		const results = classifyAll($tournament.decklists, archetypeDefs, {
+			k: 5,
+			minConfidence: 0.3,
+		});
+		return buildPlayerArchetypeMap($tournament, results);
+	},
+);
+
+/** Look up a tournament by ID (non-reactive). */
+export function getTournament(id: number): TournamentData | null {
+	return allTournaments.get(id) ?? null;
+}

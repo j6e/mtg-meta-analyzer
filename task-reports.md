@@ -1,5 +1,55 @@
 # Task Reports
 
+## Task 5.1 — Metagame Report Page
+**Status:** Completed
+**Date:** 2026-02-23
+
+### What was done
+- Verified the existing `/metagame` page already satisfies all spec requirements:
+  - FilterPanel at top with format, date range, tournament selection, and threshold controls
+  - MetagameScatter (bubble chart) + MatchupMatrix (heatmap table)
+  - Reactive store pipeline: settings → filteredTournaments → classification → matrix
+  - "No data" state when no tournaments match filters
+  - Tournament count + player count summary
+- "Loading state while computing" not needed — all computation is synchronous in derived stores and instant with current dataset sizes
+
+### Key files
+- `src/routes/metagame/+page.svelte` — main analysis page (unchanged from Phase 4)
+
+### Verification
+- All 161 tests pass, 0 type errors
+- Filters, scatter, and matrix update reactively when settings change
+
+---
+
+## Task 5.2 — Tournament List & Detail Pages
+**Status:** Completed
+**Date:** 2026-02-23
+
+### What was done
+- Created `/tournaments` list page with sortable table (name, date, format, players, rounds)
+  - Click column headers to sort ascending/descending
+  - Each tournament name links to its detail page
+- Created `/tournaments/[id]` detail page with:
+  - Breadcrumb navigation back to list
+  - Tournament metadata header (name, date, formats, player count, rounds, melee.gg link)
+  - Sortable standings table (rank, player, archetype, record, points)
+  - Inline decklist expansion — click "View" to show DecklistView with card tooltips
+  - Expandable round-by-round match results with player names and win highlighting
+  - Playoff rounds marked with a badge
+- Added `currentTournamentArchetypes` derived store for per-tournament archetype classification
+- Added `getTournament()` helper to tournaments store
+
+### Key files
+- `src/routes/tournaments/+page.svelte` — tournament list
+- `src/routes/tournaments/[id]/+page.svelte` — tournament detail
+- `src/lib/stores/tournaments.ts` — added `currentTournamentArchetypes`, `getTournament()`
+
+### Verification
+- 0 type errors (`svelte-check`), 161 tests pass
+
+---
+
 ## Task 1.1 — Initialize SvelteKit + Bun Project
 **Status:** Completed
 **Date:** 2026-02-22
