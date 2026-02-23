@@ -167,4 +167,62 @@ describe('AttributionMatrix component', () => {
 		const cell02 = container.querySelector('[data-testid="attr-cell-0-2"]') as HTMLElement;
 		expect(cell02?.style.backgroundColor).toBe('');
 	});
+
+	it('renders links on non-zero cells', () => {
+		const { container } = render(AttributionMatrix, {
+			props: { matrix: sampleMatrix },
+		});
+
+		// Cell with count 10 should have a link
+		const cell00 = container.querySelector('[data-testid="attr-cell-0-0"]');
+		const link00 = cell00?.querySelector('a');
+		expect(link00).not.toBeNull();
+		expect(link00?.getAttribute('href')).toBe(
+			'/archetypes/attribution?classified=Aggro&reported=Aggro',
+		);
+
+		// Cell with count 8 should have a link
+		const cell11 = container.querySelector('[data-testid="attr-cell-1-1"]');
+		const link11 = cell11?.querySelector('a');
+		expect(link11).not.toBeNull();
+		expect(link11?.getAttribute('href')).toBe(
+			'/archetypes/attribution?classified=Control&reported=Control',
+		);
+	});
+
+	it('does not render links on zero cells', () => {
+		const { container } = render(AttributionMatrix, {
+			props: { matrix: sampleMatrix },
+		});
+
+		// Aggro classified vs Combo reported: 0 → no link
+		const cell02 = container.querySelector('[data-testid="attr-cell-0-2"]');
+		expect(cell02?.querySelector('a')).toBeNull();
+
+		// Midrange classified vs Aggro reported: 0 → no link
+		const cell20 = container.querySelector('[data-testid="attr-cell-2-0"]');
+		expect(cell20?.querySelector('a')).toBeNull();
+	});
+
+	it('encodes special characters in link href', () => {
+		const specialMatrix: MatrixType = {
+			classifiedArchetypes: ["Sazh's Deck"],
+			reportedArchetypes: ['Mono-Green Landfall'],
+			cells: [[3]],
+			rowTotals: [3],
+			colTotals: [3],
+			grandTotal: 3,
+			maxCount: 3,
+		};
+
+		const { container } = render(AttributionMatrix, {
+			props: { matrix: specialMatrix },
+		});
+
+		const cell = container.querySelector('[data-testid="attr-cell-0-0"]');
+		const link = cell?.querySelector('a');
+		expect(link?.getAttribute('href')).toBe(
+			"/archetypes/attribution?classified=Sazh's%20Deck&reported=Mono-Green%20Landfall",
+		);
+	});
 });

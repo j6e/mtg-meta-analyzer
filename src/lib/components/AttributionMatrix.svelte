@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { base } from '$app/paths';
 	import type { AttributionMatrix } from '../types/metagame';
 
 	let { matrix }: { matrix: AttributionMatrix } = $props();
@@ -142,7 +143,12 @@
 							data-testid="attr-cell-{i}-{j}"
 						>
 							{#if count > 0}
-								<span class="count">{count}</span>
+								<a
+									href="{base}/archetypes/attribution?classified={encodeURIComponent(rowName)}&reported={encodeURIComponent(matrix.reportedArchetypes[j])}"
+									class="cell-link"
+								>
+									<span class="count">{count}</span>
+								</a>
 							{:else}
 								<span class="no-data">&mdash;</span>
 							{/if}
@@ -285,6 +291,12 @@
 
 	.count.total {
 		color: var(--color-text);
+	}
+
+	.cell-link {
+		display: block;
+		text-decoration: none;
+		color: inherit;
 	}
 
 	.no-data {

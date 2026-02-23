@@ -7,6 +7,7 @@ import { loadTournaments } from '../data/loader';
 import type { TournamentData, TournamentMeta } from '../types/tournament';
 import type { DecklistInfo } from '../types/decklist';
 import type { ArchetypeStats } from '../types/metagame';
+import type { ArchetypeDefinition } from '../types/archetype';
 import type { ClassificationResult } from '../algorithms/archetype-classifier';
 import { parseArchetypeYaml, classifyAll } from '../algorithms/archetype-classifier';
 import { buildPlayerArchetypeMap, buildMatchupMatrix, buildAttributionMatrix, type MatrixOptions } from '../utils/winrate-calculator';
@@ -228,6 +229,11 @@ export const globalAttributionMatrix = derived(
 		return buildAttributionMatrix(allTournamentArray, $resultsMap);
 	},
 );
+
+/** Look up an archetype definition by name (non-reactive). */
+export function getArchetypeDefinition(name: string): ArchetypeDefinition | null {
+	return archetypeDefs.find((d) => d.name === name) ?? null;
+}
 
 /** All tournament data values (for player pages). */
 export function getAllTournaments(): TournamentData[] {
