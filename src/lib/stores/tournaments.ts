@@ -9,7 +9,7 @@ import type { DecklistInfo } from '../types/decklist';
 import type { ArchetypeStats } from '../types/metagame';
 import type { ClassificationResult } from '../algorithms/archetype-classifier';
 import { parseArchetypeYaml, classifyAll } from '../algorithms/archetype-classifier';
-import { buildPlayerArchetypeMap, buildMatchupMatrix, type MatrixOptions } from '../utils/winrate-calculator';
+import { buildPlayerArchetypeMap, buildMatchupMatrix, buildAttributionMatrix, type MatrixOptions } from '../utils/winrate-calculator';
 import { settings } from './settings';
 import archetypeYaml from '/data/archetypes/standard.yaml?raw';
 
@@ -177,18 +177,30 @@ export function getTournament(id: number): TournamentData | null {
 /** All tournaments as an array. */
 const allTournamentArray = [...allTournaments.values()];
 
-/** Player ID → archetype across ALL tournaments. */
-export const globalPlayerArchetypes = derived([], (): Map<string, string> => {
-	const combined = new Map<string, string>();
+/** Classification results across ALL tournaments. */
+export const globalClassificationResults = derived([], (): Map<number, ClassificationResult[]> => {
+	const map = new Map<number, ClassificationResult[]>();
 	for (const t of allTournamentArray) {
-		const results = classifyAll(t.decklists, archetypeDefs, { k: 5, minConfidence: 0.3 });
-		const map = buildPlayerArchetypeMap(t, results);
-		for (const [playerId, archetype] of map) {
-			combined.set(playerId, archetype);
-		}
+		map.set(t.meta.id, classifyAll(t.decklists, archetypeDefs, { k: 5, minConfidence: 0.3 }));
 	}
-	return combined;
+	return map;
 });
+
+/** Player ID → archetype across ALL tournaments. */
+export const globalPlayerArchetypes = derived(
+	globalClassificationResults,
+	($resultsMap): Map<string, string> => {
+		const combined = new Map<string, string>();
+		for (const t of allTournamentArray) {
+			const results = $resultsMap.get(t.meta.id) ?? [];
+			const map = buildPlayerArchetypeMap(t, results);
+			for (const [playerId, archetype] of map) {
+				combined.set(playerId, archetype);
+			}
+		}
+		return combined;
+	},
+);
 
 /** Matchup matrix and stats across ALL tournaments (no "Other" collapsing). */
 export const globalMetagameData = derived(
@@ -198,6 +210,15 @@ export const globalMetagameData = derived(
 		return buildMatchupMatrix(allTournamentArray, $archetypes, {
 			excludeMirrors: true,
 		});
+	},
+);
+
+/** Attribution matrix: classified vs self-reported archetypes across ALL tournaments. */
+export const globalAttributionMatrix = derived(
+	globalClassificationResults,
+	($resultsMap) => {
+		if (allTournamentArray.length === 0) return null;
+		return buildAttributionMatrix(allTournamentArray, $resultsMap);
 	},
 );
 

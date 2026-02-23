@@ -3,6 +3,7 @@ import {
 	buildPlayerArchetypeMap,
 	buildMatchupMatrix,
 	computeMetagameStats,
+	buildAttributionMatrix,
 } from '../../src/lib/utils/winrate-calculator';
 import type { TournamentData, MatchResult, RoundInfo, PlayerInfo } from '../../src/lib/types/tournament';
 import type { ClassificationResult } from '../../src/lib/algorithms/archetype-classifier';
@@ -11,17 +12,19 @@ import type { DecklistInfo } from '../../src/lib/types/decklist';
 // --- Helpers ---
 
 function makeTournament(overrides: {
+	id?: number;
 	players?: Record<string, PlayerInfo>;
 	decklists?: Record<string, DecklistInfo>;
 	rounds?: Record<string, RoundInfo>;
 }): TournamentData {
+	const id = overrides.id ?? 1;
 	return {
 		meta: {
-			id: 1,
+			id,
 			name: 'Test Tournament',
 			date: '2026-01-01',
 			formats: ['Standard'],
-			url: 'https://melee.gg/Tournament/View/1',
+			url: `https://melee.gg/Tournament/View/${id}`,
 			fetchedAt: '2026-01-01T00:00:00Z',
 			playerCount: Object.keys(overrides.players ?? {}).length,
 			roundCount: Object.keys(overrides.rounds ?? {}).length,
@@ -51,6 +54,16 @@ function makeDecklist(playerId: string): DecklistInfo {
 		sideboard: [],
 		companion: null,
 		reportedArchetype: null,
+	};
+}
+
+function makeDecklistWithReport(playerId: string, reportedArchetype: string | null): DecklistInfo {
+	return {
+		playerId,
+		mainboard: [{ cardName: 'Mountain', quantity: 20 }],
+		sideboard: [],
+		companion: null,
+		reportedArchetype,
 	};
 }
 
@@ -513,5 +526,232 @@ describe('computeMetagameStats', () => {
 		const stats = computeMetagameStats([tournament], playerArchetypes);
 		expect(stats[0].name).toBe('Control');
 		expect(stats[1].name).toBe('Aggro');
+	});
+});
+
+describe('buildAttributionMatrix', () => {
+	it('counts decklists by classified vs reported archetype', () => {
+		const tournament = makeTournament({
+			decklists: {
+				d1: makeDecklistWithReport('p1', 'Aggro'),
+				d2: makeDecklistWithReport('p2', 'Control'),
+			},
+		});
+
+		const resultsMap = new Map([
+			[1, [
+				{ decklistId: 'd1', archetype: 'Aggro', method: 'signature' as const, confidence: 1.0 },
+				{ decklistId: 'd2', archetype: 'Midrange', method: 'knn' as const, confidence: 0.8 },
+			]],
+		]);
+
+		const matrix = buildAttributionMatrix([tournament], resultsMap)!;
+		expect(matrix).not.toBeNull();
+
+		// Row: Aggro classified, Col: Aggro reported → 1
+		const classAggIdx = matrix.classifiedArchetypes.indexOf('Aggro');
+		const repAggIdx = matrix.reportedArchetypes.indexOf('Aggro');
+		expect(matrix.cells[classAggIdx][repAggIdx]).toBe(1);
+
+		// Row: Midrange classified, Col: Control reported → 1
+		const classMidIdx = matrix.classifiedArchetypes.indexOf('Midrange');
+		const repCtrlIdx = matrix.reportedArchetypes.indexOf('Control');
+		expect(matrix.cells[classMidIdx][repCtrlIdx]).toBe(1);
+
+		expect(matrix.grandTotal).toBe(2);
+	});
+
+	it('maps null reportedArchetype to "No Report"', () => {
+		const tournament = makeTournament({
+			decklists: {
+				d1: makeDecklistWithReport('p1', null),
+			},
+		});
+
+		const resultsMap = new Map([
+			[1, [
+				{ decklistId: 'd1', archetype: 'Aggro', method: 'signature' as const, confidence: 1.0 },
+			]],
+		]);
+
+		const matrix = buildAttributionMatrix([tournament], resultsMap)!;
+		expect(matrix.reportedArchetypes).toContain('No Report');
+		const repIdx = matrix.reportedArchetypes.indexOf('No Report');
+		const classIdx = matrix.classifiedArchetypes.indexOf('Aggro');
+		expect(matrix.cells[classIdx][repIdx]).toBe(1);
+	});
+
+	it('maps empty string reportedArchetype to "No Report"', () => {
+		const tournament = makeTournament({
+			decklists: {
+				d1: makeDecklistWithReport('p1', ''),
+				d2: makeDecklistWithReport('p2', '  '),
+			},
+		});
+
+		const resultsMap = new Map([
+			[1, [
+				{ decklistId: 'd1', archetype: 'Aggro', method: 'signature' as const, confidence: 1.0 },
+				{ decklistId: 'd2', archetype: 'Control', method: 'knn' as const, confidence: 0.7 },
+			]],
+		]);
+
+		const matrix = buildAttributionMatrix([tournament], resultsMap)!;
+		expect(matrix.reportedArchetypes).toContain('No Report');
+		const repIdx = matrix.reportedArchetypes.indexOf('No Report');
+		expect(matrix.colTotals[repIdx]).toBe(2);
+	});
+
+	it('detects agreement when classified equals reported', () => {
+		const tournament = makeTournament({
+			decklists: {
+				d1: makeDecklistWithReport('p1', 'Aggro'),
+				d2: makeDecklistWithReport('p2', 'Aggro'),
+				d3: makeDecklistWithReport('p3', 'Control'),
+			},
+		});
+
+		const resultsMap = new Map([
+			[1, [
+				{ decklistId: 'd1', archetype: 'Aggro', method: 'signature' as const, confidence: 1.0 },
+				{ decklistId: 'd2', archetype: 'Aggro', method: 'signature' as const, confidence: 1.0 },
+				{ decklistId: 'd3', archetype: 'Control', method: 'knn' as const, confidence: 0.9 },
+			]],
+		]);
+
+		const matrix = buildAttributionMatrix([tournament], resultsMap)!;
+		const classAggIdx = matrix.classifiedArchetypes.indexOf('Aggro');
+		const repAggIdx = matrix.reportedArchetypes.indexOf('Aggro');
+		expect(matrix.cells[classAggIdx][repAggIdx]).toBe(2);
+
+		const classCtrlIdx = matrix.classifiedArchetypes.indexOf('Control');
+		const repCtrlIdx = matrix.reportedArchetypes.indexOf('Control');
+		expect(matrix.cells[classCtrlIdx][repCtrlIdx]).toBe(1);
+	});
+
+	it('aggregates across multiple tournaments', () => {
+		const t1 = makeTournament({
+			id: 1,
+			decklists: {
+				d1: makeDecklistWithReport('p1', 'Aggro'),
+			},
+		});
+		const t2 = makeTournament({
+			id: 2,
+			decklists: {
+				d2: makeDecklistWithReport('p2', 'Aggro'),
+			},
+		});
+
+		const resultsMap = new Map([
+			[1, [{ decklistId: 'd1', archetype: 'Aggro', method: 'signature' as const, confidence: 1.0 }]],
+			[2, [{ decklistId: 'd2', archetype: 'Aggro', method: 'signature' as const, confidence: 1.0 }]],
+		]);
+
+		const matrix = buildAttributionMatrix([t1, t2], resultsMap)!;
+		const classIdx = matrix.classifiedArchetypes.indexOf('Aggro');
+		const repIdx = matrix.reportedArchetypes.indexOf('Aggro');
+		expect(matrix.cells[classIdx][repIdx]).toBe(2);
+		expect(matrix.grandTotal).toBe(2);
+	});
+
+	it('computes correct rowTotals, colTotals, grandTotal, maxCount', () => {
+		const tournament = makeTournament({
+			decklists: {
+				d1: makeDecklistWithReport('p1', 'Aggro'),
+				d2: makeDecklistWithReport('p2', 'Aggro'),
+				d3: makeDecklistWithReport('p3', 'Control'),
+			},
+		});
+
+		const resultsMap = new Map([
+			[1, [
+				{ decklistId: 'd1', archetype: 'Aggro', method: 'signature' as const, confidence: 1.0 },
+				{ decklistId: 'd2', archetype: 'Control', method: 'knn' as const, confidence: 0.8 },
+				{ decklistId: 'd3', archetype: 'Aggro', method: 'signature' as const, confidence: 1.0 },
+			]],
+		]);
+
+		const matrix = buildAttributionMatrix([tournament], resultsMap)!;
+
+		// Aggro classified: d1 → Aggro reported, d3 → Control reported → rowTotal = 2
+		// Control classified: d2 → Aggro reported → rowTotal = 1
+		const classAggIdx = matrix.classifiedArchetypes.indexOf('Aggro');
+		const classCtrlIdx = matrix.classifiedArchetypes.indexOf('Control');
+		expect(matrix.rowTotals[classAggIdx]).toBe(2);
+		expect(matrix.rowTotals[classCtrlIdx]).toBe(1);
+
+		// Aggro reported: d1 + d2 → colTotal = 2
+		// Control reported: d3 → colTotal = 1
+		const repAggIdx = matrix.reportedArchetypes.indexOf('Aggro');
+		const repCtrlIdx = matrix.reportedArchetypes.indexOf('Control');
+		expect(matrix.colTotals[repAggIdx]).toBe(2);
+		expect(matrix.colTotals[repCtrlIdx]).toBe(1);
+
+		expect(matrix.grandTotal).toBe(3);
+		expect(matrix.maxCount).toBe(1);
+	});
+
+	it('sorts both axes by total count descending', () => {
+		const tournament = makeTournament({
+			decklists: {
+				d1: makeDecklistWithReport('p1', 'Rare'),
+				d2: makeDecklistWithReport('p2', 'Common'),
+				d3: makeDecklistWithReport('p3', 'Common'),
+			},
+		});
+
+		const resultsMap = new Map([
+			[1, [
+				{ decklistId: 'd1', archetype: 'Small', method: 'knn' as const, confidence: 0.5 },
+				{ decklistId: 'd2', archetype: 'Big', method: 'signature' as const, confidence: 1.0 },
+				{ decklistId: 'd3', archetype: 'Big', method: 'signature' as const, confidence: 1.0 },
+			]],
+		]);
+
+		const matrix = buildAttributionMatrix([tournament], resultsMap)!;
+		// Big has 2 decklists, Small has 1
+		expect(matrix.classifiedArchetypes[0]).toBe('Big');
+		expect(matrix.classifiedArchetypes[1]).toBe('Small');
+		// Common has 2 decklists, Rare has 1
+		expect(matrix.reportedArchetypes[0]).toBe('Common');
+		expect(matrix.reportedArchetypes[1]).toBe('Rare');
+	});
+
+	it('returns null for empty input', () => {
+		const result = buildAttributionMatrix([], new Map());
+		expect(result).toBeNull();
+	});
+
+	it('returns null when tournaments have no decklists', () => {
+		const tournament = makeTournament({ decklists: {} });
+		const resultsMap = new Map([[1, [] as ClassificationResult[]]]);
+		const result = buildAttributionMatrix([tournament], resultsMap);
+		expect(result).toBeNull();
+	});
+
+	it('handles all decklists with same classified and reported archetype', () => {
+		const tournament = makeTournament({
+			decklists: {
+				d1: makeDecklistWithReport('p1', 'Aggro'),
+				d2: makeDecklistWithReport('p2', 'Aggro'),
+				d3: makeDecklistWithReport('p3', 'Aggro'),
+			},
+		});
+
+		const resultsMap = new Map([
+			[1, [
+				{ decklistId: 'd1', archetype: 'Aggro', method: 'signature' as const, confidence: 1.0 },
+				{ decklistId: 'd2', archetype: 'Aggro', method: 'signature' as const, confidence: 1.0 },
+				{ decklistId: 'd3', archetype: 'Aggro', method: 'signature' as const, confidence: 1.0 },
+			]],
+		]);
+
+		const matrix = buildAttributionMatrix([tournament], resultsMap)!;
+		expect(matrix.classifiedArchetypes).toEqual(['Aggro']);
+		expect(matrix.reportedArchetypes).toEqual(['Aggro']);
+		expect(matrix.cells[0][0]).toBe(3);
+		expect(matrix.grandTotal).toBe(3);
+		expect(matrix.maxCount).toBe(3);
 	});
 });

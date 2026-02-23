@@ -31,3 +31,13 @@ export interface MetagameReport {
 	tournamentIds: number[];
 	format: string;
 }
+
+export interface AttributionMatrix {
+	classifiedArchetypes: string[]; // row labels, sorted by count desc
+	reportedArchetypes: string[]; // column labels, sorted by count desc
+	cells: number[][]; // cells[row][col] = decklist count
+	rowTotals: number[];
+	colTotals: number[];
+	grandTotal: number;
+	maxCount: number; // for color scaling
+}

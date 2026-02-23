@@ -13,21 +13,34 @@
 	let tooltipData: { cell?: MatchupCell; stat?: ArchetypeStats; isOverall: boolean } | null = $state(null);
 	let hoverTimer: ReturnType<typeof setTimeout> | null = null;
 
-	/** Color gradient: red (0%) → white (50%) → green (100%). */
+	/** Color gradient: red (≤30%) → gray (48-52%) → green (≥70%). */
 	function winrateColor(wr: number): string {
-		if (wr < 0.5) {
-			const t = wr / 0.5;
-			const r = 220;
-			const g = Math.round(80 + t * 175);
-			const b = Math.round(80 + t * 175);
-			return `rgb(${r}, ${g}, ${b})`;
+		const red: [number, number, number] = [220, 160, 160];
+		const neutral: [number, number, number] = [245, 245, 245];
+		const green: [number, number, number] = [160, 220, 165];
+
+		let from: [number, number, number];
+		let to: [number, number, number];
+		let t: number;
+
+		if (wr <= 0.30) {
+			return `rgb(${red[0]}, ${red[1]}, ${red[2]})`;
+		} else if (wr < 0.48) {
+			t = (wr - 0.30) / 0.18;
+			from = red; to = neutral;
+		} else if (wr <= 0.52) {
+			return `rgb(${neutral[0]}, ${neutral[1]}, ${neutral[2]})`;
+		} else if (wr < 0.70) {
+			t = (wr - 0.52) / 0.18;
+			from = neutral; to = green;
 		} else {
-			const t = (wr - 0.5) / 0.5;
-			const r = Math.round(255 - t * 175);
-			const g = Math.round(255 - t * 30);
-			const b = Math.round(255 - t * 175);
-			return `rgb(${r}, ${g}, ${b})`;
+			return `rgb(${green[0]}, ${green[1]}, ${green[2]})`;
 		}
+
+		const r = Math.round(from[0] + t * (to[0] - from[0]));
+		const g = Math.round(from[1] + t * (to[1] - from[1]));
+		const b = Math.round(from[2] + t * (to[2] - from[2]));
+		return `rgb(${r}, ${g}, ${b})`;
 	}
 
 	function formatWinrate(wr: number | null): string {

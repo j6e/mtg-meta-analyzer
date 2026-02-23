@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { base } from '$app/paths';
-	import { globalMetagameData } from '$lib/stores/tournaments';
+	import { globalMetagameData, globalAttributionMatrix } from '$lib/stores/tournaments';
+	import AttributionMatrix from '$lib/components/AttributionMatrix.svelte';
 
 	type SortKey = 'name' | 'metagameShare' | 'overallWinrate' | 'playerCount' | 'totalMatches';
 	type SortDir = 'asc' | 'desc';
@@ -95,6 +96,16 @@
 	</div>
 {/if}
 
+{#if $globalAttributionMatrix}
+	<section class="attribution-section">
+		<h2>Classification Attribution</h2>
+		<p class="section-desc">
+			Compares classifier-assigned archetypes (rows) vs player self-reported archetypes (columns). Cells show decklist counts.
+		</p>
+		<AttributionMatrix matrix={$globalAttributionMatrix} />
+	</section>
+{/if}
+
 <style>
 	h1 {
 		font-size: 1.5rem;
@@ -165,5 +176,21 @@
 
 	.below50 {
 		color: #dc2626;
+	}
+
+	.attribution-section {
+		margin-top: 2.5rem;
+	}
+
+	.attribution-section h2 {
+		font-size: 1.15rem;
+		font-weight: 600;
+		margin-bottom: 0.5rem;
+	}
+
+	.section-desc {
+		font-size: 0.85rem;
+		color: var(--color-text-muted);
+		margin-bottom: 1rem;
 	}
 </style>

@@ -1,5 +1,5 @@
 import type { TournamentData, MatchResult } from '../types/tournament';
-import type { MatchupCell, MatchupMatrix, ArchetypeStats } from '../types/metagame';
+import type { MatchupCell, MatchupMatrix, ArchetypeStats, AttributionMatrix } from '../types/metagame';
 import type { ClassificationResult } from '../algorithms/archetype-classifier';
 
 /** Intentional draws are recorded as 0-0-3 — no games played, just drawn rounds. */
@@ -310,4 +310,89 @@ export function computeMetagameStats(
 			intentionalDraws: ids.get(name) ?? 0,
 		};
 	});
+}
+
+/**
+ * Build an attribution (confusion) matrix comparing classifier-assigned archetypes
+ * against player self-reported archetypes. Each cell counts decklists.
+ */
+export function buildAttributionMatrix(
+	tournaments: TournamentData[],
+	classificationResultsMap: Map<number, ClassificationResult[]>,
+): AttributionMatrix | null {
+	// Count: classified → reported → count
+	const counts = new Map<string, Map<string, number>>();
+
+	for (const t of tournaments) {
+		const results = classificationResultsMap.get(t.meta.id) ?? [];
+		for (const r of results) {
+			const decklist = t.decklists[r.decklistId];
+			if (!decklist) continue;
+
+			const classified = r.archetype;
+			const raw = decklist.reportedArchetype?.trim();
+			const reported = raw ? raw : 'No Report';
+
+			if (!counts.has(classified)) counts.set(classified, new Map());
+			const inner = counts.get(classified)!;
+			inner.set(reported, (inner.get(reported) ?? 0) + 1);
+		}
+	}
+
+	if (counts.size === 0) return null;
+
+	// Collect totals per classified archetype
+	const classifiedTotals = new Map<string, number>();
+	for (const [classified, inner] of counts) {
+		let total = 0;
+		for (const count of inner.values()) total += count;
+		classifiedTotals.set(classified, total);
+	}
+
+	// Collect totals per reported archetype
+	const reportedTotals = new Map<string, number>();
+	for (const inner of counts.values()) {
+		for (const [reported, count] of inner) {
+			reportedTotals.set(reported, (reportedTotals.get(reported) ?? 0) + count);
+		}
+	}
+
+	// Sort both axes by total count descending
+	const classifiedArchetypes = [...classifiedTotals.entries()]
+		.sort((a, b) => b[1] - a[1])
+		.map(([name]) => name);
+	const reportedArchetypes = [...reportedTotals.entries()]
+		.sort((a, b) => b[1] - a[1])
+		.map(([name]) => name);
+
+	// Build cells, totals, maxCount
+	const rowTotals: number[] = [];
+	const colTotals: number[] = new Array(reportedArchetypes.length).fill(0);
+	let grandTotal = 0;
+	let maxCount = 0;
+
+	const cells: number[][] = classifiedArchetypes.map((classified) => {
+		const inner = counts.get(classified) ?? new Map<string, number>();
+		let rowTotal = 0;
+		const row = reportedArchetypes.map((reported, j) => {
+			const count = inner.get(reported) ?? 0;
+			rowTotal += count;
+			colTotals[j] += count;
+			if (count > maxCount) maxCount = count;
+			return count;
+		});
+		rowTotals.push(rowTotal);
+		grandTotal += rowTotal;
+		return row;
+	});
+
+	return {
+		classifiedArchetypes,
+		reportedArchetypes,
+		cells,
+		rowTotals,
+		colTotals,
+		grandTotal,
+		maxCount,
+	};
 }
