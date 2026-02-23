@@ -1,0 +1,62 @@
+format: Standard
+date: "2026-02-23"
+archetypes:
+  - name: "Izzet Lessons (0 Talent)"
+    strictMode: true
+    signatureCards:
+      - name: Gran-Gran
+        minCopies: 4
+      - name: Firebending Lesson
+        minCopies: 4
+      - name: Accumulate Wisdom
+        minCopies: 4
+      - name: "Stormchaser's Talent"
+        exactCopies: 0
+
+  - name: "Izzet Lessons (1 Talent)"
+    strictMode: true
+    signatureCards:
+      - name: Gran-Gran
+        minCopies: 4
+      - name: Firebending Lesson
+        minCopies: 4
+      - name: Accumulate Wisdom
+        minCopies: 4
+      - name: "Stormchaser's Talent"
+        exactCopies: 1
+
+  - name: "Izzet Lessons (2 Talent)"
+    strictMode: true
+    signatureCards:
+      - name: Gran-Gran
+        minCopies: 4
+      - name: Firebending Lesson
+        minCopies: 4
+      - name: Accumulate Wisdom
+        minCopies: 4
+      - name: "Stormchaser's Talent"
+        exactCopies: 2
+
+  - name: "Izzet Lessons (3 Talent)"
+    strictMode: true
+    signatureCards:
+      - name: Gran-Gran
+        minCopies: 4
+      - name: Firebending Lesson
+        minCopies: 4
+      - name: Accumulate Wisdom
+        minCopies: 4
+      - name: "Stormchaser's Talent"
+        exactCopies: 3
+
+  - name: "Izzet Lessons (4 Talent)"
+    strictMode: true
+    signatureCards:
+      - name: Gran-Gran
+        minCopies: 4
+      - name: Firebending Lesson
+        minCopies: 4
+      - name: Accumulate Wisdom
+        minCopies: 4
+      - name: "Stormchaser's Talent"
+        exactCopies: 4
