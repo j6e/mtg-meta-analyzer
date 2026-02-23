@@ -155,69 +155,51 @@
 	<div class="spec-panel">
 		<h3>Specification</h3>
 
-		<section>
-			<h4>Schema Reference</h4>
-			<table class="spec-table">
-				<thead>
-					<tr><th>Field</th><th>Type</th><th>Req</th><th>Description</th></tr>
-				</thead>
-				<tbody>
-					<tr><td><code>format</code></td><td>string</td><td></td><td>Format name (e.g. "Standard")</td></tr>
-					<tr><td><code>date</code></td><td>string</td><td></td><td>Date of definition (ISO)</td></tr>
-					<tr><td><code>archetypes</code></td><td>array</td><td>*</td><td>List of archetype definitions</td></tr>
-					<tr><td><code>  name</code></td><td>string</td><td>*</td><td>Archetype display name</td></tr>
-					<tr><td><code>  signatureCards</code></td><td>array</td><td>*</td><td>Cards that identify this archetype</td></tr>
-					<tr><td><code>    name</code></td><td>string</td><td>*</td><td>Card name</td></tr>
-					<tr><td><code>    minCopies</code></td><td>number</td><td></td><td>Deck must have &ge; N copies</td></tr>
-					<tr><td><code>    exactCopies</code></td><td>number</td><td></td><td>Deck must have exactly N copies (0 = absent)</td></tr>
-					<tr><td><code>  strictMode</code></td><td>boolean</td><td></td><td>If true, KNN cannot produce this label</td></tr>
-				</tbody>
-			</table>
-		</section>
+		<table class="spec-table">
+			<thead>
+				<tr><th>Field</th><th>Type</th><th>Description</th></tr>
+			</thead>
+			<tbody>
+				<tr><td><code>format</code></td><td>string</td><td>Format name (e.g. "Standard")</td></tr>
+				<tr><td><code>date</code></td><td>string</td><td>Date of definition (ISO)</td></tr>
+				<tr><td><code>archetypes[]</code></td><td>array</td><td>List of archetype definitions</td></tr>
+				<tr><td><code>&nbsp;&nbsp;.name</code></td><td>string*</td><td>Archetype display name</td></tr>
+				<tr><td><code>&nbsp;&nbsp;.signatureCards[]</code></td><td>array*</td><td>Cards that identify this archetype</td></tr>
+				<tr><td><code>&nbsp;&nbsp;&nbsp;&nbsp;.name</code></td><td>string*</td><td>Card name</td></tr>
+				<tr><td><code>&nbsp;&nbsp;&nbsp;&nbsp;.minCopies</code></td><td>number</td><td>Deck must have &ge; N copies</td></tr>
+				<tr><td><code>&nbsp;&nbsp;&nbsp;&nbsp;.exactCopies</code></td><td>number</td><td>Exactly N copies (0 = absent)</td></tr>
+				<tr><td><code>&nbsp;&nbsp;.strictMode</code></td><td>boolean</td><td>If true, KNN cannot produce this label</td></tr>
+			</tbody>
+		</table>
 
 		<section>
-			<h4>Matching Rules</h4>
+			<h4>Rules</h4>
 			<ul>
-				<li><code>minCopies</code>: deck must have &ge; N copies of the card</li>
-				<li><code>exactCopies</code>: deck must have exactly N copies (use 0 to require card absence)</li>
-				<li>If neither is set, defaults to <code>minCopies: 1</code></li>
-				<li>ALL signature cards must match (AND logic)</li>
-				<li>If multiple archetypes match, the one with more signature cards wins</li>
+				<li><code>minCopies</code>: &ge; N copies required; <code>exactCopies</code>: exactly N (0 = card absent)</li>
+				<li>Neither set → defaults to <code>minCopies: 1</code></li>
+				<li>ALL signature cards must match (AND); most cards wins ties</li>
+				<li>Unmatched decks go to KNN (k=5, min confidence 0.3)</li>
 			</ul>
 		</section>
 
-		<section>
-			<h4>Classification Pipeline</h4>
-			<ol>
-				<li><strong>Signature match</strong>: rule-based, checks all signature cards (confidence 1.0)</li>
-				<li><strong>KNN fallback</strong>: for unmatched decklists, uses TF-IDF + cosine similarity with k=5 neighbors</li>
-				<li>KNN confidence below 0.3 → classified as "Unknown"</li>
-			</ol>
-		</section>
-
-		<section>
-			<h4>Example</h4>
-			<pre class="example">{`archetypes:
+		<pre class="example">{`archetypes:
   - name: Izzet Lessons
     signatureCards:
       - name: Gran-Gran
         minCopies: 4
-      - name: Firebending Lesson
-        minCopies: 4
-
-  - name: Mono-Green Landfall
+  - name: Mono-Green
     signatureCards:
       - name: Stomping Ground
-        exactCopies: 0  # must NOT have`}</pre>
-		</section>
+        exactCopies: 0  # absent`}</pre>
 	</div>
 </div>
 
 <style>
 	.editor-layout {
 		display: grid;
-		grid-template-columns: 1fr 1fr;
+		grid-template-columns: 3fr 2fr;
 		gap: 1.5rem;
+		align-items: start;
 		margin-bottom: 2rem;
 	}
 
@@ -285,7 +267,7 @@
 	textarea {
 		display: block;
 		width: 100%;
-		min-height: 400px;
+		min-height: 550px;
 		padding: 0.75rem;
 		border: none;
 		background: transparent;
@@ -407,79 +389,77 @@
 	/* Spec panel */
 
 	.spec-panel {
-		max-height: calc(60vh + 200px);
-		overflow-y: auto;
-		font-size: 0.8rem;
+		font-size: 0.78rem;
 	}
 
 	.spec-panel h3 {
-		font-size: 0.75rem;
+		font-size: 0.7rem;
 		font-weight: 600;
 		text-transform: uppercase;
 		letter-spacing: 0.04em;
 		color: var(--color-text-muted);
-		margin-bottom: 0.75rem;
+		margin-bottom: 0.5rem;
 	}
 
 	.spec-panel h4 {
-		font-size: 0.85rem;
+		font-size: 0.8rem;
 		font-weight: 600;
-		margin-bottom: 0.4rem;
+		margin-bottom: 0.3rem;
 	}
 
 	.spec-panel section {
-		margin-bottom: 1.25rem;
+		margin-bottom: 0.75rem;
 	}
 
 	.spec-table {
 		width: 100%;
 		border-collapse: collapse;
-		font-size: 0.75rem;
+		font-size: 0.7rem;
+		margin-bottom: 0.75rem;
 	}
 
 	.spec-table th,
 	.spec-table td {
-		padding: 0.3rem 0.5rem;
+		padding: 0.2rem 0.4rem;
 		text-align: left;
 		border-bottom: 1px solid var(--color-border);
 	}
 
 	.spec-table th {
 		font-weight: 600;
-		font-size: 0.65rem;
+		font-size: 0.6rem;
 		text-transform: uppercase;
 		letter-spacing: 0.04em;
 		color: var(--color-text-muted);
 	}
 
 	.spec-table code {
-		font-size: 0.75rem;
+		font-size: 0.7rem;
 		white-space: nowrap;
 	}
 
-	.spec-panel ul,
-	.spec-panel ol {
+	.spec-panel ul {
 		margin: 0;
-		padding-left: 1.25rem;
+		padding-left: 1.1rem;
 	}
 
 	.spec-panel li {
-		margin-bottom: 0.3rem;
+		margin-bottom: 0.2rem;
 	}
 
 	.spec-panel code {
 		background: var(--color-bg);
-		padding: 0.1rem 0.3rem;
+		padding: 0.05rem 0.25rem;
 		border-radius: 3px;
-		font-size: 0.75rem;
+		font-size: 0.7rem;
 	}
 
 	pre.example {
 		background: var(--color-bg);
-		padding: 0.75rem;
+		padding: 0.5rem 0.75rem;
 		border-radius: var(--radius);
-		font-size: 0.75rem;
-		line-height: 1.5;
+		font-size: 0.7rem;
+		line-height: 1.4;
 		overflow-x: auto;
 		margin: 0;
 	}
