@@ -1,6 +1,9 @@
 <script lang="ts">
 	import type { TournamentData } from '../types/tournament';
-	import { splitByCard, type SplitMode, type SplitResult, type SplitRow } from '../utils/winrate-splitter';
+	import { splitByCard, type SplitMode, type SplitResult } from '../utils/winrate-splitter';
+	import { computeStatistics, autoScanCards } from '../utils/statistical-splitter';
+	import type { StatisticalSplitResult, AutoScanResult } from '../types/statistics';
+	import { significanceStars } from '../algorithms/statistics';
 	import { winrateColor, pct } from '../utils/format';
 
 	let {
@@ -22,8 +25,16 @@
 	let topN = $state(0);
 	let minMetagameShare = $state(2);
 	let splitResult = $state<SplitResult | null>(null);
+	let statsResult = $state<StatisticalSplitResult | null>(null);
 	let calculating = $state(false);
 	let searchQuery = $state('');
+
+	// Auto-scan state
+	let autoScanMinMatches = $state(10);
+	let autoScanResults = $state<AutoScanResult[] | null>(null);
+	let autoScanning = $state(false);
+	let autoScanProgress = $state(0);
+	let autoScanTotal = $state(0);
 
 	const filteredCards = $derived.by(() => {
 		if (!searchQuery) return allCardNames.slice(0, 20);
@@ -39,44 +50,86 @@
 		showDropdown = false;
 	}
 
+	function splitOptions() {
+		return {
+			...(mode === 'binary' ? { threshold } : {}),
+			...(otherMode === 'topN' && topN > 0 ? { topN } : {}),
+			...(otherMode === 'minShare' && minMetagameShare > 0
+				? { minMetagameShare: minMetagameShare / 100 }
+				: {}),
+		};
+	}
+
 	async function doSplit() {
 		if (!selectedCard) return;
 		calculating = true;
 		splitResult = null;
+		statsResult = null;
 
 		await new Promise((r) => requestAnimationFrame(r));
 
 		try {
-			splitResult = splitByCard(
-				tournaments,
-				playerArchetypes,
-				archetypeName,
-				selectedCard,
-				mode,
-				{
-					...(mode === 'binary' ? { threshold } : {}),
-					...(otherMode === 'topN' && topN > 0 ? { topN } : {}),
-					...(otherMode === 'minShare' && minMetagameShare > 0
-						? { minMetagameShare: minMetagameShare / 100 }
-						: {}),
-				},
+			const split = splitByCard(
+				tournaments, playerArchetypes, archetypeName,
+				selectedCard, mode, splitOptions(),
 			);
+			splitResult = split;
+			statsResult = computeStatistics(split);
 		} finally {
 			calculating = false;
 		}
+	}
+
+	async function doAutoScan() {
+		autoScanning = true;
+		autoScanResults = null;
+		autoScanProgress = 0;
+		autoScanTotal = allCardNames.length;
+
+		try {
+			autoScanResults = await autoScanCards(
+				tournaments, playerArchetypes, archetypeName,
+				allCardNames, mode,
+				{
+					minMatches: autoScanMinMatches,
+					...splitOptions(),
+					onProgress: (done, total) => {
+						autoScanProgress = done;
+						autoScanTotal = total;
+					},
+				},
+			);
+		} finally {
+			autoScanning = false;
+		}
+	}
+
+	function selectAutoScanCard(cardName: string) {
+		selectedCard = cardName;
+		searchQuery = cardName;
+		doSplit();
 	}
 
 	function deltaBar(baseline: number | null, group: number | null): { width: string; color: string; label: string } | null {
 		if (baseline === null || group === null) return null;
 		const delta = group - baseline;
 		if (Math.abs(delta) < 0.001) return null;
-		const maxDelta = 0.30; // 30% is full width
+		const maxDelta = 0.30;
 		const width = Math.min(Math.abs(delta) / maxDelta, 1) * 100;
 		return {
 			width: width + '%',
 			color: delta > 0 ? '#16a34a' : '#dc2626',
 			label: (delta > 0 ? '+' : '') + (delta * 100).toFixed(1) + '%',
 		};
+	}
+
+	function sigColor(level: number): string {
+		switch (level) {
+			case 1: return '#d97706';
+			case 2: return '#ea580c';
+			case 3: return '#dc2626';
+			default: return 'transparent';
+		}
 	}
 </script>
 
@@ -185,12 +238,38 @@
 		<button class="split-btn" onclick={doSplit} disabled={!selectedCard || calculating}>
 			{calculating ? 'Splitting...' : 'Split'}
 		</button>
+
+		<div class="field auto-scan-field">
+			<label for="auto-scan-min">Auto-Scan</label>
+			<div class="threshold-row">
+				<input
+					id="auto-scan-min"
+					type="number"
+					min="1"
+					max="200"
+					bind:value={autoScanMinMatches}
+				/>
+				<span class="hint">min matches</span>
+			</div>
+			<button class="scan-btn" onclick={doAutoScan} disabled={autoScanning}>
+				{autoScanning ? 'Scanning...' : 'Scan All Cards'}
+			</button>
+		</div>
 	</div>
 
 	{#if calculating}
 		<div class="loading">
 			<div class="spinner"></div>
 			<span>Computing splits...</span>
+		</div>
+	{/if}
+
+	{#if autoScanning}
+		<div class="progress-section">
+			<div class="progress-bar-track">
+				<div class="progress-bar-fill" style="width: {autoScanTotal > 0 ? (autoScanProgress / autoScanTotal * 100) : 0}%"></div>
+			</div>
+			<span class="progress-text">{autoScanProgress} / {autoScanTotal} cards</span>
 		</div>
 	{/if}
 
@@ -203,7 +282,7 @@
 		{/if}
 	{/snippet}
 
-	{#if splitResult}
+	{#if splitResult && statsResult}
 		<div class="results">
 			<div class="table-wrap">
 				<table>
@@ -246,7 +325,8 @@
 						</tr>
 
 						<!-- Group rows with delta bars -->
-						{#each splitResult.groupRows as group}
+						{#each splitResult.groupRows as group, gi}
+							{@const statRow = statsResult.rows[gi]}
 							<!-- Delta bar row -->
 							<tr class="delta-row">
 								<td class="group-col"></td>
@@ -272,13 +352,24 @@
 									{#if group.totalMatches > 0}
 										<span class="match-count">({group.totalMatches})</span>
 									{/if}
+									<span class="ci-text">[{pct(statRow.overallCI.lower, 0)} — {pct(statRow.overallCI.upper, 0)}]</span>
 								</td>
 								{#each splitResult.opponents as opp}
 									{@const cell = group.cells.get(opp)}
+									{@const cellCI = statRow.cellCIs.get(opp)}
+									{@const cellSig = statRow.cellSignificance.get(opp)}
 									<td class="num-col" style="background: {cell?.winrate != null ? winrateColor(cell.winrate) : 'transparent'}">
-										<span class="winrate">{pct(cell?.winrate ?? null)}</span>
+										<span class="winrate">
+											{pct(cell?.winrate ?? null)}
+											{#if cellSig && cellSig.level > 0}
+												<span class="sig-stars" style="color: {sigColor(cellSig.level)}">{significanceStars(cellSig.level)}</span>
+											{/if}
+										</span>
 										{#if cell && cell.total > 0}
 											<span class="match-count">({cell.total})</span>
+										{/if}
+										{#if cellCI}
+											<span class="ci-text">[{pct(cellCI.lower, 0)} — {pct(cellCI.upper, 0)}]</span>
 										{/if}
 									</td>
 								{/each}
@@ -287,6 +378,62 @@
 					</tbody>
 				</table>
 			</div>
+
+			<!-- Pairwise comparisons -->
+			{#if statsResult.pairwise.length > 0}
+				<div class="pairwise-section">
+					{#each statsResult.pairwise as pair}
+						<div class="pairwise-item">
+							P({pair.groupA} &gt; {pair.groupB}) = <strong>{(pair.probABetter * 100).toFixed(1)}%</strong>
+						</div>
+					{/each}
+				</div>
+			{/if}
+		</div>
+	{/if}
+
+	<!-- Auto-scan results -->
+	{#if autoScanResults}
+		<div class="auto-scan-results">
+			<h4>Auto-Scan Results ({autoScanResults.length} cards with data)</h4>
+			{#if autoScanResults.length === 0}
+				<p class="empty-msg">No significant card effects found.</p>
+			{:else}
+				<div class="table-wrap">
+					<table>
+						<thead>
+							<tr>
+								<th class="card-name-col">Card</th>
+								<th class="num-col">Effect</th>
+								<th class="num-col">Adj. p</th>
+								<th class="num-col">Sig</th>
+								<th>Best</th>
+								<th>Worst</th>
+								<th class="num-col">Matches</th>
+							</tr>
+						</thead>
+						<tbody>
+							{#each autoScanResults as row}
+								<tr class="scan-row" class:significant={row.level > 0} onclick={() => selectAutoScanCard(row.cardName)}>
+									<td class="card-name-col">{row.cardName}</td>
+									<td class="num-col">{(row.effectSize * 100).toFixed(1)}%</td>
+									<td class="num-col">{row.adjustedP < 0.001 ? '<0.001' : row.adjustedP.toFixed(3)}</td>
+									<td class="num-col">
+										{#if row.level > 0}
+											<span class="sig-stars" style="color: {sigColor(row.level)}">{significanceStars(row.level)}</span>
+										{:else}
+											<span class="ns-label">ns</span>
+										{/if}
+									</td>
+									<td>{row.bestGroup}</td>
+									<td>{row.worstGroup}</td>
+									<td class="num-col">{row.totalMatches}</td>
+								</tr>
+							{/each}
+						</tbody>
+					</table>
+				</div>
+			{/if}
 		</div>
 	{/if}
 </div>
@@ -451,6 +598,32 @@
 		cursor: not-allowed;
 	}
 
+	.scan-btn {
+		padding: 0.45rem 0.75rem;
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius);
+		background: var(--color-surface);
+		color: var(--color-text);
+		font-size: 0.8rem;
+		font-weight: 600;
+		cursor: pointer;
+		transition: background 0.15s;
+	}
+
+	.scan-btn:hover:not(:disabled) {
+		background: var(--color-border);
+	}
+
+	.scan-btn:disabled {
+		opacity: 0.5;
+		cursor: not-allowed;
+	}
+
+	.auto-scan-field {
+		border-left: 1px solid var(--color-border);
+		padding-left: 1rem;
+	}
+
 	.loading {
 		display: flex;
 		align-items: center;
@@ -471,6 +644,33 @@
 
 	@keyframes spin {
 		to { transform: rotate(360deg); }
+	}
+
+	.progress-section {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		margin-bottom: 1rem;
+	}
+
+	.progress-bar-track {
+		flex: 1;
+		height: 0.5rem;
+		background: var(--color-border);
+		border-radius: 4px;
+		overflow: hidden;
+		max-width: 300px;
+	}
+
+	.progress-bar-fill {
+		height: 100%;
+		background: var(--color-accent);
+		transition: width 0.1s;
+	}
+
+	.progress-text {
+		font-size: 0.75rem;
+		color: var(--color-text-muted);
 	}
 
 	.results {
@@ -572,6 +772,73 @@
 		font-size: 0.6rem;
 		color: var(--color-text-muted);
 		line-height: 1;
+	}
+
+	.ci-text {
+		display: block;
+		font-size: 0.55rem;
+		color: var(--color-text-muted);
+		font-weight: 400;
+		line-height: 1.1;
+	}
+
+	.sig-stars {
+		font-weight: 700;
+		margin-left: 0.15rem;
+	}
+
+	.pairwise-section {
+		margin-top: 0.75rem;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem 1.5rem;
+	}
+
+	.pairwise-item {
+		font-size: 0.8rem;
+		color: var(--color-text-muted);
+	}
+
+	.auto-scan-results {
+		margin-top: 1.5rem;
+		border-top: 1px solid var(--color-border);
+		padding-top: 1rem;
+	}
+
+	.auto-scan-results h4 {
+		font-size: 0.8rem;
+		font-weight: 600;
+		margin: 0 0 0.5rem;
+		text-transform: uppercase;
+		letter-spacing: 0.03em;
+		color: var(--color-text-muted);
+	}
+
+	.empty-msg {
+		font-size: 0.8rem;
+		color: var(--color-text-muted);
+	}
+
+	.card-name-col {
+		text-align: left;
+		min-width: 10rem;
+	}
+
+	.scan-row {
+		cursor: pointer;
+	}
+
+	.scan-row:hover {
+		background: rgba(79, 70, 229, 0.04);
+	}
+
+	.scan-row.significant {
+		font-weight: 500;
+	}
+
+	.ns-label {
+		font-size: 0.65rem;
+		color: var(--color-text-muted);
 	}
 
 	tbody tr:hover:not(.delta-row) {

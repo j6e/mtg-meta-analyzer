@@ -10,6 +10,8 @@ export interface SplitRow {
 	cells: Map<string, MatchupCell>;
 	overallWinrate: number | null;
 	totalMatches: number;
+	totalWins: number;
+	totalLosses: number;
 	playerCount: number;
 }
 
@@ -132,6 +134,8 @@ function extractRow(
 		cells,
 		overallWinrate: totalMatches > 0 ? totalWins / totalMatches : null,
 		totalMatches,
+		totalWins,
+		totalLosses,
 		playerCount,
 	};
 }

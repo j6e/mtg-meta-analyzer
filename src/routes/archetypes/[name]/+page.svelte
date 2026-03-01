@@ -10,6 +10,7 @@
 	import DecklistComparison from '$lib/components/DecklistComparison.svelte';
 	import CardCompositionTable from '$lib/components/CardCompositionTable.svelte';
 	import WinrateSplitterPanel from '$lib/components/WinrateSplitterPanel.svelte';
+	import CardImpactPanel from '$lib/components/CardImpactPanel.svelte';
 	import {
 		collectArchetypeDecklists,
 		findBestDecklist,
@@ -110,7 +111,7 @@
 	const rawDecklists = $derived(enrichedDecklists.map((e) => e.decklist));
 
 	// ── Tab state ──
-	type Tab = 'matchups' | 'aggregate' | 'composition' | 'splitter' | 'decklists';
+	type Tab = 'matchups' | 'aggregate' | 'composition' | 'splitter' | 'impact' | 'decklists';
 	let activeTab = $state<Tab>('matchups');
 
 	const tabs: { id: Tab; label: string }[] = [
@@ -118,6 +119,7 @@
 		{ id: 'aggregate', label: 'Aggregate' },
 		{ id: 'composition', label: 'Composition' },
 		{ id: 'splitter', label: 'Winrate Splitter' },
+		{ id: 'impact', label: 'Card Impact' },
 		{ id: 'decklists', label: 'Decklists' },
 	];
 
@@ -212,6 +214,9 @@
 	});
 
 	const tournaments = $derived(getAllTournaments());
+
+	// ── Card Impact tab ──
+	const impactOpponents = $derived(matchupsRaw.map((m) => m.opponent));
 
 	// ── Decklists tab ──
 	let showAllDecklists = $state(false);
@@ -429,6 +434,19 @@
 				{allCardNames}
 				{tournaments}
 				playerArchetypes={$globalPlayerArchetypes}
+			/>
+
+		{:else if activeTab === 'impact'}
+			<p class="tab-description">
+				Multivariate analysis of which flex card choices jointly predict wins.
+				Uses Bayesian logistic regression on card copy counts, reporting each card's
+				coefficient with 95% credible interval.
+			</p>
+			<CardImpactPanel
+				{archetypeName}
+				{tournaments}
+				playerArchetypes={$globalPlayerArchetypes}
+				opponents={impactOpponents}
 			/>
 
 		{:else if activeTab === 'decklists'}
