@@ -32,7 +32,7 @@ export const BUILTIN_CONFIGS: BuiltinArchetypeConfig[] = Object.entries(builtinM
 			id: `builtin:${stem}`,
 			filename,
 			displayName: stemToDisplayName(stem),
-			yamlContent,
+			yamlContent: yamlContent.replace(/\r\n/g, '\n'),
 		};
 	})
 	.sort((a, b) => {
