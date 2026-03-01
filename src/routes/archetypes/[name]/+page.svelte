@@ -12,12 +12,11 @@
 	import WinrateSplitterPanel from '$lib/components/WinrateSplitterPanel.svelte';
 	import {
 		collectArchetypeDecklists,
-		collectRawDecklists,
 		findBestDecklist,
-		type EnrichedDecklist,
 	} from '$lib/utils/decklist-collector';
 	import { aggregateDecks, type AggregatedDeck } from '$lib/algorithms/noka';
 	import { computeCardComposition } from '$lib/utils/card-composition';
+	import { pct } from '$lib/utils/format';
 	import type { DecklistInfo } from '$lib/types/decklist';
 
 	const archetypeName = $derived(decodeURIComponent(page.params.name ?? ''));
@@ -218,9 +217,6 @@
 	let showAllDecklists = $state(false);
 	const visibleDecklists = $derived(showAllDecklists ? enrichedDecklists : enrichedDecklists.slice(0, 6));
 
-	function pct(n: number): string {
-		return (n * 100).toFixed(1) + '%';
-	}
 </script>
 
 <svelte:head>

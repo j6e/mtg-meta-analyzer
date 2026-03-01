@@ -132,15 +132,6 @@ function higherOrderAggregate(
 		return names;
 	});
 
-	// Pre-compute combo frequencies from input decks
-	// Singles: how many decks include card X
-	const singleFreq = new Map<string, number>();
-	for (const cardSet of deckCardSets) {
-		for (const name of cardSet) {
-			singleFreq.set(name, (singleFreq.get(name) ?? 0) + 1);
-		}
-	}
-
 	// Instance frequencies: how many decks include ≥N copies (for scoring individual copies)
 	const instanceFreq = new Map<string, number>();
 	for (const cardList of cardLists) {
@@ -205,8 +196,17 @@ function higherOrderAggregate(
 	// Iteratively remove lowest-scored card-copy until target size.
 	// Each order's contribution is normalized by the number of combinations
 	// so the 1/2^size weight controls relative importance across orders.
+
+	// Track unique card names and their copy counts incrementally
+	const nameCounts = new Map<string, number>();
+	for (const copy of pool) {
+		nameCounts.set(copy.name, (nameCounts.get(copy.name) ?? 0) + 1);
+	}
+
 	while (pool.length > targetSize) {
-		const uniqueNames = new Set(pool.map((c) => c.name));
+		// Pre-sort unique names once per iteration (for triple key construction)
+		const sortedUniqueNames = tripleFreq ? [...nameCounts.keys()].sort() : null;
+
 		let minScore = Infinity;
 		let minIdx = 0;
 
@@ -222,7 +222,7 @@ function higherOrderAggregate(
 			if (pairFreq) {
 				let pairSum = 0;
 				let pairCount = 0;
-				for (const other of uniqueNames) {
+				for (const other of nameCounts.keys()) {
 					if (other === copy.name) continue;
 					const pairKey =
 						copy.name < other
@@ -237,16 +237,24 @@ function higherOrderAggregate(
 			}
 
 			// 3rd order component: average triple frequency × 1/8
-			if (tripleFreq) {
+			if (tripleFreq && sortedUniqueNames) {
 				let tripleSum = 0;
 				let tripleCount = 0;
-				const others = [...uniqueNames]
-					.filter((n) => n !== copy.name)
-					.sort();
-				for (let i = 0; i < others.length; i++) {
-					for (let j = i + 1; j < others.length; j++) {
-						const triple = [copy.name, others[i], others[j]].sort();
-						const key = `${triple[0]}|${triple[1]}|${triple[2]}`;
+				for (let i = 0; i < sortedUniqueNames.length; i++) {
+					const a = sortedUniqueNames[i];
+					if (a === copy.name) continue;
+					for (let j = i + 1; j < sortedUniqueNames.length; j++) {
+						const b = sortedUniqueNames[j];
+						if (b === copy.name) continue;
+						// a < b is guaranteed (sorted). Build key with copy.name in correct position.
+						let key: string;
+						if (copy.name < a) {
+							key = `${copy.name}|${a}|${b}`;
+						} else if (copy.name < b) {
+							key = `${a}|${copy.name}|${b}`;
+						} else {
+							key = `${a}|${b}|${copy.name}`;
+						}
 						tripleSum += tripleFreq.get(key) ?? 0;
 						tripleCount++;
 					}
@@ -262,7 +270,16 @@ function higherOrderAggregate(
 			}
 		}
 
-		pool.splice(minIdx, 1);
+		// Remove the lowest-scored copy and update name tracking
+		const removed = pool[minIdx];
+		pool[minIdx] = pool[pool.length - 1];
+		pool.pop();
+		const remaining = nameCounts.get(removed.name)! - 1;
+		if (remaining === 0) {
+			nameCounts.delete(removed.name);
+		} else {
+			nameCounts.set(removed.name, remaining);
+		}
 	}
 
 	// Collapse copies into quantities

@@ -1,5 +1,5 @@
 import type { TournamentData } from '../types/tournament';
-import type { MatchupCell } from '../types/metagame';
+import type { MatchupCell, MatchupMatrix, ArchetypeStats } from '../types/metagame';
 import { collectArchetypeDecklists } from './decklist-collector';
 import { buildMatchupMatrix } from './winrate-calculator';
 
@@ -69,11 +69,12 @@ function extractRow(
 	archetypeName: string,
 	opponents: string[],
 	playerCount: number,
+	prebuilt?: { matrix: MatchupMatrix; stats: ArchetypeStats[] },
 ): SplitRow {
 	// Always build an un-collapsed matrix so every archetype is individually
 	// visible. The "Other" cell is aggregated manually from the same set of
 	// archetypes the caller determined via the baseline threshold.
-	const { matrix, stats } = buildMatchupMatrix(tournaments, playerArchetypes, {
+	const { matrix, stats } = prebuilt ?? buildMatchupMatrix(tournaments, playerArchetypes, {
 		excludeMirrors: true,
 	});
 
@@ -155,11 +156,18 @@ export function splitByCard(
 		minMetagameShare: options?.minMetagameShare,
 	};
 
-	// Determine opponents from the baseline matrix
-	const { matrix: baseMatrix } = buildMatchupMatrix(tournaments, playerArchetypes, matrixOpts);
-	const opponents = baseMatrix.archetypes.filter((a) => a !== archetypeName);
+	// Build the un-collapsed baseline matrix once (reused for opponent determination + baseline row)
+	const baselineResult = buildMatchupMatrix(tournaments, playerArchetypes, {
+		excludeMirrors: true,
+	});
 
-	// Build baseline row (all players)
+	// Determine opponents from a possibly collapsed matrix (topN/minMetagameShare)
+	const hasCollapsing = matrixOpts.topN || matrixOpts.minMetagameShare;
+	const opponents = hasCollapsing
+		? buildMatchupMatrix(tournaments, playerArchetypes, matrixOpts).matrix.archetypes.filter((a) => a !== archetypeName)
+		: baselineResult.matrix.archetypes.filter((a) => a !== archetypeName);
+
+	// Build baseline row (all players), reusing the already-built matrix
 	const allPlayerIds = new Set(playerCopies.keys());
 	const baselineRow = extractRow(
 		tournaments,
@@ -167,6 +175,7 @@ export function splitByCard(
 		archetypeName,
 		opponents,
 		allPlayerIds.size,
+		baselineResult,
 	);
 	baselineRow.label = 'All';
 

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { CardCompositionRow } from '../utils/card-composition';
+	import { pct } from '../utils/format';
 	import CardTooltip from './CardTooltip.svelte';
 
 	let {
@@ -67,10 +68,6 @@
 		return `background: rgb(${r}, ${g}, ${b})`;
 	}
 
-	function pct(value: number): string {
-		return (value * 100).toFixed(0) + '%';
-	}
-
 	function sortIndicator(key: SortKey): string {
 		if (sortKey !== key) return '';
 		return sortAsc ? ' ▲' : ' ▼';
@@ -114,10 +111,10 @@
 									<span class="card-name">{row.cardName}</span>
 								</CardTooltip>
 							</td>
-							<td class="num-col" style={pctBg(row.thresholds[0])}>{pct(row.thresholds[0])}</td>
-							<td class="num-col" style={pctBg(row.thresholds[1])}>{pct(row.thresholds[1])}</td>
-							<td class="num-col" style={pctBg(row.thresholds[2])}>{pct(row.thresholds[2])}</td>
-							<td class="num-col" style={pctBg(row.thresholds[3])}>{pct(row.thresholds[3])}</td>
+							<td class="num-col" style={pctBg(row.thresholds[0])}>{pct(row.thresholds[0], 0)}</td>
+							<td class="num-col" style={pctBg(row.thresholds[1])}>{pct(row.thresholds[1], 0)}</td>
+							<td class="num-col" style={pctBg(row.thresholds[2])}>{pct(row.thresholds[2], 0)}</td>
+							<td class="num-col" style={pctBg(row.thresholds[3])}>{pct(row.thresholds[3], 0)}</td>
 							<td class="num-col avg-col">{row.averageQuantity.toFixed(1)}</td>
 						</tr>
 					{/each}
