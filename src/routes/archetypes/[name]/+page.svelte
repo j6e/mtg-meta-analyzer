@@ -7,6 +7,18 @@
 		getAllTournaments,
 	} from '$lib/stores/tournaments';
 	import DecklistView from '$lib/components/DecklistView.svelte';
+	import DecklistComparison from '$lib/components/DecklistComparison.svelte';
+	import CardCompositionTable from '$lib/components/CardCompositionTable.svelte';
+	import WinrateSplitterPanel from '$lib/components/WinrateSplitterPanel.svelte';
+	import {
+		collectArchetypeDecklists,
+		collectRawDecklists,
+		findBestDecklist,
+		type EnrichedDecklist,
+	} from '$lib/utils/decklist-collector';
+	import { aggregateDecks, type AggregatedDeck } from '$lib/algorithms/noka';
+	import { computeCardComposition } from '$lib/utils/card-composition';
+	import type { DecklistInfo } from '$lib/types/decklist';
 
 	const archetypeName = $derived(decodeURIComponent(page.params.name ?? ''));
 
@@ -32,34 +44,128 @@
 			.sort((a, b) => (b.cell.winrate ?? 0) - (a.cell.winrate ?? 0));
 	});
 
-	// Decklists belonging to this archetype
-	const decklists = $derived.by(() => {
-		const archetypes = $globalPlayerArchetypes;
-		const tournaments = getAllTournaments();
-		const result: { playerName: string; tournamentName: string; decklistId: string; decklist: import('$lib/types/decklist').DecklistInfo }[] = [];
-
-		for (const t of tournaments) {
-			for (const [playerId, player] of Object.entries(t.players)) {
-				if (archetypes.get(playerId) !== archetypeName) continue;
-				for (const deckId of player.decklistIds) {
-					const deck = t.decklists[deckId];
-					if (deck) {
-						result.push({
-							playerName: player.name,
-							tournamentName: t.meta.name,
-							decklistId: deckId,
-							decklist: deck,
-						});
-					}
-				}
-			}
-		}
-		return result;
+	// Enriched decklists for this archetype (with metadata)
+	const enrichedDecklists = $derived.by(() => {
+		return collectArchetypeDecklists(
+			getAllTournaments(),
+			$globalPlayerArchetypes,
+			archetypeName,
+		);
 	});
 
-	// Show only a few decklists by default
+	// Raw decklists for aggregation & composition
+	const rawDecklists = $derived(enrichedDecklists.map((e) => e.decklist));
+
+	// ── Tab state ──
+	type Tab = 'aggregate' | 'composition' | 'splitter' | 'decklists';
+	let activeTab = $state<Tab>('aggregate');
+
+	const tabs: { id: Tab; label: string }[] = [
+		{ id: 'aggregate', label: 'Aggregate' },
+		{ id: 'composition', label: 'Composition' },
+		{ id: 'splitter', label: 'Winrate Splitter' },
+		{ id: 'decklists', label: 'Decklists' },
+	];
+
+	// ── Aggregate tab state ──
+	let order = $state<1 | 2 | 3>(1);
+	let aggregateResult: AggregatedDeck | null = $state(null);
+	let aggregating = $state(false);
+	let aggregateError = $state('');
+
+	// Auto-calculate when archetype changes or order changes
+	let lastCalcKey = $state('');
+
+	$effect(() => {
+		const key = `${archetypeName}:${order}`;
+		if (key !== lastCalcKey && rawDecklists.length > 0 && activeTab === 'aggregate') {
+			lastCalcKey = key;
+			calculateAggregate();
+		}
+	});
+
+	async function calculateAggregate() {
+		aggregating = true;
+		aggregateResult = null;
+		aggregateError = '';
+
+		await new Promise((r) => requestAnimationFrame(r));
+
+		try {
+			if (rawDecklists.length === 0) {
+				aggregateError = 'No decklists found for this archetype.';
+				return;
+			}
+			aggregateResult = aggregateDecks(rawDecklists, order);
+		} catch (e) {
+			aggregateError = e instanceof Error ? e.message : 'Aggregation failed.';
+		} finally {
+			aggregating = false;
+		}
+	}
+
+	const aggregateAsDecklistInfo = $derived.by((): DecklistInfo | null => {
+		if (!aggregateResult) return null;
+		return {
+			playerId: '',
+			mainboard: aggregateResult.mainboard,
+			sideboard: aggregateResult.sideboard,
+			companion: null,
+			reportedArchetype: null,
+		};
+	});
+
+	// Decklist picker for comparison
+	const bestDecklist = $derived(findBestDecklist(enrichedDecklists));
+	let selectedDecklistId = $state('');
+
+	// Pre-select best decklist when enriched list changes
+	$effect(() => {
+		if (bestDecklist && !selectedDecklistId) {
+			selectedDecklistId = bestDecklist.decklistId;
+		}
+	});
+
+	const selectedEnriched = $derived(
+		enrichedDecklists.find((e) => e.decklistId === selectedDecklistId) ?? null,
+	);
+
+	const selectedLabel = $derived(
+		selectedEnriched
+			? `${selectedEnriched.tournamentName} — ${selectedEnriched.playerName} (Rank #${selectedEnriched.playerRank})`
+			: '',
+	);
+
+	// Dropdown options sorted by rank
+	const decklistOptions = $derived.by(() => {
+		return [...enrichedDecklists]
+			.sort((a, b) => a.playerRank - b.playerRank || a.tournamentName.localeCompare(b.tournamentName))
+			.map((e) => ({
+				id: e.decklistId,
+				label: `${e.tournamentName} — ${e.playerName} (Rank #${e.playerRank})`,
+			}));
+	});
+
+	// ── Composition tab ──
+	const composition = $derived.by(() => {
+		return computeCardComposition(rawDecklists);
+	});
+
+	// ── Splitter tab ──
+	const allCardNames = $derived.by(() => {
+		const names = new Set<string>();
+		for (const deck of rawDecklists) {
+			for (const c of deck.mainboard) names.add(c.cardName);
+			for (const c of deck.sideboard) names.add(c.cardName);
+		}
+		return [...names].sort();
+	});
+
+	const tournaments = $derived(getAllTournaments());
+
+	// ── Decklists tab ──
 	let showAllDecklists = $state(false);
-	const visibleDecklists = $derived(showAllDecklists ? decklists : decklists.slice(0, 6));
+	const visibleDecklists = $derived(showAllDecklists ? enrichedDecklists : enrichedDecklists.slice(0, 6));
 
 	function pct(n: number): string {
 		return (n * 100).toFixed(1) + '%';
@@ -131,26 +237,120 @@
 		</section>
 	{/if}
 
-	<!-- Decklists -->
-	{#if decklists.length > 0}
-		<section>
-			<h2>Decklists ({decklists.length})</h2>
-			<div class="decklist-grid">
-				{#each visibleDecklists as d}
-					<DecklistView
-						decklist={d.decklist}
-						playerName={d.playerName}
-						archetype={d.tournamentName}
-					/>
-				{/each}
+	<!-- Tab Bar -->
+	<div class="tab-bar" role="tablist">
+		{#each tabs as tab}
+			<button
+				class="tab-btn"
+				class:active={activeTab === tab.id}
+				onclick={() => (activeTab = tab.id)}
+				role="tab"
+				aria-selected={activeTab === tab.id}
+			>
+				{tab.label}
+			</button>
+		{/each}
+	</div>
+
+	<!-- Tab Content -->
+	<div class="tab-content">
+		{#if activeTab === 'aggregate'}
+			<div class="aggregate-controls">
+				<div class="field">
+					<!-- svelte-ignore a11y_label_has_associated_control -->
+					<label>Order</label>
+					<div class="order-buttons" role="group" aria-label="Aggregation order">
+						{#each [1, 2, 3] as n}
+							<button
+								class="order-btn"
+								class:active={order === n}
+								onclick={() => (order = n as 1 | 2 | 3)}
+							>
+								{n}
+							</button>
+						{/each}
+					</div>
+				</div>
+
+				<div class="field compare-field">
+					<label for="decklist-picker">Compare with</label>
+					<select id="decklist-picker" bind:value={selectedDecklistId}>
+						<option value="">— Select decklist —</option>
+						{#each decklistOptions as opt}
+							<option value={opt.id}>{opt.label}</option>
+						{/each}
+					</select>
+				</div>
 			</div>
-			{#if decklists.length > 6 && !showAllDecklists}
-				<button class="show-more" onclick={() => (showAllDecklists = true)}>
-					Show all {decklists.length} decklists
-				</button>
+
+			{#if aggregating}
+				<div class="loading">
+					<div class="spinner"></div>
+					<span>Aggregating decklists (order {order})...</span>
+				</div>
 			{/if}
-		</section>
-	{/if}
+
+			{#if aggregateError}
+				<p class="error">{aggregateError}</p>
+			{/if}
+
+			{#if aggregateAsDecklistInfo}
+				<div class="result-meta">
+					Aggregate <strong>{archetypeName}</strong> — Order {order}, from {aggregateResult?.deckCount ?? 0} decklists
+				</div>
+				<DecklistComparison
+					aggregateDecklist={aggregateAsDecklistInfo}
+					selectedDecklist={selectedEnriched?.decklist ?? null}
+					aggregateLabel="Aggregate (Order {order})"
+					selectedLabel={selectedLabel}
+				/>
+			{/if}
+
+		{:else if activeTab === 'composition'}
+			{#if composition.deckCount > 0}
+				<CardCompositionTable
+					rows={composition.mainboard}
+					title="Mainboard"
+					deckCount={composition.deckCount}
+				/>
+				<CardCompositionTable
+					rows={composition.sideboard}
+					title="Sideboard"
+					deckCount={composition.deckCount}
+				/>
+			{:else}
+				<p class="empty-state">No decklists found for composition analysis.</p>
+			{/if}
+
+		{:else if activeTab === 'splitter'}
+			<WinrateSplitterPanel
+				{archetypeName}
+				{allCardNames}
+				{tournaments}
+				playerArchetypes={$globalPlayerArchetypes}
+			/>
+
+		{:else if activeTab === 'decklists'}
+			{#if enrichedDecklists.length > 0}
+				<div class="decklist-grid">
+					{#each visibleDecklists as d}
+						<DecklistView
+							decklist={d.decklist}
+							playerName={d.playerName}
+							archetype={d.tournamentName}
+						/>
+					{/each}
+				</div>
+				{#if enrichedDecklists.length > 6 && !showAllDecklists}
+					<button class="show-more" onclick={() => (showAllDecklists = true)}>
+						Show all {enrichedDecklists.length} decklists
+					</button>
+				{/if}
+			{:else}
+				<p class="empty-state">No decklists found.</p>
+			{/if}
+		{/if}
+	</div>
 {:else}
 	<p class="not-found">Archetype "{archetypeName}" not found.</p>
 {/if}
@@ -278,7 +478,149 @@
 		color: #dc2626;
 	}
 
-	/* Decklists */
+	/* Tab bar */
+	.tab-bar {
+		display: flex;
+		gap: 0;
+		margin-bottom: 1.5rem;
+		border-bottom: 2px solid var(--color-border);
+	}
+
+	.tab-btn {
+		padding: 0.6rem 1.25rem;
+		background: none;
+		border: none;
+		border-bottom: 2px solid transparent;
+		margin-bottom: -2px;
+		font-size: 0.875rem;
+		font-weight: 500;
+		color: var(--color-text-muted);
+		cursor: pointer;
+		transition: color 0.15s, border-color 0.15s;
+	}
+
+	.tab-btn:hover {
+		color: var(--color-text);
+	}
+
+	.tab-btn.active {
+		color: var(--color-accent);
+		border-bottom-color: var(--color-accent);
+		font-weight: 600;
+	}
+
+	.tab-content {
+		min-height: 200px;
+	}
+
+	/* Aggregate tab */
+	.aggregate-controls {
+		display: flex;
+		gap: 1.25rem;
+		align-items: flex-end;
+		flex-wrap: wrap;
+		margin-bottom: 1.25rem;
+	}
+
+	.field {
+		display: flex;
+		flex-direction: column;
+		gap: 0.35rem;
+	}
+
+	.compare-field {
+		flex: 1;
+		min-width: 250px;
+	}
+
+	label {
+		font-size: 0.75rem;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.03em;
+		color: var(--color-text-muted);
+	}
+
+	select {
+		padding: 0.45rem 0.6rem;
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius);
+		background: var(--color-surface);
+		color: var(--color-text);
+		font-size: 0.85rem;
+		width: 100%;
+	}
+
+	.order-buttons {
+		display: flex;
+	}
+
+	.order-btn {
+		padding: 0.45rem 0.85rem;
+		border: 1px solid var(--color-border);
+		background: var(--color-surface);
+		color: var(--color-text);
+		font-size: 0.875rem;
+		cursor: pointer;
+		transition: background 0.15s, color 0.15s;
+	}
+
+	.order-btn:first-child {
+		border-radius: var(--radius) 0 0 var(--radius);
+	}
+
+	.order-btn:last-child {
+		border-radius: 0 var(--radius) var(--radius) 0;
+	}
+
+	.order-btn:not(:first-child) {
+		border-left: none;
+	}
+
+	.order-btn.active {
+		background: var(--color-accent);
+		color: #fff;
+		border-color: var(--color-accent);
+	}
+
+	.order-btn.active + .order-btn {
+		border-left-color: var(--color-accent);
+	}
+
+	.loading {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		color: var(--color-text-muted);
+		font-size: 0.875rem;
+		margin-bottom: 1rem;
+	}
+
+	.spinner {
+		width: 1.25rem;
+		height: 1.25rem;
+		border: 2px solid var(--color-border);
+		border-top-color: var(--color-accent);
+		border-radius: 50%;
+		animation: spin 0.6s linear infinite;
+	}
+
+	@keyframes spin {
+		to { transform: rotate(360deg); }
+	}
+
+	.error {
+		color: #dc2626;
+		font-size: 0.875rem;
+	}
+
+	.result-meta {
+		font-size: 0.85rem;
+		color: var(--color-text-muted);
+		margin-bottom: 0.75rem;
+	}
+
+	/* Decklists tab */
 	.decklist-grid {
 		display: grid;
 		grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -298,6 +640,12 @@
 
 	.show-more:hover {
 		background: rgba(79, 70, 229, 0.04);
+	}
+
+	.empty-state {
+		color: var(--color-text-muted);
+		font-size: 0.875rem;
+		font-style: italic;
 	}
 
 	.not-found {

@@ -70,13 +70,15 @@ test.describe('Navigation', () => {
 		await expect(matchupTable).toBeVisible();
 	});
 
-	test('archetype detail page shows decklists', async ({ page }) => {
+	test('archetype detail page shows decklists via tab', async ({ page }) => {
 		await page.goto('/archetypes');
 		await page.locator('tbody tr').first().locator('a').click();
 
-		// Decklists section should be present
-		const decklistHeading = page.locator('section h2', { hasText: 'Decklists' });
-		await expect(decklistHeading).toBeVisible();
+		// Tab bar should be present
+		await expect(page.locator('.tab-bar')).toBeVisible();
+
+		// Click the Decklists tab
+		await page.locator('.tab-btn', { hasText: 'Decklists' }).click();
 
 		// At least one decklist should render
 		await expect(page.locator('.decklist').first()).toBeVisible();
