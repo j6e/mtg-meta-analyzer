@@ -65,8 +65,8 @@ describe('computeCardComposition', () => {
 		// 3/5 decks have >=4 copies
 		expect(bolt.thresholds[3]).toBeCloseTo(0.6);
 		expect(bolt.count).toBe(4);
-		// avg of 4+4+2+4 = 14/4 = 3.5
-		expect(bolt.averageQuantity).toBeCloseTo(3.5);
+		// avg across all 5 decks: (4+4+2+0+4) / 5 = 2.8
+		expect(bolt.averageQuantity).toBeCloseTo(2.8);
 	});
 
 	it('separates mainboard and sideboard', () => {

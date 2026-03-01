@@ -14,7 +14,7 @@
 
 	type SortKey = 'name' | 'avg' | 't0' | 't1' | 't2' | 't3';
 
-	let sortKey = $state<SortKey>('t0');
+	let sortKey = $state<SortKey>('avg');
 	let sortAsc = $state(false);
 
 	const sortedRows = $derived.by(() => {
@@ -56,11 +56,15 @@
 	}
 
 	function pctBg(value: number): string {
-		// White at 0%, green at 100%
-		const g = Math.round(160 + value * 60); // 160 → 220
-		const r = Math.round(245 - value * 85); // 245 → 160
-		const b = Math.round(245 - value * 80); // 245 → 165
-		return `rgb(${r}, ${g}, ${b})`;
+		// Inverted gradient: #ff5555 → #6025f5, mixed with white for dimmer tones
+		const from: [number, number, number] = [0xff, 0x55, 0x55];
+		const to: [number, number, number] = [0x60, 0x25, 0xf5];
+		const mix = 0.35; // blend toward white (0 = full color, 1 = white)
+		const t = value;
+		const r = Math.round((from[0] + (to[0] - from[0]) * t) * (1 - mix) + 255 * mix);
+		const g = Math.round((from[1] + (to[1] - from[1]) * t) * (1 - mix) + 255 * mix);
+		const b = Math.round((from[2] + (to[2] - from[2]) * t) * (1 - mix) + 255 * mix);
+		return `background: rgb(${r}, ${g}, ${b})`;
 	}
 
 	function pct(value: number): string {
@@ -110,10 +114,10 @@
 									<span class="card-name">{row.cardName}</span>
 								</CardTooltip>
 							</td>
-							<td class="num-col" style="background: {pctBg(row.thresholds[0])}">{pct(row.thresholds[0])}</td>
-							<td class="num-col" style="background: {pctBg(row.thresholds[1])}">{pct(row.thresholds[1])}</td>
-							<td class="num-col" style="background: {pctBg(row.thresholds[2])}">{pct(row.thresholds[2])}</td>
-							<td class="num-col" style="background: {pctBg(row.thresholds[3])}">{pct(row.thresholds[3])}</td>
+							<td class="num-col" style={pctBg(row.thresholds[0])}>{pct(row.thresholds[0])}</td>
+							<td class="num-col" style={pctBg(row.thresholds[1])}>{pct(row.thresholds[1])}</td>
+							<td class="num-col" style={pctBg(row.thresholds[2])}>{pct(row.thresholds[2])}</td>
+							<td class="num-col" style={pctBg(row.thresholds[3])}>{pct(row.thresholds[3])}</td>
 							<td class="num-col avg-col">{row.averageQuantity.toFixed(1)}</td>
 						</tr>
 					{/each}

@@ -16,8 +16,11 @@
 	} = $props();
 
 	let selectedCard = $state('');
-	let mode = $state<SplitMode>('binary');
+	let mode = $state<SplitMode>('per-copy');
 	let threshold = $state(4);
+	let otherMode = $state<'topN' | 'minShare'>('minShare');
+	let topN = $state(0);
+	let minMetagameShare = $state(2);
 	let splitResult = $state<SplitResult | null>(null);
 	let calculating = $state(false);
 	let searchQuery = $state('');
@@ -50,7 +53,13 @@
 				archetypeName,
 				selectedCard,
 				mode,
-				mode === 'binary' ? { threshold } : undefined,
+				{
+					...(mode === 'binary' ? { threshold } : {}),
+					...(otherMode === 'topN' && topN > 0 ? { topN } : {}),
+					...(otherMode === 'minShare' && minMetagameShare > 0
+						? { minMetagameShare: minMetagameShare / 100 }
+						: {}),
+				},
 			);
 		} finally {
 			calculating = false;
@@ -164,6 +173,49 @@
 			</div>
 		{/if}
 
+		<div class="field other-field">
+			<!-- svelte-ignore a11y_label_has_associated_control -->
+			<label>"Other" threshold</label>
+			<div class="mode-buttons" role="group" aria-label="Other threshold mode">
+				<button
+					class="mode-btn"
+					class:active={otherMode === 'topN'}
+					onclick={() => (otherMode = 'topN')}
+				>
+					Top N
+				</button>
+				<button
+					class="mode-btn"
+					class:active={otherMode === 'minShare'}
+					onclick={() => (otherMode = 'minShare')}
+				>
+					Min %
+				</button>
+			</div>
+			{#if otherMode === 'topN'}
+				<div class="threshold-row">
+					<input
+						type="number"
+						min="0"
+						max="20"
+						bind:value={topN}
+					/>
+					<span class="hint">0 = all</span>
+				</div>
+			{:else}
+				<div class="threshold-row">
+					<input
+						type="number"
+						min="0"
+						max="100"
+						step="0.5"
+						bind:value={minMetagameShare}
+					/>
+					<span class="hint">%</span>
+				</div>
+			{/if}
+		</div>
+
 		<button class="split-btn" onclick={doSplit} disabled={!selectedCard || calculating}>
 			{calculating ? 'Splitting...' : 'Split'}
 		</button>
@@ -192,10 +244,16 @@
 					<thead>
 						<tr>
 							<th class="group-col">Group</th>
-							<th class="num-col">Players</th>
-							<th class="num-col">Overall</th>
+							<th class="num-col opp-col" title="Players">
+								<div class="vertical-header"># Players</div>
+							</th>
+							<th class="num-col opp-col" title="Overall">
+								<div class="vertical-header">Overall</div>
+							</th>
 							{#each splitResult.opponents as opp}
-								<th class="num-col opp-col" title={opp}>{opp}</th>
+								<th class="num-col opp-col" title={opp}>
+									<div class="vertical-header">{opp}</div>
+								</th>
 							{/each}
 						</tr>
 					</thead>
@@ -205,12 +263,18 @@
 							<td class="group-col"><strong>{splitResult.baselineRow.label}</strong></td>
 							<td class="num-col">{splitResult.baselineRow.playerCount}</td>
 							<td class="num-col" style="background: {splitResult.baselineRow.overallWinrate !== null ? winrateColor(splitResult.baselineRow.overallWinrate) : 'transparent'}">
-								{pct(splitResult.baselineRow.overallWinrate)}
+								<span class="winrate">{pct(splitResult.baselineRow.overallWinrate)}</span>
+								{#if splitResult.baselineRow.totalMatches > 0}
+									<span class="match-count">({splitResult.baselineRow.totalMatches})</span>
+								{/if}
 							</td>
 							{#each splitResult.opponents as opp}
 								{@const cell = splitResult.baselineRow.cells.get(opp)}
 								<td class="num-col" style="background: {cell?.winrate != null ? winrateColor(cell.winrate) : 'transparent'}">
-									{pct(cell?.winrate ?? null)}
+									<span class="winrate">{pct(cell?.winrate ?? null)}</span>
+									{#if cell && cell.total > 0}
+										<span class="match-count">({cell.total})</span>
+									{/if}
 								</td>
 							{/each}
 						</tr>
@@ -238,12 +302,15 @@
 								<td class="group-col">{group.label}</td>
 								<td class="num-col">{group.playerCount}</td>
 								<td class="num-col" style="background: {group.overallWinrate !== null ? winrateColor(group.overallWinrate) : 'transparent'}">
-									{pct(group.overallWinrate)}
+									<span class="winrate">{pct(group.overallWinrate)}</span>
+									{#if group.totalMatches > 0}
+										<span class="match-count">({group.totalMatches})</span>
+									{/if}
 								</td>
 								{#each splitResult.opponents as opp}
 									{@const cell = group.cells.get(opp)}
 									<td class="num-col" style="background: {cell?.winrate != null ? winrateColor(cell.winrate) : 'transparent'}">
-										{pct(cell?.winrate ?? null)}
+										<span class="winrate">{pct(cell?.winrate ?? null)}</span>
 										{#if cell && cell.total > 0}
 											<span class="match-count">({cell.total})</span>
 										{/if}
@@ -371,6 +438,22 @@
 		border-left-color: var(--color-accent);
 	}
 
+	.other-field {
+		min-width: 120px;
+	}
+
+	.threshold-row {
+		display: flex;
+		align-items: center;
+		gap: 0.35rem;
+		margin-top: 0.35rem;
+	}
+
+	.hint {
+		font-size: 0.75rem;
+		color: var(--color-text-muted);
+	}
+
 	.field input[type='number'] {
 		width: 4rem;
 		padding: 0.45rem 0.6rem;
@@ -439,9 +522,10 @@
 
 	th,
 	td {
-		padding: 0.35rem 0.5rem;
+		padding: 0.15rem 0.25rem;
 		border-bottom: 1px solid var(--color-border);
 		white-space: nowrap;
+		line-height: 1.2;
 	}
 
 	th {
@@ -463,13 +547,21 @@
 	.num-col {
 		text-align: center;
 		font-variant-numeric: tabular-nums;
-		min-width: 4rem;
+		min-width: 3rem;
 	}
 
 	.opp-col {
-		max-width: 8rem;
-		overflow: hidden;
-		text-overflow: ellipsis;
+		height: 8rem;
+		vertical-align: bottom;
+		min-width: 2.5rem;
+		padding: 0.25rem;
+	}
+
+	.vertical-header {
+		writing-mode: vertical-rl;
+		transform: rotate(180deg);
+		white-space: nowrap;
+		margin: 0 auto;
 	}
 
 	.baseline-row {
@@ -478,9 +570,9 @@
 	}
 
 	.delta-row td {
-		padding: 0.15rem 0.5rem;
+		padding: 0.1rem 0.25rem;
 		border-bottom: none;
-		height: 1.2rem;
+		height: 1rem;
 	}
 
 	.delta-bar {
@@ -503,10 +595,17 @@
 		line-height: 0.8rem;
 	}
 
+	.winrate {
+		display: block;
+		font-weight: 600;
+		font-size: 0.75rem;
+	}
+
 	.match-count {
-		font-size: 0.7rem;
+		display: block;
+		font-size: 0.6rem;
 		color: var(--color-text-muted);
-		margin-left: 0.15rem;
+		line-height: 1;
 	}
 
 	tbody tr:hover:not(.delta-row) {

@@ -29,8 +29,33 @@
 		return data.stats.find((s) => s.name === archetypeName) ?? null;
 	});
 
-	// Matchup breakdown: this archetype's row from the matrix
-	const matchups = $derived.by(() => {
+	// Rank badges for meta share and winrate
+	const metaShareRank = $derived.by(() => {
+		const data = $globalMetagameData;
+		if (!data || !stats) return null;
+		const sorted = [...data.stats].sort((a, b) => b.metagameShare - a.metagameShare);
+		const idx = sorted.findIndex((s) => s.name === archetypeName);
+		return idx >= 0 ? idx + 1 : null;
+	});
+
+	const winrateRank = $derived.by(() => {
+		const data = $globalMetagameData;
+		if (!data || !stats) return null;
+		const sorted = [...data.stats].sort((a, b) => b.overallWinrate - a.overallWinrate);
+		const idx = sorted.findIndex((s) => s.name === archetypeName);
+		return idx >= 0 ? idx + 1 : null;
+	});
+
+	function rankBadge(rank: number | null): string {
+		if (rank === null) return '';
+		if (rank === 1) return '🥇';
+		if (rank === 2) return '🥈';
+		if (rank === 3) return '🥉';
+		return `#${rank}`;
+	}
+
+	// Matchup breakdown: this archetype's row from the matrix (unsorted)
+	const matchupsRaw = $derived.by(() => {
 		const data = $globalMetagameData;
 		if (!data) return [];
 		const idx = data.matrix.archetypes.indexOf(archetypeName);
@@ -40,8 +65,37 @@
 				opponent,
 				cell: data.matrix.cells[idx][j],
 			}))
-			.filter((m) => m.opponent !== archetypeName && m.cell.total > 0)
-			.sort((a, b) => (b.cell.winrate ?? 0) - (a.cell.winrate ?? 0));
+			.filter((m) => m.opponent !== archetypeName && m.cell.total > 0);
+	});
+
+	// ── Matchup sort state ──
+	type MatchupSortCol = 'opponent' | 'winrate' | 'matches';
+	let matchupSortCol = $state<MatchupSortCol>('matches');
+	let matchupSortAsc = $state(false);
+
+	function toggleMatchupSort(col: MatchupSortCol) {
+		if (matchupSortCol === col) {
+			matchupSortAsc = !matchupSortAsc;
+		} else {
+			matchupSortCol = col;
+			matchupSortAsc = col === 'opponent'; // alphabetical asc by default, numbers desc
+		}
+	}
+
+	const matchups = $derived.by(() => {
+		const rows = [...matchupsRaw];
+		const dir = matchupSortAsc ? 1 : -1;
+		rows.sort((a, b) => {
+			switch (matchupSortCol) {
+				case 'opponent':
+					return dir * a.opponent.localeCompare(b.opponent);
+				case 'winrate':
+					return dir * ((a.cell.winrate ?? 0) - (b.cell.winrate ?? 0));
+				case 'matches':
+					return dir * (a.cell.total - b.cell.total);
+			}
+		});
+		return rows;
 	});
 
 	// Enriched decklists for this archetype (with metadata)
@@ -57,10 +111,11 @@
 	const rawDecklists = $derived(enrichedDecklists.map((e) => e.decklist));
 
 	// ── Tab state ──
-	type Tab = 'aggregate' | 'composition' | 'splitter' | 'decklists';
-	let activeTab = $state<Tab>('aggregate');
+	type Tab = 'matchups' | 'aggregate' | 'composition' | 'splitter' | 'decklists';
+	let activeTab = $state<Tab>('matchups');
 
 	const tabs: { id: Tab; label: string }[] = [
+		{ id: 'matchups', label: 'Matchups' },
 		{ id: 'aggregate', label: 'Aggregate' },
 		{ id: 'composition', label: 'Composition' },
 		{ id: 'splitter', label: 'Winrate Splitter' },
@@ -186,12 +241,20 @@
 	<div class="stat-cards">
 		<div class="stat-card">
 			<span class="stat-label">Meta Share</span>
-			<span class="stat-value">{pct(stats.metagameShare)}</span>
+			<span class="stat-value">
+				{pct(stats.metagameShare)}
+				{#if rankBadge(metaShareRank)}
+					<span class="rank-badge">{rankBadge(metaShareRank)}</span>
+				{/if}
+			</span>
 		</div>
 		<div class="stat-card">
 			<span class="stat-label">Win Rate</span>
 			<span class="stat-value" class:above50={stats.overallWinrate >= 0.5} class:below50={stats.overallWinrate < 0.5}>
 				{pct(stats.overallWinrate)}
+				{#if rankBadge(winrateRank)}
+					<span class="rank-badge">{rankBadge(winrateRank)}</span>
+				{/if}
 			</span>
 		</div>
 		<div class="stat-card">
@@ -203,39 +266,6 @@
 			<span class="stat-value">{stats.totalMatches}</span>
 		</div>
 	</div>
-
-	<!-- Matchup Breakdown -->
-	{#if matchups.length > 0}
-		<section>
-			<h2>Matchups</h2>
-			<div class="table-wrap">
-				<table>
-					<thead>
-						<tr>
-							<th>Opponent</th>
-							<th class="num">Win Rate</th>
-							<th class="num">Record</th>
-							<th class="num">Matches</th>
-						</tr>
-					</thead>
-					<tbody>
-						{#each matchups as m}
-							<tr>
-								<td>
-									<a href="{base}/archetypes/{encodeURIComponent(m.opponent)}">{m.opponent}</a>
-								</td>
-								<td class="num" class:above50={(m.cell.winrate ?? 0) >= 0.5} class:below50={(m.cell.winrate ?? 0) < 0.5}>
-									{m.cell.winrate !== null ? pct(m.cell.winrate) : '—'}
-								</td>
-								<td class="num mono">{m.cell.wins}-{m.cell.losses}-{m.cell.draws}</td>
-								<td class="num">{m.cell.total}</td>
-							</tr>
-						{/each}
-					</tbody>
-				</table>
-			</div>
-		</section>
-	{/if}
 
 	<!-- Tab Bar -->
 	<div class="tab-bar" role="tablist">
@@ -254,7 +284,45 @@
 
 	<!-- Tab Content -->
 	<div class="tab-content">
-		{#if activeTab === 'aggregate'}
+		{#if activeTab === 'matchups'}
+			{#if matchups.length > 0}
+				<div class="table-wrap">
+					<table>
+						<thead>
+							<tr>
+								<th class="sortable" onclick={() => toggleMatchupSort('opponent')}>
+									Opponent {matchupSortCol === 'opponent' ? (matchupSortAsc ? '▲' : '▼') : ''}
+								</th>
+								<th class="num sortable" onclick={() => toggleMatchupSort('winrate')}>
+									Win Rate {matchupSortCol === 'winrate' ? (matchupSortAsc ? '▲' : '▼') : ''}
+								</th>
+								<th class="num">Record</th>
+								<th class="num sortable" onclick={() => toggleMatchupSort('matches')}>
+									Matches {matchupSortCol === 'matches' ? (matchupSortAsc ? '▲' : '▼') : ''}
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							{#each matchups as m}
+								<tr>
+									<td>
+										<a href="{base}/archetypes/{encodeURIComponent(m.opponent)}">{m.opponent}</a>
+									</td>
+									<td class="num" class:above50={(m.cell.winrate ?? 0) >= 0.5} class:below50={(m.cell.winrate ?? 0) < 0.5}>
+										{m.cell.winrate !== null ? pct(m.cell.winrate) : '—'}
+									</td>
+									<td class="num mono">{m.cell.wins}-{m.cell.losses}-{m.cell.draws}</td>
+									<td class="num">{m.cell.total}</td>
+								</tr>
+							{/each}
+						</tbody>
+					</table>
+				</div>
+			{:else}
+				<p class="empty-state">No matchup data available.</p>
+			{/if}
+
+		{:else if activeTab === 'aggregate'}
 			<div class="aggregate-controls">
 				<div class="field">
 					<!-- svelte-ignore a11y_label_has_associated_control -->
@@ -376,16 +444,6 @@
 		margin-bottom: 1rem;
 	}
 
-	h2 {
-		font-size: 1.15rem;
-		font-weight: 600;
-		margin-bottom: 0.75rem;
-	}
-
-	section {
-		margin-bottom: 2rem;
-	}
-
 	/* Stat cards */
 	.stat-cards {
 		display: flex;
@@ -417,6 +475,14 @@
 		font-size: 1.25rem;
 		font-weight: 700;
 		font-variant-numeric: tabular-nums;
+		display: flex;
+		align-items: center;
+		gap: 0.35rem;
+	}
+
+	.rank-badge {
+		font-size: 0.85rem;
+		line-height: 1;
 	}
 
 	/* Table */
@@ -445,6 +511,15 @@
 		color: var(--color-text-muted);
 		background: var(--color-surface);
 		white-space: nowrap;
+	}
+
+	th.sortable {
+		cursor: pointer;
+		user-select: none;
+	}
+
+	th.sortable:hover {
+		color: var(--color-text);
 	}
 
 	.num {

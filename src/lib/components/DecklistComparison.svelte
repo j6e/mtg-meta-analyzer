@@ -72,93 +72,65 @@
 </script>
 
 <div class="comparison">
-	{#if !selectedDecklist}
-		<div class="columns">
-			<div class="col">
-				<div class="col-header">{aggregateLabel}</div>
-				<div class="decklist-wrap">
-					<section>
-						<h4>Mainboard</h4>
-						<ul>
-							{#each aggregateDecklist.mainboard as card}
-								<li>
-									<span class="qty">{card.quantity}x</span>
-									<CardTooltip cardName={card.cardName}>
-										<span class="card-name">{card.cardName}</span>
-									</CardTooltip>
-								</li>
-							{/each}
-						</ul>
-					</section>
-					{#if aggregateDecklist.sideboard.length > 0}
-						<section>
-							<h4>Sideboard</h4>
-							<ul>
-								{#each aggregateDecklist.sideboard as card}
-									<li>
-										<span class="qty">{card.quantity}x</span>
-										<CardTooltip cardName={card.cardName}>
-											<span class="card-name">{card.cardName}</span>
-										</CardTooltip>
-									</li>
-								{/each}
-							</ul>
-						</section>
+	{#snippet diffTable(entries: DiffEntry[], showSel: boolean)}
+		<table>
+			<thead>
+				<tr>
+					<th class="name-col">Card</th>
+					<th class="qty-col">{aggregateLabel}</th>
+					{#if showSel}
+						<th class="qty-col">{selectedLabel}</th>
+						<th class="delta-col">Diff</th>
 					{/if}
-				</div>
-			</div>
-			<div class="col placeholder-col">
-				<div class="col-header muted">Select a decklist to compare</div>
-			</div>
-		</div>
-	{:else}
-		<div class="columns">
-			<div class="col">
-				<div class="col-header">{aggregateLabel}</div>
-			</div>
-			<div class="col">
-				<div class="col-header">{selectedLabel}</div>
-			</div>
-		</div>
+				</tr>
+			</thead>
+			<tbody>
+				{#each entries as entry}
+					<tr class={showSel ? deltaClass(entry.aggQty, entry.selQty) : ''}>
+						<td class="name-col">
+							<CardTooltip cardName={entry.cardName}>
+								<span class="card-name">{entry.cardName}</span>
+							</CardTooltip>
+						</td>
+						<td class="qty-col">{entry.aggQty || '—'}</td>
+						{#if showSel}
+							<td class="qty-col">{entry.selQty || '—'}</td>
+							<td class="delta-col">
+								{#if formatDelta(entry.aggQty, entry.selQty)}
+									<span class="delta" class:positive={entry.selQty > entry.aggQty} class:negative={entry.selQty < entry.aggQty}>
+										{formatDelta(entry.aggQty, entry.selQty)}
+									</span>
+								{/if}
+							</td>
+						{/if}
+					</tr>
+				{/each}
+			</tbody>
+		</table>
+	{/snippet}
 
+	{#if !selectedDecklist}
+		<h4>Mainboard</h4>
+		{@render diffTable(
+			aggregateDecklist.mainboard.map((c) => ({ cardName: c.cardName, aggQty: c.quantity, selQty: 0 })),
+			false,
+		)}
+		{#if aggregateDecklist.sideboard.length > 0}
+			<h4>Sideboard</h4>
+			{@render diffTable(
+				aggregateDecklist.sideboard.map((c) => ({ cardName: c.cardName, aggQty: c.quantity, selQty: 0 })),
+				false,
+			)}
+		{/if}
+	{:else}
 		{#if mainDiff && mainDiff.length > 0}
 			<h4>Mainboard</h4>
-			<div class="diff-table">
-				{#each mainDiff as entry}
-					<div class="diff-row {deltaClass(entry.aggQty, entry.selQty)}">
-						<span class="qty">{entry.aggQty || '—'}</span>
-						<CardTooltip cardName={entry.cardName}>
-							<span class="card-name">{entry.cardName}</span>
-						</CardTooltip>
-						<span class="qty">{entry.selQty || '—'}</span>
-						{#if formatDelta(entry.aggQty, entry.selQty)}
-							<span class="delta" class:positive={entry.selQty > entry.aggQty} class:negative={entry.selQty < entry.aggQty}>
-								{formatDelta(entry.aggQty, entry.selQty)}
-							</span>
-						{/if}
-					</div>
-				{/each}
-			</div>
+			{@render diffTable(mainDiff, true)}
 		{/if}
 
 		{#if sideDiff && sideDiff.length > 0}
 			<h4>Sideboard</h4>
-			<div class="diff-table">
-				{#each sideDiff as entry}
-					<div class="diff-row {deltaClass(entry.aggQty, entry.selQty)}">
-						<span class="qty">{entry.aggQty || '—'}</span>
-						<CardTooltip cardName={entry.cardName}>
-							<span class="card-name">{entry.cardName}</span>
-						</CardTooltip>
-						<span class="qty">{entry.selQty || '—'}</span>
-						{#if formatDelta(entry.aggQty, entry.selQty)}
-							<span class="delta" class:positive={entry.selQty > entry.aggQty} class:negative={entry.selQty < entry.aggQty}>
-								{formatDelta(entry.aggQty, entry.selQty)}
-							</span>
-						{/if}
-					</div>
-				{/each}
-			</div>
+			{@render diffTable(sideDiff, true)}
 		{/if}
 	{/if}
 </div>
@@ -166,39 +138,7 @@
 <style>
 	.comparison {
 		font-size: 0.85rem;
-	}
-
-	.columns {
-		display: flex;
-		gap: 1.5rem;
-	}
-
-	.col {
-		flex: 1;
-		min-width: 0;
-	}
-
-	.col-header {
-		font-size: 0.75rem;
-		font-weight: 600;
-		text-transform: uppercase;
-		letter-spacing: 0.04em;
-		color: var(--color-text-muted);
-		margin-bottom: 0.5rem;
-		padding-bottom: 0.35rem;
-		border-bottom: 1px solid var(--color-border);
-	}
-
-	.col-header.muted {
-		color: var(--color-text-muted);
-		opacity: 0.6;
-		font-weight: 400;
-		text-transform: none;
-		font-style: italic;
-	}
-
-	.decklist-wrap section {
-		margin-bottom: 0.75rem;
+		max-width: 28rem;
 	}
 
 	h4 {
@@ -210,50 +150,57 @@
 		margin: 1rem 0 0.35rem;
 	}
 
-	ul {
-		list-style: none;
-		padding: 0;
-		margin: 0;
+	table {
+		width: 100%;
+		border-collapse: collapse;
 	}
 
-	li {
-		display: flex;
-		gap: 0.35rem;
-		padding: 0.1rem 0;
-		line-height: 1.5;
+	th, td {
+		padding: 0.2rem 0.4rem;
+		border-bottom: 1px solid var(--color-border);
 	}
 
-	.diff-table {
-		display: flex;
-		flex-direction: column;
+	th {
+		font-size: 0.7rem;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+		color: var(--color-text-muted);
+		background: var(--color-surface);
+		position: sticky;
+		top: 0;
 	}
 
-	.diff-row {
-		display: grid;
-		grid-template-columns: 2rem 1fr 2rem 2.5rem;
-		gap: 0.35rem;
-		align-items: center;
-		padding: 0.15rem 0.25rem;
-		border-radius: 3px;
+	.name-col {
+		text-align: left;
 	}
 
-	.diff-row.only-agg {
+	.qty-col {
+		text-align: center;
+		font-variant-numeric: tabular-nums;
+		width: 4.5rem;
+	}
+
+	.delta-col {
+		text-align: center;
+		width: 2.5rem;
+	}
+
+	tr.only-agg {
 		background: rgba(79, 70, 229, 0.06);
 	}
 
-	.diff-row.only-sel {
+	tr.only-sel {
 		background: rgba(22, 163, 74, 0.06);
 	}
 
-	.diff-row.diff-qty {
+	tr.diff-qty {
 		background: rgba(245, 158, 11, 0.06);
 	}
 
-	.qty {
-		color: var(--color-text-muted);
-		text-align: right;
-		font-variant-numeric: tabular-nums;
-		font-size: 0.8rem;
+	tbody tr:hover {
+		outline: 1px solid rgba(79, 70, 229, 0.15);
+		outline-offset: -1px;
 	}
 
 	.card-name {
@@ -261,7 +208,7 @@
 	}
 
 	.delta {
-		font-size: 0.75rem;
+		font-size: 0.7rem;
 		font-weight: 600;
 		font-variant-numeric: tabular-nums;
 	}
@@ -272,11 +219,5 @@
 
 	.delta.negative {
 		color: #dc2626;
-	}
-
-	.placeholder-col {
-		display: flex;
-		align-items: flex-start;
-		justify-content: center;
 	}
 </style>

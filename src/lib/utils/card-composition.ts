@@ -4,7 +4,7 @@ export interface CardCompositionRow {
 	cardName: string;
 	/** % of decklists with at least N copies: [>=1, >=2, >=3, >=4]. Each 0-1. */
 	thresholds: [number, number, number, number];
-	/** Average quantity across decklists that include at least 1 copy. */
+	/** Average quantity across all decklists (0 for those not including the card). */
 	averageQuantity: number;
 	/** Number of decklists that include at least 1 copy. */
 	count: number;
@@ -28,7 +28,7 @@ function buildRows(cards: Map<string, number[]>, deckCount: number): CardComposi
 			quantities.filter((q) => q >= 3).length / deckCount,
 			quantities.filter((q) => q >= 4).length / deckCount,
 		];
-		const averageQuantity = quantities.reduce((a, b) => a + b, 0) / count;
+		const averageQuantity = quantities.reduce((a, b) => a + b, 0) / deckCount;
 		rows.push({ cardName, thresholds, averageQuantity, count });
 	}
 

@@ -65,9 +65,9 @@ test.describe('Navigation', () => {
 		// Stat cards should be visible
 		await expect(page.locator('.stat-card').first()).toBeVisible();
 
-		// Matchup table should be present
-		const matchupTable = page.locator('section h2', { hasText: 'Matchups' });
-		await expect(matchupTable).toBeVisible();
+		// Matchups tab should be active by default and table visible
+		await expect(page.locator('.tab-btn', { hasText: 'Matchups' })).toBeVisible();
+		await expect(page.locator('.tab-content table').first()).toBeVisible();
 	});
 
 	test('archetype detail page shows decklists via tab', async ({ page }) => {

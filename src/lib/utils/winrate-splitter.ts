@@ -70,6 +70,9 @@ function extractRow(
 	opponents: string[],
 	playerCount: number,
 ): SplitRow {
+	// Don't pass Other threshold here — the inspected archetype must never be
+	// collapsed into "Other" (especially in per-group calls where its player
+	// count is reduced). Opponent columns are determined by the caller.
 	const { matrix, stats } = buildMatchupMatrix(tournaments, playerArchetypes, {
 		excludeMirrors: true,
 	});
@@ -115,14 +118,18 @@ export function splitByCard(
 	archetypeName: string,
 	cardName: string,
 	mode: SplitMode,
-	options?: { threshold?: number },
+	options?: { threshold?: number; topN?: number; minMetagameShare?: number },
 ): SplitResult {
 	const playerCopies = countCardCopies(tournaments, playerArchetypes, archetypeName, cardName);
 
-	// Determine opponents from the baseline matrix
-	const { matrix: baseMatrix } = buildMatchupMatrix(tournaments, playerArchetypes, {
+	const matrixOpts = {
 		excludeMirrors: true,
-	});
+		topN: options?.topN,
+		minMetagameShare: options?.minMetagameShare,
+	};
+
+	// Determine opponents from the baseline matrix
+	const { matrix: baseMatrix } = buildMatchupMatrix(tournaments, playerArchetypes, matrixOpts);
 	const opponents = baseMatrix.archetypes.filter((a) => a !== archetypeName);
 
 	// Build baseline row (all players)
