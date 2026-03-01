@@ -2,6 +2,7 @@
 	import type { TournamentData } from '../types/tournament';
 	import { analyzeCardImpact, type CardImpactResult, type CardImpactError } from '../utils/card-impact';
 	import { pct } from '../utils/format';
+	import CardTooltip from './CardTooltip.svelte';
 
 	let {
 		archetypeName,
@@ -38,22 +39,6 @@
 		}
 	}
 
-	// Bar chart dimensions
-	const BAR_HEIGHT = 24;
-	const LABEL_WIDTH = 160;
-	const BAR_AREA_WIDTH = 300;
-	const CHART_WIDTH = LABEL_WIDTH + BAR_AREA_WIDTH + 80;
-
-	function barProps(coef: number, maxAbsCoef: number) {
-		const scale = maxAbsCoef > 0 ? Math.abs(coef) / maxAbsCoef : 0;
-		const width = scale * (BAR_AREA_WIDTH / 2);
-		const isPositive = coef >= 0;
-		return {
-			x: isPositive ? LABEL_WIDTH + BAR_AREA_WIDTH / 2 : LABEL_WIDTH + BAR_AREA_WIDTH / 2 - width,
-			width,
-			fill: isPositive ? '#16a34a' : '#dc2626',
-		};
-	}
 </script>
 
 <div class="card-impact">
@@ -126,102 +111,39 @@
 				</div>
 			{/if}
 
-			<!-- Bar chart -->
+			<!-- Bar chart (HTML-based for CardTooltip support) -->
 			{#if reg.coefficients.length > 0}
-				{@const chartHeight = reg.coefficients.length * (BAR_HEIGHT + 6) + 30}
 				<div class="chart-wrap">
-					<svg width={CHART_WIDTH} height={chartHeight} class="bar-chart">
-						<!-- Center line -->
-						<line
-							x1={LABEL_WIDTH + BAR_AREA_WIDTH / 2}
-							y1="0"
-							x2={LABEL_WIDTH + BAR_AREA_WIDTH / 2}
-							y2={chartHeight}
-							stroke="var(--color-border)"
-							stroke-width="1"
-						/>
-
-						{#each reg.coefficients as coef, i}
-							{@const y = i * (BAR_HEIGHT + 6) + 3}
-							{@const bar = barProps(coef.coefficient, maxAbs)}
-
-							<!-- Label -->
-							<text
-								x={LABEL_WIDTH - 8}
-								y={y + BAR_HEIGHT / 2 + 4}
-								text-anchor="end"
-								font-size="12"
-								fill="var(--color-text)"
-							>
-								{coef.name.length > 20 ? coef.name.slice(0, 18) + '...' : coef.name}
-							</text>
-
-							<!-- Bar -->
-							<rect
-								x={bar.x}
-								{y}
-								width={bar.width}
-								height={BAR_HEIGHT}
-								fill={bar.fill}
-								opacity="0.8"
-								rx="2"
-							/>
-
-							<!-- Error bars (CI) -->
-							{@const ciLeftX = LABEL_WIDTH + BAR_AREA_WIDTH / 2 + (coef.lower / maxAbs) * (BAR_AREA_WIDTH / 2)}
-							{@const ciRightX = LABEL_WIDTH + BAR_AREA_WIDTH / 2 + (coef.upper / maxAbs) * (BAR_AREA_WIDTH / 2)}
-							{@const ciY = y + BAR_HEIGHT / 2}
-							<line
-								x1={Math.max(LABEL_WIDTH, ciLeftX)}
-								y1={ciY}
-								x2={Math.min(LABEL_WIDTH + BAR_AREA_WIDTH, ciRightX)}
-								y2={ciY}
-								stroke="var(--color-text)"
-								stroke-width="1.5"
-								opacity="0.5"
-							/>
-							<!-- CI caps -->
-							<line
-								x1={Math.max(LABEL_WIDTH, ciLeftX)}
-								y1={ciY - 4}
-								x2={Math.max(LABEL_WIDTH, ciLeftX)}
-								y2={ciY + 4}
-								stroke="var(--color-text)"
-								stroke-width="1.5"
-								opacity="0.5"
-							/>
-							<line
-								x1={Math.min(LABEL_WIDTH + BAR_AREA_WIDTH, ciRightX)}
-								y1={ciY - 4}
-								x2={Math.min(LABEL_WIDTH + BAR_AREA_WIDTH, ciRightX)}
-								y2={ciY + 4}
-								stroke="var(--color-text)"
-								stroke-width="1.5"
-								opacity="0.5"
-							/>
-
-							<!-- Coefficient value -->
-							<text
-								x={LABEL_WIDTH + BAR_AREA_WIDTH + 8}
-								y={y + BAR_HEIGHT / 2 + 4}
-								font-size="11"
-								fill="var(--color-text-muted)"
-							>
+					{#each reg.coefficients as coef}
+						{@const scale = maxAbs > 0 ? Math.abs(coef.coefficient) / maxAbs : 0}
+						{@const barPct = scale * 50}
+						{@const isPositive = coef.coefficient >= 0}
+						{@const ciLeftPct = Math.max(0, 50 + (coef.lower / maxAbs) * 50)}
+						{@const ciRightPct = Math.min(100, 50 + (coef.upper / maxAbs) * 50)}
+						<div class="chart-row">
+							<div class="chart-label">
+								<CardTooltip cardName={coef.name}><span class="card-name">{coef.name}</span></CardTooltip>
+							</div>
+							<div class="chart-bar-area">
+								<div class="chart-center-line"></div>
+								<div
+									class="chart-bar"
+									style="left: {isPositive ? 50 : 50 - barPct}%; width: {barPct}%; background: {isPositive ? '#16a34a' : '#dc2626'};"
+								></div>
+								<!-- Error bar -->
+								<div
+									class="chart-ci"
+									style="left: {ciLeftPct}%; width: {ciRightPct - ciLeftPct}%;"
+								></div>
+								<div class="chart-ci-cap" style="left: {ciLeftPct}%;"></div>
+								<div class="chart-ci-cap" style="left: {ciRightPct}%;"></div>
+							</div>
+							<div class="chart-value">
 								{coef.coefficient > 0 ? '+' : ''}{coef.coefficient.toFixed(2)}
-							</text>
-						{/each}
-
-						<!-- Axis labels -->
-						<text
-							x={LABEL_WIDTH + BAR_AREA_WIDTH / 2}
-							y={chartHeight - 4}
-							text-anchor="middle"
-							font-size="10"
-							fill="var(--color-text-muted)"
-						>
-							Hurts ← Coefficient → Helps
-						</text>
-					</svg>
+							</div>
+						</div>
+					{/each}
+					<div class="chart-axis-label">Hurts &larr; Coefficient &rarr; Helps</div>
 				</div>
 			{/if}
 
@@ -243,7 +165,7 @@
 							<tbody>
 								{#each reg.coefficients as coef}
 									<tr>
-										<td>{coef.name}</td>
+										<td><CardTooltip cardName={coef.name}><span class="card-name">{coef.name}</span></CardTooltip></td>
 										<td class="num" class:positive={coef.coefficient > 0} class:negative={coef.coefficient < 0}>
 											{coef.coefficient > 0 ? '+' : ''}{coef.coefficient.toFixed(3)}
 										</td>
@@ -412,8 +334,81 @@
 		margin-bottom: 1rem;
 	}
 
-	.bar-chart {
-		display: block;
+	.chart-row {
+		display: flex;
+		align-items: center;
+		height: 30px;
+		gap: 0;
+	}
+
+	.chart-label {
+		width: 220px;
+		min-width: 220px;
+		text-align: right;
+		padding-right: 8px;
+		font-size: 0.8rem;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.chart-bar-area {
+		position: relative;
+		flex: 1;
+		min-width: 300px;
+		max-width: 400px;
+		height: 20px;
+	}
+
+	.chart-center-line {
+		position: absolute;
+		left: 50%;
+		top: 0;
+		bottom: 0;
+		width: 1px;
+		background: var(--color-border);
+	}
+
+	.chart-bar {
+		position: absolute;
+		top: 3px;
+		height: 14px;
+		border-radius: 2px;
+		opacity: 0.8;
+	}
+
+	.chart-ci {
+		position: absolute;
+		top: 9px;
+		height: 2px;
+		background: var(--color-text);
+		opacity: 0.5;
+	}
+
+	.chart-ci-cap {
+		position: absolute;
+		top: 5px;
+		width: 1.5px;
+		height: 10px;
+		background: var(--color-text);
+		opacity: 0.5;
+	}
+
+	.chart-value {
+		width: 50px;
+		padding-left: 8px;
+		font-size: 0.7rem;
+		color: var(--color-text-muted);
+		font-variant-numeric: tabular-nums;
+		white-space: nowrap;
+	}
+
+	.chart-axis-label {
+		text-align: center;
+		font-size: 0.65rem;
+		color: var(--color-text-muted);
+		margin-top: 0.25rem;
+		padding-left: 220px;
 	}
 
 	.details-table {

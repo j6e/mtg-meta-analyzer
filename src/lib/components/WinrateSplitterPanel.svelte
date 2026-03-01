@@ -5,6 +5,7 @@
 	import type { StatisticalSplitResult, AutoScanResult } from '../types/statistics';
 	import { significanceStars } from '../algorithms/statistics';
 	import { winrateColor, pct } from '../utils/format';
+	import CardTooltip from './CardTooltip.svelte';
 
 	let {
 		archetypeName,
@@ -422,7 +423,7 @@
 						<tbody>
 							{#each autoScanResults as row}
 								<tr class="scan-row" class:significant={row.level > 0} onclick={() => selectAutoScanCard(row.cardName)}>
-									<td class="card-name-col">{row.cardName}</td>
+									<td class="card-name-col"><CardTooltip cardName={row.cardName}><span class="card-name">{row.cardName}</span></CardTooltip></td>
 									<td class="num-col">{(row.effectSize * 100).toFixed(1)}%</td>
 									<td class="num-col">{row.adjustedP < 0.001 ? '<0.001' : row.adjustedP.toFixed(3)}</td>
 									<td class="num-col">
