@@ -215,7 +215,8 @@
 
 	// ── Decklists tab ──
 	let showAllDecklists = $state(false);
-	const visibleDecklists = $derived(showAllDecklists ? enrichedDecklists : enrichedDecklists.slice(0, 6));
+	const sortedDecklists = $derived([...enrichedDecklists].sort((a, b) => a.playerRank - b.playerRank));
+	const visibleDecklists = $derived(showAllDecklists ? sortedDecklists : sortedDecklists.slice(0, 6));
 
 </script>
 
@@ -438,6 +439,7 @@
 							decklist={d.decklist}
 							playerName={d.playerName}
 							archetype={d.tournamentName}
+							playerRank={d.playerRank}
 						/>
 					{/each}
 				</div>

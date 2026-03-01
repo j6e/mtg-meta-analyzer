@@ -23,6 +23,7 @@
 		const tournaments = getAllTournaments();
 		const result: {
 			playerName: string;
+			playerRank: number;
 			tournamentName: string;
 			decklistId: string;
 			decklist: DecklistInfo;
@@ -48,6 +49,7 @@
 
 					result.push({
 						playerName: player.name,
+						playerRank: player.rank,
 						tournamentName: t.meta.name,
 						decklistId: deckId,
 						decklist: deck,
@@ -55,6 +57,7 @@
 				}
 			}
 		}
+		result.sort((a, b) => a.playerRank - b.playerRank);
 		return result;
 	});
 
@@ -124,6 +127,7 @@
 						decklist={d.decklist}
 						playerName={d.playerName}
 						archetype={d.tournamentName}
+						playerRank={d.playerRank}
 					/>
 				{/each}
 			</div>
