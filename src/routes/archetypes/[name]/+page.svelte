@@ -315,6 +315,36 @@
 			{/if}
 
 		{:else if activeTab === 'aggregate'}
+			<section class="algorithm-info">
+				<p class="tab-description">
+					Build a consensus decklist using
+					<strong>Nth Order Karsten Aggregation</strong>
+					(<a href="https://elvishjerricco.github.io/2015/09/24/automatically-generating-magic-decks.html"
+						target="_blank" rel="noopener">Fancher's extension</a>
+					of <a href="https://strategy.channelfireball.com/all-strategy/tag/frank-karstens-magic-math/"
+						target="_blank" rel="noopener">Karsten's original</a>).
+					Each <em>nth copy</em> of a card is treated as an independent candidate &mdash;
+					the 1st copy of a staple ranks higher than the 4th copy of a flex slot.
+					The top 60 card-copies become the mainboard; top 15 the sideboard.
+				</p>
+				<div class="orders">
+					<div class="order-card" class:active={order === 1}>
+						<h3>Order 1</h3>
+						<p>Pure popularity. Each card-copy scored by how many decklists include it.</p>
+						<p class="formula">score = freq <span class="op">&times;</span> &frac12;</p>
+					</div>
+					<div class="order-card" class:active={order === 2}>
+						<h3>Order 2</h3>
+						<p>Adds pair synergy &mdash; cards that appear together get a boost.</p>
+						<p class="formula">score = freq <span class="op">&times;</span> &frac12; <span class="op">+</span> avg pair freq <span class="op">&times;</span> &frac14;</p>
+					</div>
+					<div class="order-card" class:active={order === 3}>
+						<h3>Order 3</h3>
+						<p>Adds triple synergy on top of pairs.</p>
+						<p class="formula">score = freq <span class="op">&times;</span> &frac12; <span class="op">+</span> avg pair freq <span class="op">&times;</span> &frac14; <span class="op">+</span> avg triple freq <span class="op">&times;</span> &frac18;</p>
+					</div>
+				</div>
+			</section>
 			<div class="aggregate-controls">
 				<div class="field">
 					<!-- svelte-ignore a11y_label_has_associated_control -->
@@ -367,6 +397,11 @@
 			{/if}
 
 		{:else if activeTab === 'composition'}
+			<p class="tab-description">
+				Shows how frequently each card appears across all decklists.
+				The <strong>1+, 2+, 3+, 4+</strong> columns show the percentage of decks running at least that many copies.
+				<strong>Avg</strong> is the mean number of copies across all decklists, including those that don't play the card.
+			</p>
 			{#if composition.deckCount > 0}
 				<CardCompositionTable
 					rows={composition.mainboard}
@@ -383,6 +418,11 @@
 			{/if}
 
 		{:else if activeTab === 'splitter'}
+			<p class="tab-description">
+				Splits players of this archetype by how many copies of a card they run and compares matchup performance across groups.
+				<strong>Binary</strong> divides players into two groups: those with at least N copies vs. those with fewer.
+				<strong>Per Copy</strong> creates a separate group for each exact copy count (0, 1, 2, 3, 4).
+			</p>
 			<WinrateSplitterPanel
 				{archetypeName}
 				{allCardNames}
@@ -687,6 +727,71 @@
 		margin-bottom: 0.75rem;
 	}
 
+	/* Algorithm info */
+	.algorithm-info {
+		margin-bottom: 1.25rem;
+	}
+
+	.algorithm-info a {
+		color: var(--color-accent);
+		text-decoration: underline;
+		text-decoration-color: rgba(79, 70, 229, 0.3);
+		text-underline-offset: 2px;
+	}
+
+	.algorithm-info a:hover {
+		text-decoration-color: var(--color-accent);
+	}
+
+	.orders {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+		gap: 0.75rem;
+	}
+
+	.order-card {
+		padding: 0.75rem;
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius);
+		opacity: 0.5;
+		transition: opacity 0.15s;
+	}
+
+	.order-card.active {
+		opacity: 1;
+	}
+
+	.order-card h3 {
+		font-size: 0.75rem;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.03em;
+		color: var(--color-text);
+		margin-bottom: 0.3rem;
+	}
+
+	.order-card p {
+		font-size: 0.8rem;
+		color: var(--color-text-muted);
+		line-height: 1.5;
+		margin-bottom: 0.35rem;
+	}
+
+	.order-card p:last-child {
+		margin-bottom: 0;
+	}
+
+	.formula {
+		font-family: var(--font-mono);
+		font-size: 0.75rem;
+	}
+
+	.formula .op {
+		color: var(--color-accent);
+		font-weight: 600;
+	}
+
 	/* Decklists tab */
 	.decklist-grid {
 		display: grid;
@@ -713,6 +818,14 @@
 		color: var(--color-text-muted);
 		font-size: 0.875rem;
 		font-style: italic;
+	}
+
+	.tab-description {
+		font-size: 0.8rem;
+		color: var(--color-text-muted);
+		line-height: 1.5;
+		margin-bottom: 1.25rem;
+		max-width: 720px;
 	}
 
 	.not-found {
