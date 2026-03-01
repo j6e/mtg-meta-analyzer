@@ -36,11 +36,15 @@ const selected: DecklistInfo = {
 };
 
 describe('DecklistComparison', () => {
-	it('shows placeholder when no selected decklist', () => {
+	it('shows aggregate-only table when no selected decklist', () => {
 		const { container } = render(DecklistComparison, {
 			props: { aggregateDecklist: aggregate },
 		});
-		expect(container.textContent).toContain('Select a decklist to compare');
+		// Should show aggregate cards in a table
+		expect(container.textContent).toContain('Lightning Bolt');
+		expect(container.textContent).toContain('Mainboard');
+		// Should not show the selected column header
+		expect(container.textContent).not.toContain('Selected');
 	});
 
 	it('renders both column headers when selected decklist provided', () => {
@@ -77,8 +81,8 @@ describe('DecklistComparison', () => {
 				selectedDecklist: selected,
 			},
 		});
-		// Shock is only in aggregate, should have only-agg class
-		const rows = container.querySelectorAll('.diff-row');
+		// Shock is only in aggregate, should have only-agg class on the tr
+		const rows = container.querySelectorAll('tbody tr');
 		const shockRow = [...rows].find((r) => r.textContent?.includes('Shock'));
 		expect(shockRow?.classList.contains('only-agg')).toBe(true);
 	});
@@ -90,7 +94,7 @@ describe('DecklistComparison', () => {
 				selectedDecklist: selected,
 			},
 		});
-		const rows = container.querySelectorAll('.diff-row');
+		const rows = container.querySelectorAll('tbody tr');
 		const guideRow = [...rows].find((r) => r.textContent?.includes('Goblin Guide'));
 		expect(guideRow?.classList.contains('only-sel')).toBe(true);
 	});

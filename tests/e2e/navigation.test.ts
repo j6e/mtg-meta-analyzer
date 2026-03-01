@@ -27,9 +27,16 @@ test.describe('Navigation', () => {
 
 	test('navigate to archetypes page', async ({ page }) => {
 		await page.goto('/');
-		await page.locator('nav a', { hasText: 'Archetypes' }).click();
-		await expect(page).toHaveURL(/\/archetypes/);
+		await page.locator('nav a', { hasText: /^Archetypes$/ }).click();
+		await expect(page).toHaveURL(/\/archetypes$/);
 		await expect(page.locator('h1')).toHaveText('Archetypes');
+	});
+
+	test('navigate to archetype cleaner page', async ({ page }) => {
+		await page.goto('/');
+		await page.locator('nav a', { hasText: 'Archetype Cleaner' }).click();
+		await expect(page).toHaveURL(/\/archetype-cleaner/);
+		await expect(page.locator('h1')).toHaveText('Archetype Cleaner');
 	});
 
 	test('tournaments page shows tournament list with links', async ({ page }) => {

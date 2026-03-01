@@ -37,8 +37,13 @@
 		<a href="{base}/archetypes" class="card">
 			<h2>Archetypes</h2>
 			<p>
-				View archetype definitions and signature card lists used for
-				classification.
+				Browse archetype stats, matchups, decklists, and composition.
+			</p>
+		</a>
+		<a href="{base}/archetype-cleaner" class="card">
+			<h2>Archetype Cleaner</h2>
+			<p>
+				Edit signature card definitions and review classification attribution.
 			</p>
 		</a>
 	</div>

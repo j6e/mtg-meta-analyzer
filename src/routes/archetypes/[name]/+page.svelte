@@ -185,11 +185,7 @@
 		enrichedDecklists.find((e) => e.decklistId === selectedDecklistId) ?? null,
 	);
 
-	const selectedLabel = $derived(
-		selectedEnriched
-			? `${selectedEnriched.tournamentName} — ${selectedEnriched.playerName} (Rank #${selectedEnriched.playerRank})`
-			: '',
-	);
+	const selectedLabel = $derived(selectedEnriched ? 'Selected' : '');
 
 	// Dropdown options sorted by rank
 	const decklistOptions = $derived.by(() => {

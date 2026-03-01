@@ -69,7 +69,7 @@
 </svelte:head>
 
 <div class="breadcrumb">
-	<a href="{base}/archetypes">Archetypes</a> / Classification Assessment
+	<a href="{base}/archetype-cleaner">Archetype Cleaner</a> / Classification Assessment
 </div>
 
 {#if !hasValidParams}

@@ -70,9 +70,9 @@ function extractRow(
 	opponents: string[],
 	playerCount: number,
 ): SplitRow {
-	// Don't pass Other threshold here — the inspected archetype must never be
-	// collapsed into "Other" (especially in per-group calls where its player
-	// count is reduced). Opponent columns are determined by the caller.
+	// Always build an un-collapsed matrix so every archetype is individually
+	// visible. The "Other" cell is aggregated manually from the same set of
+	// archetypes the caller determined via the baseline threshold.
 	const { matrix, stats } = buildMatchupMatrix(tournaments, playerArchetypes, {
 		excludeMirrors: true,
 	});
@@ -84,12 +84,39 @@ function extractRow(
 	let totalDraws = 0;
 
 	if (idx !== -1) {
+		// Named opponents that are NOT "Other" — used to determine which
+		// individual archetypes should be summed into the "Other" bucket.
+		const namedOpponents = new Set(opponents.filter((o) => o !== 'Other'));
+
 		for (const opponent of opponents) {
-			const oIdx = matrix.archetypes.indexOf(opponent);
-			if (oIdx !== -1 && oIdx !== idx) {
-				cells.set(opponent, matrix.cells[idx][oIdx]);
+			if (opponent === 'Other') {
+				// Sum all archetypes not explicitly named as opponents
+				let w = 0, l = 0, d = 0, id = 0, t = 0;
+				for (let j = 0; j < matrix.archetypes.length; j++) {
+					const name = matrix.archetypes[j];
+					if (j === idx || namedOpponents.has(name)) continue;
+					const c = matrix.cells[idx][j];
+					w += c.wins;
+					l += c.losses;
+					d += c.draws;
+					id += c.intentionalDraws;
+					t += c.total;
+				}
+				if (t > 0) {
+					cells.set('Other', {
+						wins: w, losses: l, draws: d,
+						intentionalDraws: id, total: t,
+						winrate: w / t,
+					});
+				}
+			} else {
+				const oIdx = matrix.archetypes.indexOf(opponent);
+				if (oIdx !== -1 && oIdx !== idx) {
+					cells.set(opponent, matrix.cells[idx][oIdx]);
+				}
 			}
 		}
+
 		const archetypeStats = stats.find((s) => s.name === archetypeName);
 		if (archetypeStats) {
 			totalWins = archetypeStats.wins;
