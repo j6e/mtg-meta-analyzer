@@ -165,7 +165,7 @@ describe('autoScanCards', () => {
 			[tournament], archetypes, 'Aggro',
 			['Lightning Bolt', 'Shock', 'Mountain'],
 			'binary',
-			{ threshold: 4, minMatches: 1 },
+			{ threshold: 4, minGroupSize: 1 },
 		);
 
 		// Should have at least one result
@@ -182,7 +182,7 @@ describe('autoScanCards', () => {
 			[tournament], archetypes, 'Aggro',
 			['Lightning Bolt'],
 			'binary',
-			{ threshold: 4, minMatches: 1 },
+			{ threshold: 4, minGroupSize: 1 },
 		);
 
 		expect(results).toHaveLength(1);
@@ -195,7 +195,7 @@ describe('autoScanCards', () => {
 			[tournament], archetypes, 'Aggro',
 			['Nonexistent Card'],
 			'binary',
-			{ threshold: 1, minMatches: 1 },
+			{ threshold: 1, minGroupSize: 1 },
 		);
 
 		// All players have 0 copies → only 1 group → skipped
@@ -210,7 +210,7 @@ describe('autoScanCards', () => {
 			'binary',
 			{
 				threshold: 4,
-				minMatches: 1,
+				minGroupSize: 1,
 				onProgress: (done, total) => progressCalls.push([done, total]),
 			},
 		);

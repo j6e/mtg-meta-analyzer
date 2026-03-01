@@ -20,13 +20,22 @@ import type { SplitMode } from './winrate-splitter';
 /**
  * Enrich a SplitResult with credible intervals, Fisher's exact test
  * significance per cell, and pairwise P(A > B) comparisons.
+ *
+ * Groups with fewer than `minGroupSize` total matches still get CIs
+ * but are excluded from significance testing and pairwise comparisons.
  */
-export function computeStatistics(split: SplitResult): StatisticalSplitResult {
+export function computeStatistics(
+	split: SplitResult,
+	options?: { minGroupSize?: number },
+): StatisticalSplitResult {
+	const minGS = options?.minGroupSize ?? 0;
 	const baseline = split.baselineRow;
 	const rows: StatisticalSplitRow[] = split.groupRows.map((row) => {
 		const overallCI = credibleInterval(row.totalWins, row.totalLosses);
 		const cellCIs = new Map<string, CredibleInterval>();
 		const cellSignificance = new Map<string, import('../types/statistics').CellSignificance>();
+
+		const groupTooSmall = row.totalMatches < minGS;
 
 		for (const opponent of split.opponents) {
 			const cell = row.cells.get(opponent);
@@ -35,9 +44,7 @@ export function computeStatistics(split: SplitResult): StatisticalSplitResult {
 			if (cell && cell.total > 0) {
 				cellCIs.set(opponent, credibleInterval(cell.wins, cell.losses));
 
-				if (baseCell && baseCell.total > 0) {
-					// Fisher's test: compare this group vs the complement
-					// complement = baseline - group
+				if (!groupTooSmall && baseCell && baseCell.total > 0) {
 					const compW = baseCell.wins - cell.wins;
 					const compL = baseCell.losses - cell.losses;
 					if (compW >= 0 && compL >= 0 && (compW + compL) > 0) {
@@ -54,12 +61,13 @@ export function computeStatistics(split: SplitResult): StatisticalSplitResult {
 		return { label: row.label, overallCI, cellCIs, cellSignificance };
 	});
 
-	// Pairwise comparisons: P(group A overall > group B overall)
+	// Pairwise comparisons only between groups above minGroupSize
+	const eligibleRows = split.groupRows.filter((r) => r.totalMatches >= minGS);
 	const pairwise: PairwiseComparison[] = [];
-	for (let i = 0; i < split.groupRows.length; i++) {
-		for (let j = i + 1; j < split.groupRows.length; j++) {
-			const a = split.groupRows[i];
-			const b = split.groupRows[j];
+	for (let i = 0; i < eligibleRows.length; i++) {
+		for (let j = i + 1; j < eligibleRows.length; j++) {
+			const a = eligibleRows[i];
+			const b = eligibleRows[j];
 			const prob = probAGreaterThanB(a.totalWins, a.totalLosses, b.totalWins, b.totalLosses);
 			pairwise.push({
 				groupA: a.label,
@@ -83,14 +91,14 @@ export async function autoScanCards(
 	allCardNames: string[],
 	mode: SplitMode,
 	options: {
-		minMatches?: number;
+		minGroupSize?: number;
 		threshold?: number;
 		topN?: number;
 		minMetagameShare?: number;
 		onProgress?: (done: number, total: number) => void;
 	} = {},
 ): Promise<AutoScanResult[]> {
-	const minMatches = options.minMatches ?? 10;
+	const minGroupSize = options.minGroupSize ?? 10;
 	const candidates: {
 		cardName: string;
 		effectSize: number;
@@ -98,6 +106,7 @@ export async function autoScanCards(
 		bestGroup: string;
 		worstGroup: string;
 		totalMatches: number;
+		minGroupSize: number;
 	}[] = [];
 
 	for (let i = 0; i < allCardNames.length; i++) {
@@ -109,33 +118,42 @@ export async function autoScanCards(
 			minMetagameShare: options.minMetagameShare,
 		});
 
-		// Skip cards where groups don't have enough data
-		if (split.groupRows.length < 2) continue;
-		const totalMatches = split.groupRows.reduce((s, r) => s + r.totalMatches, 0);
-		if (totalMatches < minMatches) continue;
+		// Filter to groups that meet the minimum size
+		const eligibleRows = split.groupRows.filter((r) => r.totalMatches >= minGroupSize);
+		if (eligibleRows.length < 2) continue;
 
-		// Find best/worst group by overall winrate and best Fisher p-value
-		const stats = computeStatistics(split);
+		// Compute stats with the group size filter
+		const stats = computeStatistics(split, { minGroupSize });
+
+		// Find best/worst among eligible groups
 		let bestWR = -1, worstWR = 2;
 		let bestGroup = '', worstGroup = '';
+		let smallestGroup = Infinity;
 
-		for (const row of split.groupRows) {
+		for (const row of eligibleRows) {
 			const wr = row.overallWinrate ?? 0.5;
 			if (wr > bestWR) { bestWR = wr; bestGroup = row.label; }
 			if (wr < worstWR) { worstWR = wr; worstGroup = row.label; }
+			if (row.totalMatches < smallestGroup) smallestGroup = row.totalMatches;
 		}
 
 		const effectSize = bestWR - worstWR;
+		const totalMatches = eligibleRows.reduce((s, r) => s + r.totalMatches, 0);
 
-		// Collect the minimum p-value across all cells and groups
+		// Collect the minimum p-value across eligible groups only
 		let minP = 1;
 		for (const statRow of stats.rows) {
+			// Only consider rows that have significance data (non-filtered groups)
 			for (const [, sig] of statRow.cellSignificance) {
 				if (sig.pValue < minP) minP = sig.pValue;
 			}
 		}
 
-		candidates.push({ cardName, effectSize, rawP: minP, bestGroup, worstGroup, totalMatches });
+		candidates.push({
+			cardName, effectSize, rawP: minP,
+			bestGroup, worstGroup, totalMatches,
+			minGroupSize: smallestGroup,
+		});
 
 		// Yield to UI every 5 cards
 		if (i % 5 === 4) {
@@ -161,6 +179,7 @@ export async function autoScanCards(
 		bestGroup: c.bestGroup,
 		worstGroup: c.worstGroup,
 		totalMatches: c.totalMatches,
+		minGroupSize: c.minGroupSize,
 	}));
 
 	// Sort by adjusted p-value ascending (most significant first)

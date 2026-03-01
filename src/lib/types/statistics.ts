@@ -45,4 +45,6 @@ export interface AutoScanResult {
 	bestGroup: string;
 	worstGroup: string;
 	totalMatches: number;
+	/** Match count of the smallest group (limits statistical power) */
+	minGroupSize: number;
 }

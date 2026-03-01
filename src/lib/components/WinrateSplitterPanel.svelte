@@ -30,7 +30,7 @@
 	let searchQuery = $state('');
 
 	// Auto-scan state
-	let autoScanMinMatches = $state(10);
+	let autoScanMinGroupSize = $state(10);
 	let autoScanResults = $state<AutoScanResult[] | null>(null);
 	let autoScanning = $state(false);
 	let autoScanProgress = $state(0);
@@ -74,7 +74,7 @@
 				selectedCard, mode, splitOptions(),
 			);
 			splitResult = split;
-			statsResult = computeStatistics(split);
+			statsResult = computeStatistics(split, { minGroupSize: autoScanMinGroupSize });
 		} finally {
 			calculating = false;
 		}
@@ -91,7 +91,7 @@
 				tournaments, playerArchetypes, archetypeName,
 				allCardNames, mode,
 				{
-					minMatches: autoScanMinMatches,
+					minGroupSize: autoScanMinGroupSize,
 					...splitOptions(),
 					onProgress: (done, total) => {
 						autoScanProgress = done;
@@ -176,6 +176,13 @@
 				>
 					Per Copy
 				</button>
+				<button
+					class="mode-btn"
+					class:active={mode === 'cumulative'}
+					onclick={() => (mode = 'cumulative')}
+				>
+					Cumulative
+				</button>
 			</div>
 		</div>
 
@@ -247,9 +254,9 @@
 					type="number"
 					min="1"
 					max="200"
-					bind:value={autoScanMinMatches}
+					bind:value={autoScanMinGroupSize}
 				/>
-				<span class="hint">min matches</span>
+				<span class="hint">min group N</span>
 			</div>
 			<button class="scan-btn" onclick={doAutoScan} disabled={autoScanning}>
 				{autoScanning ? 'Scanning...' : 'Scan All Cards'}
@@ -409,7 +416,7 @@
 								<th class="num-col">Sig</th>
 								<th>Best</th>
 								<th>Worst</th>
-								<th class="num-col">Matches</th>
+								<th class="num-col">Min N</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -427,7 +434,7 @@
 									</td>
 									<td>{row.bestGroup}</td>
 									<td>{row.worstGroup}</td>
-									<td class="num-col">{row.totalMatches}</td>
+									<td class="num-col">{row.minGroupSize}</td>
 								</tr>
 							{/each}
 						</tbody>

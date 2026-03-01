@@ -23,12 +23,13 @@ describe('WinrateSplitterPanel', () => {
 	it('renders mode toggle buttons', () => {
 		const { container } = render(WinrateSplitterPanel, { props: defaultProps });
 		const buttons = container.querySelectorAll('.mode-btn');
-		// 2 split mode buttons + 2 other threshold buttons = 4
-		expect(buttons).toHaveLength(4);
+		// 3 split mode buttons + 2 other threshold buttons = 5
+		expect(buttons).toHaveLength(5);
 		expect(buttons[0].textContent).toContain('Binary');
 		expect(buttons[1].textContent).toContain('Per Copy');
-		expect(buttons[2].textContent).toContain('Top N');
-		expect(buttons[3].textContent).toContain('Min %');
+		expect(buttons[2].textContent).toContain('Cumulative');
+		expect(buttons[3].textContent).toContain('Top N');
+		expect(buttons[4].textContent).toContain('Min %');
 	});
 
 	it('renders split button', () => {

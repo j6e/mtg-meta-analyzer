@@ -3,7 +3,7 @@ import type { MatchupCell, MatchupMatrix, ArchetypeStats } from '../types/metaga
 import { collectArchetypeDecklists } from './decklist-collector';
 import { buildMatchupMatrix } from './winrate-calculator';
 
-export type SplitMode = 'binary' | 'per-copy';
+export type SplitMode = 'binary' | 'per-copy' | 'cumulative';
 
 export interface SplitRow {
 	label: string;
@@ -197,6 +197,33 @@ export function splitByCard(
 		if (above.size > 0) groups.push({ label: `${threshold}+ copies`, playerIds: above });
 		if (below.size > 0)
 			groups.push({ label: `< ${threshold} copies`, playerIds: below });
+	} else if (mode === 'cumulative') {
+		// cumulative mode: each row is "≥ N copies" (overlapping groups)
+		// Fisher's test compares each group against its complement (< N)
+		const byCount = new Map<number, Set<string>>();
+		for (const [pid, copies] of playerCopies) {
+			let set = byCount.get(copies);
+			if (!set) {
+				set = new Set();
+				byCount.set(copies, set);
+			}
+			set.add(pid);
+		}
+		const sortedCounts = [...byCount.keys()].sort((a, b) => a - b);
+		// For each threshold N (skip the lowest — "≥ min" would be everyone)
+		for (let i = 1; i < sortedCounts.length; i++) {
+			const threshold = sortedCounts[i];
+			const atOrAbove = new Set<string>();
+			for (const [pid, copies] of playerCopies) {
+				if (copies >= threshold) atOrAbove.add(pid);
+			}
+			if (atOrAbove.size > 0) {
+				groups.push({
+					label: `≥ ${threshold} ${threshold === 1 ? 'copy' : 'copies'}`,
+					playerIds: atOrAbove,
+				});
+			}
+		}
 	} else {
 		// per-copy mode: group by exact copy count
 		const byCount = new Map<number, Set<string>>();
