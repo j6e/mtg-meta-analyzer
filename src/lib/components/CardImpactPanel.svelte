@@ -160,8 +160,8 @@
 					<a href="https://en.wikipedia.org/wiki/Credible_interval">credible intervals</a>
 					from
 					<a href="https://en.wikipedia.org/wiki/Laplace%27s_approximation">Laplace approximation</a>.
-					The marginal effect is the estimated change in win probability per additional copy,
-					evaluated at the baseline win rate.
+					Impact is a bounded score (−100 to +100) derived from the coefficient,
+					where 0 means no effect and ±100 is the theoretical maximum.
 				</p>
 			{/if}
 
@@ -177,7 +177,7 @@
 									<th class="num" title="Log-odds coefficient: positive means more copies correlate with more wins">Coef</th>
 									<th class="num" title="Standard error of the coefficient estimate (Laplace approximation)">SE</th>
 									<th class="num" title="95% credible interval for the coefficient; crossing zero means the effect is not significant">95% CI</th>
-									<th class="num" title="Estimated change in win probability per additional copy, at the baseline win rate">Marginal</th>
+									<th class="num" title="Impact score from −100 to +100: effect strength on a bounded scale. 0 = no effect, ±100 = theoretical maximum">Impact</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -190,8 +190,8 @@
 										</td>
 										<td class="num">{coef.se.toFixed(3)}</td>
 										<td class="num">[{coef.lower.toFixed(2)}, {coef.upper.toFixed(2)}]</td>
-										<td class="num" class:positive={coef.marginalEffect > 0} class:negative={coef.marginalEffect < 0}>
-											{coef.marginalEffect > 0 ? '+' : ''}{(coef.marginalEffect * 100).toFixed(1)}%
+										<td class="num" class:positive={coef.impactScore > 0} class:negative={coef.impactScore < 0}>
+											{coef.impactScore > 0 ? '+' : ''}{coef.impactScore}
 										</td>
 									</tr>
 								{/each}

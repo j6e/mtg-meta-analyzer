@@ -17,10 +17,6 @@ export interface LogisticRegressionInput {
 	y: Float64Array;
 	/** Feature names (length p, first should be 'intercept') */
 	featureNames: string[];
-	/** Standard deviations of the raw (unstandardized) features, used to
-	 *  convert marginal effects from per-std to per-unit (per-copy) scale.
-	 *  Length p-1 (one per feature, excluding intercept). */
-	featureStds?: number[];
 	/** Prior variance for coefficients (default 6.25 → σ=2.5) */
 	priorVariance?: number;
 	/** Prior variance for intercept (default 100 → σ=10) */
@@ -37,8 +33,7 @@ export interface CardCoefficient {
 	se: number;
 	lower: number;  // 95% CI lower
 	upper: number;  // 95% CI upper
-	/** Marginal effect: change in probability at baseline */
-	marginalEffect: number;
+	impactScore: number;  // tanh(β/2)×100, bounded [-100, +100]
 }
 
 export interface LogisticRegressionResult {
@@ -182,21 +177,17 @@ export function fitLogisticRegression(input: LogisticRegressionInput): LogisticR
 	// Build coefficients
 	const baselineProb = sigmoid(beta[0]);
 	const coefficients: CardCoefficient[] = [];
-	const stds = input.featureStds;
 
 	for (let j = 1; j < p; j++) {
 		const se = Math.sqrt(Math.max(0, get(covariance, j, j)));
 		const coef = beta[j];
-		// Marginal effect per raw unit (per copy): since features are standardized,
-		// divide by the feature's std to convert from per-std to per-unit scale.
-		const rawStd = stds?.[j - 1] ?? 1;
 		coefficients.push({
 			name: featureNames[j],
 			coefficient: coef,
 			se,
 			lower: coef - 1.96 * se,
 			upper: coef + 1.96 * se,
-			marginalEffect: baselineProb * (1 - baselineProb) * coef / rawStd,
+			impactScore: Math.round(Math.tanh(coef / 2) * 100),
 		});
 	}
 

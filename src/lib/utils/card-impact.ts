@@ -22,6 +22,8 @@ export interface FlexFeature {
 	variance: number;
 	mean: number;
 	std: number;
+	min: number;
+	max: number;
 }
 
 export interface CardImpactResult {
@@ -186,7 +188,9 @@ export function selectFlexFeatures(
 		if (maxFreq / n >= autoIncludeThreshold) continue;
 
 		const std = Math.sqrt(variance);
-		candidates.push({ cardName, variance, mean, std });
+		const min = Math.min(...counts);
+		const max = Math.max(...counts);
+		candidates.push({ cardName, variance, mean, std, min, max });
 	}
 
 	// Sort by variance descending, take top maxFeatures
@@ -256,7 +260,6 @@ export function analyzeCardImpact(
 
 	const regression = fitLogisticRegression({
 		X, y, featureNames,
-		featureStds: features.map((f) => f.std),
 		priorVariance: 6.25,
 		interceptPriorVariance: 100,
 	});

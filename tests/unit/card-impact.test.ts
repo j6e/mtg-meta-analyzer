@@ -6,6 +6,7 @@ import {
 	analyzeCardImpact,
 	type TrainingObservation,
 } from '../../src/lib/utils/card-impact';
+import { sigmoid, type CardCoefficient } from '../../src/lib/algorithms/logistic-regression';
 import type { TournamentData, PlayerInfo, MatchResult } from '../../src/lib/types/tournament';
 import type { DecklistInfo } from '../../src/lib/types/decklist';
 
@@ -214,7 +215,7 @@ describe('buildDesignMatrix', () => {
 			{ cardCounts: new Map([['A', 1]]), outcome: 1 },
 			{ cardCounts: new Map([['A', 3]]), outcome: 0 },
 		];
-		const features = [{ cardName: 'A', variance: 1, mean: 2, std: 1 }];
+		const features = [{ cardName: 'A', variance: 1, mean: 2, std: 1, min: 1, max: 3 }];
 		const { X } = buildDesignMatrix(obs, features);
 
 		for (let i = 0; i < X.rows; i++) {
@@ -253,7 +254,7 @@ describe('buildDesignMatrix', () => {
 			{ cardCounts: new Map([['A', 2]]), outcome: 0 },
 			{ cardCounts: new Map([['A', 3]]), outcome: 1 },
 		];
-		const features = [{ cardName: 'A', variance: 1, mean: 2, std: 1 }];
+		const features = [{ cardName: 'A', variance: 1, mean: 2, std: 1, min: 1, max: 3 }];
 		const { y } = buildDesignMatrix(obs, features);
 		expect(Array.from(y)).toEqual([1, 0, 1]);
 	});
@@ -345,10 +346,8 @@ describe('analyzeCardImpact', () => {
 		}
 	});
 
-	it('marginal effect is per-copy, not per-std', () => {
+	it('features include min/max copy counts', () => {
 		// Setup: 40 players, half with 4 copies of "Good Card", half with 0.
-		// Feature std for a 50/50 split of 0 vs 4 = 2.0.
-		// If marginal effect is per-std (the bug), it will be ~2x too large.
 		const players: Record<string, PlayerInfo> = {};
 		const decklists: Record<string, DecklistInfo> = {};
 		const matches: MatchResult[] = [];
@@ -366,7 +365,6 @@ describe('analyzeCardImpact', () => {
 		players['opp'] = makePlayer('Opp', ['dopp']);
 		decklists['dopp'] = makeDeck('opp', [['Other', 4]]);
 
-		// Good Card users win 80%, others win 20%
 		for (let i = 0; i < 40; i++) {
 			const pid = `p${i}`;
 			const hasCard = i < 20;
@@ -382,21 +380,20 @@ describe('analyzeCardImpact', () => {
 		const result = analyzeCardImpact([t], arch, 'A', { minObservations: 1 });
 		expect('regression' in result).toBe(true);
 		if ('regression' in result) {
-			const reg = result.regression;
-			const goodCard = reg.coefficients.find((c) => c.name === 'Good Card');
-			expect(goodCard).toBeDefined();
+			const goodFeat = result.features.find((f) => f.cardName === 'Good Card');
+			expect(goodFeat).toBeDefined();
+			expect(goodFeat!.min).toBe(0);
+			expect(goodFeat!.max).toBe(4);
 
-			// Manually compute expected marginal effect per copy:
-			// marginal_per_std = baselineProb * (1 - baselineProb) * coef
-			// marginal_per_copy = marginal_per_std / std
-			// For a 50/50 split of 0 vs 4: std = 2.0
-			const baseline = reg.baselineWinProb;
-			const perStd = baseline * (1 - baseline) * goodCard!.coefficient;
-			const perCopy = perStd / 2.0; // std of [0,0,...,4,4,...] with 50/50 = 2.0
+			// Predicted winrate at max copies should be higher than at min copies
+			// (since Good Card correlates with winning)
+			const goodCoef = result.regression.coefficients.find((c) => c.name === 'Good Card');
+			expect(goodCoef).toBeDefined();
+			expect(goodCoef!.coefficient).toBeGreaterThan(0);
 
-			// The marginal effect should be per-copy (smaller), not per-std (larger)
-			expect(Math.abs(goodCard!.marginalEffect)).toBeLessThan(Math.abs(perStd));
-			expect(goodCard!.marginalEffect).toBeCloseTo(perCopy, 1);
+			// Impact score should be positive and bounded
+			expect(goodCoef!.impactScore).toBeGreaterThan(0);
+			expect(goodCoef!.impactScore).toBeLessThanOrEqual(100);
 		}
 	});
 
@@ -419,6 +416,24 @@ describe('analyzeCardImpact', () => {
 				expect(c.lower).toBeLessThanOrEqual(c.coefficient);
 				expect(c.upper).toBeGreaterThanOrEqual(c.coefficient);
 				expect(c.upper - c.lower).toBeGreaterThan(0);
+			}
+		}
+	});
+
+	it('impact score is bounded [-100, +100] and matches coefficient sign', () => {
+		const result = analyzeCardImpact([tournament], archetypes, 'Aggro', {
+			minObservations: 1,
+		});
+		if ('regression' in result) {
+			for (const c of result.regression.coefficients) {
+				expect(c.impactScore).toBeGreaterThanOrEqual(-100);
+				expect(c.impactScore).toBeLessThanOrEqual(100);
+				// Impact score should match coefficient sign (or be zero)
+				if (c.coefficient > 0) expect(c.impactScore).toBeGreaterThanOrEqual(0);
+				if (c.coefficient < 0) expect(c.impactScore).toBeLessThanOrEqual(0);
+				// Verify formula: tanh(β/2) * 100, rounded
+				const expected = Math.round(Math.tanh(c.coefficient / 2) * 100);
+				expect(c.impactScore).toBe(expected);
 			}
 		}
 	});
