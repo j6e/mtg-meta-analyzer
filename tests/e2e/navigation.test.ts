@@ -27,9 +27,16 @@ test.describe('Navigation', () => {
 
 	test('navigate to archetypes page', async ({ page }) => {
 		await page.goto('/');
-		await page.locator('nav a', { hasText: 'Archetypes' }).click();
-		await expect(page).toHaveURL(/\/archetypes/);
+		await page.locator('nav a', { hasText: /^Archetypes$/ }).click();
+		await expect(page).toHaveURL(/\/archetypes$/);
 		await expect(page.locator('h1')).toHaveText('Archetypes');
+	});
+
+	test('navigate to archetype cleaner page', async ({ page }) => {
+		await page.goto('/');
+		await page.locator('nav a', { hasText: 'Archetype Cleaner' }).click();
+		await expect(page).toHaveURL(/\/archetype-cleaner/);
+		await expect(page.locator('h1')).toHaveText('Archetype Cleaner');
 	});
 
 	test('tournaments page shows tournament list with links', async ({ page }) => {
@@ -65,18 +72,20 @@ test.describe('Navigation', () => {
 		// Stat cards should be visible
 		await expect(page.locator('.stat-card').first()).toBeVisible();
 
-		// Matchup table should be present
-		const matchupTable = page.locator('section h2', { hasText: 'Matchups' });
-		await expect(matchupTable).toBeVisible();
+		// Matchups tab should be active by default and table visible
+		await expect(page.locator('.tab-btn', { hasText: 'Matchups' })).toBeVisible();
+		await expect(page.locator('.tab-content table').first()).toBeVisible();
 	});
 
-	test('archetype detail page shows decklists', async ({ page }) => {
+	test('archetype detail page shows decklists via tab', async ({ page }) => {
 		await page.goto('/archetypes');
 		await page.locator('tbody tr').first().locator('a').click();
 
-		// Decklists section should be present
-		const decklistHeading = page.locator('section h2', { hasText: 'Decklists' });
-		await expect(decklistHeading).toBeVisible();
+		// Tab bar should be present
+		await expect(page.locator('.tab-bar')).toBeVisible();
+
+		// Click the Decklists tab
+		await page.locator('.tab-btn', { hasText: 'Decklists' }).click();
 
 		// At least one decklist should render
 		await expect(page.locator('.decklist').first()).toBeVisible();

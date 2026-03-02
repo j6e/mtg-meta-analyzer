@@ -144,7 +144,7 @@
 						>
 							{#if count > 0}
 								<a
-									href="{base}/archetypes/attribution?classified={encodeURIComponent(rowName)}&reported={encodeURIComponent(matrix.reportedArchetypes[j])}"
+									href="{base}/archetype-cleaner/attribution?classified={encodeURIComponent(rowName)}&reported={encodeURIComponent(matrix.reportedArchetypes[j])}"
 									class="cell-link"
 								>
 									<span class="count">{count}</span>

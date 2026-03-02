@@ -178,7 +178,7 @@ describe('AttributionMatrix component', () => {
 		const link00 = cell00?.querySelector('a');
 		expect(link00).not.toBeNull();
 		expect(link00?.getAttribute('href')).toBe(
-			'/archetypes/attribution?classified=Aggro&reported=Aggro',
+			'/archetype-cleaner/attribution?classified=Aggro&reported=Aggro',
 		);
 
 		// Cell with count 8 should have a link
@@ -186,7 +186,7 @@ describe('AttributionMatrix component', () => {
 		const link11 = cell11?.querySelector('a');
 		expect(link11).not.toBeNull();
 		expect(link11?.getAttribute('href')).toBe(
-			'/archetypes/attribution?classified=Control&reported=Control',
+			'/archetype-cleaner/attribution?classified=Control&reported=Control',
 		);
 	});
 
@@ -222,7 +222,7 @@ describe('AttributionMatrix component', () => {
 		const cell = container.querySelector('[data-testid="attr-cell-0-0"]');
 		const link = cell?.querySelector('a');
 		expect(link?.getAttribute('href')).toBe(
-			"/archetypes/attribution?classified=Sazh's%20Deck&reported=Mono-Green%20Landfall",
+			"/archetype-cleaner/attribution?classified=Sazh's%20Deck&reported=Mono-Green%20Landfall",
 		);
 	});
 });

@@ -6,10 +6,12 @@
 		decklist,
 		playerName = '',
 		archetype = '',
+		playerRank,
 	}: {
 		decklist: DecklistInfo;
 		playerName?: string;
 		archetype?: string;
+		playerRank?: number;
 	} = $props();
 
 	const mainboardCount = $derived(
@@ -21,8 +23,9 @@
 </script>
 
 <div class="decklist">
-	{#if playerName || archetype}
+	{#if playerName || archetype || playerRank != null}
 		<div class="meta">
+			{#if playerRank != null}<span class="rank">#{playerRank}</span>{/if}
 			{#if playerName}<span class="player">{playerName}</span>{/if}
 			{#if archetype}<span class="archetype">{archetype}</span>{/if}
 		</div>
@@ -91,6 +94,16 @@
 		gap: 0.5rem;
 		align-items: center;
 		flex-wrap: wrap;
+	}
+
+	.rank {
+		font-size: 0.75rem;
+		font-weight: 600;
+		color: var(--color-text-muted);
+		background: var(--color-surface-alt, rgba(0, 0, 0, 0.05));
+		padding: 0.1rem 0.4rem;
+		border-radius: 4px;
+		font-variant-numeric: tabular-nums;
 	}
 
 	.player {

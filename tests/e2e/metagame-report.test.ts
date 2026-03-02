@@ -58,7 +58,7 @@ test.describe('Metagame Report', () => {
 		const initialText = await info.textContent();
 
 		// Find the format select and change it
-		const formatSelect = page.locator('select');
+		const formatSelect = page.getByLabel('Format');
 		const options = await formatSelect.locator('option').allTextContents();
 
 		// If there's a specific format option (not just "All formats"), select it

@@ -2,6 +2,7 @@
 	import { base } from '$app/paths';
 	import type { MatchupMatrix, MatchupCell, ArchetypeStats } from '../types/metagame';
 	import { exportElementAsImage } from '../utils/export-image';
+	import { winrateColor, pct } from '../utils/format';
 
 	let { matrix, stats = [] }: { matrix: MatchupMatrix; stats?: ArchetypeStats[] } = $props();
 
@@ -16,41 +17,6 @@
 	let tooltipY = $state(0);
 	let tooltipData: { cell?: MatchupCell; stat?: ArchetypeStats; isOverall: boolean } | null = $state(null);
 	let hoverTimer: ReturnType<typeof setTimeout> | null = null;
-
-	/** Color gradient: red (≤30%) → gray (48-52%) → green (≥70%). */
-	function winrateColor(wr: number): string {
-		const red: [number, number, number] = [220, 160, 160];
-		const neutral: [number, number, number] = [245, 245, 245];
-		const green: [number, number, number] = [160, 220, 165];
-
-		let from: [number, number, number];
-		let to: [number, number, number];
-		let t: number;
-
-		if (wr <= 0.30) {
-			return `rgb(${red[0]}, ${red[1]}, ${red[2]})`;
-		} else if (wr < 0.48) {
-			t = (wr - 0.30) / 0.18;
-			from = red; to = neutral;
-		} else if (wr <= 0.52) {
-			return `rgb(${neutral[0]}, ${neutral[1]}, ${neutral[2]})`;
-		} else if (wr < 0.70) {
-			t = (wr - 0.52) / 0.18;
-			from = neutral; to = green;
-		} else {
-			return `rgb(${green[0]}, ${green[1]}, ${green[2]})`;
-		}
-
-		const r = Math.round(from[0] + t * (to[0] - from[0]));
-		const g = Math.round(from[1] + t * (to[1] - from[1]));
-		const b = Math.round(from[2] + t * (to[2] - from[2]));
-		return `rgb(${r}, ${g}, ${b})`;
-	}
-
-	function formatWinrate(wr: number | null): string {
-		if (wr === null) return '—';
-		return (wr * 100).toFixed(1) + '%';
-	}
 
 	function getStatForArchetype(name: string): ArchetypeStats | undefined {
 		return stats.find((s) => s.name === name);
@@ -186,7 +152,7 @@
 					>
 						{#if getStatForArchetype(rowName)?.totalMatches}
 							{@const s = getStatForArchetype(rowName)!}
-							<span class="winrate">{formatWinrate(s.overallWinrate)}</span>
+							<span class="winrate">{pct(s.overallWinrate)}</span>
 							<span class="match-count">({s.totalMatches})</span>
 						{:else}
 							<span class="no-data">—</span>
@@ -214,7 +180,7 @@
 							{:else if cell.total === 0}
 								<span class="no-data">—</span>
 							{:else}
-								<span class="winrate" class:low-sample={cell.total < 20}>{formatWinrate(cell.winrate)}</span>
+								<span class="winrate" class:low-sample={cell.total < 20}>{pct(cell.winrate)}</span>
 								<span class="match-count" class:low-sample={cell.total < 20}>({cell.total})</span>
 							{/if}
 						</td>
@@ -243,7 +209,7 @@
 				<span class="tooltip-label">Draws</span><span class="tooltip-value">{s.draws}</span>
 				<span class="tooltip-label">Byes</span><span class="tooltip-value tooltip-excluded">{s.byes} excl.</span>
 				<span class="tooltip-label">IDs</span><span class="tooltip-value tooltip-excluded">{s.intentionalDraws} excl.</span>
-				<span class="tooltip-label">Winrate</span><span class="tooltip-value">{formatWinrate(s.overallWinrate)}</span>
+				<span class="tooltip-label">Winrate</span><span class="tooltip-value">{pct(s.overallWinrate)}</span>
 				<span class="tooltip-label">95% CI</span><span class="tooltip-value">{formatCI(lo, hi)}</span>
 			</div>
 		{:else if tooltipData.cell}
@@ -254,7 +220,7 @@
 				<span class="tooltip-label">Losses</span><span class="tooltip-value">{c.losses}</span>
 				<span class="tooltip-label">Draws</span><span class="tooltip-value">{c.draws}</span>
 				<span class="tooltip-label">IDs</span><span class="tooltip-value tooltip-excluded">{c.intentionalDraws} excl.</span>
-				<span class="tooltip-label">Winrate</span><span class="tooltip-value">{formatWinrate(c.winrate)}</span>
+				<span class="tooltip-label">Winrate</span><span class="tooltip-value">{pct(c.winrate)}</span>
 				<span class="tooltip-label">95% CI</span><span class="tooltip-value">{formatCI(lo, hi)}</span>
 			</div>
 		{/if}
