@@ -429,9 +429,12 @@
 				<strong>Binary</strong> divides into two groups: &ge; N copies vs. &lt; N.
 				<strong>Per Copy</strong> creates a group for each exact copy count (0, 1, 2, 3, 4).
 				<strong>Cumulative</strong> creates overlapping groups (0, &ge; 1, &ge; 2, ...) so small counts are pooled.
-				<strong>Auto-Scan</strong> tests every card in the archetype at once, applies
+				<strong>Auto-Scan</strong> tests every card at once, applies
 				<a href="https://en.wikipedia.org/wiki/False_discovery_rate#Benjamini%E2%80%93Hochberg_procedure" target="_blank" rel="noopener">Benjamini-Hochberg</a>
 				correction for multiple testing, and ranks cards by statistical significance.
+				This is a <strong>univariate</strong> analysis &mdash; each card is tested in isolation.
+				A card that appears significant here may be a proxy for a different, correlated card choice.
+				For a multivariate view that controls for other cards, see the <strong>Card Impact</strong> tab.
 			</p>
 			<WinrateSplitterPanel
 				{archetypeName}
@@ -442,9 +445,13 @@
 
 		{:else if activeTab === 'impact'}
 			<p class="tab-description">
-				Multivariate analysis of which flex card choices jointly predict wins.
-				Uses Bayesian logistic regression on card copy counts, reporting each card's
-				coefficient with 95% credible interval.
+				<strong>Multivariate</strong> analysis of which flex card choices jointly predict wins.
+				Uses Bayesian logistic regression on card copy counts, fitting all selected cards into a single model.
+				Each card's coefficient reflects its effect <em>after controlling for the other cards in the model</em>,
+				with 95% credible intervals.
+				Because this controls for correlated card choices, results may differ from the <strong>Winrate Splitter</strong>
+				&mdash; a card that looks significant there but not here likely has its effect explained by a different card
+				that tends to appear alongside it.
 			</p>
 			<CardImpactPanel
 				{archetypeName}

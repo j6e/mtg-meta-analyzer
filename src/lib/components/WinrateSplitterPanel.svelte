@@ -403,7 +403,7 @@
 		<div class="section-body">
 			<div class="section-controls">
 				<div class="field">
-					<label for="auto-scan-min">Min matches</label>
+					<label for="auto-scan-min">Min matches <span class="info-hint" title="Minimum number of matches a group must have to be included in the test. Higher values give more reliable results but may exclude fringe cards.">?</span></label>
 					<input
 						id="auto-scan-min"
 						type="number"
@@ -413,25 +413,23 @@
 					/>
 				</div>
 				<div class="field">
-					<label for="auto-scan-threshold">Skip %</label>
+					<label for="auto-scan-threshold">Skip % <span class="info-hint" title="Cards where this % or more of players run the same count are skipped as auto-includes (no meaningful split possible).">?</span></label>
 					<input
 						id="auto-scan-threshold"
 						type="number"
 						min="50"
 						max="100"
 						bind:value={autoIncludeThreshold}
-						title="Cards where this % or more of players run the same count are skipped (auto-includes)"
 					/>
 				</div>
 				<div class="field">
-					<label for="auto-scan-effect">Min effect %</label>
+					<label for="auto-scan-effect">Min effect % <span class="info-hint" title="Only show cards where the winrate difference between the best and worst groups exceeds this threshold. Filters out noise from tiny effects.">?</span></label>
 					<input
 						id="auto-scan-effect"
 						type="number"
 						min="0"
 						max="50"
 						bind:value={autoMinEffect}
-						title="Only test cards where the winrate difference between best and worst groups exceeds this threshold"
 					/>
 				</div>
 				<button class="scan-btn" onclick={doAutoScan} disabled={autoScanning}>
@@ -568,6 +566,29 @@
 		text-transform: uppercase;
 		letter-spacing: 0.03em;
 		color: var(--color-text-muted);
+	}
+
+	.info-hint {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 1rem;
+		height: 1rem;
+		font-size: 0.6rem;
+		font-weight: 700;
+		border-radius: 50%;
+		border: 1px solid var(--color-text-muted);
+		color: var(--color-text-muted);
+		cursor: help;
+		text-transform: none;
+		letter-spacing: 0;
+		vertical-align: middle;
+		margin-left: 0.15rem;
+	}
+
+	.info-hint:hover {
+		color: var(--color-accent);
+		border-color: var(--color-accent);
 	}
 
 	.card-search {
