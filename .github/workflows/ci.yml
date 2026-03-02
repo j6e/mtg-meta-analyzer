@@ -33,7 +33,7 @@ jobs:
         with:
           bun-version: latest
       - run: bun install --frozen-lockfile
-      - run: bun test tests/unit/
+      - run: bunx vitest run tests/unit/
       - run: bunx vitest run tests/component/
 
   e2e:
