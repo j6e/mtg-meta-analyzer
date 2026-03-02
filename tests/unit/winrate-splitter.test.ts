@@ -117,8 +117,8 @@ describe('splitByCard', () => {
 		expect(result.cardName).toBe('Lightning Bolt');
 		expect(result.groupRows).toHaveLength(2);
 
-		const withBolt = result.groupRows.find((r) => r.label.includes('4+'))!;
-		const withoutBolt = result.groupRows.find((r) => r.label.includes('<'))!;
+		const withBolt = result.groupRows.find((r) => r.label === '4 copies')!;
+		const withoutBolt = result.groupRows.find((r) => r.label === '< 4 copies')!;
 
 		expect(withBolt.playerCount).toBe(2);
 		expect(withoutBolt.playerCount).toBe(2);
@@ -150,8 +150,8 @@ describe('splitByCard', () => {
 			{ threshold: 4 },
 		);
 
-		const withBolt = result.groupRows.find((r) => r.label.includes('4+'))!;
-		const withoutBolt = result.groupRows.find((r) => r.label.includes('<'))!;
+		const withBolt = result.groupRows.find((r) => r.label === '4 copies')!;
+		const withoutBolt = result.groupRows.find((r) => r.label === '< 4 copies')!;
 
 		// With Bolt: 2 wins, 0 losses vs Control → 100%
 		const boltVsControl = withBolt.cells.get('Control');

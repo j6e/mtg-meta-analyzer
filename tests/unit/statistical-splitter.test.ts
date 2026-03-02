@@ -113,7 +113,7 @@ describe('computeStatistics', () => {
 		const split = splitByCard([tournament], archetypes, 'Aggro', 'Lightning Bolt', 'binary', { threshold: 4 });
 		const stats = computeStatistics(split);
 
-		const boltRow = stats.rows.find((r) => r.label.includes('4+'))!;
+		const boltRow = stats.rows.find((r) => r.label.includes('4 copies'))!;
 		expect(boltRow.cellCIs.has('Control')).toBe(true);
 		const ci = boltRow.cellCIs.get('Control')!;
 		// 2-0 record: mean should be high
@@ -150,8 +150,8 @@ describe('computeStatistics', () => {
 		const stats = computeStatistics(split);
 
 		const pair = stats.pairwise[0];
-		// 4+ copies (all wins) should be better than <4 copies (all losses)
-		if (pair.groupA.includes('4+')) {
+		// 4 copies (all wins) should be better than 0 copies (all losses)
+		if (pair.groupA.includes('4 copies')) {
 			expect(pair.probABetter).toBeGreaterThan(0.5);
 		} else {
 			expect(pair.probABetter).toBeLessThan(0.5);

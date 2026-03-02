@@ -4,6 +4,7 @@ import type {
 	StatisticalSplitRow,
 	PairwiseComparison,
 	AutoScanResult,
+	CellSignificance,
 } from '../types/statistics';
 import type { CredibleInterval } from '../algorithms/statistics';
 import type { TournamentData } from '../types/tournament';
@@ -30,11 +31,16 @@ export function computeStatistics(
 ): StatisticalSplitResult {
 	const minGS = options?.minGroupSize ?? 0;
 	const baseline = split.baselineRow;
-	const rows: StatisticalSplitRow[] = split.groupRows.map((row) => {
+
+	// First pass: compute CIs and collect raw p-values for BH correction
+	const rawTests: { groupIdx: number; opponent: string; p: number }[] = [];
+	const perRow: { overallCI: CredibleInterval; cellCIs: Map<string, CredibleInterval>; rawPs: Map<string, number> }[] = [];
+
+	for (let gi = 0; gi < split.groupRows.length; gi++) {
+		const row = split.groupRows[gi];
 		const overallCI = credibleInterval(row.totalWins, row.totalLosses);
 		const cellCIs = new Map<string, CredibleInterval>();
-		const cellSignificance = new Map<string, import('../types/statistics').CellSignificance>();
-
+		const rawPs = new Map<string, number>();
 		const groupTooSmall = row.totalMatches < minGS;
 
 		for (const opponent of split.opponents) {
@@ -49,25 +55,46 @@ export function computeStatistics(
 					const compL = baseCell.losses - cell.losses;
 					if (compW >= 0 && compL >= 0 && (compW + compL) > 0) {
 						const p = fisherExactTest(cell.wins, cell.losses, compW, compL);
-						cellSignificance.set(opponent, {
-							pValue: p,
-							level: significanceLevel(p),
-						});
+						rawPs.set(opponent, p);
+						rawTests.push({ groupIdx: gi, opponent, p });
 					}
 				}
+			}
+		}
+
+		perRow.push({ overallCI, cellCIs, rawPs });
+	}
+
+	// BH correction across all per-cell tests
+	const adjustedPs = rawTests.length > 0
+		? benjaminiHochberg(rawTests.map((t) => t.p))
+		: [];
+
+	// Build final rows with corrected significance
+	const rows: StatisticalSplitRow[] = split.groupRows.map((row, gi) => {
+		const { overallCI, cellCIs } = perRow[gi];
+		const cellSignificance = new Map<string, CellSignificance>();
+
+		for (let i = 0; i < rawTests.length; i++) {
+			if (rawTests[i].groupIdx === gi) {
+				cellSignificance.set(rawTests[i].opponent, {
+					pValue: rawTests[i].p,
+					adjustedP: adjustedPs[i],
+					level: significanceLevel(adjustedPs[i]),
+				});
 			}
 		}
 
 		return { label: row.label, overallCI, cellCIs, cellSignificance };
 	});
 
-	// Pairwise comparisons only between groups above minGroupSize
-	const eligibleRows = split.groupRows.filter((r) => r.totalMatches >= minGS);
+	// Pairwise comparisons: adjacent groups only (avoids invalid
+	// overlapping-group comparisons in cumulative mode)
 	const pairwise: PairwiseComparison[] = [];
-	for (let i = 0; i < eligibleRows.length; i++) {
-		for (let j = i + 1; j < eligibleRows.length; j++) {
-			const a = eligibleRows[i];
-			const b = eligibleRows[j];
+	for (let i = 0; i < split.groupRows.length - 1; i++) {
+		const a = split.groupRows[i];
+		const b = split.groupRows[i + 1];
+		if (a.totalMatches >= minGS && b.totalMatches >= minGS) {
 			const prob = probAGreaterThanB(a.totalWins, a.totalLosses, b.totalWins, b.totalLosses);
 			pairwise.push({
 				groupA: a.label,

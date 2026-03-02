@@ -139,30 +139,8 @@
 </script>
 
 <div class="splitter">
-	<div class="controls">
-		<div class="field card-search">
-			<label for="card-search-input">Card</label>
-			<div class="search-wrap">
-				<input
-					id="card-search-input"
-					type="text"
-					placeholder="Search card..."
-					bind:value={searchQuery}
-					onfocus={() => (showDropdown = true)}
-					onblur={() => setTimeout(() => (showDropdown = false), 200)}
-				/>
-				{#if showDropdown && filteredCards.length > 0}
-					<ul class="dropdown" role="listbox">
-						{#each filteredCards as name}
-							<li role="option" aria-selected={name === selectedCard}>
-								<button onmousedown={() => selectCard(name)}>{name}</button>
-							</li>
-						{/each}
-					</ul>
-				{/if}
-			</div>
-		</div>
-
+	<!-- Shared controls: mode + opponent filtering -->
+	<div class="shared-controls">
 		<div class="field">
 			<!-- svelte-ignore a11y_label_has_associated_control -->
 			<label>Mode</label>
@@ -206,7 +184,7 @@
 
 		<div class="field other-field">
 			<!-- svelte-ignore a11y_label_has_associated_control -->
-			<label>"Other" threshold</label>
+			<label>"Other" column</label>
 			<div class="mode-buttons" role="group" aria-label="Other threshold mode">
 				<button
 					class="mode-btn"
@@ -246,64 +224,7 @@
 				</div>
 			{/if}
 		</div>
-
-		<button class="split-btn" onclick={doSplit} disabled={!selectedCard || calculating}>
-			{calculating ? 'Splitting...' : 'Split'}
-		</button>
-
-		<div class="field auto-scan-field">
-			<label for="auto-scan-min">Auto-Scan</label>
-			<div class="threshold-row">
-				<input
-					id="auto-scan-min"
-					type="number"
-					min="1"
-					max="200"
-					bind:value={autoScanMinGroupSize}
-				/>
-				<span class="hint">min matches</span>
-			</div>
-			<div class="threshold-row">
-				<input
-					id="auto-scan-threshold"
-					type="number"
-					min="50"
-					max="100"
-					bind:value={autoIncludeThreshold}
-				/>
-				<span class="hint" title="Cards where this % or more of players run the same count are skipped (auto-includes)">% skip</span>
-			</div>
-			<div class="threshold-row">
-				<input
-					id="auto-scan-effect"
-					type="number"
-					min="0"
-					max="50"
-					bind:value={autoMinEffect}
-				/>
-				<span class="hint" title="Only test cards where the winrate difference between best and worst groups exceeds this threshold">% min effect</span>
-			</div>
-			<button class="scan-btn" onclick={doAutoScan} disabled={autoScanning}>
-				{autoScanning ? 'Scanning...' : 'Scan All Cards'}
-			</button>
-		</div>
 	</div>
-
-	{#if calculating}
-		<div class="loading">
-			<div class="spinner"></div>
-			<span>Computing splits...</span>
-		</div>
-	{/if}
-
-	{#if autoScanning}
-		<div class="progress-section">
-			<div class="progress-bar-track">
-				<div class="progress-bar-fill" style="width: {autoScanTotal > 0 ? (autoScanProgress / autoScanTotal * 100) : 0}%"></div>
-			</div>
-			<span class="progress-text">{autoScanProgress} / {autoScanTotal} cards</span>
-		</div>
-	{/if}
 
 	{#snippet deltaBarSnippet(baseline: number | null, group: number | null)}
 		{@const d = deltaBar(baseline, group)}
@@ -314,167 +235,274 @@
 		{/if}
 	{/snippet}
 
-	{#if splitResult && statsResult}
-		<div class="results">
-			<div class="table-wrap">
-				<table>
-					<thead>
-						<tr>
-							<th class="group-col">Group</th>
-							<th class="num-col opp-col" title="Players">
-								<div class="vertical-header"># Players</div>
-							</th>
-							<th class="num-col opp-col" title="Overall">
-								<div class="vertical-header">Overall</div>
-							</th>
-							{#each splitResult.opponents as opp}
-								<th class="num-col opp-col" title={opp}>
-									<div class="vertical-header">{opp}</div>
-								</th>
-							{/each}
-						</tr>
-					</thead>
-					<tbody>
-						<!-- Baseline row -->
-						<tr class="baseline-row">
-							<td class="group-col"><strong>{splitResult.baselineRow.label}</strong></td>
-							<td class="num-col">{splitResult.baselineRow.playerCount}</td>
-							<td class="num-col" style="background: {splitResult.baselineRow.overallWinrate !== null ? winrateColor(splitResult.baselineRow.overallWinrate) : 'transparent'}">
-								<span class="winrate">{pct(splitResult.baselineRow.overallWinrate)}</span>
-								{#if splitResult.baselineRow.totalMatches > 0}
-									<span class="match-count">({splitResult.baselineRow.totalMatches})</span>
-								{/if}
-							</td>
-							{#each splitResult.opponents as opp}
-								{@const cell = splitResult.baselineRow.cells.get(opp)}
-								<td class="num-col" style="background: {cell?.winrate != null ? winrateColor(cell.winrate) : 'transparent'}">
-									<span class="winrate">{pct(cell?.winrate ?? null)}</span>
-									{#if cell && cell.total > 0}
-										<span class="match-count">({cell.total})</span>
-									{/if}
-								</td>
-							{/each}
-						</tr>
-
-						<!-- Group rows with delta bars -->
-						{#each splitResult.groupRows as group, gi}
-							{@const statRow = statsResult.rows[gi]}
-							<!-- Delta bar row -->
-							<tr class="delta-row">
-								<td class="group-col"></td>
-								<td class="num-col"></td>
-								<td class="num-col">
-									{@render deltaBarSnippet(splitResult.baselineRow.overallWinrate, group.overallWinrate)}
-								</td>
-								{#each splitResult.opponents as opp}
-									{@const baseCell = splitResult.baselineRow.cells.get(opp)}
-									{@const groupCell = group.cells.get(opp)}
-									<td class="num-col">
-										{@render deltaBarSnippet(baseCell?.winrate ?? null, groupCell?.winrate ?? null)}
-									</td>
+	<!-- Section 1: Card Split -->
+	<details class="section" open>
+		<summary>Card Split</summary>
+		<div class="section-body">
+			<div class="section-controls">
+				<div class="field card-search">
+					<label for="card-search-input">Card</label>
+					<div class="search-wrap">
+						<input
+							id="card-search-input"
+							type="text"
+							placeholder="Search card..."
+							bind:value={searchQuery}
+							onfocus={() => (showDropdown = true)}
+							onblur={() => setTimeout(() => (showDropdown = false), 200)}
+						/>
+						{#if showDropdown && filteredCards.length > 0}
+							<ul class="dropdown" role="listbox">
+								{#each filteredCards as name}
+									<li role="option" aria-selected={name === selectedCard}>
+										<button onmousedown={() => selectCard(name)}>{name}</button>
+									</li>
 								{/each}
-							</tr>
+							</ul>
+						{/if}
+					</div>
+				</div>
 
-							<!-- Group data row -->
-							<tr>
-								<td class="group-col">{group.label}</td>
-								<td class="num-col">{group.playerCount}</td>
-								<td class="num-col" style="background: {group.overallWinrate !== null ? winrateColor(group.overallWinrate) : 'transparent'}">
-									<span class="winrate">{pct(group.overallWinrate)}</span>
-									{#if group.totalMatches > 0}
-										<span class="match-count">({group.totalMatches})</span>
-									{/if}
-									<span class="ci-text">[{pct(statRow.overallCI.lower, 0)} — {pct(statRow.overallCI.upper, 0)}]</span>
-								</td>
-								{#each splitResult.opponents as opp}
-									{@const cell = group.cells.get(opp)}
-									{@const cellCI = statRow.cellCIs.get(opp)}
-									{@const cellSig = statRow.cellSignificance.get(opp)}
-									<td class="num-col" style="background: {cell?.winrate != null ? winrateColor(cell.winrate) : 'transparent'}">
-										<span class="winrate">
-											{pct(cell?.winrate ?? null)}
-											{#if cellSig && cellSig.level > 0}
-												<span class="sig-stars" style="color: {sigColor(cellSig.level)}">{significanceStars(cellSig.level)}</span>
-											{/if}
-										</span>
-										{#if cell && cell.total > 0}
-											<span class="match-count">({cell.total})</span>
-										{/if}
-										{#if cellCI}
-											<span class="ci-text">[{pct(cellCI.lower, 0)} — {pct(cellCI.upper, 0)}]</span>
-										{/if}
-									</td>
-								{/each}
-							</tr>
-						{/each}
-					</tbody>
-				</table>
+				<button class="split-btn" onclick={doSplit} disabled={!selectedCard || calculating}>
+					{calculating ? 'Splitting...' : 'Split'}
+				</button>
 			</div>
 
-			<!-- Pairwise comparisons -->
-			{#if statsResult.pairwise.length > 0}
-				<div class="pairwise-section">
-					{#each statsResult.pairwise as pair}
-						<div class="pairwise-item">
-							P({pair.groupA} &gt; {pair.groupB}) = <strong>{(pair.probABetter * 100).toFixed(1)}%</strong>
-						</div>
-					{/each}
+			<p class="scan-explanation">
+				<a href="https://en.wikipedia.org/wiki/Credible_interval" target="_blank" rel="noopener">Credible intervals</a>
+				[in brackets] show the 95% Bayesian range for each winrate.
+				Stars (* p&lt;0.05, ** p&lt;0.01, *** p&lt;0.001) indicate
+				<a href="https://en.wikipedia.org/wiki/Benjamini%E2%80%93Hochberg_procedure" target="_blank" rel="noopener">BH-corrected</a>
+				<a href="https://en.wikipedia.org/wiki/Fisher%27s_exact_test" target="_blank" rel="noopener">Fisher's exact test</a>
+				significance vs the complement group.
+				P(A &gt; B) is the Bayesian probability that group A's true overall winrate exceeds group B's.
+			</p>
+
+			{#if calculating}
+				<div class="loading">
+					<div class="spinner"></div>
+					<span>Computing splits...</span>
 				</div>
 			{/if}
-		</div>
-	{/if}
 
-	<!-- Auto-scan results -->
-	{#if autoScanResults}
-		<div class="auto-scan-results">
-			<h4>Auto-Scan Results ({autoScanResults.length} cards with data)</h4>
-			<p class="scan-explanation">
-				Each card is split using the selected mode. The best and worst groups (by overall winrate) are compared
-				with Fisher's exact test. P-values are adjusted for multiple comparisons (Benjamini-Hochberg).
-				Click a row to view the full split.
-			</p>
-			{#if autoScanResults.length === 0}
-				<p class="empty-msg">No cards had enough data in at least 2 groups to test.</p>
-			{:else}
-				<div class="table-wrap">
-					<table>
-						<thead>
-							<tr>
-								<th class="card-name-col">Card</th>
-								<th class="num-col" title="Winrate difference between the best and worst performing groups">Effect</th>
-								<th class="num-col" title="Raw p-value from Fisher's exact test before multiple-testing correction">Raw p-value</th>
-								<th class="num-col" title="P-value after Benjamini-Hochberg correction for multiple testing. Lower = more significant.">Adj. p-value</th>
-								<th class="num-col" title="Statistical significance: * p<0.05, ** p<0.01, *** p<0.001, ns = not significant">Sig</th>
-								<th title="The group with the highest overall winrate">Best</th>
-								<th title="The group with the lowest overall winrate">Worst</th>
-								<th class="num-col" title="Match count of the smallest group included in the test. Larger = more reliable.">Min matches</th>
-							</tr>
-						</thead>
-						<tbody>
-							{#each autoScanResults as row}
-								<tr class="scan-row" class:significant={row.level > 0} onclick={() => selectAutoScanCard(row.cardName)}>
-									<td class="card-name-col"><CardTooltip cardName={row.cardName}><span class="card-name">{row.cardName}</span></CardTooltip></td>
-									<td class="num-col">{(row.effectSize * 100).toFixed(1)}%</td>
-									<td class="num-col">{row.rawP < 0.001 ? '<0.001' : row.rawP.toFixed(3)}</td>
-									<td class="num-col">{row.adjustedP < 0.001 ? '<0.001' : row.adjustedP.toFixed(3)}</td>
-									<td class="num-col">
-										{#if row.level > 0}
-											<span class="sig-stars" style="color: {sigColor(row.level)}">{significanceStars(row.level)}</span>
-										{:else}
-											<span class="ns-label">ns</span>
+			{#if splitResult && statsResult}
+				<div class="results">
+					<div class="table-wrap">
+						<table>
+							<thead>
+								<tr>
+									<th class="group-col">Group</th>
+									<th class="num-col opp-col" title="Players">
+										<div class="vertical-header"># Players</div>
+									</th>
+									<th class="num-col opp-col" title="Overall">
+										<div class="vertical-header">Overall</div>
+									</th>
+									{#each splitResult.opponents as opp}
+										<th class="num-col opp-col" title={opp}>
+											<div class="vertical-header">{opp}</div>
+										</th>
+									{/each}
+								</tr>
+							</thead>
+							<tbody>
+								<!-- Baseline row -->
+								<tr class="baseline-row">
+									<td class="group-col"><strong>{splitResult.baselineRow.label}</strong></td>
+									<td class="num-col">{splitResult.baselineRow.playerCount}</td>
+									<td class="num-col" style="background: {splitResult.baselineRow.overallWinrate !== null ? winrateColor(splitResult.baselineRow.overallWinrate) : 'transparent'}">
+										<span class="winrate">{pct(splitResult.baselineRow.overallWinrate)}</span>
+										{#if splitResult.baselineRow.totalMatches > 0}
+											<span class="match-count">({splitResult.baselineRow.totalMatches})</span>
 										{/if}
 									</td>
-									<td>{row.bestGroup}</td>
-									<td>{row.worstGroup}</td>
-									<td class="num-col">{row.minGroupSize}</td>
+									{#each splitResult.opponents as opp}
+										{@const cell = splitResult.baselineRow.cells.get(opp)}
+										<td class="num-col" style="background: {cell?.winrate != null ? winrateColor(cell.winrate) : 'transparent'}">
+											<span class="winrate">{pct(cell?.winrate ?? null)}</span>
+											{#if cell && cell.total > 0}
+												<span class="match-count">({cell.total})</span>
+											{/if}
+										</td>
+									{/each}
 								</tr>
+
+								<!-- Group rows with delta bars -->
+								{#each splitResult.groupRows as group, gi}
+									{@const statRow = statsResult.rows[gi]}
+									<!-- Delta bar row -->
+									<tr class="delta-row">
+										<td class="group-col"></td>
+										<td class="num-col"></td>
+										<td class="num-col">
+											{@render deltaBarSnippet(splitResult.baselineRow.overallWinrate, group.overallWinrate)}
+										</td>
+										{#each splitResult.opponents as opp}
+											{@const baseCell = splitResult.baselineRow.cells.get(opp)}
+											{@const groupCell = group.cells.get(opp)}
+											<td class="num-col">
+												{@render deltaBarSnippet(baseCell?.winrate ?? null, groupCell?.winrate ?? null)}
+											</td>
+										{/each}
+									</tr>
+
+									<!-- Group data row -->
+									<tr>
+										<td class="group-col">{group.label}</td>
+										<td class="num-col">{group.playerCount}</td>
+										<td class="num-col" style="background: {group.overallWinrate !== null ? winrateColor(group.overallWinrate) : 'transparent'}">
+											<span class="winrate">{pct(group.overallWinrate)}</span>
+											{#if group.totalMatches > 0}
+												<span class="match-count">({group.totalMatches})</span>
+											{/if}
+											<span class="ci-text">[{pct(statRow.overallCI.lower, 0)} — {pct(statRow.overallCI.upper, 0)}]</span>
+										</td>
+										{#each splitResult.opponents as opp}
+											{@const cell = group.cells.get(opp)}
+											{@const cellCI = statRow.cellCIs.get(opp)}
+											{@const cellSig = statRow.cellSignificance.get(opp)}
+											<td class="num-col" style="background: {cell?.winrate != null ? winrateColor(cell.winrate) : 'transparent'}">
+												<span class="winrate">
+													{pct(cell?.winrate ?? null)}
+													{#if cellSig && cellSig.level > 0}
+														<span class="sig-stars" style="color: {sigColor(cellSig.level)}">{significanceStars(cellSig.level)}</span>
+													{/if}
+												</span>
+												{#if cell && cell.total > 0}
+													<span class="match-count">({cell.total})</span>
+												{/if}
+												{#if cellCI}
+													<span class="ci-text">[{pct(cellCI.lower, 0)} — {pct(cellCI.upper, 0)}]</span>
+												{/if}
+											</td>
+										{/each}
+									</tr>
+								{/each}
+							</tbody>
+						</table>
+					</div>
+
+					<!-- Pairwise comparisons -->
+					{#if statsResult.pairwise.length > 0}
+						<div class="pairwise-section">
+							{#each statsResult.pairwise as pair}
+								<div class="pairwise-item">
+									P({pair.groupA} &gt; {pair.groupB}) = <strong>{(pair.probABetter * 100).toFixed(1)}%</strong>
+								</div>
 							{/each}
-						</tbody>
-					</table>
+						</div>
+					{/if}
 				</div>
 			{/if}
 		</div>
-	{/if}
+	</details>
+
+	<!-- Section 2: Auto-Scan -->
+	<details class="section" open>
+		<summary>Auto-Scan</summary>
+		<div class="section-body">
+			<div class="section-controls">
+				<div class="field">
+					<label for="auto-scan-min">Min matches</label>
+					<input
+						id="auto-scan-min"
+						type="number"
+						min="1"
+						max="200"
+						bind:value={autoScanMinGroupSize}
+					/>
+				</div>
+				<div class="field">
+					<label for="auto-scan-threshold">Skip %</label>
+					<input
+						id="auto-scan-threshold"
+						type="number"
+						min="50"
+						max="100"
+						bind:value={autoIncludeThreshold}
+						title="Cards where this % or more of players run the same count are skipped (auto-includes)"
+					/>
+				</div>
+				<div class="field">
+					<label for="auto-scan-effect">Min effect %</label>
+					<input
+						id="auto-scan-effect"
+						type="number"
+						min="0"
+						max="50"
+						bind:value={autoMinEffect}
+						title="Only test cards where the winrate difference between best and worst groups exceeds this threshold"
+					/>
+				</div>
+				<button class="scan-btn" onclick={doAutoScan} disabled={autoScanning}>
+					{autoScanning ? 'Scanning...' : 'Scan All Cards'}
+				</button>
+			</div>
+
+			<p class="scan-explanation">
+				Each card is split using the selected mode. The best and worst groups (by overall winrate) are compared
+				with <a href="https://en.wikipedia.org/wiki/Fisher%27s_exact_test" target="_blank" rel="noopener">Fisher's exact test</a>.
+				P-values are adjusted for multiple comparisons
+				(<a href="https://en.wikipedia.org/wiki/Benjamini%E2%80%93Hochberg_procedure" target="_blank" rel="noopener">Benjamini-Hochberg</a>).
+				Click a row to view the full split.
+			</p>
+
+			{#if autoScanning}
+				<div class="progress-section">
+					<div class="progress-bar-track">
+						<div class="progress-bar-fill" style="width: {autoScanTotal > 0 ? (autoScanProgress / autoScanTotal * 100) : 0}%"></div>
+					</div>
+					<span class="progress-text">{autoScanProgress} / {autoScanTotal} cards</span>
+				</div>
+			{/if}
+
+			{#if autoScanResults}
+				<div class="auto-scan-results">
+					<h4>Results ({autoScanResults.length} cards tested)</h4>
+					{#if autoScanResults.length === 0}
+						<p class="empty-msg">No cards had enough data in at least 2 groups to test.</p>
+					{:else}
+						<div class="table-wrap">
+							<table>
+								<thead>
+									<tr>
+										<th class="card-name-col">Card</th>
+										<th class="num-col" title="Winrate difference between the best and worst performing groups">Effect</th>
+										<th class="num-col" title="Raw p-value from Fisher's exact test before multiple-testing correction">Raw p</th>
+										<th class="num-col" title="P-value after Benjamini-Hochberg correction for multiple testing. Lower = more significant.">Adj. p</th>
+										<th class="num-col" title="Statistical significance: * p<0.05, ** p<0.01, *** p<0.001, ns = not significant">Sig</th>
+										<th title="The group with the highest overall winrate">Best</th>
+										<th title="The group with the lowest overall winrate">Worst</th>
+										<th class="num-col" title="Match count of the smallest group included in the test. Larger = more reliable.">Min N</th>
+									</tr>
+								</thead>
+								<tbody>
+									{#each autoScanResults as row}
+										<tr class="scan-row" class:significant={row.level > 0} onclick={() => selectAutoScanCard(row.cardName)}>
+											<td class="card-name-col"><CardTooltip cardName={row.cardName}><span class="card-name">{row.cardName}</span></CardTooltip></td>
+											<td class="num-col">{(row.effectSize * 100).toFixed(1)}%</td>
+											<td class="num-col">{row.rawP < 0.001 ? '<0.001' : row.rawP.toFixed(3)}</td>
+											<td class="num-col">{row.adjustedP < 0.001 ? '<0.001' : row.adjustedP.toFixed(3)}</td>
+											<td class="num-col">
+												{#if row.level > 0}
+													<span class="sig-stars" style="color: {sigColor(row.level)}">{significanceStars(row.level)}</span>
+												{:else}
+													<span class="ns-label">ns</span>
+												{/if}
+											</td>
+											<td>{row.bestGroup}</td>
+											<td>{row.worstGroup}</td>
+											<td class="num-col">{row.minGroupSize}</td>
+										</tr>
+									{/each}
+								</tbody>
+							</table>
+						</div>
+					{/if}
+				</div>
+			{/if}
+		</div>
+	</details>
 </div>
 
 <style>
@@ -482,12 +510,50 @@
 		font-size: 0.85rem;
 	}
 
-	.controls {
+	/* Shared controls bar */
+	.shared-controls {
 		display: flex;
 		gap: 1rem;
 		align-items: flex-end;
 		flex-wrap: wrap;
 		margin-bottom: 1rem;
+	}
+
+	/* Collapsible sections */
+	.section {
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius);
+		margin-bottom: 0.75rem;
+	}
+
+	.section summary {
+		padding: 0.5rem 0.75rem;
+		font-size: 0.75rem;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+		color: var(--color-text-muted);
+		cursor: pointer;
+		user-select: none;
+		background: var(--color-surface);
+		border-radius: var(--radius);
+	}
+
+	.section[open] summary {
+		border-bottom: 1px solid var(--color-border);
+		border-radius: var(--radius) var(--radius) 0 0;
+	}
+
+	.section-body {
+		padding: 0.75rem;
+	}
+
+	.section-controls {
+		display: flex;
+		gap: 1rem;
+		align-items: flex-end;
+		flex-wrap: wrap;
+		margin-bottom: 0.75rem;
 	}
 
 	.field {
@@ -639,28 +705,23 @@
 
 	.scan-btn {
 		padding: 0.45rem 0.75rem;
-		border: 1px solid var(--color-border);
+		border: 1px solid var(--color-accent);
 		border-radius: var(--radius);
-		background: var(--color-surface);
-		color: var(--color-text);
+		background: var(--color-accent);
+		color: #fff;
 		font-size: 0.8rem;
 		font-weight: 600;
 		cursor: pointer;
-		transition: background 0.15s;
+		transition: opacity 0.15s;
 	}
 
 	.scan-btn:hover:not(:disabled) {
-		background: var(--color-border);
+		opacity: 0.85;
 	}
 
 	.scan-btn:disabled {
 		opacity: 0.5;
 		cursor: not-allowed;
-	}
-
-	.auto-scan-field {
-		border-left: 1px solid var(--color-border);
-		padding-left: 1rem;
 	}
 
 	.loading {
@@ -839,9 +900,7 @@
 	}
 
 	.auto-scan-results {
-		margin-top: 1.5rem;
-		border-top: 1px solid var(--color-border);
-		padding-top: 1rem;
+		margin-top: 0.5rem;
 	}
 
 	.auto-scan-results h4 {
@@ -859,6 +918,17 @@
 		line-height: 1.5;
 		margin: 0 0 0.75rem;
 		max-width: 640px;
+	}
+
+	.scan-explanation a {
+		color: var(--color-text-muted);
+		text-decoration: underline;
+		text-decoration-style: dotted;
+		text-underline-offset: 2px;
+	}
+
+	.scan-explanation a:hover {
+		color: var(--color-accent);
 	}
 
 	.empty-msg {
