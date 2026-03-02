@@ -80,23 +80,24 @@
 			<div class="error-box">{result.error}</div>
 		{:else}
 			{@const reg = result.regression}
-			{@const maxAbs = Math.max(...reg.coefficients.map((c) => Math.abs(c.coefficient)), 0.01)}
+			{@const sorted = [...reg.coefficients].sort((a, b) => Math.abs(b.coefficient) - Math.abs(a.coefficient))}
+			{@const maxAbs = Math.max(...sorted.map((c) => Math.abs(c.coefficient)), 0.01)}
 
 			<!-- Summary -->
 			<div class="summary">
-				<div class="summary-item">
+				<div class="summary-item" title="Number of non-mirror, non-draw, non-bye match observations used for fitting">
 					<span class="summary-label">Matches</span>
 					<span class="summary-value">{reg.nObservations}</span>
 				</div>
-				<div class="summary-item">
+				<div class="summary-item" title="Cards with meaningful variance in copy counts across decklists (excludes basic lands and auto-includes)">
 					<span class="summary-label">Flex cards</span>
 					<span class="summary-value">{reg.nFeatures}</span>
 				</div>
-				<div class="summary-item">
+				<div class="summary-item" title="Predicted win probability at average card counts (sigmoid of the intercept)">
 					<span class="summary-label">Baseline win</span>
 					<span class="summary-value">{pct(reg.baselineWinProb)}</span>
 				</div>
-				<div class="summary-item">
+				<div class="summary-item" title="Model fit: 0 means card choices have no predictive power over a coin flip, higher is better. Expect small values — match outcomes depend heavily on opponent, draws, and skill">
 					<span class="summary-label">Pseudo-R²</span>
 					<span class="summary-value">{reg.pseudoR2.toFixed(3)}</span>
 				</div>
@@ -112,15 +113,16 @@
 			{/if}
 
 			<!-- Bar chart (HTML-based for CardTooltip support) -->
-			{#if reg.coefficients.length > 0}
+			{#if sorted.length > 0}
 				<div class="chart-wrap">
-					{#each reg.coefficients as coef}
+					{#each sorted as coef}
 						{@const scale = maxAbs > 0 ? Math.abs(coef.coefficient) / maxAbs : 0}
 						{@const barPct = scale * 50}
 						{@const isPositive = coef.coefficient >= 0}
 						{@const ciLeftPct = Math.max(0, 50 + (coef.lower / maxAbs) * 50)}
 						{@const ciRightPct = Math.min(100, 50 + (coef.upper / maxAbs) * 50)}
-						<div class="chart-row">
+						{@const significant = !(coef.lower <= 0 && coef.upper >= 0)}
+						<div class="chart-row" class:faded={!significant}>
 							<div class="chart-label">
 								<CardTooltip cardName={coef.name}><span class="card-name">{coef.name}</span></CardTooltip>
 							</div>
@@ -144,27 +146,44 @@
 						</div>
 					{/each}
 					<div class="chart-axis-label">Hurts &larr; Coefficient &rarr; Helps</div>
+					<p class="chart-note">Faded bars have confidence intervals crossing zero (not statistically reliable).</p>
 				</div>
+
+				<p class="methodology">
+					Coefficients are from a
+					<a href="https://en.wikipedia.org/wiki/Bayesian_logistic_regression">Bayesian logistic regression</a>
+					fitted via
+					<a href="https://en.wikipedia.org/wiki/Iteratively_reweighted_least_squares">IRLS</a>
+					with weakly informative
+					<a href="https://en.wikipedia.org/wiki/Normal_distribution">normal priors</a>
+					(&sigma;=2.5). Error bars show 95%
+					<a href="https://en.wikipedia.org/wiki/Credible_interval">credible intervals</a>
+					from
+					<a href="https://en.wikipedia.org/wiki/Laplace%27s_approximation">Laplace approximation</a>.
+					The marginal effect is the estimated change in win probability per additional copy,
+					evaluated at the baseline win rate.
+				</p>
 			{/if}
 
 			<!-- Coefficient details table -->
-			{#if reg.coefficients.length > 0}
+			{#if sorted.length > 0}
 				<details class="details-table">
 					<summary>Coefficient details</summary>
 					<div class="table-wrap">
 						<table>
 							<thead>
 								<tr>
-									<th>Card</th>
-									<th class="num">Coef</th>
-									<th class="num">SE</th>
-									<th class="num">95% CI</th>
-									<th class="num">Marginal</th>
+									<th title="The flex card whose copy count varies across decklists">Card</th>
+									<th class="num" title="Log-odds coefficient: positive means more copies correlate with more wins">Coef</th>
+									<th class="num" title="Standard error of the coefficient estimate (Laplace approximation)">SE</th>
+									<th class="num" title="95% credible interval for the coefficient; crossing zero means the effect is not significant">95% CI</th>
+									<th class="num" title="Estimated change in win probability per additional copy, at the baseline win rate">Marginal</th>
 								</tr>
 							</thead>
 							<tbody>
-								{#each reg.coefficients as coef}
-									<tr>
+								{#each sorted as coef}
+									{@const significant = !(coef.lower <= 0 && coef.upper >= 0)}
+									<tr class:faded={!significant}>
 										<td><CardTooltip cardName={coef.name}><span class="card-name">{coef.name}</span></CardTooltip></td>
 										<td class="num" class:positive={coef.coefficient > 0} class:negative={coef.coefficient < 0}>
 											{coef.coefficient > 0 ? '+' : ''}{coef.coefficient.toFixed(3)}
@@ -299,6 +318,7 @@
 		display: flex;
 		flex-direction: column;
 		gap: 0.15rem;
+		cursor: help;
 	}
 
 	.summary-label {
@@ -403,12 +423,41 @@
 		white-space: nowrap;
 	}
 
+	.chart-row.faded {
+		opacity: 0.4;
+	}
+
 	.chart-axis-label {
 		text-align: center;
 		font-size: 0.65rem;
 		color: var(--color-text-muted);
 		margin-top: 0.25rem;
 		padding-left: 220px;
+	}
+
+	.chart-note {
+		font-size: 0.7rem;
+		color: var(--color-text-muted);
+		margin: 0.35rem 0 0 220px;
+		font-style: italic;
+	}
+
+	.methodology {
+		font-size: 0.75rem;
+		color: var(--color-text-muted);
+		line-height: 1.5;
+		margin: 0.75rem 0 0.5rem;
+	}
+
+	.methodology a {
+		color: var(--color-text-muted);
+		text-decoration: underline;
+		text-decoration-style: dotted;
+		text-underline-offset: 2px;
+	}
+
+	.methodology a:hover {
+		color: var(--color-accent);
 	}
 
 	.details-table {
@@ -444,6 +493,11 @@
 		text-transform: uppercase;
 		letter-spacing: 0.04em;
 		color: var(--color-text-muted);
+		cursor: help;
+	}
+
+	tr.faded {
+		opacity: 0.4;
 	}
 
 	.num {

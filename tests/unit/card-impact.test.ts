@@ -344,4 +344,82 @@ describe('analyzeCardImpact', () => {
 			expect(result.regression.converged).toBe(true);
 		}
 	});
+
+	it('marginal effect is per-copy, not per-std', () => {
+		// Setup: 40 players, half with 4 copies of "Good Card", half with 0.
+		// Feature std for a 50/50 split of 0 vs 4 = 2.0.
+		// If marginal effect is per-std (the bug), it will be ~2x too large.
+		const players: Record<string, PlayerInfo> = {};
+		const decklists: Record<string, DecklistInfo> = {};
+		const matches: MatchResult[] = [];
+
+		for (let i = 0; i < 40; i++) {
+			const pid = `p${i}`;
+			const did = `d${i}`;
+			const hasCard = i < 20;
+			players[pid] = makePlayer(`P${i}`, [did]);
+			decklists[did] = makeDeck(pid, [
+				['Good Card', hasCard ? 4 : 0],
+				['Filler', hasCard ? 0 : 4],
+			]);
+		}
+		players['opp'] = makePlayer('Opp', ['dopp']);
+		decklists['dopp'] = makeDeck('opp', [['Other', 4]]);
+
+		// Good Card users win 80%, others win 20%
+		for (let i = 0; i < 40; i++) {
+			const pid = `p${i}`;
+			const hasCard = i < 20;
+			const wins = hasCard ? (i % 5 !== 0) : (i % 5 === 0);
+			matches.push(makeMatch(pid, 'opp', wins ? pid : 'opp'));
+		}
+
+		const t = makeTournament({ players, decklists, matches });
+		const arch = new Map<string, string>();
+		for (let i = 0; i < 40; i++) arch.set(`p${i}`, 'A');
+		arch.set('opp', 'B');
+
+		const result = analyzeCardImpact([t], arch, 'A', { minObservations: 1 });
+		expect('regression' in result).toBe(true);
+		if ('regression' in result) {
+			const reg = result.regression;
+			const goodCard = reg.coefficients.find((c) => c.name === 'Good Card');
+			expect(goodCard).toBeDefined();
+
+			// Manually compute expected marginal effect per copy:
+			// marginal_per_std = baselineProb * (1 - baselineProb) * coef
+			// marginal_per_copy = marginal_per_std / std
+			// For a 50/50 split of 0 vs 4: std = 2.0
+			const baseline = reg.baselineWinProb;
+			const perStd = baseline * (1 - baseline) * goodCard!.coefficient;
+			const perCopy = perStd / 2.0; // std of [0,0,...,4,4,...] with 50/50 = 2.0
+
+			// The marginal effect should be per-copy (smaller), not per-std (larger)
+			expect(Math.abs(goodCard!.marginalEffect)).toBeLessThan(Math.abs(perStd));
+			expect(goodCard!.marginalEffect).toBeCloseTo(perCopy, 1);
+		}
+	});
+
+	it('pseudo-R² is between 0 and 1', () => {
+		const result = analyzeCardImpact([tournament], archetypes, 'Aggro', {
+			minObservations: 1,
+		});
+		if ('regression' in result) {
+			expect(result.regression.pseudoR2).toBeGreaterThanOrEqual(0);
+			expect(result.regression.pseudoR2).toBeLessThanOrEqual(1);
+		}
+	});
+
+	it('CI contains the coefficient and has positive width', () => {
+		const result = analyzeCardImpact([tournament], archetypes, 'Aggro', {
+			minObservations: 1,
+		});
+		if ('regression' in result) {
+			for (const c of result.regression.coefficients) {
+				expect(c.lower).toBeLessThanOrEqual(c.coefficient);
+				expect(c.upper).toBeGreaterThanOrEqual(c.coefficient);
+				expect(c.upper - c.lower).toBeGreaterThan(0);
+			}
+		}
+	});
 });

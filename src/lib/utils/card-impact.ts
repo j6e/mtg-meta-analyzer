@@ -256,6 +256,7 @@ export function analyzeCardImpact(
 
 	const regression = fitLogisticRegression({
 		X, y, featureNames,
+		featureStds: features.map((f) => f.std),
 		priorVariance: 6.25,
 		interceptPriorVariance: 100,
 	});
