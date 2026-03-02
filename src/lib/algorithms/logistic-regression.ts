@@ -17,7 +17,7 @@ export interface LogisticRegressionInput {
 	y: Float64Array;
 	/** Feature names (length p, first should be 'intercept') */
 	featureNames: string[];
-	/** Prior variance for coefficients (default 6.25 → σ=2.5) */
+	/** Prior variance for coefficients (default 1.0 → σ=1.0) */
 	priorVariance?: number;
 	/** Prior variance for intercept (default 100 → σ=10) */
 	interceptPriorVariance?: number;
@@ -64,7 +64,7 @@ export function sigmoid(x: number): number {
 
 export function fitLogisticRegression(input: LogisticRegressionInput): LogisticRegressionResult {
 	const { X, y, featureNames } = input;
-	const priorVar = input.priorVariance ?? 6.25;
+	const priorVar = input.priorVariance ?? 1.0;
 	const interceptVar = input.interceptPriorVariance ?? 100;
 	const maxIter = input.maxIter ?? 25;
 	const tol = input.tol ?? 1e-6;

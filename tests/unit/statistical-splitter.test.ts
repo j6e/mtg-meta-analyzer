@@ -202,6 +202,147 @@ describe('autoScanCards', () => {
 		expect(results).toHaveLength(0);
 	});
 
+	it('binary split has no extraPairs (only 2 groups)', async () => {
+		const results = await autoScanCards(
+			[tournament], archetypes, 'Aggro',
+			['Lightning Bolt'],
+			'binary',
+			{ threshold: 4, minGroupSize: 1 },
+		);
+
+		expect(results).toHaveLength(1);
+		expect(results[0].extraPairs).toHaveLength(0);
+	});
+
+	it('per-copy split produces extraPairs when 3+ groups exist', async () => {
+		// Build a tournament with 3 distinct copy-count groups for "Flex Card":
+		// 0 copies (lose), 2 copies (mixed), 4 copies (win)
+		const players: Record<string, PlayerInfo> = {};
+		const decklists: Record<string, DecklistInfo> = {};
+		const matches: MatchResult[] = [];
+
+		// 6 players per group = 18 aggro players
+		for (let g = 0; g < 3; g++) {
+			const copies = g * 2; // 0, 2, 4
+			for (let j = 0; j < 6; j++) {
+				const idx = g * 6 + j;
+				const pid = `a${idx}`;
+				const did = `d${idx}`;
+				players[pid] = makePlayer(`A${idx}`, [did]);
+				decklists[did] = makeDeckWithCards(pid, [['Flex Card', copies], ['Filler', 4 - copies]]);
+			}
+		}
+
+		// 1 control opponent
+		players['c1'] = makePlayer('C1', ['dc1']);
+		decklists['dc1'] = makeDeckWithCards('c1', [['Island', 20]]);
+
+		// Group 0 (0 copies): all lose; Group 1 (2 copies): mixed; Group 2 (4 copies): all win
+		for (let i = 0; i < 18; i++) {
+			const pid = `a${i}`;
+			const group = Math.floor(i / 6);
+			let wins: boolean;
+			if (group === 0) wins = false;
+			else if (group === 2) wins = true;
+			else wins = i % 2 === 0; // 50% for group 1
+			matches.push(makeMatch(pid, 'c1', wins ? pid : 'c1'));
+		}
+
+		const t = makeTournament({ players, decklists, matches });
+		const arch = new Map<string, string>();
+		for (let i = 0; i < 18; i++) arch.set(`a${i}`, 'Aggro');
+		arch.set('c1', 'Control');
+
+		const results = await autoScanCards(
+			[t], arch, 'Aggro',
+			['Flex Card'],
+			'per-copy',
+			{ minGroupSize: 1, minEffectSize: 0.01 },
+		);
+
+		expect(results).toHaveLength(1);
+		const r = results[0];
+
+		// Primary row should be best (4 copies) vs worst (0 copies)
+		expect(r.bestGroup).toContain('4');
+		expect(r.worstGroup).toContain('0');
+
+		// Should have extra pairs (e.g., 4 vs 2, 2 vs 0)
+		expect(r.extraPairs.length).toBeGreaterThan(0);
+
+		// All extra pairs should have valid BH-adjusted p-values
+		for (const pair of r.extraPairs) {
+			expect(pair.adjustedP).toBeGreaterThanOrEqual(0);
+			expect(pair.adjustedP).toBeLessThanOrEqual(1);
+			expect(pair.effectSize).toBeGreaterThan(0);
+		}
+	});
+
+	it('BH correction is applied across all pairs from all cards', async () => {
+		// With multiple cards producing multiple pairs, adjustedP should differ from rawP
+		const players: Record<string, PlayerInfo> = {};
+		const decklists: Record<string, DecklistInfo> = {};
+		const matches: MatchResult[] = [];
+
+		for (let g = 0; g < 3; g++) {
+			const copies = g * 2;
+			for (let j = 0; j < 6; j++) {
+				const idx = g * 6 + j;
+				const pid = `a${idx}`;
+				const did = `d${idx}`;
+				players[pid] = makePlayer(`A${idx}`, [did]);
+				decklists[did] = makeDeckWithCards(pid, [
+					['CardA', copies],
+					['CardB', 4 - copies],
+					['Filler', 4],
+				]);
+			}
+		}
+		players['c1'] = makePlayer('C1', ['dc1']);
+		decklists['dc1'] = makeDeckWithCards('c1', [['Island', 20]]);
+
+		for (let i = 0; i < 18; i++) {
+			const pid = `a${i}`;
+			const group = Math.floor(i / 6);
+			const wins = group === 2;
+			matches.push(makeMatch(pid, 'c1', wins ? pid : 'c1'));
+		}
+
+		const t = makeTournament({ players, decklists, matches });
+		const arch = new Map<string, string>();
+		for (let i = 0; i < 18; i++) arch.set(`a${i}`, 'Aggro');
+		arch.set('c1', 'Control');
+
+		const results = await autoScanCards(
+			[t], arch, 'Aggro',
+			['CardA', 'CardB'],
+			'per-copy',
+			{ minGroupSize: 1, minEffectSize: 0.01 },
+		);
+
+		// Both cards should produce results with pairwise tests
+		expect(results.length).toBeGreaterThan(0);
+
+		// Collect all adjusted p-values (primary + extras)
+		const allAdjusted: number[] = [];
+		for (const r of results) {
+			allAdjusted.push(r.adjustedP);
+			for (const p of r.extraPairs) allAdjusted.push(p.adjustedP);
+		}
+
+		// With multiple tests, at least some adjustedP should be >= rawP
+		const allRaw: number[] = [];
+		for (const r of results) {
+			allRaw.push(r.rawP);
+			for (const p of r.extraPairs) allRaw.push(p.rawP);
+		}
+
+		// BH can only increase p-values (or keep them equal)
+		for (let i = 0; i < allAdjusted.length; i++) {
+			expect(allAdjusted[i]).toBeGreaterThanOrEqual(allRaw[i] - 1e-10);
+		}
+	});
+
 	it('calls onProgress callback', async () => {
 		const progressCalls: [number, number][] = [];
 		await autoScanCards(

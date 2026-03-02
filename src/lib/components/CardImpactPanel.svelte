@@ -156,7 +156,7 @@
 					<a href="https://en.wikipedia.org/wiki/Iteratively_reweighted_least_squares">IRLS</a>
 					with weakly informative
 					<a href="https://en.wikipedia.org/wiki/Normal_distribution">normal priors</a>
-					(&sigma;=2.5). Error bars show 95%
+					(&sigma;=1.0). Error bars show 95%
 					<a href="https://en.wikipedia.org/wiki/Credible_interval">credible intervals</a>
 					from
 					<a href="https://en.wikipedia.org/wiki/Laplace%27s_approximation">Laplace approximation</a>.

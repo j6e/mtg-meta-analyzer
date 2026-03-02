@@ -32,11 +32,21 @@ export interface StatisticalSplitResult {
 	pairwise: PairwiseComparison[];
 }
 
+export interface AutoScanPair {
+	groupA: string;
+	groupB: string;
+	effectSize: number;
+	rawP: number;
+	adjustedP: number;
+	level: number;
+	minN: number;
+}
+
 export interface AutoScanResult {
 	cardName: string;
-	/** Largest absolute effect size across groups */
+	/** Effect size of the best-vs-worst pair */
 	effectSize: number;
-	/** Raw Fisher p-value for the most significant cell */
+	/** Raw Fisher p-value for the best-vs-worst pair */
 	rawP: number;
 	/** BH-adjusted p-value */
 	adjustedP: number;
@@ -47,4 +57,6 @@ export interface AutoScanResult {
 	totalMatches: number;
 	/** Match count of the smallest group (limits statistical power) */
 	minGroupSize: number;
+	/** Additional pairwise comparisons beyond best/worst that passed filters */
+	extraPairs: AutoScanPair[];
 }

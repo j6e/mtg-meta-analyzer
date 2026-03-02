@@ -492,6 +492,24 @@
 											<td>{row.worstGroup}</td>
 											<td class="num-col">{row.minGroupSize}</td>
 										</tr>
+										{#each row.extraPairs as pair}
+											<tr class="scan-row sub-row" class:significant={pair.level > 0} onclick={() => selectAutoScanCard(row.cardName)}>
+												<td class="card-name-col"></td>
+												<td class="num-col">{(pair.effectSize * 100).toFixed(1)}%</td>
+												<td class="num-col">{pair.rawP < 0.001 ? '<0.001' : pair.rawP.toFixed(3)}</td>
+												<td class="num-col">{pair.adjustedP < 0.001 ? '<0.001' : pair.adjustedP.toFixed(3)}</td>
+												<td class="num-col">
+													{#if pair.level > 0}
+														<span class="sig-stars" style="color: {sigColor(pair.level)}">{significanceStars(pair.level)}</span>
+													{:else}
+														<span class="ns-label">ns</span>
+													{/if}
+												</td>
+												<td>{pair.groupA}</td>
+												<td>{pair.groupB}</td>
+												<td class="num-col">{pair.minN}</td>
+											</tr>
+										{/each}
 									{/each}
 								</tbody>
 							</table>
@@ -971,7 +989,18 @@
 	}
 
 	.scan-row.significant {
-		font-weight: 500;
+		background: rgba(79, 70, 229, 0.06);
+	}
+
+	.sub-row {
+		opacity: 0.6;
+		font-size: 0.75rem;
+	}
+
+	.sub-row td {
+		border-bottom: 1px solid transparent;
+		padding-top: 0.05rem;
+		padding-bottom: 0.05rem;
 	}
 
 	.ns-label {

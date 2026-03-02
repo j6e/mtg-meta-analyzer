@@ -4,6 +4,7 @@ import type {
 	StatisticalSplitRow,
 	PairwiseComparison,
 	AutoScanResult,
+	AutoScanPair,
 	CellSignificance,
 } from '../types/statistics';
 import type { CredibleInterval } from '../algorithms/statistics';
@@ -130,15 +131,20 @@ export async function autoScanCards(
 	const minGroupSize = options.minGroupSize ?? 10;
 	const autoIncludeThreshold = options.autoIncludeThreshold ?? 0.9;
 	const minEffectSize = options.minEffectSize ?? 0.05;
-	const candidates: {
+
+	// Collect all pairwise candidates across all cards.
+	// BH correction is applied across ALL pairs, not per-card.
+	interface PairCandidate {
 		cardName: string;
+		groupA: string;   // higher WR
+		groupB: string;   // lower WR
 		effectSize: number;
 		rawP: number;
-		bestGroup: string;
-		worstGroup: string;
+		minN: number;
 		totalMatches: number;
-		minGroupSize: number;
-	}[] = [];
+		isBestWorst: boolean;
+	}
+	const allPairs: PairCandidate[] = [];
 
 	for (let i = 0; i < allCardNames.length; i++) {
 		const cardName = allCardNames[i];
@@ -168,36 +174,44 @@ export async function autoScanCards(
 		const eligibleRows = split.groupRows.filter((r) => r.totalMatches >= minGroupSize);
 		if (eligibleRows.length < 2) continue;
 
-		// Find best/worst among eligible groups by overall winrate
-		let bestRow: SplitRow | null = null;
-		let worstRow: SplitRow | null = null;
+		// Find best/worst for the primary row
 		let bestWR = -1, worstWR = 2;
-		let smallestGroup = Infinity;
-
+		let bestLabel = '', worstLabel = '';
 		for (const row of eligibleRows) {
 			const wr = row.overallWinrate ?? 0.5;
-			if (wr > bestWR) { bestWR = wr; bestRow = row; }
-			if (wr < worstWR) { worstWR = wr; worstRow = row; }
-			if (row.totalMatches < smallestGroup) smallestGroup = row.totalMatches;
+			if (wr > bestWR) { bestWR = wr; bestLabel = row.label; }
+			if (wr < worstWR) { worstWR = wr; worstLabel = row.label; }
 		}
 
-		const effectSize = bestWR - worstWR;
-		if (effectSize < minEffectSize) continue;
-
+		// Enumerate all C(k,2) pairwise comparisons
 		const totalMatches = eligibleRows.reduce((s, r) => s + r.totalMatches, 0);
 
-		// Single Fisher's test: best group vs worst group on overall record.
-		// One test per card — avoids cherry-picking across per-opponent cells.
-		const rawP = fisherExactTest(
-			bestRow!.totalWins, bestRow!.totalLosses,
-			worstRow!.totalWins, worstRow!.totalLosses,
-		);
+		for (let a = 0; a < eligibleRows.length; a++) {
+			for (let b = a + 1; b < eligibleRows.length; b++) {
+				const rowA = eligibleRows[a];
+				const rowB = eligibleRows[b];
+				const wrA = rowA.overallWinrate ?? 0.5;
+				const wrB = rowB.overallWinrate ?? 0.5;
 
-		candidates.push({
-			cardName, effectSize, rawP,
-			bestGroup: bestRow!.label, worstGroup: worstRow!.label,
-			totalMatches, minGroupSize: smallestGroup,
-		});
+				// Order so groupA has higher winrate
+				const [higher, lower] = wrA >= wrB ? [rowA, rowB] : [rowB, rowA];
+				const effect = (higher.overallWinrate ?? 0.5) - (lower.overallWinrate ?? 0.5);
+
+				if (effect < minEffectSize) continue;
+
+				const rawP = fisherExactTest(
+					higher.totalWins, higher.totalLosses,
+					lower.totalWins, lower.totalLosses,
+				);
+				const minN = Math.min(higher.totalMatches, lower.totalMatches);
+				const isBestWorst = higher.label === bestLabel && lower.label === worstLabel;
+
+				allPairs.push({
+					cardName, groupA: higher.label, groupB: lower.label,
+					effectSize: effect, rawP, minN, totalMatches, isBestWorst,
+				});
+			}
+		}
 
 		// Yield to UI every 5 cards
 		if (i % 5 === 4) {
@@ -208,23 +222,58 @@ export async function autoScanCards(
 
 	options.onProgress?.(allCardNames.length, allCardNames.length);
 
-	if (candidates.length === 0) return [];
+	if (allPairs.length === 0) return [];
 
-	// BH correction across all scanned cards
-	const rawPs = candidates.map((c) => c.rawP);
+	// BH correction across ALL pairs from ALL cards
+	const rawPs = allPairs.map((c) => c.rawP);
 	const adjustedPs = benjaminiHochberg(rawPs);
 
-	const results: AutoScanResult[] = candidates.map((c, i) => ({
-		cardName: c.cardName,
-		effectSize: c.effectSize,
-		rawP: c.rawP,
+	// Attach adjusted p-values
+	const correctedPairs = allPairs.map((p, i) => ({
+		...p,
 		adjustedP: adjustedPs[i],
 		level: significanceLevel(adjustedPs[i]),
-		bestGroup: c.bestGroup,
-		worstGroup: c.worstGroup,
-		totalMatches: c.totalMatches,
-		minGroupSize: c.minGroupSize,
 	}));
+
+	// Group by card: primary row = best/worst pair, extras = other pairs
+	const byCard = new Map<string, typeof correctedPairs>();
+	for (const pair of correctedPairs) {
+		if (!byCard.has(pair.cardName)) byCard.set(pair.cardName, []);
+		byCard.get(pair.cardName)!.push(pair);
+	}
+
+	const results: AutoScanResult[] = [];
+	for (const [cardName, pairs] of byCard) {
+		// Primary = best/worst pair; fallback to lowest adjusted p
+		const primary = pairs.find((p) => p.isBestWorst)
+			?? pairs.reduce((best, p) => p.adjustedP < best.adjustedP ? p : best);
+
+		const extras: AutoScanPair[] = pairs
+			.filter((p) => p !== primary)
+			.sort((a, b) => a.adjustedP - b.adjustedP)
+			.map((p) => ({
+				groupA: p.groupA,
+				groupB: p.groupB,
+				effectSize: p.effectSize,
+				rawP: p.rawP,
+				adjustedP: p.adjustedP,
+				level: p.level,
+				minN: p.minN,
+			}));
+
+		results.push({
+			cardName,
+			effectSize: primary.effectSize,
+			rawP: primary.rawP,
+			adjustedP: primary.adjustedP,
+			level: primary.level,
+			bestGroup: primary.groupA,
+			worstGroup: primary.groupB,
+			totalMatches: primary.totalMatches,
+			minGroupSize: primary.minN,
+			extraPairs: extras,
+		});
+	}
 
 	// Sort by adjusted p-value ascending (most significant first)
 	results.sort((a, b) => a.adjustedP - b.adjustedP);

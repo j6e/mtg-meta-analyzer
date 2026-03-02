@@ -47,48 +47,25 @@ const BASIC_LANDS = new Set([
 // ── Extract training data ──
 
 /**
- * Build a decklist lookup: playerId → merged card counts (main + side).
- * Takes max across multiple decklists for the same player.
+ * Build a decklist lookup: decklistId → card counts (main + side).
+ * Each decklist is treated as an independent entity — no merging across tournaments.
  */
-function getPlayerDecklists(
-	tournaments: TournamentData[],
-	playerArchetypes: Map<string, string>,
-	archetypeName: string,
-): Map<string, Map<string, number>> {
-	const result = new Map<string, Map<string, number>>();
-
-	for (const t of tournaments) {
-		for (const [dlId, dl] of Object.entries(t.decklists)) {
-			const playerId = dl.playerId;
-			if (playerArchetypes.get(playerId) !== archetypeName) continue;
-
-			const counts = new Map<string, number>();
-			for (const entry of dl.mainboard) {
-				counts.set(entry.cardName, (counts.get(entry.cardName) ?? 0) + entry.quantity);
-			}
-			for (const entry of dl.sideboard) {
-				counts.set(entry.cardName, (counts.get(entry.cardName) ?? 0) + entry.quantity);
-			}
-
-			// Merge: take max per card across decklists
-			const existing = result.get(playerId);
-			if (!existing) {
-				result.set(playerId, counts);
-			} else {
-				for (const [card, qty] of counts) {
-					existing.set(card, Math.max(existing.get(card) ?? 0, qty));
-				}
-			}
-		}
+function getDecklistCards(dl: DecklistInfo): Map<string, number> {
+	const counts = new Map<string, number>();
+	for (const entry of dl.mainboard) {
+		counts.set(entry.cardName, (counts.get(entry.cardName) ?? 0) + entry.quantity);
 	}
-
-	return result;
+	for (const entry of dl.sideboard) {
+		counts.set(entry.cardName, (counts.get(entry.cardName) ?? 0) + entry.quantity);
+	}
+	return counts;
 }
 
 /**
  * Extract training observations from match results.
  * Each match where the target archetype player has a win or loss
  * against the specified opponent archetype becomes one observation.
+ * The decklist used is resolved per tournament (not merged across events).
  * Byes, IDs, draws, and mirrors are excluded.
  */
 export function extractTrainingData(
@@ -97,10 +74,21 @@ export function extractTrainingData(
 	archetypeName: string,
 	opponent?: string,
 ): TrainingObservation[] {
-	const playerDecks = getPlayerDecklists(tournaments, playerArchetypes, archetypeName);
 	const observations: TrainingObservation[] = [];
 
 	for (const t of tournaments) {
+		// Build per-tournament playerId → card counts lookup
+		const playerDecks = new Map<string, Map<string, number>>();
+		for (const [playerId, player] of Object.entries(t.players)) {
+			if (playerArchetypes.get(playerId) !== archetypeName) continue;
+			// Use the first decklist for this player in this tournament
+			const dlId = player.decklistIds[0];
+			const dl = dlId ? t.decklists[dlId] : undefined;
+			if (dl) {
+				playerDecks.set(playerId, getDecklistCards(dl));
+			}
+		}
+
 		for (const round of Object.values(t.rounds)) {
 			for (const match of round.matches) {
 				// Skip byes
@@ -260,7 +248,7 @@ export function analyzeCardImpact(
 
 	const regression = fitLogisticRegression({
 		X, y, featureNames,
-		priorVariance: 6.25,
+		priorVariance: 1.0,
 		interceptPriorVariance: 100,
 	});
 
