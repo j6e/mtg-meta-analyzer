@@ -22,7 +22,7 @@ export interface SplitResult {
 	groupRows: SplitRow[];
 }
 
-function countCardCopies(
+export function countCardCopies(
 	tournaments: TournamentData[],
 	playerArchetypes: Map<string, string>,
 	archetypeName: string,
@@ -194,9 +194,11 @@ export function splitByCard(
 			if (copies >= threshold) above.add(pid);
 			else below.add(pid);
 		}
-		if (above.size > 0) groups.push({ label: `${threshold}+ copies`, playerIds: above });
+		const maxCopies = Math.max(...playerCopies.values());
+		const aboveLabel = maxCopies > threshold ? `${threshold}+ copies` : `${threshold} copies`;
+		if (above.size > 0) groups.push({ label: aboveLabel, playerIds: above });
 		if (below.size > 0)
-			groups.push({ label: `< ${threshold} copies`, playerIds: below });
+			groups.push({ label: threshold === 1 ? '0 copies' : `< ${threshold} copies`, playerIds: below });
 	} else if (mode === 'cumulative') {
 		// cumulative mode: each row is "≥ N copies" (overlapping groups)
 		// Fisher's test compares each group against its complement (< N)
@@ -210,7 +212,11 @@ export function splitByCard(
 			set.add(pid);
 		}
 		const sortedCounts = [...byCount.keys()].sort((a, b) => a - b);
-		// For each threshold N (skip the lowest — "≥ min" would be everyone)
+		// First group: "= 0 copies" (players with none of the card)
+		if (byCount.has(0) && byCount.get(0)!.size > 0) {
+			groups.push({ label: '0 copies', playerIds: byCount.get(0)! });
+		}
+		// Remaining groups: "≥ N copies" (skip the lowest — "≥ min" would be everyone)
 		for (let i = 1; i < sortedCounts.length; i++) {
 			const threshold = sortedCounts[i];
 			const atOrAbove = new Set<string>();

@@ -14,7 +14,7 @@ import {
 	benjaminiHochberg,
 	significanceLevel,
 } from '../algorithms/statistics';
-import { splitByCard } from './winrate-splitter';
+import { splitByCard, countCardCopies } from './winrate-splitter';
 import type { SplitMode } from './winrate-splitter';
 
 /**
@@ -95,10 +95,14 @@ export async function autoScanCards(
 		threshold?: number;
 		topN?: number;
 		minMetagameShare?: number;
+		autoIncludeThreshold?: number;
+		minEffectSize?: number;
 		onProgress?: (done: number, total: number) => void;
 	} = {},
 ): Promise<AutoScanResult[]> {
 	const minGroupSize = options.minGroupSize ?? 10;
+	const autoIncludeThreshold = options.autoIncludeThreshold ?? 0.9;
+	const minEffectSize = options.minEffectSize ?? 0.05;
 	const candidates: {
 		cardName: string;
 		effectSize: number;
@@ -112,6 +116,21 @@ export async function autoScanCards(
 	for (let i = 0; i < allCardNames.length; i++) {
 		const cardName = allCardNames[i];
 
+		// Pre-filter: skip low-variance cards where ≥threshold% of players
+		// have the same copy count — no meaningful split to test.
+		if (autoIncludeThreshold < 1) {
+			const playerCopies = countCardCopies(tournaments, playerArchetypes, archetypeName, cardName);
+			const n = playerCopies.size;
+			if (n > 0) {
+				const countFreq = new Map<number, number>();
+				for (const copies of playerCopies.values()) {
+					countFreq.set(copies, (countFreq.get(copies) ?? 0) + 1);
+				}
+				const maxFreq = Math.max(...countFreq.values());
+				if (maxFreq / n >= autoIncludeThreshold) continue;
+			}
+		}
+
 		const split = splitByCard(tournaments, playerArchetypes, archetypeName, cardName, mode, {
 			threshold: options.threshold,
 			topN: options.topN,
@@ -122,37 +141,35 @@ export async function autoScanCards(
 		const eligibleRows = split.groupRows.filter((r) => r.totalMatches >= minGroupSize);
 		if (eligibleRows.length < 2) continue;
 
-		// Compute stats with the group size filter
-		const stats = computeStatistics(split, { minGroupSize });
-
-		// Find best/worst among eligible groups
+		// Find best/worst among eligible groups by overall winrate
+		let bestRow: SplitRow | null = null;
+		let worstRow: SplitRow | null = null;
 		let bestWR = -1, worstWR = 2;
-		let bestGroup = '', worstGroup = '';
 		let smallestGroup = Infinity;
 
 		for (const row of eligibleRows) {
 			const wr = row.overallWinrate ?? 0.5;
-			if (wr > bestWR) { bestWR = wr; bestGroup = row.label; }
-			if (wr < worstWR) { worstWR = wr; worstGroup = row.label; }
+			if (wr > bestWR) { bestWR = wr; bestRow = row; }
+			if (wr < worstWR) { worstWR = wr; worstRow = row; }
 			if (row.totalMatches < smallestGroup) smallestGroup = row.totalMatches;
 		}
 
 		const effectSize = bestWR - worstWR;
+		if (effectSize < minEffectSize) continue;
+
 		const totalMatches = eligibleRows.reduce((s, r) => s + r.totalMatches, 0);
 
-		// Collect the minimum p-value across eligible groups only
-		let minP = 1;
-		for (const statRow of stats.rows) {
-			// Only consider rows that have significance data (non-filtered groups)
-			for (const [, sig] of statRow.cellSignificance) {
-				if (sig.pValue < minP) minP = sig.pValue;
-			}
-		}
+		// Single Fisher's test: best group vs worst group on overall record.
+		// One test per card — avoids cherry-picking across per-opponent cells.
+		const rawP = fisherExactTest(
+			bestRow!.totalWins, bestRow!.totalLosses,
+			worstRow!.totalWins, worstRow!.totalLosses,
+		);
 
 		candidates.push({
-			cardName, effectSize, rawP: minP,
-			bestGroup, worstGroup, totalMatches,
-			minGroupSize: smallestGroup,
+			cardName, effectSize, rawP,
+			bestGroup: bestRow!.label, worstGroup: worstRow!.label,
+			totalMatches, minGroupSize: smallestGroup,
 		});
 
 		// Yield to UI every 5 cards

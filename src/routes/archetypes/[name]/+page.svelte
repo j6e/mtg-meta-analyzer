@@ -426,8 +426,12 @@
 		{:else if activeTab === 'splitter'}
 			<p class="tab-description">
 				Splits players of this archetype by how many copies of a card they run and compares matchup performance across groups.
-				<strong>Binary</strong> divides players into two groups: those with at least N copies vs. those with fewer.
-				<strong>Per Copy</strong> creates a separate group for each exact copy count (0, 1, 2, 3, 4).
+				<strong>Binary</strong> divides into two groups: &ge; N copies vs. &lt; N.
+				<strong>Per Copy</strong> creates a group for each exact copy count (0, 1, 2, 3, 4).
+				<strong>Cumulative</strong> creates overlapping groups (0, &ge; 1, &ge; 2, ...) so small counts are pooled.
+				<strong>Auto-Scan</strong> tests every card in the archetype at once, applies
+				<a href="https://en.wikipedia.org/wiki/False_discovery_rate#Benjamini%E2%80%93Hochberg_procedure" target="_blank" rel="noopener">Benjamini-Hochberg</a>
+				correction for multiple testing, and ranks cards by statistical significance.
 			</p>
 			<WinrateSplitterPanel
 				{archetypeName}

@@ -31,7 +31,9 @@
 	let searchQuery = $state('');
 
 	// Auto-scan state
-	let autoScanMinGroupSize = $state(10);
+	let autoScanMinGroupSize = $state(50);
+	let autoIncludeThreshold = $state(90);
+	let autoMinEffect = $state(5);
 	let autoScanResults = $state<AutoScanResult[] | null>(null);
 	let autoScanning = $state(false);
 	let autoScanProgress = $state(0);
@@ -93,6 +95,8 @@
 				allCardNames, mode,
 				{
 					minGroupSize: autoScanMinGroupSize,
+					autoIncludeThreshold: autoIncludeThreshold / 100,
+					minEffectSize: autoMinEffect / 100,
 					...splitOptions(),
 					onProgress: (done, total) => {
 						autoScanProgress = done;
@@ -257,7 +261,27 @@
 					max="200"
 					bind:value={autoScanMinGroupSize}
 				/>
-				<span class="hint">min group N</span>
+				<span class="hint">min matches</span>
+			</div>
+			<div class="threshold-row">
+				<input
+					id="auto-scan-threshold"
+					type="number"
+					min="50"
+					max="100"
+					bind:value={autoIncludeThreshold}
+				/>
+				<span class="hint" title="Cards where this % or more of players run the same count are skipped (auto-includes)">% skip</span>
+			</div>
+			<div class="threshold-row">
+				<input
+					id="auto-scan-effect"
+					type="number"
+					min="0"
+					max="50"
+					bind:value={autoMinEffect}
+				/>
+				<span class="hint" title="Only test cards where the winrate difference between best and worst groups exceeds this threshold">% min effect</span>
 			</div>
 			<button class="scan-btn" onclick={doAutoScan} disabled={autoScanning}>
 				{autoScanning ? 'Scanning...' : 'Scan All Cards'}
@@ -404,20 +428,26 @@
 	{#if autoScanResults}
 		<div class="auto-scan-results">
 			<h4>Auto-Scan Results ({autoScanResults.length} cards with data)</h4>
+			<p class="scan-explanation">
+				Each card is split using the selected mode. The best and worst groups (by overall winrate) are compared
+				with Fisher's exact test. P-values are adjusted for multiple comparisons (Benjamini-Hochberg).
+				Click a row to view the full split.
+			</p>
 			{#if autoScanResults.length === 0}
-				<p class="empty-msg">No significant card effects found.</p>
+				<p class="empty-msg">No cards had enough data in at least 2 groups to test.</p>
 			{:else}
 				<div class="table-wrap">
 					<table>
 						<thead>
 							<tr>
 								<th class="card-name-col">Card</th>
-								<th class="num-col">Effect</th>
-								<th class="num-col">Adj. p</th>
-								<th class="num-col">Sig</th>
-								<th>Best</th>
-								<th>Worst</th>
-								<th class="num-col">Min N</th>
+								<th class="num-col" title="Winrate difference between the best and worst performing groups">Effect</th>
+								<th class="num-col" title="Raw p-value from Fisher's exact test before multiple-testing correction">Raw p-value</th>
+								<th class="num-col" title="P-value after Benjamini-Hochberg correction for multiple testing. Lower = more significant.">Adj. p-value</th>
+								<th class="num-col" title="Statistical significance: * p<0.05, ** p<0.01, *** p<0.001, ns = not significant">Sig</th>
+								<th title="The group with the highest overall winrate">Best</th>
+								<th title="The group with the lowest overall winrate">Worst</th>
+								<th class="num-col" title="Match count of the smallest group included in the test. Larger = more reliable.">Min matches</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -425,6 +455,7 @@
 								<tr class="scan-row" class:significant={row.level > 0} onclick={() => selectAutoScanCard(row.cardName)}>
 									<td class="card-name-col"><CardTooltip cardName={row.cardName}><span class="card-name">{row.cardName}</span></CardTooltip></td>
 									<td class="num-col">{(row.effectSize * 100).toFixed(1)}%</td>
+									<td class="num-col">{row.rawP < 0.001 ? '<0.001' : row.rawP.toFixed(3)}</td>
 									<td class="num-col">{row.adjustedP < 0.001 ? '<0.001' : row.adjustedP.toFixed(3)}</td>
 									<td class="num-col">
 										{#if row.level > 0}
@@ -816,10 +847,18 @@
 	.auto-scan-results h4 {
 		font-size: 0.8rem;
 		font-weight: 600;
-		margin: 0 0 0.5rem;
+		margin: 0 0 0.35rem;
 		text-transform: uppercase;
 		letter-spacing: 0.03em;
 		color: var(--color-text-muted);
+	}
+
+	.scan-explanation {
+		font-size: 0.75rem;
+		color: var(--color-text-muted);
+		line-height: 1.5;
+		margin: 0 0 0.75rem;
+		max-width: 640px;
 	}
 
 	.empty-msg {
