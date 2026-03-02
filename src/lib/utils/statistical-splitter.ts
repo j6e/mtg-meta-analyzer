@@ -28,9 +28,10 @@ import type { SplitMode } from './winrate-splitter';
  */
 export function computeStatistics(
 	split: SplitResult,
-	options?: { minGroupSize?: number },
+	options?: { minGroupSize?: number; mode?: SplitMode },
 ): StatisticalSplitResult {
 	const minGS = options?.minGroupSize ?? 0;
+	const mode = options?.mode;
 	const baseline = split.baselineRow;
 
 	// First pass: compute CIs and collect raw p-values for BH correction
@@ -89,19 +90,36 @@ export function computeStatistics(
 		return { label: row.label, overallCI, cellCIs, cellSignificance };
 	});
 
-	// Pairwise comparisons: adjacent groups only (avoids invalid
-	// overlapping-group comparisons in cumulative mode)
+	// Pairwise comparisons
 	const pairwise: PairwiseComparison[] = [];
-	for (let i = 0; i < split.groupRows.length - 1; i++) {
-		const a = split.groupRows[i];
-		const b = split.groupRows[i + 1];
-		if (a.totalMatches >= minGS && b.totalMatches >= minGS) {
-			const prob = probAGreaterThanB(a.totalWins, a.totalLosses, b.totalWins, b.totalLosses);
+	if (mode === 'cumulative') {
+		// Cumulative groups overlap (≥N is a superset of ≥N+1), so compare
+		// each group against its complement derived from the baseline.
+		for (const row of split.groupRows) {
+			if (row.totalMatches < minGS) continue;
+			const compW = baseline.totalWins - row.totalWins;
+			const compL = baseline.totalLosses - row.totalLosses;
+			if (compW + compL < minGS) continue;
+			const prob = probAGreaterThanB(row.totalWins, row.totalLosses, compW, compL);
 			pairwise.push({
-				groupA: a.label,
-				groupB: b.label,
+				groupA: row.label,
+				groupB: `not ${row.label}`,
 				probABetter: prob,
 			});
+		}
+	} else {
+		// Binary / per-copy: groups are non-overlapping, compare adjacent pairs
+		for (let i = 0; i < split.groupRows.length - 1; i++) {
+			const a = split.groupRows[i];
+			const b = split.groupRows[i + 1];
+			if (a.totalMatches >= minGS && b.totalMatches >= minGS) {
+				const prob = probAGreaterThanB(a.totalWins, a.totalLosses, b.totalWins, b.totalLosses);
+				pairwise.push({
+					groupA: a.label,
+					groupB: b.label,
+					probABetter: prob,
+				});
+			}
 		}
 	}
 

@@ -77,7 +77,7 @@
 				selectedCard, mode, splitOptions(),
 			);
 			splitResult = split;
-			statsResult = computeStatistics(split, { minGroupSize: autoScanMinGroupSize });
+			statsResult = computeStatistics(split, { minGroupSize: autoScanMinGroupSize, mode });
 		} finally {
 			calculating = false;
 		}

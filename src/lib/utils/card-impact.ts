@@ -163,7 +163,7 @@ export function selectFlexFeatures(
 
 		const n = counts.length;
 		const mean = counts.reduce((s, v) => s + v, 0) / n;
-		const variance = counts.reduce((s, v) => s + (v - mean) ** 2, 0) / n;
+		const variance = counts.reduce((s, v) => s + (v - mean) ** 2, 0) / (n - 1);
 
 		if (variance < 1e-10) continue; // All same count → auto-include
 

@@ -159,6 +159,63 @@ describe('computeStatistics', () => {
 	});
 });
 
+describe('computeStatistics cumulative mode', () => {
+	// Build a tournament with 3 distinct copy counts for "Flex Card": 0, 2, 4
+	const cumPlayers: Record<string, PlayerInfo> = {};
+	const cumDecklists: Record<string, DecklistInfo> = {};
+	const cumMatches: MatchResult[] = [];
+
+	for (let g = 0; g < 3; g++) {
+		const copies = g * 2; // 0, 2, 4
+		for (let j = 0; j < 4; j++) {
+			const idx = g * 4 + j;
+			const pid = `p${idx}`;
+			const did = `dl${idx}`;
+			cumPlayers[pid] = makePlayer(`P${idx}`, [did]);
+			cumDecklists[did] = makeDeckWithCards(pid, [['Flex Card', copies], ['Filler', 4 - copies]]);
+		}
+	}
+	cumPlayers['opp'] = makePlayer('Opp', ['dlopp']);
+	cumDecklists['dlopp'] = makeDeckWithCards('opp', [['Island', 20]]);
+
+	// Group 0 (0 copies): all lose; Group 1 (2 copies): mixed; Group 2 (4 copies): all win
+	for (let i = 0; i < 12; i++) {
+		const pid = `p${i}`;
+		const group = Math.floor(i / 4);
+		const wins = group === 2 ? true : group === 1 ? i % 2 === 0 : false;
+		cumMatches.push(makeMatch(pid, 'opp', wins ? pid : 'opp'));
+	}
+
+	const cumTournament = makeTournament({ players: cumPlayers, decklists: cumDecklists, matches: cumMatches });
+	const cumArchetypes = new Map<string, string>();
+	for (let i = 0; i < 12; i++) cumArchetypes.set(`p${i}`, 'Aggro');
+	cumArchetypes.set('opp', 'Control');
+
+	it('cumulative mode produces one comparison per group (group vs complement)', () => {
+		const split = splitByCard([cumTournament], cumArchetypes, 'Aggro', 'Flex Card', 'cumulative');
+		const stats = computeStatistics(split, { mode: 'cumulative' });
+
+		// Each group should be compared against its complement, not adjacent groups
+		expect(stats.pairwise.length).toBe(split.groupRows.length);
+		for (const pair of stats.pairwise) {
+			expect(pair.groupB).toMatch(/^not /);
+			expect(pair.probABetter).toBeGreaterThanOrEqual(0);
+			expect(pair.probABetter).toBeLessThanOrEqual(1);
+		}
+	});
+
+	it('without cumulative mode, produces adjacent pairwise comparisons', () => {
+		const split = splitByCard([cumTournament], cumArchetypes, 'Aggro', 'Flex Card', 'per-copy');
+		const stats = computeStatistics(split);
+
+		// Adjacent comparisons: n-1 pairs for n groups
+		expect(stats.pairwise.length).toBe(split.groupRows.length - 1);
+		for (const pair of stats.pairwise) {
+			expect(pair.groupB).not.toMatch(/^not /);
+		}
+	});
+});
+
 describe('autoScanCards', () => {
 	it('returns results sorted by adjusted p-value', async () => {
 		const results = await autoScanCards(

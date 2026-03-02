@@ -153,7 +153,7 @@ export interface CredibleInterval {
 
 /**
  * 95% Bayesian credible interval using Beta(1+wins, 1+losses) posterior
- * (Jeffreys-like uniform prior).
+ * (uniform Beta(1,1) prior).
  */
 export function credibleInterval(wins: number, losses: number, alpha = 0.05): CredibleInterval {
 	const a = 1 + wins;

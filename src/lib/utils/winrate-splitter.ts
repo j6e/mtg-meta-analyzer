@@ -1,6 +1,5 @@
 import type { TournamentData } from '../types/tournament';
 import type { MatchupCell, MatchupMatrix, ArchetypeStats } from '../types/metagame';
-import { collectArchetypeDecklists } from './decklist-collector';
 import { buildMatchupMatrix } from './winrate-calculator';
 
 export type SplitMode = 'binary' | 'per-copy' | 'cumulative';
@@ -28,20 +27,24 @@ export function countCardCopies(
 	archetypeName: string,
 	cardName: string,
 ): Map<string, number> {
-	const enriched = collectArchetypeDecklists(tournaments, playerArchetypes, archetypeName);
 	const playerCopies = new Map<string, number>();
 
-	for (const e of enriched) {
-		// Take max copies across all decklists for the same player
-		const existing = playerCopies.get(e.playerId) ?? 0;
-		let copies = 0;
-		for (const entry of e.decklist.mainboard) {
-			if (entry.cardName === cardName) copies += entry.quantity;
+	for (const t of tournaments) {
+		for (const [playerId, player] of Object.entries(t.players)) {
+			if (playerArchetypes.get(playerId) !== archetypeName) continue;
+			const dlId = player.decklistIds[0];
+			const dl = dlId ? t.decklists[dlId] : undefined;
+			if (!dl) continue;
+
+			let copies = 0;
+			for (const entry of dl.mainboard) {
+				if (entry.cardName === cardName) copies += entry.quantity;
+			}
+			for (const entry of dl.sideboard) {
+				if (entry.cardName === cardName) copies += entry.quantity;
+			}
+			playerCopies.set(playerId, copies);
 		}
-		for (const entry of e.decklist.sideboard) {
-			if (entry.cardName === cardName) copies += entry.quantity;
-		}
-		playerCopies.set(e.playerId, Math.max(existing, copies));
 	}
 
 	return playerCopies;
