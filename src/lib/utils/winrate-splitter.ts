@@ -16,6 +16,7 @@ export interface SplitRow {
 
 export interface SplitResult {
 	cardName: string;
+	mode: SplitMode;
 	opponents: string[];
 	baselineRow: SplitRow;
 	groupRows: SplitRow[];
@@ -272,5 +273,5 @@ export function splitByCard(
 		return row;
 	});
 
-	return { cardName, opponents, baselineRow, groupRows };
+	return { cardName, mode, opponents, baselineRow, groupRows };
 }

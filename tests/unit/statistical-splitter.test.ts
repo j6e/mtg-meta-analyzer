@@ -193,7 +193,7 @@ describe('computeStatistics cumulative mode', () => {
 
 	it('cumulative mode produces one comparison per group (group vs complement)', () => {
 		const split = splitByCard([cumTournament], cumArchetypes, 'Aggro', 'Flex Card', 'cumulative');
-		const stats = computeStatistics(split, { mode: 'cumulative' });
+		const stats = computeStatistics(split);
 
 		// Each group should be compared against its complement, not adjacent groups
 		expect(stats.pairwise.length).toBe(split.groupRows.length);

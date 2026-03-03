@@ -28,10 +28,10 @@ import type { SplitMode } from './winrate-splitter';
  */
 export function computeStatistics(
 	split: SplitResult,
-	options?: { minGroupSize?: number; mode?: SplitMode },
+	options?: { minGroupSize?: number },
 ): StatisticalSplitResult {
 	const minGS = options?.minGroupSize ?? 0;
-	const mode = options?.mode;
+	const mode = split.mode;
 	const baseline = split.baselineRow;
 
 	// First pass: compute CIs and collect raw p-values for BH correction
