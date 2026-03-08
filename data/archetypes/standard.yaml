@@ -75,6 +75,21 @@ archetypes:
       - name: Llanowar Elves
         minCopies: 4
 
+  - name: Bant Rhythm
+    signatureCards:
+      - name: Badgermole Cub
+        minCopies: 4
+      - name: "Nature's Rhythm"
+        minCopies: 3
+      - name: Gene Pollinator
+        minCopies: 3
+      - name: Llanowar Elves
+        minCopies: 4
+      - name: Brightglass Gearhulk
+        minCopies: 1
+      - name: Seam Rip
+        minCopies: 1
+
   - name: Dimir Midrange
     signatureCards:
       - name: Kaito, Bane of Nightmares
@@ -169,10 +184,10 @@ archetypes:
     signatureCards:
       - name: Moonshadow
         minCopies: 3
-      - name: Monument to Endurance
+      - name: Marauding Mako
         minCopies: 3
       - name: Bloodghast
-        minCopies: 3
+        minCopies: 1
 
   - name: Izzet Blink
     signatureCards:
@@ -230,4 +245,13 @@ archetypes:
       - name: "Get Lost"
         minCopies: 3
       - name: "Consult the Star Charts"
+        minCopies: 3
+
+  - name: Momo-White
+    signatureCards:
+      - name: Momo, Friendly Flier
+        minCopies: 3
+      - name: Sage of the Skies
+        minCopies: 3
+      - name: Springleaf Drum
         minCopies: 3
