@@ -65,6 +65,14 @@
 	const visibleDecklists = $derived(showAllDecklists ? decklists : decklists.slice(0, 6));
 
 	const hasValidParams = $derived(classifiedName !== '' && reportedName !== '');
+
+	const filterLabel = $derived.by(() => {
+		const ts = $filteredTournaments;
+		if (ts.length === 0) return null;
+		const formats = [...new Set(ts.flatMap(t => t.meta.formats).filter(Boolean))];
+		const fmtStr = formats.length > 0 ? formats.join(', ') : 'All formats';
+		return `${ts.length} tournament${ts.length !== 1 ? 's' : ''} · ${fmtStr}`;
+	});
 </script>
 
 <svelte:head>
@@ -79,6 +87,9 @@
 	<p class="not-found">Missing classification parameters.</p>
 {:else}
 	<h1>Archetype Classification Assessment</h1>
+	{#if filterLabel}
+		<p class="filter-notice">Filtered to: {filterLabel}</p>
+	{/if}
 	<p class="subtitle">
 		Classified as <strong>{classifiedName}</strong>, reported as <strong>{reportedName}</strong>
 	</p>
@@ -258,5 +269,11 @@
 
 	.empty {
 		color: var(--color-text-muted);
+	}
+
+	.filter-notice {
+		font-size: 0.8rem;
+		color: var(--color-text-muted);
+		margin-bottom: 1rem;
 	}
 </style>
