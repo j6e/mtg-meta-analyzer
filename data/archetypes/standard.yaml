@@ -132,19 +132,37 @@ archetypes:
         minCopies: 1
       - name: No More Lies
         minCopies: 2
-      - name: Lightning Helix
-        minCopies: 1
       - name: Stock Up
         minCopies: 2
 
+  - name: 4-Color Control
+    signatureCards:
+      - name: Inevitable Defeat
+        minCopies: 2
+      - name: Jeskai Revelation
+        minCopies: 1
+      - name: No More Lies
+        minCopies: 2
+      - name: Stock Up
+        minCopies: 1
+
   - name: Boros Dragons
     signatureCards:
-      - name: Twinmaw Stormbrood
+      - name: Nova Hellkite
         minCopies: 3
       - name: "Sarkhan, Dragon Ascendant"
         minCopies: 3
       - name: "Momo, Friendly Flier"
         minCopies: 3
+
+  - name: Boros Tremors
+    signatureCards:
+      - name: Warleader's Call
+        minCopies: 1
+      - name: "Ojer Axonil, Deepest Might"
+        minCopies: 1
+      - name: "Voice of Victory"
+        minCopies: 2
 
   - name: Izzet Prowess
     signatureCards:
@@ -180,7 +198,7 @@ archetypes:
       - name: Hexing Squelcher
         minCopies: 3
 
-  - name: Rakdos Monument
+  - name: Rakdos Discard
     signatureCards:
       - name: Moonshadow
         minCopies: 3
@@ -188,6 +206,17 @@ archetypes:
         minCopies: 3
       - name: Bloodghast
         minCopies: 1
+      - name: Quantum Riddler
+        exactCopies: 0
+
+  - name: Grixis Discard
+    signatureCards:
+      - name: Moonshadow
+        minCopies: 3
+      - name: Marauding Mako
+        minCopies: 3
+      - name: Quantum Riddler
+        minCopies: 2
 
   - name: Izzet Blink
     signatureCards:
@@ -246,6 +275,8 @@ archetypes:
         minCopies: 3
       - name: "Consult the Star Charts"
         minCopies: 3
+      - name: "Jeskai Revelation"
+        exactCopies: 0
 
   - name: Momo-White
     signatureCards:
