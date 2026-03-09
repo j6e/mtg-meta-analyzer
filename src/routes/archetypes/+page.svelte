@@ -9,7 +9,7 @@ let sortAsc = $state(false);
 
 const sortedStats = $derived.by(() => {
 	const stats = $metagameData?.stats ?? [];
-	const rows = stats.filter((s) => s.name !== "Unknown");
+	const rows = stats.filter((s) => s.name !== "Unknown" && s.name !== "Other");
 	const dir = sortAsc ? 1 : -1;
 	rows.sort((a, b) => {
 		switch (sortKey) {
