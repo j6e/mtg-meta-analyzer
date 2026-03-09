@@ -26,11 +26,11 @@ function isoDate(date: Date): string {
 
 function makeDefaults(): MetaSettings {
 	const today = new Date();
-	const minus60 = new Date(today);
-	minus60.setDate(today.getDate() - 60);
+	const minus30 = new Date(today);
+	minus30.setDate(today.getDate() - 30);
 	return {
 		format: "Standard",
-		dateFrom: isoDate(minus60),
+		dateFrom: isoDate(minus30),
 		dateTo: isoDate(today),
 		selectedTournamentIds: [],
 		excludeMirrors: true,

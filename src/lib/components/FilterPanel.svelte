@@ -32,14 +32,55 @@
 		settings.update((s) => ({ ...s, format: value }));
 	}
 
+	let datePreset = $state('30');
+
+	function toDateString(d: Date): string {
+		return d.toISOString().slice(0, 10);
+	}
+
+	function tournamentsInRange(from: string, to: string): number[] {
+		return tournaments
+			.filter((t) => (!from || t.date >= from) && (!to || t.date <= to))
+			.map((t) => t.id);
+	}
+
+	function handleDatePresetChange(e: Event) {
+		const value = (e.target as HTMLSelectElement).value;
+		datePreset = value;
+		if (!value) return;
+		const today = new Date();
+		const from = new Date(today);
+		const days = { '7': 7, '14': 14, '30': 30, '60': 60 }[value];
+		if (!days) return;
+		from.setDate(today.getDate() - days);
+		const dateFrom = toDateString(from);
+		const dateTo = toDateString(today);
+		settings.update((s) => ({
+			...s,
+			dateFrom,
+			dateTo,
+			selectedTournamentIds: tournamentsInRange(dateFrom, dateTo),
+		}));
+	}
+
 	function handleDateFromChange(e: Event) {
-		const value = (e.target as HTMLInputElement).value;
-		settings.update((s) => ({ ...s, dateFrom: value }));
+		datePreset = '';
+		const dateFrom = (e.target as HTMLInputElement).value;
+		settings.update((s) => ({
+			...s,
+			dateFrom,
+			selectedTournamentIds: tournamentsInRange(dateFrom, s.dateTo),
+		}));
 	}
 
 	function handleDateToChange(e: Event) {
-		const value = (e.target as HTMLInputElement).value;
-		settings.update((s) => ({ ...s, dateTo: value }));
+		datePreset = '';
+		const dateTo = (e.target as HTMLInputElement).value;
+		settings.update((s) => ({
+			...s,
+			dateTo,
+			selectedTournamentIds: tournamentsInRange(s.dateFrom, dateTo),
+		}));
 	}
 
 	function handleTournamentToggle(id: number, checked: boolean) {
@@ -93,6 +134,19 @@
 					{#each formats as f}
 						<option value={f}>{f}</option>
 					{/each}
+				</select>
+			</label>
+		</div>
+
+		<div class="filter-row">
+			<label>
+				Quick range
+				<select onchange={handleDatePresetChange} value={datePreset}>
+					<option value="">Custom</option>
+					<option value="7">Last week</option>
+					<option value="14">Last 2 weeks</option>
+					<option value="30">Last month</option>
+					<option value="60">Last 2 months</option>
 				</select>
 			</label>
 		</div>
