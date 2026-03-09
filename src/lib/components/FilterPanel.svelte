@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import type { TournamentMeta } from '../types/tournament';
 	import { settings, type OtherMode } from '../stores/settings';
 	import {
@@ -15,6 +16,13 @@
 		tournaments: TournamentMeta[];
 		formats: string[];
 	} = $props();
+
+	onMount(() => {
+		settings.update((s) => ({
+			...s,
+			selectedTournamentIds: tournaments.map((t) => t.id),
+		}));
+	});
 
 	// Debounce timer for numeric inputs
 	let debounceTimer: ReturnType<typeof setTimeout> | null = null;
@@ -52,7 +60,7 @@
 	}
 
 	function selectAllTournaments() {
-		settings.update((s) => ({ ...s, selectedTournamentIds: [] }));
+		settings.update((s) => ({ ...s, selectedTournamentIds: tournaments.map((t) => t.id) }));
 	}
 
 	function handleOtherModeChange(mode: OtherMode) {
@@ -108,8 +116,8 @@
 		<div class="filter-row tournament-list">
 			<div class="tournament-header">
 				<span>Select tournaments</span>
-				{#if $settings.selectedTournamentIds.length > 0}
-					<button class="link-btn" onclick={selectAllTournaments}>Clear selection</button>
+				{#if $settings.selectedTournamentIds.length < tournaments.length}
+					<button class="link-btn" onclick={selectAllTournaments}>Select all</button>
 				{/if}
 			</div>
 			<div class="tournament-checks">
@@ -117,8 +125,7 @@
 					<label class="tournament-check">
 						<input
 							type="checkbox"
-							checked={$settings.selectedTournamentIds.length === 0 ||
-								$settings.selectedTournamentIds.includes(t.id)}
+							checked={$settings.selectedTournamentIds.includes(t.id)}
 							onchange={(e) =>
 								handleTournamentToggle(t.id, (e.target as HTMLInputElement).checked)}
 						/>

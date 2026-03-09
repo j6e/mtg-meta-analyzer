@@ -9,7 +9,9 @@
 		availableFormats,
 		archetypeStats,
 	} from '$lib/stores/tournaments';
+	import { settings } from '$lib/stores/settings';
 
+	const noTournamentsSelected = $derived($settings.selectedTournamentIds.length === 0);
 	const playerCount = $derived(
 		$filteredTournaments.reduce((sum, t) => sum + Object.keys(t.players).length, 0),
 	);
@@ -48,6 +50,8 @@
 		<h2>Matchup Matrix <span class="info-icon" title="Win rates = wins / (wins + losses + draws). Draws count against both sides, so opposing win rates may not sum to 100%. Byes and intentional draws (0-0-3) are excluded.">?</span></h2>
 		<MatchupMatrix matrix={$metagameData.matrix} stats={$metagameData.stats} />
 	</section>
+{:else if noTournamentsSelected}
+	<p class="no-data warning">No tournaments selected. Select at least one tournament to run the analysis.</p>
 {:else}
 	<p class="no-data">No data available for the current filters.</p>
 {/if}
@@ -97,5 +101,9 @@
 	.no-data {
 		color: var(--color-text-muted);
 		margin-top: 1rem;
+	}
+
+	.no-data.warning {
+		color: #b45309;
 	}
 </style>

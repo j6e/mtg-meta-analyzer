@@ -64,10 +64,8 @@ export const filteredTournaments = derived(
 		let tournaments = [...allTournaments.values()];
 
 		// Filter by explicitly selected tournaments
-		if ($settings.selectedTournamentIds.length > 0) {
-			const idSet = new Set($settings.selectedTournamentIds);
-			tournaments = tournaments.filter((t) => idSet.has(t.meta.id));
-		}
+		const idSet = new Set($settings.selectedTournamentIds);
+		tournaments = tournaments.filter((t) => idSet.has(t.meta.id));
 
 		// Filter by format
 		if ($settings.format) {
