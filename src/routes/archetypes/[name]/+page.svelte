@@ -353,8 +353,7 @@
 			</section>
 			<div class="aggregate-controls">
 				<div class="field">
-					<!-- svelte-ignore a11y_label_has_associated_control -->
-					<label>Order</label>
+					<span class="field-label">Order</span>
 					<div class="order-buttons" role="group" aria-label="Aggregation order">
 						{#each [1, 2, 3] as n}
 							<button
@@ -671,7 +670,8 @@
 		min-width: 250px;
 	}
 
-	label {
+	label,
+	.field-label {
 		font-size: 0.75rem;
 		font-weight: 600;
 		text-transform: uppercase;
