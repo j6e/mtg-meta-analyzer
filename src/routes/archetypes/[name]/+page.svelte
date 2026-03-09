@@ -748,7 +748,7 @@
 	}
 
 	.error {
-		color: var(--color-loss);
+		color: var(--color-error);
 		font-size: 0.875rem;
 	}
 
