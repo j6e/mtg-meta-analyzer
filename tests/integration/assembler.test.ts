@@ -488,6 +488,162 @@ describe("assembleTournament", () => {
 		expect(result.players["100"].reportedArchetypes).toEqual([]);
 	});
 
+	it("removes no-show players and converts their R1 match to a bye", () => {
+		// Alice (has decklist) beats Charlie (no decklist) in R1; Charlie absent from R2
+		const standings = [
+			makeStanding(), // Alice, id=100, has decklist
+			makeStanding({
+				Rank: 2,
+				Points: 6,
+				MatchWins: 2,
+				MatchLosses: 1,
+				Team: { Players: [{ ID: 200, DisplayName: "Bob", Username: "bob456", TeamId: 2 }] },
+				Decklists: [{ DecklistId: "deck-bbb", PlayerId: 200, DecklistName: "Control", Format: "Standard", FormatId: "fmt-1" }],
+			}),
+			makeStanding({
+				Rank: 3,
+				Points: 0,
+				MatchWins: 0,
+				MatchLosses: 1,
+				Team: { Players: [{ ID: 300, DisplayName: "Charlie", Username: "charlie", TeamId: 3 }] },
+				Decklists: [], // no decklist
+			}),
+		];
+
+		const completedRounds: ParsedRound[] = [
+			{ id: 5000, name: "Round 1", isCompleted: true, isStarted: false },
+			{ id: 5001, name: "Round 2", isCompleted: true, isStarted: false },
+		];
+
+		// R1: Alice beats Charlie 2-0, Bob gets a bye
+		const aliceBeatsCharlie = makeMatch({
+			Guid: "match-ac",
+			Competitors: [
+				{
+					ID: 1, CheckedIn: null, ResultConfirmed: null, SortOrder: 0,
+					GameByes: 0, GameWins: 2, GameWinsAndGameByes: 2, TeamId: 1,
+					Team: { ID: 1, Name: null, Players: [{ ID: 100, DisplayName: "Alice", DisplayNameLastFirst: "Alice", Username: "alice123", TeamId: 1 }] },
+					Decklists: [],
+				},
+				{
+					ID: 3, CheckedIn: null, ResultConfirmed: null, SortOrder: 1,
+					GameByes: 0, GameWins: 0, GameWinsAndGameByes: 0, TeamId: 3,
+					Team: { ID: 3, Name: null, Players: [{ ID: 300, DisplayName: "Charlie", DisplayNameLastFirst: "Charlie", Username: "charlie", TeamId: 3 }] },
+					Decklists: [],
+				},
+			],
+			RoundId: 5000,
+		});
+
+		// R2: Alice vs Bob (Charlie absent)
+		const aliceVsBob = makeMatch({ Guid: "match-ab", RoundId: 5001 });
+
+		const roundMatches = new Map<number, MeleeMatchRow[]>();
+		roundMatches.set(5000, [aliceBeatsCharlie]);
+		roundMatches.set(5001, [aliceVsBob]);
+
+		const decklists = new Map<string, { details: MeleeDecklistDetails; playerId: number }>();
+
+		const result = assembleTournament({
+			tournamentId: 999,
+			parsed: { ...baseParsed, rounds: completedRounds },
+			standings,
+			decklists,
+			completedRounds,
+			roundMatches,
+		});
+
+		// Charlie removed from players
+		expect(result.players["300"]).toBeUndefined();
+		expect(result.meta.playerCount).toBe(2);
+
+		// R1 match converted to bye for Alice
+		const r1Match = result.rounds["5000"].matches[0];
+		expect(r1Match.player1Id).toBe("100");
+		expect(r1Match.player2Id).toBeNull();
+		expect(r1Match.result).toBe("bye");
+		expect(r1Match.winnerId).toBe("100");
+	});
+
+	it("does not remove a no-decklist player who appears in R2", () => {
+		const standings = [
+			makeStanding(),
+			makeStanding({
+				Rank: 2,
+				Points: 0,
+				MatchWins: 0,
+				MatchLosses: 1,
+				Team: { Players: [{ ID: 300, DisplayName: "Charlie", Username: "charlie", TeamId: 3 }] },
+				Decklists: [], // no decklist
+			}),
+		];
+
+		const completedRounds: ParsedRound[] = [
+			{ id: 5000, name: "Round 1", isCompleted: true, isStarted: false },
+			{ id: 5001, name: "Round 2", isCompleted: true, isStarted: false },
+		];
+
+		const aliceBeatsCharlie = makeMatch({
+			Guid: "match-ac",
+			Competitors: [
+				{
+					ID: 1, CheckedIn: null, ResultConfirmed: null, SortOrder: 0,
+					GameByes: 0, GameWins: 2, GameWinsAndGameByes: 2, TeamId: 1,
+					Team: { ID: 1, Name: null, Players: [{ ID: 100, DisplayName: "Alice", DisplayNameLastFirst: "Alice", Username: "alice123", TeamId: 1 }] },
+					Decklists: [],
+				},
+				{
+					ID: 3, CheckedIn: null, ResultConfirmed: null, SortOrder: 1,
+					GameByes: 0, GameWins: 0, GameWinsAndGameByes: 0, TeamId: 3,
+					Team: { ID: 3, Name: null, Players: [{ ID: 300, DisplayName: "Charlie", DisplayNameLastFirst: "Charlie", Username: "charlie", TeamId: 3 }] },
+					Decklists: [],
+				},
+			],
+			RoundId: 5000,
+		});
+
+		// Charlie IS in R2 (played despite no decklist — should not be removed)
+		const charlieR2 = makeMatch({
+			Guid: "match-c2",
+			RoundId: 5001,
+			Competitors: [
+				{
+					ID: 1, CheckedIn: null, ResultConfirmed: null, SortOrder: 0,
+					GameByes: 0, GameWins: 2, GameWinsAndGameByes: 2, TeamId: 1,
+					Team: { ID: 1, Name: null, Players: [{ ID: 100, DisplayName: "Alice", DisplayNameLastFirst: "Alice", Username: "alice123", TeamId: 1 }] },
+					Decklists: [],
+				},
+				{
+					ID: 3, CheckedIn: null, ResultConfirmed: null, SortOrder: 1,
+					GameByes: 0, GameWins: 0, GameWinsAndGameByes: 0, TeamId: 3,
+					Team: { ID: 3, Name: null, Players: [{ ID: 300, DisplayName: "Charlie", DisplayNameLastFirst: "Charlie", Username: "charlie", TeamId: 3 }] },
+					Decklists: [],
+				},
+			],
+		});
+
+		const roundMatches = new Map<number, MeleeMatchRow[]>();
+		roundMatches.set(5000, [aliceBeatsCharlie]);
+		roundMatches.set(5001, [charlieR2]);
+
+		const result = assembleTournament({
+			tournamentId: 999,
+			parsed: { ...baseParsed, rounds: completedRounds },
+			standings,
+			decklists: new Map(),
+			completedRounds,
+			roundMatches,
+		});
+
+		// Charlie NOT removed — appeared in R2
+		expect(result.players["300"]).toBeDefined();
+		expect(result.meta.playerCount).toBe(2);
+
+		// R1 match untouched
+		const r1Match = result.rounds["5000"].matches[0];
+		expect(r1Match.result).toBe("2-0-0");
+	});
+
 	it("handles multi-format tournaments with multiple decklists per player", () => {
 		const standings = [
 			makeStanding({
