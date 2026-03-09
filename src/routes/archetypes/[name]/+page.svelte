@@ -2,9 +2,9 @@
 	import { page } from '$app/state';
 	import { base } from '$app/paths';
 	import {
-		globalMetagameData,
-		globalPlayerArchetypes,
-		getAllTournaments,
+		metagameData,
+		playerArchetypes,
+		filteredTournaments,
 	} from '$lib/stores/tournaments';
 	import DecklistView from '$lib/components/DecklistView.svelte';
 	import DecklistComparison from '$lib/components/DecklistComparison.svelte';
@@ -24,14 +24,14 @@
 
 	// Find this archetype's stats
 	const stats = $derived.by(() => {
-		const data = $globalMetagameData;
+		const data = $metagameData;
 		if (!data) return null;
 		return data.stats.find((s) => s.name === archetypeName) ?? null;
 	});
 
 	// Rank badges for meta share and winrate
 	const metaShareRank = $derived.by(() => {
-		const data = $globalMetagameData;
+		const data = $metagameData;
 		if (!data || !stats) return null;
 		const sorted = [...data.stats].sort((a, b) => b.metagameShare - a.metagameShare);
 		const idx = sorted.findIndex((s) => s.name === archetypeName);
@@ -39,7 +39,7 @@
 	});
 
 	const winrateRank = $derived.by(() => {
-		const data = $globalMetagameData;
+		const data = $metagameData;
 		if (!data || !stats) return null;
 		const sorted = [...data.stats].sort((a, b) => b.overallWinrate - a.overallWinrate);
 		const idx = sorted.findIndex((s) => s.name === archetypeName);
@@ -56,7 +56,7 @@
 
 	// Matchup breakdown: this archetype's row from the matrix (unsorted)
 	const matchupsRaw = $derived.by(() => {
-		const data = $globalMetagameData;
+		const data = $metagameData;
 		if (!data) return [];
 		const idx = data.matrix.archetypes.indexOf(archetypeName);
 		if (idx === -1) return [];
@@ -101,8 +101,8 @@
 	// Enriched decklists for this archetype (with metadata)
 	const enrichedDecklists = $derived.by(() => {
 		return collectArchetypeDecklists(
-			getAllTournaments(),
-			$globalPlayerArchetypes,
+			$filteredTournaments,
+			$playerArchetypes,
 			archetypeName,
 		);
 	});
@@ -213,7 +213,7 @@
 		return [...names].sort();
 	});
 
-	const tournaments = $derived(getAllTournaments());
+	const tournaments = $derived($filteredTournaments);
 
 	// ── Card Impact tab ──
 	const impactOpponents = $derived(matchupsRaw.map((m) => m.opponent));
@@ -440,7 +440,7 @@
 				{archetypeName}
 				{allCardNames}
 				{tournaments}
-				playerArchetypes={$globalPlayerArchetypes}
+				playerArchetypes={$playerArchetypes}
 			/>
 
 		{:else if activeTab === 'impact'}
@@ -456,7 +456,7 @@
 			<CardImpactPanel
 				{archetypeName}
 				{tournaments}
-				playerArchetypes={$globalPlayerArchetypes}
+				playerArchetypes={$playerArchetypes}
 				opponents={impactOpponents}
 			/>
 
@@ -609,11 +609,11 @@
 	}
 
 	.above50 {
-		color: #16a34a;
+		color: var(--color-win);
 	}
 
 	.below50 {
-		color: #dc2626;
+		color: var(--color-loss);
 	}
 
 	/* Tab bar */
@@ -748,7 +748,7 @@
 	}
 
 	.error {
-		color: #dc2626;
+		color: var(--color-loss);
 		font-size: 0.875rem;
 	}
 

@@ -1,12 +1,9 @@
 <script lang="ts">
 	import MatchupMatrix from '$lib/components/MatchupMatrix.svelte';
 	import MetagameScatter from '$lib/components/MetagameScatter.svelte';
-	import FilterPanel from '$lib/components/FilterPanel.svelte';
 	import {
 		metagameData,
 		filteredTournaments,
-		tournamentList,
-		availableFormats,
 		archetypeStats,
 	} from '$lib/stores/tournaments';
 	import { settings } from '$lib/stores/settings';
@@ -28,8 +25,6 @@
 </svelte:head>
 
 <h1>Metagame</h1>
-
-<FilterPanel tournaments={$tournamentList} formats={$availableFormats} />
 
 {#if $filteredTournaments.length > 0}
 	<p class="tournament-info">
@@ -79,7 +74,7 @@
 	}
 
 	.warning {
-		color: #b45309;
+		color: var(--color-warning);
 	}
 
 	.info-icon {
@@ -104,6 +99,6 @@
 	}
 
 	.no-data.warning {
-		color: #b45309;
+		color: var(--color-warning);
 	}
 </style>

@@ -1,6 +1,6 @@
 <script lang="ts">
 import { base } from '$app/paths';
-import { globalMetagameData } from '$lib/stores/tournaments';
+import { metagameData } from '$lib/stores/tournaments';
 import { pct } from '$lib/utils/format';
 
 type SortKey = "name" | "share" | "winrate" | "players" | "matches";
@@ -8,7 +8,7 @@ let sortKey = $state<SortKey>("share");
 let sortAsc = $state(false);
 
 const sortedStats = $derived.by(() => {
-	const stats = $globalMetagameData?.stats ?? [];
+	const stats = $metagameData?.stats ?? [];
 	const rows = stats.filter((s) => s.name !== "Unknown");
 	const dir = sortAsc ? 1 : -1;
 	rows.sort((a, b) => {
@@ -152,11 +152,11 @@ function sortIndicator(key: SortKey): string {
 	}
 
 	.above50 {
-		color: #16a34a;
+		color: var(--color-win);
 	}
 
 	.below50 {
-		color: #dc2626;
+		color: var(--color-loss);
 	}
 
 	tbody tr:hover {
