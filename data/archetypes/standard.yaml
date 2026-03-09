@@ -77,6 +77,8 @@ archetypes:
 
   - name: Bant Rhythm
     signatureCards:
+      - name: Brightglass Gearhulk
+        minCopies: 1
       - name: Badgermole Cub
         minCopies: 4
       - name: "Nature's Rhythm"
@@ -85,8 +87,6 @@ archetypes:
         minCopies: 3
       - name: Llanowar Elves
         minCopies: 4
-      - name: Brightglass Gearhulk
-        minCopies: 1
       - name: Seam Rip
         minCopies: 1
 
@@ -125,7 +125,22 @@ archetypes:
         minCopies: 2
       - name: Vibrance
         minCopies: 4
+      - name: Superior Spider-Man
+        exactCopies: 0
+      - name: Restless Reef
+        exactCopies: 0
 
+  - name: Grixis Elementals
+    signatureCards:
+      - name: Superior Spider-Man
+        minCopies: 1
+      - name: "Ashling, Rekindled"
+        minCopies: 4
+      - name: Sunderflock
+        minCopies: 2
+      - name: Vibrance
+        minCopies: 2
+ 
   - name: Jeskai Control
     signatureCards:
       - name: Jeskai Revelation
@@ -195,8 +210,8 @@ archetypes:
         minCopies: 3
       - name: Burst Lightning
         minCopies: 3
-      - name: Hexing Squelcher
-        minCopies: 3
+      - name: Mountain
+        minCopies: 12
 
   - name: Rakdos Discard
     signatureCards:
@@ -211,9 +226,9 @@ archetypes:
 
   - name: Grixis Discard
     signatureCards:
-      - name: Moonshadow
-        minCopies: 3
       - name: Marauding Mako
+        minCopies: 3
+      - name: Moonshadow
         minCopies: 3
       - name: Quantum Riddler
         minCopies: 2
