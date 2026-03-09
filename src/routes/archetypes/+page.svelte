@@ -62,7 +62,7 @@ function sortIndicator(key: SortKey): string {
 						tabindex="0"
 						aria-sort={sortKey === 'name' ? (sortAsc ? 'ascending' : 'descending') : 'none'}
 						onclick={() => toggleSort('name')}
-						onkeydown={(e) => (e.key === 'Enter' || e.key === ' ') && toggleSort('name')}
+						onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleSort('name'); } }}
 					>
 						Archetype{sortIndicator('name')}
 					</th>
@@ -72,7 +72,7 @@ function sortIndicator(key: SortKey): string {
 						tabindex="0"
 						aria-sort={sortKey === 'share' ? (sortAsc ? 'ascending' : 'descending') : 'none'}
 						onclick={() => toggleSort('share')}
-						onkeydown={(e) => (e.key === 'Enter' || e.key === ' ') && toggleSort('share')}
+						onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleSort('share'); } }}
 					>
 						Meta Share{sortIndicator('share')}
 					</th>
@@ -82,7 +82,7 @@ function sortIndicator(key: SortKey): string {
 						tabindex="0"
 						aria-sort={sortKey === 'winrate' ? (sortAsc ? 'ascending' : 'descending') : 'none'}
 						onclick={() => toggleSort('winrate')}
-						onkeydown={(e) => (e.key === 'Enter' || e.key === ' ') && toggleSort('winrate')}
+						onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleSort('winrate'); } }}
 					>
 						Win Rate{sortIndicator('winrate')}
 					</th>
@@ -92,7 +92,7 @@ function sortIndicator(key: SortKey): string {
 						tabindex="0"
 						aria-sort={sortKey === 'players' ? (sortAsc ? 'ascending' : 'descending') : 'none'}
 						onclick={() => toggleSort('players')}
-						onkeydown={(e) => (e.key === 'Enter' || e.key === ' ') && toggleSort('players')}
+						onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleSort('players'); } }}
 					>
 						Players{sortIndicator('players')}
 					</th>
@@ -102,7 +102,7 @@ function sortIndicator(key: SortKey): string {
 						tabindex="0"
 						aria-sort={sortKey === 'matches' ? (sortAsc ? 'ascending' : 'descending') : 'none'}
 						onclick={() => toggleSort('matches')}
-						onkeydown={(e) => (e.key === 'Enter' || e.key === ' ') && toggleSort('matches')}
+						onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleSort('matches'); } }}
 					>
 						Matches{sortIndicator('matches')}
 					</th>
@@ -171,6 +171,11 @@ function sortIndicator(key: SortKey): string {
 
 	.sortable:hover {
 		color: var(--color-text);
+	}
+
+	th.sortable:focus-visible {
+		outline: 2px solid var(--color-accent);
+		outline-offset: -2px;
 	}
 
 	.name-col {

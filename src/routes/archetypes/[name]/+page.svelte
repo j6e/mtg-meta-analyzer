@@ -294,7 +294,7 @@
 									tabindex="0"
 									aria-sort={matchupSortCol === 'opponent' ? (matchupSortAsc ? 'ascending' : 'descending') : 'none'}
 									onclick={() => toggleMatchupSort('opponent')}
-									onkeydown={(e) => (e.key === 'Enter' || e.key === ' ') && toggleMatchupSort('opponent')}
+									onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleMatchupSort('opponent'); } }}
 								>
 									Opponent {matchupSortCol === 'opponent' ? (matchupSortAsc ? '▲' : '▼') : ''}
 								</th>
@@ -304,7 +304,7 @@
 									tabindex="0"
 									aria-sort={matchupSortCol === 'winrate' ? (matchupSortAsc ? 'ascending' : 'descending') : 'none'}
 									onclick={() => toggleMatchupSort('winrate')}
-									onkeydown={(e) => (e.key === 'Enter' || e.key === ' ') && toggleMatchupSort('winrate')}
+									onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleMatchupSort('winrate'); } }}
 								>
 									Win Rate {matchupSortCol === 'winrate' ? (matchupSortAsc ? '▲' : '▼') : ''}
 								</th>
@@ -315,7 +315,7 @@
 									tabindex="0"
 									aria-sort={matchupSortCol === 'matches' ? (matchupSortAsc ? 'ascending' : 'descending') : 'none'}
 									onclick={() => toggleMatchupSort('matches')}
-									onkeydown={(e) => (e.key === 'Enter' || e.key === ' ') && toggleMatchupSort('matches')}
+									onkeydown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggleMatchupSort('matches'); } }}
 								>
 									Matches {matchupSortCol === 'matches' ? (matchupSortAsc ? '▲' : '▼') : ''}
 								</th>
@@ -603,6 +603,11 @@
 
 	th.sortable:hover {
 		color: var(--color-text);
+	}
+
+	th.sortable:focus-visible {
+		outline: 2px solid var(--color-accent);
+		outline-offset: -2px;
 	}
 
 	.num {
