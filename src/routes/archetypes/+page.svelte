@@ -7,11 +7,14 @@ type SortKey = "name" | "share" | "winrate" | "players" | "matches";
 let sortKey = $state<SortKey>("share");
 let sortAsc = $state(false);
 
+const PINNED_BOTTOM = ["Other", "Unknown"];
+
 const sortedStats = $derived.by(() => {
 	const stats = $metagameData?.stats ?? [];
-	const rows = stats.filter((s) => s.name !== "Unknown" && s.name !== "Other");
+	const normal = stats.filter((s) => !PINNED_BOTTOM.includes(s.name));
+	const pinned = PINNED_BOTTOM.map((name) => stats.find((s) => s.name === name)).filter(Boolean);
 	const dir = sortAsc ? 1 : -1;
-	rows.sort((a, b) => {
+	normal.sort((a, b) => {
 		switch (sortKey) {
 			case "name":
 				return dir * a.name.localeCompare(b.name);
@@ -27,7 +30,7 @@ const sortedStats = $derived.by(() => {
 				return 0;
 		}
 	});
-	return rows;
+	return [...normal, ...pinned];
 });
 
 function toggleSort(key: SortKey) {
@@ -113,7 +116,11 @@ function sortIndicator(key: SortKey): string {
 				{#each sortedStats as s}
 					<tr>
 						<td class="name-col">
-							<a href="{base}/archetypes/{encodeURIComponent(s.name)}">{s.name}</a>
+							{#if PINNED_BOTTOM.includes(s.name)}
+								<span class="pinned-name">{s.name}</span>
+							{:else}
+								<a href="{base}/archetypes/{encodeURIComponent(s.name)}">{s.name}</a>
+							{/if}
 						</td>
 						<td class="num-col">{pct(s.metagameShare)}</td>
 						<td class="num-col" class:above50={s.overallWinrate >= 0.5} class:below50={s.overallWinrate < 0.5}>
@@ -132,6 +139,11 @@ function sortIndicator(key: SortKey): string {
 {/if}
 
 <style>
+	.pinned-name {
+		color: var(--color-text-muted);
+		font-style: italic;
+	}
+
 	h1 {
 		font-size: 1.5rem;
 		margin-bottom: 1rem;
