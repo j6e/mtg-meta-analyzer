@@ -9,9 +9,9 @@ describe("settings store", () => {
 		expect(s.excludeMirrors).toBe(true);
 		expect(s.topN).toBe(0);
 
-		expect(s.format).toBe("");
-		expect(s.dateFrom).toBe("");
-		expect(s.dateTo).toBe("");
+		expect(s.format).toBe("Standard");
+		expect(s.dateFrom).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+		expect(s.dateTo).toMatch(/^\d{4}-\d{2}-\d{2}$/);
 		expect(s.selectedTournamentIds).toEqual([]);
 		expect(s.otherMode).toBe("minShare");
 		expect(s.minMetagameShare).toBe(2);
@@ -70,7 +70,7 @@ describe("settings store", () => {
 		expect(s.excludeMirrors).toBe(true);
 		expect(s.topN).toBe(0);
 
-		expect(s.format).toBe("");
+		expect(s.format).toBe("Standard");
 		expect(s.selectedTournamentIds).toEqual([]);
 		expect(s.otherMode).toBe("minShare");
 	});
