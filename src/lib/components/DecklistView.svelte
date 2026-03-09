@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { DecklistInfo } from '../types/decklist';
+	import type { ClassificationResult } from '../algorithms/archetype-classifier';
 	import CardTooltip from './CardTooltip.svelte';
 
 	let {
@@ -7,12 +8,22 @@
 		playerName = '',
 		archetype = '',
 		playerRank,
+		classificationResult,
 	}: {
 		decklist: DecklistInfo;
 		playerName?: string;
 		archetype?: string;
 		playerRank?: number;
+		classificationResult?: ClassificationResult;
 	} = $props();
+
+	const knnTooltip = $derived(
+		classificationResult?.method === 'knn' && classificationResult.neighbors
+			? classificationResult.neighbors
+					.map((n) => `${n.archetype} (${n.similarity.toFixed(2)})`)
+					.join(', ')
+			: null,
+	);
 
 	const mainboardCount = $derived(
 		decklist.mainboard.reduce((sum, c) => sum + c.quantity, 0),
@@ -28,6 +39,16 @@
 			{#if playerRank != null}<span class="rank">#{playerRank}</span>{/if}
 			{#if playerName}<span class="player">{playerName}</span>{/if}
 			{#if archetype}<span class="archetype">{archetype}</span>{/if}
+			{#if classificationResult?.method === 'signature'}
+				<span class="method-badge method-rules" title="Classified by signature cards">By rules</span>
+			{:else if classificationResult?.method === 'knn'}
+				<span class="method-badge method-knn knn-tooltip-anchor">
+					By KNN
+					{#if knnTooltip}
+						<span class="knn-tooltip">{knnTooltip}</span>
+					{/if}
+				</span>
+			{/if}
 		</div>
 	{/if}
 
@@ -116,6 +137,52 @@
 		background: rgba(79, 70, 229, 0.08);
 		padding: 0.15rem 0.5rem;
 		border-radius: 9999px;
+	}
+
+	.method-badge {
+		font-size: 0.7rem;
+		padding: 0.1rem 0.45rem;
+		border-radius: 9999px;
+		font-weight: 500;
+		white-space: nowrap;
+	}
+
+	.method-rules {
+		color: var(--color-text-muted);
+		background: var(--color-surface-alt, rgba(0, 0, 0, 0.05));
+	}
+
+	.method-knn {
+		color: #1d6fb8;
+		background: rgba(29, 111, 184, 0.08);
+	}
+
+	.knn-tooltip-anchor {
+		position: relative;
+		cursor: default;
+	}
+
+	.knn-tooltip {
+		display: none;
+		position: absolute;
+		top: calc(100% + 4px);
+		left: 0;
+		z-index: 10;
+		background: var(--color-surface);
+		border: 1px solid var(--color-border);
+		border-radius: 6px;
+		padding: 0.4rem 0.6rem;
+		font-size: 0.72rem;
+		color: var(--color-text);
+		white-space: normal;
+		min-width: 300px;
+		max-width: 480px;
+		line-height: 1.5;
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+	}
+
+	.knn-tooltip-anchor:hover .knn-tooltip {
+		display: block;
 	}
 
 	section {

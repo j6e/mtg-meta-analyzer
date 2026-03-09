@@ -10,6 +10,7 @@ export interface ClassificationResult {
 	archetype: string;
 	method: "signature" | "knn" | "unknown";
 	confidence: number; // 1.0 for signature match, KNN confidence for knn, 0 for unknown
+	neighbors?: { archetype: string; similarity: number }[]; // only present for method === "knn"
 }
 
 /**
@@ -135,6 +136,7 @@ export function classifyAll(
 				archetype: knnResult.label,
 				method: "knn",
 				confidence: knnResult.confidence,
+				neighbors: knnResult.neighbors.map((n) => ({ archetype: n.label, similarity: n.similarity })),
 			});
 		} else {
 			results.push({

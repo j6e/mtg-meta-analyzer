@@ -9,6 +9,7 @@
 	import DecklistView from '$lib/components/DecklistView.svelte';
 	import CardTooltip from '$lib/components/CardTooltip.svelte';
 	import type { DecklistInfo } from '$lib/types/decklist';
+	import type { ClassificationResult } from '$lib/algorithms/archetype-classifier';
 
 	const classifiedName = $derived(page.url.searchParams.get('classified') ?? '');
 	const reportedName = $derived(page.url.searchParams.get('reported') ?? '');
@@ -27,13 +28,14 @@
 			tournamentName: string;
 			decklistId: string;
 			decklist: DecklistInfo;
+			classificationResult: ClassificationResult | undefined;
 		}[] = [];
 
 		for (const t of tournaments) {
 			const classResults = resultsMap.get(t.meta.id) ?? [];
-			const deckClassified = new Map<string, string>();
+			const deckResultMap = new Map<string, ClassificationResult>();
 			for (const r of classResults) {
-				deckClassified.set(r.decklistId, r.archetype);
+				deckResultMap.set(r.decklistId, r);
 			}
 
 			for (const [playerId, player] of Object.entries(t.players)) {
@@ -41,7 +43,8 @@
 					const deck = t.decklists[deckId];
 					if (!deck) continue;
 
-					if (deckClassified.get(deckId) !== classifiedName) continue;
+					const classResult = deckResultMap.get(deckId);
+					if (classResult?.archetype !== classifiedName) continue;
 
 					const raw = deck.reportedArchetype?.trim();
 					const reported = raw ? raw : 'No Report';
@@ -53,6 +56,7 @@
 						tournamentName: t.meta.name,
 						decklistId: deckId,
 						decklist: deck,
+						classificationResult: classResult,
 					});
 				}
 			}
@@ -139,6 +143,7 @@
 						playerName={d.playerName}
 						archetype={classifiedName}
 						playerRank={d.playerRank}
+						classificationResult={d.classificationResult}
 					/>
 				{/each}
 			</div>

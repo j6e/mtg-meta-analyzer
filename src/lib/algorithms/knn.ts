@@ -9,6 +9,7 @@ export interface LabeledPoint {
 export interface ClassificationResult {
 	label: string;
 	confidence: number; // average similarity of k nearest neighbors with winning label
+	neighbors: { label: string; similarity: number }[];
 }
 
 /**
@@ -63,5 +64,5 @@ export function knnClassify(
 		}
 	}
 
-	return { label: bestLabel, confidence: bestAvgSim };
+	return { label: bestLabel, confidence: bestAvgSim, neighbors };
 }
