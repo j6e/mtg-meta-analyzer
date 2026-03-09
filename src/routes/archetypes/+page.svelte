@@ -56,19 +56,54 @@ function sortIndicator(key: SortKey): string {
 		<table>
 			<thead>
 				<tr>
-					<th class="name-col sortable" onclick={() => toggleSort('name')}>
+					<th
+						class="name-col sortable"
+						role="columnheader"
+						tabindex="0"
+						aria-sort={sortKey === 'name' ? (sortAsc ? 'ascending' : 'descending') : 'none'}
+						onclick={() => toggleSort('name')}
+						onkeydown={(e) => (e.key === 'Enter' || e.key === ' ') && toggleSort('name')}
+					>
 						Archetype{sortIndicator('name')}
 					</th>
-					<th class="num-col sortable" onclick={() => toggleSort('share')}>
+					<th
+						class="num-col sortable"
+						role="columnheader"
+						tabindex="0"
+						aria-sort={sortKey === 'share' ? (sortAsc ? 'ascending' : 'descending') : 'none'}
+						onclick={() => toggleSort('share')}
+						onkeydown={(e) => (e.key === 'Enter' || e.key === ' ') && toggleSort('share')}
+					>
 						Meta Share{sortIndicator('share')}
 					</th>
-					<th class="num-col sortable" onclick={() => toggleSort('winrate')}>
+					<th
+						class="num-col sortable"
+						role="columnheader"
+						tabindex="0"
+						aria-sort={sortKey === 'winrate' ? (sortAsc ? 'ascending' : 'descending') : 'none'}
+						onclick={() => toggleSort('winrate')}
+						onkeydown={(e) => (e.key === 'Enter' || e.key === ' ') && toggleSort('winrate')}
+					>
 						Win Rate{sortIndicator('winrate')}
 					</th>
-					<th class="num-col sortable" onclick={() => toggleSort('players')}>
+					<th
+						class="num-col sortable"
+						role="columnheader"
+						tabindex="0"
+						aria-sort={sortKey === 'players' ? (sortAsc ? 'ascending' : 'descending') : 'none'}
+						onclick={() => toggleSort('players')}
+						onkeydown={(e) => (e.key === 'Enter' || e.key === ' ') && toggleSort('players')}
+					>
 						Players{sortIndicator('players')}
 					</th>
-					<th class="num-col sortable" onclick={() => toggleSort('matches')}>
+					<th
+						class="num-col sortable"
+						role="columnheader"
+						tabindex="0"
+						aria-sort={sortKey === 'matches' ? (sortAsc ? 'ascending' : 'descending') : 'none'}
+						onclick={() => toggleSort('matches')}
+						onkeydown={(e) => (e.key === 'Enter' || e.key === ' ') && toggleSort('matches')}
+					>
 						Matches{sortIndicator('matches')}
 					</th>
 					<th class="num-col">Record</th>

@@ -288,14 +288,35 @@
 					<table>
 						<thead>
 							<tr>
-								<th class="sortable" onclick={() => toggleMatchupSort('opponent')}>
+								<th
+									class="sortable"
+									role="columnheader"
+									tabindex="0"
+									aria-sort={matchupSortCol === 'opponent' ? (matchupSortAsc ? 'ascending' : 'descending') : 'none'}
+									onclick={() => toggleMatchupSort('opponent')}
+									onkeydown={(e) => (e.key === 'Enter' || e.key === ' ') && toggleMatchupSort('opponent')}
+								>
 									Opponent {matchupSortCol === 'opponent' ? (matchupSortAsc ? '▲' : '▼') : ''}
 								</th>
-								<th class="num sortable" onclick={() => toggleMatchupSort('winrate')}>
+								<th
+									class="num sortable"
+									role="columnheader"
+									tabindex="0"
+									aria-sort={matchupSortCol === 'winrate' ? (matchupSortAsc ? 'ascending' : 'descending') : 'none'}
+									onclick={() => toggleMatchupSort('winrate')}
+									onkeydown={(e) => (e.key === 'Enter' || e.key === ' ') && toggleMatchupSort('winrate')}
+								>
 									Win Rate {matchupSortCol === 'winrate' ? (matchupSortAsc ? '▲' : '▼') : ''}
 								</th>
 								<th class="num">Record</th>
-								<th class="num sortable" onclick={() => toggleMatchupSort('matches')}>
+								<th
+									class="num sortable"
+									role="columnheader"
+									tabindex="0"
+									aria-sort={matchupSortCol === 'matches' ? (matchupSortAsc ? 'ascending' : 'descending') : 'none'}
+									onclick={() => toggleMatchupSort('matches')}
+									onkeydown={(e) => (e.key === 'Enter' || e.key === ' ') && toggleMatchupSort('matches')}
+								>
 									Matches {matchupSortCol === 'matches' ? (matchupSortAsc ? '▲' : '▼') : ''}
 								</th>
 							</tr>
