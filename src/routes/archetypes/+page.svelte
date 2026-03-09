@@ -1,4 +1,8 @@
 <script lang="ts">
+import { base } from '$app/paths';
+import { globalMetagameData } from '$lib/stores/tournaments';
+import { pct } from '$lib/utils/format';
+
 type SortKey = "name" | "share" | "winrate" | "players" | "matches";
 let sortKey = $state<SortKey>("share");
 let sortAsc = $state(false);

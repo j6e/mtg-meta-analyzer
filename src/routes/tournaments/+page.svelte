@@ -1,4 +1,6 @@
 <script lang="ts">
+import { tournamentList } from '$lib/stores/tournaments';
+
 type SortKey =
 	| "name"
 	| "date"

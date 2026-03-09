@@ -1,5 +1,7 @@
 <script lang="ts">
 import type { CardCompositionRow } from "../utils/card-composition";
+import { pct } from '../utils/format';
+import CardTooltip from './CardTooltip.svelte';
 
 let {
 	rows,

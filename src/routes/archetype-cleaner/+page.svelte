@@ -1,4 +1,7 @@
 <script lang="ts">
+	import { globalAttributionMatrix } from '$lib/stores/tournaments';
+	import AttributionMatrix from '$lib/components/AttributionMatrix.svelte';
+	import ArchetypeEditor from '$lib/components/ArchetypeEditor.svelte';
 </script>
 
 <svelte:head>
