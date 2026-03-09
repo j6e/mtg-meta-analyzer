@@ -243,6 +243,15 @@ export const globalAttributionMatrix = derived(
 	},
 );
 
+/** Attribution matrix scoped to the currently filtered tournaments. */
+export const attributionMatrix = derived(
+	[filteredTournaments, classificationResults],
+	([$tournaments, $resultsMap]) => {
+		if ($tournaments.length === 0) return null;
+		return buildAttributionMatrix($tournaments, $resultsMap);
+	},
+);
+
 /** Look up an archetype definition by name (non-reactive snapshot). */
 export function getArchetypeDefinition(name: string): ArchetypeDefinition | null {
 	return get(activeArchetypeDefs).find((d) => d.name === name) ?? null;

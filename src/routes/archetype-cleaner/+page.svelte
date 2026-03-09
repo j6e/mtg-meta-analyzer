@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { globalAttributionMatrix } from '$lib/stores/tournaments';
+	import { attributionMatrix } from '$lib/stores/tournaments';
 	import AttributionMatrix from '$lib/components/AttributionMatrix.svelte';
 	import ArchetypeEditor from '$lib/components/ArchetypeEditor.svelte';
 </script>
@@ -19,13 +19,13 @@
 	<ArchetypeEditor />
 </section>
 
-{#if $globalAttributionMatrix}
+{#if $attributionMatrix}
 	<section class="attribution-section">
 		<h2>Classification Attribution</h2>
 		<p class="section-desc">
 			Compares classifier-assigned archetypes (rows) vs player self-reported archetypes (columns). Cells show decklist counts.
 		</p>
-		<AttributionMatrix matrix={$globalAttributionMatrix} />
+		<AttributionMatrix matrix={$attributionMatrix} />
 	</section>
 {/if}
 
