@@ -2,6 +2,7 @@
 	import '../app.css';
 	import { base } from '$app/paths';
 	import { page } from '$app/state';
+	import AppSidebar from '$lib/components/AppSidebar.svelte';
 
 	let { children } = $props();
 
@@ -28,9 +29,14 @@
 			</div>
 		</nav>
 	</header>
-	<main>
-		{@render children()}
-	</main>
+	<div class="body">
+		<AppSidebar />
+		<main>
+			<div class="content">
+				{@render children()}
+			</div>
+		</main>
+	</div>
 	<footer>
 		<div class="footer-inner">
 			<p>
@@ -52,7 +58,7 @@
 	.app {
 		display: flex;
 		flex-direction: column;
-		min-height: 100vh;
+		height: 100dvh;
 	}
 
 	header {
@@ -112,12 +118,23 @@
 		background: rgba(255, 255, 255, 0.12);
 	}
 
+	.body {
+		display: flex;
+		flex: 1;
+		min-height: 0;
+		overflow: hidden;
+	}
+
 	main {
 		flex: 1;
+		min-width: 0;
+		overflow-y: auto;
+	}
+
+	.content {
 		max-width: var(--max-width);
 		margin: 0 auto;
 		padding: 2rem 1.5rem;
-		width: 100%;
 	}
 
 	footer {

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import type { TournamentMeta } from '../types/tournament';
 	import { settings, type OtherMode } from '../stores/settings';
+	import { tournamentList, availableFormats } from '../stores/tournaments';
 	import {
 		savedConfigs,
 		activeConfigId,
@@ -9,13 +9,8 @@
 		BUILTIN_CONFIGS,
 	} from '../stores/archetype-configs';
 
-	let {
-		tournaments,
-		formats,
-	}: {
-		tournaments: TournamentMeta[];
-		formats: string[];
-	} = $props();
+	const tournaments = $derived($tournamentList);
+	const formats = $derived($availableFormats);
 
 	onMount(() => {
 		settings.update((s) => ({
@@ -122,7 +117,7 @@
 			</div>
 			<div class="tournament-checks">
 				{#each tournaments as t}
-					<label class="tournament-check">
+					<label class="tournament-check" title={t.name}>
 						<input
 							type="checkbox"
 							checked={$settings.selectedTournamentIds.includes(t.id)}
@@ -141,7 +136,7 @@
 		<h3>Options</h3>
 
 		<div class="filter-row">
-			<label>
+			<label class="stacked">
 				Archetype config
 				<select onchange={handleConfigChange} value={$activeConfigId}>
 					{#each BUILTIN_CONFIGS as cfg}
@@ -222,19 +217,14 @@
 
 <style>
 	.filter-panel {
-		background: var(--color-surface);
-		border: 1px solid var(--color-border);
-		border-radius: var(--radius);
-		padding: 1rem 1.25rem;
 		font-size: 0.85rem;
 		display: flex;
-		flex-wrap: wrap;
-		gap: 1.5rem;
+		flex-direction: column;
+		gap: 1.25rem;
 	}
 
 	.filter-section {
-		flex: 1;
-		min-width: 240px;
+		width: 100%;
 	}
 
 	h3 {
@@ -260,6 +250,16 @@
 		gap: 0.375rem;
 	}
 
+	label.stacked {
+		flex-direction: column;
+		align-items: flex-start;
+		gap: 0.2rem;
+	}
+
+	label.stacked select {
+		width: 100%;
+	}
+
 	select,
 	input[type='date'],
 	input[type='number'] {
@@ -270,13 +270,18 @@
 		background: var(--color-bg);
 	}
 
+	input[type='date'] {
+		width: 100%;
+	}
+
 	input[type='number'] {
 		width: 4rem;
 	}
 
 	.dates {
 		display: flex;
-		gap: 0.75rem;
+		flex-direction: column;
+		gap: 0.4rem;
 	}
 
 	.tournament-header {
