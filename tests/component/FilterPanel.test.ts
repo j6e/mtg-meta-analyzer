@@ -2,15 +2,51 @@
 
 import { cleanup, fireEvent, render } from "@testing-library/svelte";
 import { get } from "svelte/store";
-import { afterEach, beforeEach, describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import type { TournamentMeta } from "../../src/lib/types/tournament";
+
+// vi.hoisted ensures these are initialised before the hoisted vi.mock factory runs
+const { mockTournamentList, mockAvailableFormats } = vi.hoisted(() => {
+	const { writable } = require("svelte/store");
+	return {
+		mockTournamentList: writable([]),
+		mockAvailableFormats: writable([]),
+	};
+});
+
+vi.mock("../../src/lib/stores/tournaments", () => {
+	const { writable } = require("svelte/store");
+	return {
+		tournamentList: mockTournamentList,
+		availableFormats: mockAvailableFormats,
+		selectedTournamentId: writable(null),
+		filteredTournaments: writable([]),
+		currentTournament: writable(null),
+		playerList: writable([]),
+		decklistMap: writable({}),
+		archetypeCardMap: writable(new Map()),
+		classificationResults: writable(new Map()),
+		playerArchetypes: writable(new Map()),
+		metagameData: writable(null),
+		archetypeStats: writable([]),
+		currentTournamentArchetypes: writable(new Map()),
+		globalClassificationResults: writable(new Map()),
+		globalPlayerArchetypes: writable(new Map()),
+		globalMetagameData: writable(null),
+		globalAttributionMatrix: writable(null),
+		attributionMatrix: writable(null),
+		getTournament: vi.fn(() => null),
+		getAllTournaments: vi.fn(() => []),
+	};
+});
+
 import FilterPanel from "../../src/lib/components/FilterPanel.svelte";
 import { resetSettings, settings } from "../../src/lib/stores/settings";
-import type { TournamentMeta } from "../../src/lib/types/tournament";
 
 afterEach(() => cleanup());
 beforeEach(() => resetSettings());
 
-const sampleTournaments: TournamentMeta[] = [
+const sampleTournaments: (TournamentMeta & { matchCount: number })[] = [
 	{
 		id: 1,
 		name: "Tournament A",
@@ -20,6 +56,7 @@ const sampleTournaments: TournamentMeta[] = [
 		fetchedAt: "",
 		playerCount: 100,
 		roundCount: 8,
+		matchCount: 56,
 	},
 	{
 		id: 2,
@@ -30,6 +67,7 @@ const sampleTournaments: TournamentMeta[] = [
 		fetchedAt: "",
 		playerCount: 200,
 		roundCount: 12,
+		matchCount: 132,
 	},
 ];
 
@@ -37,16 +75,16 @@ const sampleFormats = ["Draft", "Standard"];
 
 describe("FilterPanel component", () => {
 	it("renders the filter panel", () => {
-		const { container } = render(FilterPanel, {
-			props: { tournaments: sampleTournaments, formats: sampleFormats },
-		});
+		mockTournamentList.set(sampleTournaments);
+		mockAvailableFormats.set(sampleFormats);
+		const { container } = render(FilterPanel);
 		expect(container.querySelector('[data-testid="filter-panel"]')).toBeTruthy();
 	});
 
 	it('shows format options including "All formats"', () => {
-		const { container } = render(FilterPanel, {
-			props: { tournaments: sampleTournaments, formats: sampleFormats },
-		});
+		mockTournamentList.set(sampleTournaments);
+		mockAvailableFormats.set(sampleFormats);
+		const { container } = render(FilterPanel);
 		const options = container.querySelectorAll("select option");
 		const labels = [...options].map((o) => o.textContent);
 		expect(labels).toContain("All formats");
@@ -55,17 +93,17 @@ describe("FilterPanel component", () => {
 	});
 
 	it("shows date range inputs", () => {
-		const { container } = render(FilterPanel, {
-			props: { tournaments: sampleTournaments, formats: sampleFormats },
-		});
+		mockTournamentList.set(sampleTournaments);
+		mockAvailableFormats.set(sampleFormats);
+		const { container } = render(FilterPanel);
 		const dateInputs = container.querySelectorAll('input[type="date"]');
 		expect(dateInputs.length).toBe(2);
 	});
 
 	it("lists all tournaments with checkboxes", () => {
-		const { container } = render(FilterPanel, {
-			props: { tournaments: sampleTournaments, formats: sampleFormats },
-		});
+		mockTournamentList.set(sampleTournaments);
+		mockAvailableFormats.set(sampleFormats);
+		const { container } = render(FilterPanel);
 		const checks = container.querySelectorAll(".tournament-check");
 		expect(checks.length).toBe(2);
 		expect(checks[0].textContent).toContain("Tournament A");
@@ -73,34 +111,34 @@ describe("FilterPanel component", () => {
 	});
 
 	it("shows mirror match toggle", () => {
-		const { container } = render(FilterPanel, {
-			props: { tournaments: sampleTournaments, formats: sampleFormats },
-		});
+		mockTournamentList.set(sampleTournaments);
+		mockAvailableFormats.set(sampleFormats);
+		const { container } = render(FilterPanel);
 		const checkboxes = container.querySelectorAll('.toggle input[type="checkbox"]');
 		expect(checkboxes.length).toBe(1);
 	});
 
 	it('shows "Other" threshold radio buttons', () => {
-		const { container } = render(FilterPanel, {
-			props: { tournaments: sampleTournaments, formats: sampleFormats },
-		});
+		mockTournamentList.set(sampleTournaments);
+		mockAvailableFormats.set(sampleFormats);
+		const { container } = render(FilterPanel);
 		const radios = container.querySelectorAll('input[type="radio"]');
 		expect(radios.length).toBe(2);
 	});
 
 	it("updates settings store when format changes", async () => {
-		const { container } = render(FilterPanel, {
-			props: { tournaments: sampleTournaments, formats: sampleFormats },
-		});
+		mockTournamentList.set(sampleTournaments);
+		mockAvailableFormats.set(sampleFormats);
+		const { container } = render(FilterPanel);
 		const select = container.querySelector("select")!;
 		await fireEvent.change(select, { target: { value: "Standard" } });
 		expect(get(settings).format).toBe("Standard");
 	});
 
 	it("updates settings store when mirror toggle changes", async () => {
-		const { container } = render(FilterPanel, {
-			props: { tournaments: sampleTournaments, formats: sampleFormats },
-		});
+		mockTournamentList.set(sampleTournaments);
+		mockAvailableFormats.set(sampleFormats);
+		const { container } = render(FilterPanel);
 		const toggles = container.querySelectorAll('.toggle input[type="checkbox"]');
 		const mirrorToggle = toggles[0] as HTMLInputElement;
 		// Default is checked (excludeMirrors: true)
@@ -110,9 +148,9 @@ describe("FilterPanel component", () => {
 	});
 
 	it("shows Top N input when topN mode selected", () => {
-		const { container } = render(FilterPanel, {
-			props: { tournaments: sampleTournaments, formats: sampleFormats },
-		});
+		mockTournamentList.set(sampleTournaments);
+		mockAvailableFormats.set(sampleFormats);
+		const { container } = render(FilterPanel);
 		const numberInput = container.querySelector(
 			'.threshold-input input[type="number"]',
 		);
