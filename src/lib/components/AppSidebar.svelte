@@ -23,6 +23,7 @@
 		onclick={toggle}
 		title={collapsed ? 'Expand filters' : 'Collapse filters'}
 		aria-label={collapsed ? 'Expand filters' : 'Collapse filters'}
+		aria-expanded={!collapsed}
 	>
 		{collapsed ? '›' : '‹'}
 	</button>
