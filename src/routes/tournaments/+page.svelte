@@ -1,5 +1,5 @@
 <script lang="ts">
-import { tournamentList } from '$lib/stores/tournaments';
+import { filteredTournaments, tournamentList } from '$lib/stores/tournaments';
 
 type SortKey =
 	| "name"
@@ -49,6 +49,29 @@ function sortIndicator(key: SortKey): string {
 	if (sortKey !== key) return "";
 	return sortDir === "asc" ? " \u25B2" : " \u25BC";
 }
+
+// Filtered tournament stats for % weight display
+const filteredIds = $derived(new Set($filteredTournaments.map(t => t.meta.id)));
+
+const filteredMatchCounts = $derived(
+	new Map($filteredTournaments.map(t => [
+		t.meta.id,
+		Object.values(t.rounds).reduce((sum, r) => sum + r.matches.length, 0)
+	]))
+);
+
+const totalFilteredPlayers = $derived(
+	$filteredTournaments.reduce((sum, t) => sum + t.meta.playerCount, 0)
+);
+
+const totalFilteredMatches = $derived(
+	$filteredTournaments.reduce((sum, t) => sum + (filteredMatchCounts.get(t.meta.id) ?? 0), 0)
+);
+
+function pct(value: number, total: number): string {
+	if (total === 0) return "";
+	return (value / total * 100).toFixed(1) + "%";
+}
 </script>
 
 <svelte:head>
@@ -86,15 +109,27 @@ function sortIndicator(key: SortKey): string {
 			</thead>
 			<tbody>
 				{#each sorted as t}
-					<tr>
+					{@const inFilter = filteredIds.has(t.id)}
+					{@const tMatchCount = filteredMatchCounts.get(t.id) ?? t.matchCount}
+					<tr class:filtered={inFilter}>
 						<td>
 							<a href={t.url} target="_blank" rel="noopener">{t.name}</a>
 						</td>
 						<td class="mono">{t.date}</td>
 						<td>{t.formats.join(', ')}</td>
-						<td class="num">{t.playerCount}</td>
+						<td class="num">
+							{t.playerCount}
+							{#if inFilter && totalFilteredPlayers > 0}
+								<span class="pct">{pct(t.playerCount, totalFilteredPlayers)}</span>
+							{/if}
+						</td>
 						<td class="num">{t.roundCount}</td>
-						<td class="num">{t.matchCount}</td>
+						<td class="num">
+							{t.matchCount}
+							{#if inFilter && totalFilteredMatches > 0}
+								<span class="pct">{pct(tMatchCount, totalFilteredMatches)}</span>
+							{/if}
+						</td>
 					</tr>
 				{/each}
 			</tbody>
@@ -162,6 +197,22 @@ function sortIndicator(key: SortKey): string {
 
 	tbody tr:hover {
 		background: rgba(79, 70, 229, 0.04);
+	}
+
+	tr.filtered {
+		background: rgba(79, 70, 229, 0.03);
+	}
+
+	tr.filtered:hover {
+		background: rgba(79, 70, 229, 0.07);
+	}
+
+	.pct {
+		display: inline-block;
+		margin-left: 0.4em;
+		font-size: 0.75em;
+		color: var(--color-text-muted);
+		font-variant-numeric: tabular-nums;
 	}
 
 	td a {
