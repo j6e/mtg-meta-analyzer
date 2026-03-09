@@ -1,4 +1,4 @@
-import type { CardEntry, DecklistInfo } from '../types/decklist';
+import type { CardEntry, DecklistInfo } from "../types/decklist";
 
 export interface CardCompositionRow {
 	cardName: string;
@@ -16,7 +16,10 @@ export interface CardCompositionResult {
 	deckCount: number;
 }
 
-function buildRows(cards: Map<string, number[]>, deckCount: number): CardCompositionRow[] {
+function buildRows(
+	cards: Map<string, number[]>,
+	deckCount: number,
+): CardCompositionRow[] {
 	if (deckCount === 0) return [];
 
 	const rows: CardCompositionRow[] = [];
@@ -47,7 +50,10 @@ function collectQuantities(sections: CardEntry[][]): Map<string, number[]> {
 		// Build per-deck quantity for this section
 		const deckCards = new Map<string, number>();
 		for (const entry of section) {
-			deckCards.set(entry.cardName, (deckCards.get(entry.cardName) ?? 0) + entry.quantity);
+			deckCards.set(
+				entry.cardName,
+				(deckCards.get(entry.cardName) ?? 0) + entry.quantity,
+			);
 		}
 		for (const [name, qty] of deckCards) {
 			let arr = cards.get(name);

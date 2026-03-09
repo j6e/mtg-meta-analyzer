@@ -50,7 +50,7 @@ More information about Pro Tour Thunder Junction can be found at https://magic.g
     
 
 <script type="text/javascript">
-    const debug = { log: (message) => {
+    const _debug = { log: (_message) => {
     }}
 </script>
 
@@ -619,12 +619,12 @@ More information about Pro Tour Thunder Junction can be found at https://magic.g
 
 <!-- Datadog RUM (CDN async) -->
 <script>
-    (function(h,o,u,n,d) {
-        h=h[d]=h[d]||{q:[],onReady:function(c){h.q.push(c)}}
+    ((h,o,u,n,d) => {
+        h=h[d]=h[d]||{q:[],onReady:(c)=> {h.q.push(c)}}
         d=o.createElement(u);d.async=1;d.src=n
         n=o.getElementsByTagName(u)[0];n.parentNode.insertBefore(d,n)
     })(window,document,'script','https://www.datadoghq-browser-agent.com/us5/v6/datadog-rum.js','DD_RUM')
-    window.DD_RUM.onReady(function() { 
+    window.DD_RUM.onReady(() => { 
         window.DD_RUM.init({
         clientToken: 'pub22e31ccd740f290ba9b4a07ad7565c22',
         applicationId: '2e019cb6-dc4b-4076-b6e6-c2e701b2d0eb',
@@ -798,7 +798,7 @@ More information about Pro Tour Thunder Junction can be found at https://magic.g
         $('.modal-backdrop').show();
     })
 
-    $(document).ready(function () {
+    $(document).ready(() => {
         const allowAllButton = $("#allowAllButton");
         const acceptAllCookie = $("#acceptAllCookie");
         const customSave = $("#customSave");
@@ -810,15 +810,15 @@ More information about Pro Tour Thunder Junction can be found at https://magic.g
         const customizeButton = $("#customizeButton");
         const detailTabButton = $("#detail-tab");
 
-        customizeButton.on("click", function () {
+        customizeButton.on("click", () => {
             detailTabButton.click();
         });
 
-        allowAllButton.on("click", function () {
+        allowAllButton.on("click", () => {
             allowAllCookies();          
         });
 
-        acceptAllCookie.on("click", function () {
+        acceptAllCookie.on("click", () => {
             allowAllCookies();            
         });
 
@@ -837,13 +837,13 @@ More information about Pro Tour Thunder Junction can be found at https://magic.g
 
         analytical_cookies.on("click", hideValidationMessage);
         functional_cookies.on("click", hideValidationMessage);
-        functional_cookies.on("change", function () {            
+        functional_cookies.on("change", () => {            
             if (!functional_cookies.prop("checked")) {
                 showValidationMessage();
             }
         });
         
-        customSave.on("click", function () {
+        customSave.on("click", () => {
             setCookies({
                 essentialCookie: essential_cookies.prop("checked"),
                 analyticalCookie: analytical_cookies.prop("checked"),
@@ -851,7 +851,7 @@ More information about Pro Tour Thunder Junction can be found at https://magic.g
             });            
         });
 
-        necessaryOnlyButton.on("click", function () {
+        necessaryOnlyButton.on("click", () => {
             setCookies({
                 essentialCookie: true,
                 analyticalCookie: false,
@@ -884,7 +884,7 @@ More information about Pro Tour Thunder Junction can be found at https://magic.g
                 method: "POST",
                 contentType: "application/json",
                 data: JSON.stringify(requestData),
-                success: function (data) {  
+                success: (_data) => {  
                     hideCookiesModal();
                 }
             });
@@ -902,7 +902,7 @@ More information about Pro Tour Thunder Junction can be found at https://magic.g
                 method: "POST",
                 contentType: "application/json",
                 data: JSON.stringify(requestData),
-                success: function (data) {
+                success: (_data) => {
                     hideCookiesModal();
                 }
             });
@@ -1643,8 +1643,8 @@ $(() => {
     if ($countdown.length) {
         const date = Flattsware.dateTime.netDateTimeToJsDateTime($countdown.data('value'))
 
-        let interval = setInterval(() => {
-            const now = new Date().getTime()
+        const interval = setInterval(() => {
+            const now = Date.now()
             const distance = date - now
             const days = Math.floor(distance / (1000 * 60 * 60 * 24))
             const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
@@ -1928,7 +1928,7 @@ $(() => {
     }
     
     .tournament-card-organizer, .tournament-card-player-count {
-        color: #989ea4 !important;
+        color: #989ea4;
         font-weight: 500;
     }    
     
@@ -1989,7 +1989,7 @@ $(() => {
     const $supportTicketModalIssueSelectorContainer = $(`#support-ticket-modal-issue-selector-container`)
     const $supportTicketModalSubmitButton = $(`#support-ticket-modal-content-submit-button`)
 
-    let newSupportTicketModel = {
+    const newSupportTicketModel = {
         url: window.location.href,
         contextType: `Tournament`,
         contextGuid: tournamentGuid,
@@ -2039,7 +2039,7 @@ $(() => {
 
     const $registrationsProgressContainer = $(`#registrations-progress-container`)
 
-    let registrationsProgressTemplate = $(`#registrations-progress-template`).html()
+    const registrationsProgressTemplate = $(`#registrations-progress-template`).html()
     Mustache.parse(registrationsProgressTemplate)
 
     if ($registrationsProgressContainer.length) {
@@ -2051,7 +2051,7 @@ $(() => {
                 return
             }
 
-            let data = response
+            const data = response
 
             data.percentage = _.round(_.min([100, ((data.registrationsCount / data.playerCap) * 100)]))
 
@@ -2073,7 +2073,7 @@ $(() => {
     const $waitlistRefreshButton = $(`#waitlist-refresh-button`)
     const $waitlistProgressContainer = $(`#waitlist-progress-container`)
 
-    let waitlistTemplate = $(`#waitlist-template`).html()
+    const waitlistTemplate = $(`#waitlist-template`).html()
     Mustache.parse(waitlistTemplate)
 
     function refreshProgressContainer() {
@@ -2087,7 +2087,7 @@ $(() => {
                 return
             }
 
-            let data = response
+            const data = response
 
             data.waitlistCount = data.registrationsCount - data.playerCap
             data.percentage = _.round(_.min([100, ((data.playerCap / data.registrationsCount) * 100)]))
@@ -2122,7 +2122,7 @@ $(() => {
 
     const $entryRequirementsContainer = $(`#entry-requirements-container`)
 
-    let entryRequirementTemplate = $(`#entry-requirement-template`).html()
+    const entryRequirementTemplate = $(`#entry-requirement-template`).html()
     Mustache.parse(entryRequirementTemplate)
 
     if ($entryRequirementsContainer.length) {
@@ -2162,7 +2162,7 @@ $(() => {
                 })
             }
             
-            if (count == 0) {
+            if (count === 0) {
                 $entryRequirementsContainer.append(`<span class="text-success">None</span>`)
             }
         }).fail(() => {

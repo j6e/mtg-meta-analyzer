@@ -1,14 +1,14 @@
-import { parse as parseYaml } from 'yaml';
-import type { ArchetypeDefinition, ArchetypeYaml } from '../types/archetype';
-import type { CardEntry, DecklistInfo } from '../types/decklist';
-import { buildCorpus, vectorize, type SparseVector } from './tfidf';
-import { knnClassify, type LabeledPoint } from './knn';
-import { getFrontFace } from '../utils/card-normalizer';
+import { parse as parseYaml } from "yaml";
+import type { ArchetypeDefinition, ArchetypeYaml } from "../types/archetype";
+import type { CardEntry, DecklistInfo } from "../types/decklist";
+import { getFrontFace } from "../utils/card-normalizer";
+import { knnClassify, type LabeledPoint } from "./knn";
+import { buildCorpus, vectorize } from "./tfidf";
 
 export interface ClassificationResult {
 	decklistId: string;
 	archetype: string;
-	method: 'signature' | 'knn' | 'unknown';
+	method: "signature" | "knn" | "unknown";
 	confidence: number; // 1.0 for signature match, KNN confidence for knn, 0 for unknown
 }
 
@@ -81,7 +81,12 @@ export function classifyAll(
 		const archetype = classifyBySignatureCards(decklist.mainboard, archetypeDefs);
 		if (archetype) {
 			classified.set(id, archetype);
-			results.push({ decklistId: id, archetype, method: 'signature', confidence: 1.0 });
+			results.push({
+				decklistId: id,
+				archetype,
+				method: "signature",
+				confidence: 1.0,
+			});
 		} else {
 			unclassifiedIds.push(id);
 		}
@@ -90,7 +95,12 @@ export function classifyAll(
 	// If no unclassified decklists or no labeled data, done
 	if (unclassifiedIds.length === 0 || classified.size === 0) {
 		for (const id of unclassifiedIds) {
-			results.push({ decklistId: id, archetype: 'Unknown', method: 'unknown', confidence: 0 });
+			results.push({
+				decklistId: id,
+				archetype: "Unknown",
+				method: "unknown",
+				confidence: 0,
+			});
 		}
 		return results;
 	}
@@ -123,14 +133,14 @@ export function classifyAll(
 			results.push({
 				decklistId: id,
 				archetype: knnResult.label,
-				method: 'knn',
+				method: "knn",
 				confidence: knnResult.confidence,
 			});
 		} else {
 			results.push({
 				decklistId: id,
-				archetype: 'Unknown',
-				method: 'unknown',
+				archetype: "Unknown",
+				method: "unknown",
 				confidence: knnResult?.confidence ?? 0,
 			});
 		}

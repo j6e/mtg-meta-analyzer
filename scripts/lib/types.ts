@@ -97,12 +97,12 @@ export interface MeleeTournamentSearchRow {
 // Decklist JSON endpoint types
 
 export interface MeleeDecklistRecord {
-	l: string;  // lowercase card name (slug)
-	n: string;  // display card name
-	s: string | null;  // set code (nullable)
-	q: number;  // quantity
-	c: number;  // category: 0 = mainboard, 99 = sideboard
-	t: string;  // card type (Creature, Instant, Land, etc.)
+	l: string; // lowercase card name (slug)
+	n: string; // display card name
+	s: string | null; // set code (nullable)
+	q: number; // quantity
+	c: number; // category: 0 = mainboard, 99 = sideboard
+	t: string; // card type (Creature, Instant, Land, etc.)
 }
 
 export interface MeleeDecklistDetails {

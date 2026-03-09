@@ -2,17 +2,22 @@
  * Tournament data store — loads all tournament JSON at build time and provides
  * reactive derived data (player lists, decklists, classifications, metagame stats).
  */
-import { writable, derived, get } from 'svelte/store';
-import { loadTournaments } from '../data/loader';
-import type { TournamentData, TournamentMeta } from '../types/tournament';
-import type { DecklistInfo } from '../types/decklist';
-import type { ArchetypeStats } from '../types/metagame';
-import type { ArchetypeDefinition } from '../types/archetype';
-import type { ClassificationResult } from '../algorithms/archetype-classifier';
-import { classifyAll } from '../algorithms/archetype-classifier';
-import { buildPlayerArchetypeMap, buildMatchupMatrix, buildAttributionMatrix, type MatrixOptions } from '../utils/winrate-calculator';
-import { settings } from './settings';
-import { activeArchetypeDefs } from './archetype-configs';
+import { derived, get, writable } from "svelte/store";
+import type { ClassificationResult } from "../algorithms/archetype-classifier";
+import { classifyAll } from "../algorithms/archetype-classifier";
+import { loadTournaments } from "../data/loader";
+import type { ArchetypeDefinition } from "../types/archetype";
+import type { DecklistInfo } from "../types/decklist";
+import type { ArchetypeStats } from "../types/metagame";
+import type { TournamentData, TournamentMeta } from "../types/tournament";
+import {
+	buildAttributionMatrix,
+	buildMatchupMatrix,
+	buildPlayerArchetypeMap,
+	type MatrixOptions,
+} from "../utils/winrate-calculator";
+import { activeArchetypeDefs } from "./archetype-configs";
+import { settings } from "./settings";
 
 // --- Raw data (loaded once at build time) ---
 
@@ -26,14 +31,20 @@ export const selectedTournamentId = writable<number | null>(
 // --- Derived stores ---
 
 /** List of all tournament metadata (with computed match count), sorted by date descending. */
-export const tournamentList = derived([], (): (TournamentMeta & { matchCount: number })[] => {
-	return [...allTournaments.values()]
-		.map((t) => ({
-			...t.meta,
-			matchCount: Object.values(t.rounds).reduce((sum, r) => sum + r.matches.length, 0),
-		}))
-		.sort((a, b) => b.date.localeCompare(a.date));
-});
+export const tournamentList = derived(
+	[],
+	(): (TournamentMeta & { matchCount: number })[] => {
+		return [...allTournaments.values()]
+			.map((t) => ({
+				...t.meta,
+				matchCount: Object.values(t.rounds).reduce(
+					(sum, r) => sum + r.matches.length,
+					0,
+				),
+			}))
+			.sort((a, b) => b.date.localeCompare(a.date));
+	},
+);
 
 /** All unique formats across all tournaments. */
 export const availableFormats = derived([], (): string[] => {
@@ -78,10 +89,13 @@ export const filteredTournaments = derived(
 );
 
 /** The currently selected single tournament (for decklist/player views). */
-export const currentTournament = derived(selectedTournamentId, ($id): TournamentData | null => {
-	if ($id === null) return null;
-	return allTournaments.get($id) ?? null;
-});
+export const currentTournament = derived(
+	selectedTournamentId,
+	($id): TournamentData | null => {
+		if ($id === null) return null;
+		return allTournaments.get($id) ?? null;
+	},
+);
 
 /** All players in the current tournament, sorted by rank. */
 export const playerList = derived(currentTournament, ($tournament) => {
@@ -116,10 +130,7 @@ export const classificationResults = derived(
 	([$tournaments, $defs]): Map<number, ClassificationResult[]> => {
 		const map = new Map<number, ClassificationResult[]>();
 		for (const t of $tournaments) {
-			map.set(
-				t.meta.id,
-				classifyAll(t.decklists, $defs, { k: 5, minConfidence: 0.3 }),
-			);
+			map.set(t.meta.id, classifyAll(t.decklists, $defs, { k: 5, minConfidence: 0.3 }));
 		}
 		return map;
 	},
@@ -151,9 +162,9 @@ export const metagameData = derived(
 
 		const options: MatrixOptions = {
 			excludeMirrors: $settings.excludeMirrors,
-			topN: $settings.otherMode === 'topN' ? $settings.topN : 0,
+			topN: $settings.otherMode === "topN" ? $settings.topN : 0,
 			minMetagameShare:
-				$settings.otherMode === 'minShare' ? $settings.minMetagameShare / 100 : 0,
+				$settings.otherMode === "minShare" ? $settings.minMetagameShare / 100 : 0,
 		};
 
 		return buildMatchupMatrix($tournaments, $playerArchetypes, options);
@@ -218,15 +229,12 @@ export const globalPlayerArchetypes = derived(
 );
 
 /** Matchup matrix and stats across ALL tournaments (no "Other" collapsing). */
-export const globalMetagameData = derived(
-	globalPlayerArchetypes,
-	($archetypes) => {
-		if (allTournamentArray.length === 0 || $archetypes.size === 0) return null;
-		return buildMatchupMatrix(allTournamentArray, $archetypes, {
-			excludeMirrors: true,
-		});
-	},
-);
+export const globalMetagameData = derived(globalPlayerArchetypes, ($archetypes) => {
+	if (allTournamentArray.length === 0 || $archetypes.size === 0) return null;
+	return buildMatchupMatrix(allTournamentArray, $archetypes, {
+		excludeMirrors: true,
+	});
+});
 
 /** Attribution matrix: classified vs self-reported archetypes across ALL tournaments. */
 export const globalAttributionMatrix = derived(

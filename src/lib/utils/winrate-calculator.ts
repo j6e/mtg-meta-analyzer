@@ -1,10 +1,15 @@
-import type { TournamentData, MatchResult } from '../types/tournament';
-import type { MatchupCell, MatchupMatrix, ArchetypeStats, AttributionMatrix } from '../types/metagame';
-import type { ClassificationResult } from '../algorithms/archetype-classifier';
+import type { ClassificationResult } from "../algorithms/archetype-classifier";
+import type {
+	ArchetypeStats,
+	AttributionMatrix,
+	MatchupCell,
+	MatchupMatrix,
+} from "../types/metagame";
+import type { MatchResult, TournamentData } from "../types/tournament";
 
 /** Intentional draws are recorded as 0-0-3 — no games played, just drawn rounds. */
 function isIntentionalDraw(match: MatchResult): boolean {
-	return match.result === '0-0-3';
+	return match.result === "0-0-3";
 }
 
 export interface MatrixOptions {
@@ -28,10 +33,10 @@ export function buildPlayerArchetypeMap(
 
 	const playerArchetype = new Map<string, string>();
 	for (const [playerId, player] of Object.entries(tournament.players)) {
-		let archetype = 'Unknown';
+		let archetype = "Unknown";
 		for (const deckId of player.decklistIds) {
 			const a = deckArchetype.get(deckId);
-			if (a && a !== 'Unknown') {
+			if (a && a !== "Unknown") {
 				archetype = a;
 				break;
 			}
@@ -54,11 +59,7 @@ export function buildMatchupMatrix(
 	playerArchetypes: Map<string, string>,
 	options: MatrixOptions = {},
 ): { matrix: MatchupMatrix; stats: ArchetypeStats[] } {
-	const {
-		excludeMirrors = true,
-		minMetagameShare = 0,
-		topN = 0,
-	} = options;
+	const { excludeMirrors = true, minMetagameShare = 0, topN = 0 } = options;
 
 	// Step 1: Count players per raw archetype
 	const rawPlayerSets = new Map<string, Set<string>>();
@@ -71,7 +72,7 @@ export function buildMatchupMatrix(
 	// Step 2: Determine which archetypes get collapsed to "Other"
 	const otherSet = new Set<string>();
 	let sortedNames = [...rawPlayerSets.entries()]
-		.filter(([name]) => name !== 'Unknown')
+		.filter(([name]) => name !== "Unknown")
 		.sort((a, b) => b[1].size - a[1].size)
 		.map(([name]) => name);
 
@@ -96,15 +97,15 @@ export function buildMatchupMatrix(
 	// Build display archetype list (sorted by player count, Other/Unknown last)
 	const displayArchetypes = [...sortedNames];
 	const hasOther = otherSet.size > 0;
-	if (hasOther) displayArchetypes.push('Other');
-	const hasUnknown = (rawPlayerSets.get('Unknown')?.size ?? 0) > 0;
+	if (hasOther) displayArchetypes.push("Other");
+	const hasUnknown = (rawPlayerSets.get("Unknown")?.size ?? 0) > 0;
 	// Merge Unknown into Other when Other exists; only show standalone Unknown if no Other bucket
-	if (hasUnknown && !hasOther) displayArchetypes.push('Unknown');
+	if (hasUnknown && !hasOther) displayArchetypes.push("Unknown");
 
 	// Resolve raw archetype to display archetype
 	function resolve(raw: string): string {
-		if (otherSet.has(raw)) return 'Other';
-		if (raw === 'Unknown' && hasOther) return 'Other';
+		if (otherSet.has(raw)) return "Other";
+		if (raw === "Unknown" && hasOther) return "Other";
 		return raw;
 	}
 
@@ -115,7 +116,14 @@ export function buildMatchupMatrix(
 	}
 	const n = displayArchetypes.length;
 	const cells: MatchupCell[][] = Array.from({ length: n }, () =>
-		Array.from({ length: n }, () => ({ wins: 0, losses: 0, draws: 0, intentionalDraws: 0, total: 0, winrate: null })),
+		Array.from({ length: n }, () => ({
+			wins: 0,
+			losses: 0,
+			draws: 0,
+			intentionalDraws: 0,
+			total: 0,
+			winrate: null,
+		})),
 	);
 
 	// Step 4: Count players per display archetype
@@ -331,7 +339,7 @@ export function buildAttributionMatrix(
 
 			const classified = r.archetype;
 			const raw = decklist.reportedArchetype?.trim();
-			const reported = raw ? raw : 'No Report';
+			const reported = raw ? raw : "No Report";
 
 			if (!counts.has(classified)) counts.set(classified, new Map());
 			const inner = counts.get(classified)!;

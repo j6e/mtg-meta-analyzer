@@ -1,25 +1,23 @@
 export type {
+	ArchetypeDefinition,
+	ArchetypeYaml,
+	SignatureCard,
+} from "./archetype.ts";
+export type {
 	CardEntry,
-	DecklistInfo
-} from './decklist.ts';
+	DecklistInfo,
+} from "./decklist.ts";
 
 export type {
-	TournamentMeta,
-	PlayerInfo,
-	MatchResult,
-	RoundInfo,
-	TournamentData
-} from './tournament.ts';
-
-export type {
+	ArchetypeStats,
 	MatchupCell,
 	MatchupMatrix,
-	ArchetypeStats,
-	MetagameReport
-} from './metagame.ts';
-
+	MetagameReport,
+} from "./metagame.ts";
 export type {
-	SignatureCard,
-	ArchetypeDefinition,
-	ArchetypeYaml
-} from './archetype.ts';
+	MatchResult,
+	PlayerInfo,
+	RoundInfo,
+	TournamentData,
+	TournamentMeta,
+} from "./tournament.ts";

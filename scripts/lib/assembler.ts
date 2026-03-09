@@ -1,18 +1,18 @@
+import type { DecklistInfo } from "../../src/lib/types/decklist";
 import type {
-	MeleeStandingRow,
-	MeleeMatchRow,
-	MeleeDecklistDetails,
-	ParsedTournamentPage,
-	ParsedRound,
-} from './types';
-import type {
-	TournamentData,
-	PlayerInfo,
 	MatchResult,
+	PlayerInfo,
 	RoundInfo,
-} from '../../src/lib/types/tournament';
-import type { DecklistInfo } from '../../src/lib/types/decklist';
-import { parseDecklistRecords } from './html-parser';
+	TournamentData,
+} from "../../src/lib/types/tournament";
+import { parseDecklistRecords } from "./html-parser";
+import type {
+	MeleeDecklistDetails,
+	MeleeMatchRow,
+	MeleeStandingRow,
+	ParsedRound,
+	ParsedTournamentPage,
+} from "./types";
 
 export interface AssembleInput {
 	tournamentId: number;
@@ -24,7 +24,8 @@ export interface AssembleInput {
 }
 
 export function assembleTournament(input: AssembleInput): TournamentData {
-	const { tournamentId, parsed, standings, decklists, completedRounds, roundMatches } = input;
+	const { tournamentId, parsed, standings, decklists, completedRounds, roundMatches } =
+		input;
 
 	// Build players from standings
 	const players: Record<string, PlayerInfo> = {};
@@ -40,7 +41,7 @@ export function assembleTournament(input: AssembleInput): TournamentData {
 			points: s.Points,
 			matchRecord: `${s.MatchWins}-${s.MatchLosses}-${s.MatchDraws}`,
 			decklistIds: s.Decklists.map((d) => d.DecklistId),
-			reportedArchetypes: s.Decklists.map((d) => d.DecklistName || 'Unknown'),
+			reportedArchetypes: s.Decklists.map((d) => d.DecklistName || "Unknown"),
 		};
 	}
 
@@ -99,7 +100,12 @@ function parseMatchResult(m: MeleeMatchRow): MatchResult {
 	const competitors = m.Competitors;
 
 	if (competitors.length === 0) {
-		return { player1Id: '', player2Id: null, result: 'unknown', winnerId: null };
+		return {
+			player1Id: "",
+			player2Id: null,
+			result: "unknown",
+			winnerId: null,
+		};
 	}
 
 	const p1 = competitors[0];
@@ -114,7 +120,7 @@ function parseMatchResult(m: MeleeMatchRow): MatchResult {
 
 	if (m.ByeReasonDescription) {
 		// Bye
-		result = 'bye';
+		result = "bye";
 		winnerId = player1Id;
 	} else if (p1 && p2) {
 		const p1Wins = p1.GameWinsAndGameByes ?? 0;
@@ -128,7 +134,7 @@ function parseMatchResult(m: MeleeMatchRow): MatchResult {
 			result = `${p2Wins}-${p1Wins}-${m.GameDraws}`;
 		} else {
 			winnerId = null;
-			result = `${p1Wins}-${p2Wins}-${m.GameDraws}` || 'draw';
+			result = `${p1Wins}-${p2Wins}-${m.GameDraws}` || "draw";
 		}
 	}
 
@@ -141,11 +147,12 @@ function extractRoundNumber(name: string): number {
 
 	// Playoff rounds: assign high numbers
 	const lower = name.toLowerCase();
-	if (lower.includes('quarterfinal')) return 900;
-	if (lower.includes('semifinal')) return 950;
-	if (lower.includes('final') && !lower.includes('semi') && !lower.includes('quarter')) return 999;
-	if (lower.includes('top 8')) return 900;
-	if (lower.includes('top 4')) return 950;
+	if (lower.includes("quarterfinal")) return 900;
+	if (lower.includes("semifinal")) return 950;
+	if (lower.includes("final") && !lower.includes("semi") && !lower.includes("quarter"))
+		return 999;
+	if (lower.includes("top 8")) return 900;
+	if (lower.includes("top 4")) return 950;
 
 	return 0;
 }
@@ -153,11 +160,11 @@ function extractRoundNumber(name: string): number {
 function isPlayoffRound(name: string): boolean {
 	const lower = name.toLowerCase();
 	return (
-		lower.includes('quarterfinal') ||
-		lower.includes('semifinal') ||
-		lower.includes('final') ||
-		lower.includes('top 8') ||
-		lower.includes('top 4') ||
-		lower.includes('playoff')
+		lower.includes("quarterfinal") ||
+		lower.includes("semifinal") ||
+		lower.includes("final") ||
+		lower.includes("top 8") ||
+		lower.includes("top 4") ||
+		lower.includes("playoff")
 	);
 }

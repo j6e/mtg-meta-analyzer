@@ -1,8 +1,8 @@
-import type { TournamentData } from '../types/tournament';
-import type { MatchupCell, MatchupMatrix, ArchetypeStats } from '../types/metagame';
-import { buildMatchupMatrix } from './winrate-calculator';
+import type { ArchetypeStats, MatchupCell, MatchupMatrix } from "../types/metagame";
+import type { TournamentData } from "../types/tournament";
+import { buildMatchupMatrix } from "./winrate-calculator";
 
-export type SplitMode = 'binary' | 'per-copy' | 'cumulative';
+export type SplitMode = "binary" | "per-copy" | "cumulative";
 
 export interface SplitRow {
 	label: string;
@@ -80,9 +80,11 @@ function extractRow(
 	// Always build an un-collapsed matrix so every archetype is individually
 	// visible. The "Other" cell is aggregated manually from the same set of
 	// archetypes the caller determined via the baseline threshold.
-	const { matrix, stats } = prebuilt ?? buildMatchupMatrix(tournaments, playerArchetypes, {
-		excludeMirrors: true,
-	});
+	const { matrix, stats } =
+		prebuilt ??
+		buildMatchupMatrix(tournaments, playerArchetypes, {
+			excludeMirrors: true,
+		});
 
 	const idx = matrix.archetypes.indexOf(archetypeName);
 	const cells = new Map<string, MatchupCell>();
@@ -93,12 +95,16 @@ function extractRow(
 	if (idx !== -1) {
 		// Named opponents that are NOT "Other" — used to determine which
 		// individual archetypes should be summed into the "Other" bucket.
-		const namedOpponents = new Set(opponents.filter((o) => o !== 'Other'));
+		const namedOpponents = new Set(opponents.filter((o) => o !== "Other"));
 
 		for (const opponent of opponents) {
-			if (opponent === 'Other') {
+			if (opponent === "Other") {
 				// Sum all archetypes not explicitly named as opponents
-				let w = 0, l = 0, d = 0, id = 0, t = 0;
+				let w = 0,
+					l = 0,
+					d = 0,
+					id = 0,
+					t = 0;
 				for (let j = 0; j < matrix.archetypes.length; j++) {
 					const name = matrix.archetypes[j];
 					if (j === idx || namedOpponents.has(name)) continue;
@@ -110,9 +116,12 @@ function extractRow(
 					t += c.total;
 				}
 				if (t > 0) {
-					cells.set('Other', {
-						wins: w, losses: l, draws: d,
-						intentionalDraws: id, total: t,
+					cells.set("Other", {
+						wins: w,
+						losses: l,
+						draws: d,
+						intentionalDraws: id,
+						total: t,
 						winrate: w / t,
 					});
 				}
@@ -134,7 +143,7 @@ function extractRow(
 
 	const totalMatches = totalWins + totalLosses + totalDraws;
 	return {
-		label: '',
+		label: "",
 		cells,
 		overallWinrate: totalMatches > 0 ? totalWins / totalMatches : null,
 		totalMatches,
@@ -156,7 +165,12 @@ export function splitByCard(
 	mode: SplitMode,
 	options?: { threshold?: number; topN?: number; minMetagameShare?: number },
 ): SplitResult {
-	const playerCopies = countCardCopies(tournaments, playerArchetypes, archetypeName, cardName);
+	const playerCopies = countCardCopies(
+		tournaments,
+		playerArchetypes,
+		archetypeName,
+		cardName,
+	);
 
 	const matrixOpts = {
 		excludeMirrors: true,
@@ -172,7 +186,11 @@ export function splitByCard(
 	// Determine opponents from a possibly collapsed matrix (topN/minMetagameShare)
 	const hasCollapsing = matrixOpts.topN || matrixOpts.minMetagameShare;
 	const opponents = hasCollapsing
-		? buildMatchupMatrix(tournaments, playerArchetypes, matrixOpts).matrix.archetypes.filter((a) => a !== archetypeName)
+		? buildMatchupMatrix(
+				tournaments,
+				playerArchetypes,
+				matrixOpts,
+			).matrix.archetypes.filter((a) => a !== archetypeName)
 		: baselineResult.matrix.archetypes.filter((a) => a !== archetypeName);
 
 	// Build baseline row (all players), reusing the already-built matrix
@@ -185,12 +203,12 @@ export function splitByCard(
 		allPlayerIds.size,
 		baselineResult,
 	);
-	baselineRow.label = 'All';
+	baselineRow.label = "All";
 
 	// Partition players into groups
 	const groups: { label: string; playerIds: Set<string> }[] = [];
 
-	if (mode === 'binary') {
+	if (mode === "binary") {
 		const threshold = options?.threshold ?? 4;
 		const above = new Set<string>();
 		const below = new Set<string>();
@@ -199,11 +217,15 @@ export function splitByCard(
 			else below.add(pid);
 		}
 		const maxCopies = Math.max(...playerCopies.values());
-		const aboveLabel = maxCopies > threshold ? `${threshold}+ copies` : `${threshold} copies`;
+		const aboveLabel =
+			maxCopies > threshold ? `${threshold}+ copies` : `${threshold} copies`;
 		if (above.size > 0) groups.push({ label: aboveLabel, playerIds: above });
 		if (below.size > 0)
-			groups.push({ label: threshold === 1 ? '0 copies' : `< ${threshold} copies`, playerIds: below });
-	} else if (mode === 'cumulative') {
+			groups.push({
+				label: threshold === 1 ? "0 copies" : `< ${threshold} copies`,
+				playerIds: below,
+			});
+	} else if (mode === "cumulative") {
 		// cumulative mode: each row is "≥ N copies" (overlapping groups)
 		// Fisher's test compares each group against its complement (< N)
 		const byCount = new Map<number, Set<string>>();
@@ -218,7 +240,7 @@ export function splitByCard(
 		const sortedCounts = [...byCount.keys()].sort((a, b) => a - b);
 		// First group: "= 0 copies" (players with none of the card)
 		if (byCount.has(0) && byCount.get(0)!.size > 0) {
-			groups.push({ label: '0 copies', playerIds: byCount.get(0)! });
+			groups.push({ label: "0 copies", playerIds: byCount.get(0)! });
 		}
 		// Remaining groups: "≥ N copies" (skip the lowest — "≥ min" would be everyone)
 		for (let i = 1; i < sortedCounts.length; i++) {
@@ -229,7 +251,7 @@ export function splitByCard(
 			}
 			if (atOrAbove.size > 0) {
 				groups.push({
-					label: `≥ ${threshold} ${threshold === 1 ? 'copy' : 'copies'}`,
+					label: `≥ ${threshold} ${threshold === 1 ? "copy" : "copies"}`,
 					playerIds: atOrAbove,
 				});
 			}
@@ -249,7 +271,7 @@ export function splitByCard(
 		for (const count of sortedCounts) {
 			const set = byCount.get(count)!;
 			groups.push({
-				label: count === 1 ? '1 copy' : `${count} copies`,
+				label: count === 1 ? "1 copy" : `${count} copies`,
 				playerIds: set,
 			});
 		}

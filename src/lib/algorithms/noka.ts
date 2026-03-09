@@ -12,7 +12,7 @@
  *
  * Reference: Frank Karsten (ChannelFireball), elvishjerricco.github.io
  */
-import type { CardEntry, DecklistInfo } from '../types/decklist';
+import type { CardEntry, DecklistInfo } from "../types/decklist";
 
 export interface AggregatedDeck {
 	mainboard: CardEntry[];
@@ -225,9 +225,7 @@ function higherOrderAggregate(
 				for (const other of nameCounts.keys()) {
 					if (other === copy.name) continue;
 					const pairKey =
-						copy.name < other
-							? `${copy.name}|${other}`
-							: `${other}|${copy.name}`;
+						copy.name < other ? `${copy.name}|${other}` : `${other}|${copy.name}`;
 					pairSum += pairFreq.get(pairKey) ?? 0;
 					pairCount++;
 				}
@@ -293,9 +291,7 @@ function higherOrderAggregate(
 
 // --- Helpers ---
 
-function collapseToCardEntries(
-	quantities: Map<string, number>,
-): CardEntry[] {
+function collapseToCardEntries(quantities: Map<string, number>): CardEntry[] {
 	const entries: CardEntry[] = [];
 	for (const [cardName, quantity] of quantities) {
 		entries.push({ cardName, quantity });

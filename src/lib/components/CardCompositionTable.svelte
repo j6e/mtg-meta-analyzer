@@ -1,77 +1,75 @@
 <script lang="ts">
-	import type { CardCompositionRow } from '../utils/card-composition';
-	import { pct } from '../utils/format';
-	import CardTooltip from './CardTooltip.svelte';
+import type { CardCompositionRow } from "../utils/card-composition";
 
-	let {
-		rows,
-		title,
-		deckCount,
-	}: {
-		rows: CardCompositionRow[];
-		title: string;
-		deckCount: number;
-	} = $props();
+let {
+	rows,
+	title,
+	deckCount,
+}: {
+	rows: CardCompositionRow[];
+	title: string;
+	deckCount: number;
+} = $props();
 
-	type SortKey = 'name' | 'avg' | 't0' | 't1' | 't2' | 't3';
+type SortKey = "name" | "avg" | "t0" | "t1" | "t2" | "t3";
 
-	let sortKey = $state<SortKey>('avg');
-	let sortAsc = $state(false);
+let sortKey = $state<SortKey>("avg");
+let sortAsc = $state(false);
 
-	const sortedRows = $derived.by(() => {
-		const sorted = [...rows];
-		sorted.sort((a, b) => {
-			let cmp = 0;
-			switch (sortKey) {
-				case 'name':
-					cmp = a.cardName.localeCompare(b.cardName);
-					break;
-				case 'avg':
-					cmp = a.averageQuantity - b.averageQuantity;
-					break;
-				case 't0':
-					cmp = a.thresholds[0] - b.thresholds[0];
-					break;
-				case 't1':
-					cmp = a.thresholds[1] - b.thresholds[1];
-					break;
-				case 't2':
-					cmp = a.thresholds[2] - b.thresholds[2];
-					break;
-				case 't3':
-					cmp = a.thresholds[3] - b.thresholds[3];
-					break;
-			}
-			return sortAsc ? cmp : -cmp;
-		});
-		return sorted;
-	});
-
-	function toggleSort(key: SortKey) {
-		if (sortKey === key) {
-			sortAsc = !sortAsc;
-		} else {
-			sortKey = key;
-			sortAsc = key === 'name';
+const sortedRows = $derived.by(() => {
+	const sorted = [...rows];
+	sorted.sort((a, b) => {
+		let cmp = 0;
+		switch (sortKey) {
+			case "name":
+				cmp = a.cardName.localeCompare(b.cardName);
+				break;
+			case "avg":
+				cmp = a.averageQuantity - b.averageQuantity;
+				break;
+			case "t0":
+				cmp = a.thresholds[0] - b.thresholds[0];
+				break;
+			case "t1":
+				cmp = a.thresholds[1] - b.thresholds[1];
+				break;
+			case "t2":
+				cmp = a.thresholds[2] - b.thresholds[2];
+				break;
+			case "t3":
+				cmp = a.thresholds[3] - b.thresholds[3];
+				break;
 		}
-	}
+		return sortAsc ? cmp : -cmp;
+	});
+	return sorted;
+});
 
-	function pctBg(value: number): string {
-		// Inverted gradient: #ff5555 → #6025f5, mixed with white for dimmer tones
-		const from: [number, number, number] = [0xff, 0x55, 0x55];
-		const to: [number, number, number] = [0x60, 0x25, 0xf5];
-		const mix = 0.35; // blend toward white (0 = full color, 1 = white)
-		const t = value;
-		const r = Math.round((from[0] + (to[0] - from[0]) * t) * (1 - mix) + 255 * mix);
-		const g = Math.round((from[1] + (to[1] - from[1]) * t) * (1 - mix) + 255 * mix);
-		const b = Math.round((from[2] + (to[2] - from[2]) * t) * (1 - mix) + 255 * mix);
-		return `background: rgb(${r}, ${g}, ${b})`;
+function toggleSort(key: SortKey) {
+	if (sortKey === key) {
+		sortAsc = !sortAsc;
+	} else {
+		sortKey = key;
+		sortAsc = key === "name";
 	}
+}
 
-	function sortIndicator(key: SortKey): string {
-		if (sortKey !== key) return '';
-		return sortAsc ? ' ▲' : ' ▼';
-	}
+function pctBg(value: number): string {
+	// Inverted gradient: #ff5555 → #6025f5, mixed with white for dimmer tones
+	const from: [number, number, number] = [0xff, 0x55, 0x55];
+	const to: [number, number, number] = [0x60, 0x25, 0xf5];
+	const mix = 0.35; // blend toward white (0 = full color, 1 = white)
+	const t = value;
+	const r = Math.round((from[0] + (to[0] - from[0]) * t) * (1 - mix) + 255 * mix);
+	const g = Math.round((from[1] + (to[1] - from[1]) * t) * (1 - mix) + 255 * mix);
+	const b = Math.round((from[2] + (to[2] - from[2]) * t) * (1 - mix) + 255 * mix);
+	return `background: rgb(${r}, ${g}, ${b})`;
+}
+
+function sortIndicator(key: SortKey): string {
+	if (sortKey !== key) return "";
+	return sortAsc ? " ▲" : " ▼";
+}
 </script>
 
 <div class="composition-section">

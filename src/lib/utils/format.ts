@@ -8,15 +8,17 @@ export function winrateColor(wr: number): string {
 	let to: [number, number, number];
 	let t: number;
 
-	if (wr <= 0.30) {
+	if (wr <= 0.3) {
 		return `rgb(${red[0]}, ${red[1]}, ${red[2]})`;
 	} else if (wr <= 0.48) {
-		from = red; to = neutral;
-		t = (wr - 0.30) / 0.18;
+		from = red;
+		to = neutral;
+		t = (wr - 0.3) / 0.18;
 	} else if (wr <= 0.52) {
 		return `rgb(${neutral[0]}, ${neutral[1]}, ${neutral[2]})`;
-	} else if (wr <= 0.70) {
-		from = neutral; to = green;
+	} else if (wr <= 0.7) {
+		from = neutral;
+		to = green;
 		t = (wr - 0.52) / 0.18;
 	} else {
 		return `rgb(${green[0]}, ${green[1]}, ${green[2]})`;
@@ -30,6 +32,6 @@ export function winrateColor(wr: number): string {
 
 /** Format a 0-1 fraction as a percentage string. */
 export function pct(n: number | null, decimals = 1): string {
-	if (n === null) return '—';
-	return (n * 100).toFixed(decimals) + '%';
+	if (n === null) return "—";
+	return `${(n * 100).toFixed(decimals)}%`;
 }

@@ -1,4 +1,4 @@
-import type { SparseVector } from './tfidf';
+import type { SparseVector } from "./tfidf";
 
 /**
  * Compute cosine similarity between two dense vectors.

@@ -2,9 +2,9 @@
  * Archetype configuration store — manages built-in and user-saved archetype
  * YAML configs with localStorage persistence.
  */
-import { writable, derived, get } from 'svelte/store';
-import { parseArchetypeYaml } from '../algorithms/archetype-classifier';
-import type { ArchetypeDefinition } from '../types/archetype';
+import { derived, get, writable } from "svelte/store";
+import { parseArchetypeYaml } from "../algorithms/archetype-classifier";
+import type { ArchetypeDefinition } from "../types/archetype";
 // --- Built-in config auto-discovery ---
 
 export interface BuiltinArchetypeConfig {
@@ -14,44 +14,44 @@ export interface BuiltinArchetypeConfig {
 	yamlContent: string;
 }
 
-const builtinModules = import.meta.glob<string>('/data/archetypes/*.yaml', {
+const builtinModules = import.meta.glob<string>("/data/archetypes/*.yaml", {
 	eager: true,
-	query: '?raw',
-	import: 'default',
+	query: "?raw",
+	import: "default",
 });
 
 function stemToDisplayName(stem: string): string {
-	return stem.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+	return stem.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
 export const BUILTIN_CONFIGS: BuiltinArchetypeConfig[] = Object.entries(builtinModules)
 	.map(([path, yamlContent]) => {
-		const filename = path.split('/').pop()!;
-		const stem = filename.replace(/\.yaml$/, '');
+		const filename = path.split("/").pop()!;
+		const stem = filename.replace(/\.yaml$/, "");
 		return {
 			id: `builtin:${stem}`,
 			filename,
 			displayName: stemToDisplayName(stem),
-			yamlContent: yamlContent.replace(/\r\n/g, '\n'),
+			yamlContent: yamlContent.replace(/\r\n/g, "\n"),
 		};
 	})
 	.sort((a, b) => {
-		if (a.filename === 'standard.yaml') return -1;
-		if (b.filename === 'standard.yaml') return 1;
+		if (a.filename === "standard.yaml") return -1;
+		if (b.filename === "standard.yaml") return 1;
 		return a.filename.localeCompare(b.filename);
 	});
 
 // --- Constants ---
 
-export const DEFAULT_BUILTIN_ID = 'builtin:standard';
+export const DEFAULT_BUILTIN_ID = "builtin:standard";
 /** @deprecated Use DEFAULT_BUILTIN_ID and BUILTIN_CONFIGS instead. */
 export const BUILTIN_CONFIG_ID = DEFAULT_BUILTIN_ID;
 /** @deprecated Use BUILTIN_CONFIGS instead. */
 export const builtinArchetypeYaml: string =
-	BUILTIN_CONFIGS.find((c) => c.id === DEFAULT_BUILTIN_ID)?.yamlContent ?? '';
+	BUILTIN_CONFIGS.find((c) => c.id === DEFAULT_BUILTIN_ID)?.yamlContent ?? "";
 
-const CONFIGS_KEY = 'mtg-archetype-configs';
-const ACTIVE_KEY = 'mtg-active-config-id';
+const CONFIGS_KEY = "mtg-archetype-configs";
+const ACTIVE_KEY = "mtg-active-config-id";
 
 // --- Types ---
 
@@ -67,7 +67,7 @@ export interface SavedArchetypeConfig {
 // --- localStorage helpers ---
 
 function hasStorage(): boolean {
-	return typeof globalThis.localStorage !== 'undefined';
+	return typeof globalThis.localStorage !== "undefined";
 }
 
 function loadConfigs(): SavedArchetypeConfig[] {

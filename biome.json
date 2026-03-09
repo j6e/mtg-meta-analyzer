@@ -7,7 +7,7 @@
 	},
 	"files": {
 		"ignoreUnknown": true,
-		"includes": ["**", "!*.svelte", "!**/data/tournaments"]
+		"includes": ["**", "!**/*.svelte", "!**/data/tournaments", "!tests/fixtures"]
 	},
 	"formatter": {
 		"enabled": true,

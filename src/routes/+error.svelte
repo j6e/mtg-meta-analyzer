@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { page } from '$app/state';
-	import { base } from '$app/paths';
 </script>
 
 <svelte:head>

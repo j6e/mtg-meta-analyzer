@@ -1,46 +1,44 @@
 <script lang="ts">
-	import { base } from '$app/paths';
-	import { globalMetagameData } from '$lib/stores/tournaments';
-	import { pct } from '$lib/utils/format';
+type SortKey = "name" | "share" | "winrate" | "players" | "matches";
+let sortKey = $state<SortKey>("share");
+let sortAsc = $state(false);
 
-	type SortKey = 'name' | 'share' | 'winrate' | 'players' | 'matches';
-	let sortKey = $state<SortKey>('share');
-	let sortAsc = $state(false);
-
-	const sortedStats = $derived.by(() => {
-		const stats = $globalMetagameData?.stats ?? [];
-		const rows = stats.filter((s) => s.name !== 'Unknown');
-		const dir = sortAsc ? 1 : -1;
-		rows.sort((a, b) => {
-			switch (sortKey) {
-				case 'name':
-					return dir * a.name.localeCompare(b.name);
-				case 'share':
-					return dir * (a.metagameShare - b.metagameShare);
-				case 'winrate':
-					return dir * (a.overallWinrate - b.overallWinrate);
-				case 'players':
-					return dir * (a.playerCount - b.playerCount);
-				case 'matches':
-					return dir * (a.totalMatches - b.totalMatches);
-			}
-		});
-		return rows;
-	});
-
-	function toggleSort(key: SortKey) {
-		if (sortKey === key) {
-			sortAsc = !sortAsc;
-		} else {
-			sortKey = key;
-			sortAsc = key === 'name';
+const sortedStats = $derived.by(() => {
+	const stats = $globalMetagameData?.stats ?? [];
+	const rows = stats.filter((s) => s.name !== "Unknown");
+	const dir = sortAsc ? 1 : -1;
+	rows.sort((a, b) => {
+		switch (sortKey) {
+			case "name":
+				return dir * a.name.localeCompare(b.name);
+			case "share":
+				return dir * (a.metagameShare - b.metagameShare);
+			case "winrate":
+				return dir * (a.overallWinrate - b.overallWinrate);
+			case "players":
+				return dir * (a.playerCount - b.playerCount);
+			case "matches":
+				return dir * (a.totalMatches - b.totalMatches);
+			default:
+				return 0;
 		}
-	}
+	});
+	return rows;
+});
 
-	function sortIndicator(key: SortKey): string {
-		if (sortKey !== key) return '';
-		return sortAsc ? ' \u25B2' : ' \u25BC';
+function toggleSort(key: SortKey) {
+	if (sortKey === key) {
+		sortAsc = !sortAsc;
+	} else {
+		sortKey = key;
+		sortAsc = key === "name";
 	}
+}
+
+function sortIndicator(key: SortKey): string {
+	if (sortKey !== key) return "";
+	return sortAsc ? " \u25B2" : " \u25BC";
+}
 </script>
 
 <svelte:head>

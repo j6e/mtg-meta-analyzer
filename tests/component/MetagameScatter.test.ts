@@ -1,8 +1,9 @@
 // @vitest-environment jsdom
-import { describe, it, expect, beforeEach } from 'vitest';
-import { render } from '@testing-library/svelte';
-import MetagameScatter from '../../src/lib/components/MetagameScatter.svelte';
-import type { ArchetypeStats } from '../../src/lib/types/metagame';
+
+import { render } from "@testing-library/svelte";
+import { beforeEach, describe, expect, it } from "vitest";
+import MetagameScatter from "../../src/lib/components/MetagameScatter.svelte";
+import type { ArchetypeStats } from "../../src/lib/types/metagame";
 
 // Chart.js needs a canvas context — jsdom provides a stub but Chart.js
 // may fail to fully render. We test that the component mounts and the
@@ -23,7 +24,11 @@ beforeEach(() => {
 			save: () => {},
 			restore: () => {},
 			setLineDash: () => {},
-			measureText: () => ({ width: 0, actualBoundingBoxAscent: 0, actualBoundingBoxDescent: 0 }),
+			measureText: () => ({
+				width: 0,
+				actualBoundingBoxAscent: 0,
+				actualBoundingBoxDescent: 0,
+			}),
 			fillText: () => {},
 			strokeText: () => {},
 			createLinearGradient: () => ({ addColorStop: () => {} }),
@@ -45,36 +50,84 @@ beforeEach(() => {
 });
 
 const sampleStats: ArchetypeStats[] = [
-	{ name: 'Aggro', metagameShare: 0.35, overallWinrate: 0.55, wins: 55, losses: 45, draws: 0, totalMatches: 100, playerCount: 14, byes: 0, intentionalDraws: 0 },
-	{ name: 'Control', metagameShare: 0.25, overallWinrate: 0.48, wins: 38, losses: 42, draws: 0, totalMatches: 80, playerCount: 10, byes: 0, intentionalDraws: 0 },
-	{ name: 'Midrange', metagameShare: 0.2, overallWinrate: 0.52, wins: 31, losses: 29, draws: 0, totalMatches: 60, playerCount: 8, byes: 0, intentionalDraws: 0 },
-	{ name: 'Unknown', metagameShare: 0.2, overallWinrate: 0.45, wins: 18, losses: 22, draws: 0, totalMatches: 40, playerCount: 8, byes: 0, intentionalDraws: 0 },
+	{
+		name: "Aggro",
+		metagameShare: 0.35,
+		overallWinrate: 0.55,
+		wins: 55,
+		losses: 45,
+		draws: 0,
+		totalMatches: 100,
+		playerCount: 14,
+		byes: 0,
+		intentionalDraws: 0,
+	},
+	{
+		name: "Control",
+		metagameShare: 0.25,
+		overallWinrate: 0.48,
+		wins: 38,
+		losses: 42,
+		draws: 0,
+		totalMatches: 80,
+		playerCount: 10,
+		byes: 0,
+		intentionalDraws: 0,
+	},
+	{
+		name: "Midrange",
+		metagameShare: 0.2,
+		overallWinrate: 0.52,
+		wins: 31,
+		losses: 29,
+		draws: 0,
+		totalMatches: 60,
+		playerCount: 8,
+		byes: 0,
+		intentionalDraws: 0,
+	},
+	{
+		name: "Unknown",
+		metagameShare: 0.2,
+		overallWinrate: 0.45,
+		wins: 18,
+		losses: 22,
+		draws: 0,
+		totalMatches: 40,
+		playerCount: 8,
+		byes: 0,
+		intentionalDraws: 0,
+	},
 ];
 
-describe('MetagameScatter component', () => {
-	it('mounts a canvas element', () => {
-		const { container } = render(MetagameScatter, { props: { stats: sampleStats } });
+describe("MetagameScatter component", () => {
+	it("mounts a canvas element", () => {
+		const { container } = render(MetagameScatter, {
+			props: { stats: sampleStats },
+		});
 		const canvas = container.querySelector('canvas[data-testid="scatter-canvas"]');
 		expect(canvas).toBeTruthy();
 	});
 
-	it('renders legend items for non-Unknown archetypes', () => {
-		const { container } = render(MetagameScatter, { props: { stats: sampleStats } });
-		const legendItems = container.querySelectorAll('.legend-item');
+	it("renders legend items for non-Unknown archetypes", () => {
+		const { container } = render(MetagameScatter, {
+			props: { stats: sampleStats },
+		});
+		const legendItems = container.querySelectorAll(".legend-item");
 		// 3 non-Unknown archetypes
 		expect(legendItems.length).toBe(3);
 		const names = [...legendItems].map((el) => el.textContent?.trim());
-		expect(names).toContain('Aggro');
-		expect(names).toContain('Control');
-		expect(names).toContain('Midrange');
-		expect(names).not.toContain('Unknown');
+		expect(names).toContain("Aggro");
+		expect(names).toContain("Control");
+		expect(names).toContain("Midrange");
+		expect(names).not.toContain("Unknown");
 	});
 
-	it('handles empty stats', () => {
+	it("handles empty stats", () => {
 		const { container } = render(MetagameScatter, { props: { stats: [] } });
-		const canvas = container.querySelector('canvas');
+		const canvas = container.querySelector("canvas");
 		expect(canvas).toBeTruthy();
-		const legendItems = container.querySelectorAll('.legend-item');
+		const legendItems = container.querySelectorAll(".legend-item");
 		expect(legendItems.length).toBe(0);
 	});
 });
