@@ -467,7 +467,7 @@
 						<DecklistView
 							decklist={d.decklist}
 							playerName={d.playerName}
-							archetype={d.tournamentName}
+							archetype={archetypeName}
 							playerRank={d.playerRank}
 						/>
 					{/each}

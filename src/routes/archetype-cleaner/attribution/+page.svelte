@@ -2,8 +2,8 @@
 	import { page } from '$app/state';
 	import { base } from '$app/paths';
 	import {
-		globalClassificationResults,
-		getAllTournaments,
+		classificationResults,
+		filteredTournaments,
 	} from '$lib/stores/tournaments';
 	import { activeArchetypeDefs } from '$lib/stores/archetype-configs';
 	import DecklistView from '$lib/components/DecklistView.svelte';
@@ -19,8 +19,8 @@
 
 	// Find decklists where classified === classifiedName AND reported === reportedName
 	const decklists = $derived.by(() => {
-		const resultsMap = $globalClassificationResults;
-		const tournaments = getAllTournaments();
+		const resultsMap = $classificationResults;
+		const tournaments = $filteredTournaments;
 		const result: {
 			playerName: string;
 			playerRank: number;
@@ -126,7 +126,7 @@
 					<DecklistView
 						decklist={d.decklist}
 						playerName={d.playerName}
-						archetype={d.tournamentName}
+						archetype={classifiedName}
 						playerRank={d.playerRank}
 					/>
 				{/each}
