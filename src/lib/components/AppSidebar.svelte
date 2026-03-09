@@ -27,11 +27,9 @@
 	>
 		{collapsed ? '›' : '‹'}
 	</button>
-	{#if !collapsed}
-		<div class="sidebar-content">
-			<FilterPanel />
-		</div>
-	{/if}
+	<div class="sidebar-content" class:hidden={collapsed}>
+		<FilterPanel />
+	</div>
 </aside>
 
 <style>
@@ -78,5 +76,9 @@
 		padding: 0 0.75rem 1rem;
 		overflow-y: auto;
 		flex: 1;
+	}
+
+	.sidebar-content.hidden {
+		display: none;
 	}
 </style>
