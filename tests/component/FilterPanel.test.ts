@@ -44,7 +44,11 @@ import FilterPanel from "../../src/lib/components/FilterPanel.svelte";
 import { resetSettings, settings } from "../../src/lib/stores/settings";
 
 afterEach(() => cleanup());
-beforeEach(() => resetSettings());
+beforeEach(() => {
+	resetSettings();
+	mockTournamentList.set(sampleTournaments);
+	mockAvailableFormats.set(sampleFormats);
+});
 
 const sampleTournaments: (TournamentMeta & { matchCount: number })[] = [
 	{
