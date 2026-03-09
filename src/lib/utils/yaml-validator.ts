@@ -1,4 +1,4 @@
-import { parse as parseYaml } from 'yaml';
+import { parse as parseYaml } from "yaml";
 
 export interface ValidationResult {
 	ok: boolean;
@@ -27,8 +27,13 @@ export function validateArchetypeYaml(yamlContent: string): ValidationResult {
 		};
 	}
 
-	if (data == null || typeof data !== 'object') {
-		return { ok: false, archetypeCount: 0, errors: ['YAML must be an object'], warnings: [] };
+	if (data == null || typeof data !== "object") {
+		return {
+			ok: false,
+			archetypeCount: 0,
+			errors: ["YAML must be an object"],
+			warnings: [],
+		};
 	}
 
 	const obj = data as Record<string, unknown>;
@@ -62,13 +67,13 @@ export function validateArchetypeYaml(yamlContent: string): ValidationResult {
 		const arch = obj.archetypes[i] as Record<string, unknown>;
 		const prefix = `archetypes[${i}]`;
 
-		if (!arch || typeof arch !== 'object') {
+		if (!arch || typeof arch !== "object") {
 			errors.push(`${prefix}: must be an object`);
 			continue;
 		}
 
 		// Name
-		if (!arch.name || typeof arch.name !== 'string') {
+		if (!arch.name || typeof arch.name !== "string") {
 			errors.push(`${prefix}: missing or invalid "name"`);
 		} else {
 			if (seenNames.has(arch.name)) {
@@ -79,7 +84,7 @@ export function validateArchetypeYaml(yamlContent: string): ValidationResult {
 
 		// Signature cards
 		if (!Array.isArray(arch.signatureCards)) {
-			errors.push(`${prefix} (${arch.name ?? '?'}): "signatureCards" must be an array`);
+			errors.push(`${prefix} (${arch.name ?? "?"}): "signatureCards" must be an array`);
 			continue;
 		}
 
@@ -87,12 +92,12 @@ export function validateArchetypeYaml(yamlContent: string): ValidationResult {
 			const card = arch.signatureCards[j] as Record<string, unknown>;
 			const cardPrefix = `${prefix}.signatureCards[${j}]`;
 
-			if (!card || typeof card !== 'object') {
+			if (!card || typeof card !== "object") {
 				errors.push(`${cardPrefix}: must be an object`);
 				continue;
 			}
 
-			if (!card.name || typeof card.name !== 'string') {
+			if (!card.name || typeof card.name !== "string") {
 				errors.push(`${cardPrefix}: missing or invalid "name"`);
 			}
 
@@ -101,7 +106,7 @@ export function validateArchetypeYaml(yamlContent: string): ValidationResult {
 
 			if (!hasMin && !hasExact) {
 				warnings.push(
-					`${cardPrefix} (${card.name ?? '?'}): no minCopies or exactCopies (defaults to minCopies: 1)`,
+					`${cardPrefix} (${card.name ?? "?"}): no minCopies or exactCopies (defaults to minCopies: 1)`,
 				);
 			}
 		}

@@ -1,5 +1,5 @@
-import type { DecklistInfo } from '../types/decklist';
-import type { TournamentData } from '../types/tournament';
+import type { DecklistInfo } from "../types/decklist";
+import type { TournamentData } from "../types/tournament";
 
 export interface EnrichedDecklist {
 	decklist: DecklistInfo;
@@ -62,7 +62,9 @@ export function collectRawDecklists(
  * Find the decklist with the best standing (lowest rank) across all tournaments.
  * Ties broken by tournament name (alphabetical), then player name.
  */
-export function findBestDecklist(enriched: EnrichedDecklist[]): EnrichedDecklist | null {
+export function findBestDecklist(
+	enriched: EnrichedDecklist[],
+): EnrichedDecklist | null {
 	if (enriched.length === 0) return null;
 
 	return enriched.reduce((best, curr) => {

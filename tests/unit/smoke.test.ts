@@ -1,11 +1,11 @@
-import { describe, it, expect } from 'vitest';
+import { describe, expect, it } from "vitest";
 
-describe('unit test smoke test', () => {
-	it('should pass a basic assertion', () => {
+describe("unit test smoke test", () => {
+	it("should pass a basic assertion", () => {
 		expect(1 + 1).toBe(2);
 	});
 
-	it('should run in node environment', () => {
-		expect(typeof globalThis).toBe('object');
+	it("should run in node environment", () => {
+		expect(typeof globalThis).toBe("object");
 	});
 });

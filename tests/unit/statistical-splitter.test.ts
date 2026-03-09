@@ -1,8 +1,15 @@
-import { describe, it, expect } from 'vitest';
-import { computeStatistics, autoScanCards } from '../../src/lib/utils/statistical-splitter';
-import { splitByCard } from '../../src/lib/utils/winrate-splitter';
-import type { TournamentData, PlayerInfo, MatchResult } from '../../src/lib/types/tournament';
-import type { DecklistInfo } from '../../src/lib/types/decklist';
+import { describe, expect, it } from "vitest";
+import type { DecklistInfo } from "../../src/lib/types/decklist";
+import type {
+	MatchResult,
+	PlayerInfo,
+	TournamentData,
+} from "../../src/lib/types/tournament";
+import {
+	autoScanCards,
+	computeStatistics,
+} from "../../src/lib/utils/statistical-splitter";
+import { splitByCard } from "../../src/lib/utils/winrate-splitter";
 
 function makePlayer(name: string, decklistIds: string[], rank = 1): PlayerInfo {
 	return {
@@ -10,16 +17,22 @@ function makePlayer(name: string, decklistIds: string[], rank = 1): PlayerInfo {
 		username: name.toLowerCase(),
 		rank,
 		points: 0,
-		matchRecord: '0-0-0',
+		matchRecord: "0-0-0",
 		decklistIds,
 		reportedArchetypes: [],
 	};
 }
 
-function makeDeckWithCards(playerId: string, mainboard: [string, number][]): DecklistInfo {
+function makeDeckWithCards(
+	playerId: string,
+	mainboard: [string, number][],
+): DecklistInfo {
 	return {
 		playerId,
-		mainboard: mainboard.map(([cardName, quantity]) => ({ cardName, quantity })),
+		mainboard: mainboard.map(([cardName, quantity]) => ({
+			cardName,
+			quantity,
+		})),
 		sideboard: [],
 		companion: null,
 		reportedArchetype: null,
@@ -30,7 +43,7 @@ function makeMatch(p1: string, p2: string, winnerId: string | null): MatchResult
 	return {
 		player1Id: p1,
 		player2Id: p2,
-		result: winnerId ? '2-1-0' : '1-1-0',
+		result: winnerId ? "2-1-0" : "1-1-0",
 		winnerId,
 	};
 }
@@ -43,11 +56,11 @@ function makeTournament(overrides: {
 	return {
 		meta: {
 			id: 1,
-			name: 'Test',
-			date: '2026-01-01',
-			formats: ['Standard'],
-			url: 'https://melee.gg/Tournament/View/1',
-			fetchedAt: '2026-01-01T00:00:00Z',
+			name: "Test",
+			date: "2026-01-01",
+			formats: ["Standard"],
+			url: "https://melee.gg/Tournament/View/1",
+			fetchedAt: "2026-01-01T00:00:00Z",
 			playerCount: Object.keys(overrides.players).length,
 			roundCount: 1,
 		},
@@ -55,7 +68,7 @@ function makeTournament(overrides: {
 		decklists: overrides.decklists,
 		rounds: {
 			r1: {
-				name: 'Round 1',
+				name: "Round 1",
 				number: 1,
 				isPlayoff: false,
 				matches: overrides.matches,
@@ -67,38 +80,66 @@ function makeTournament(overrides: {
 // Reuse the same fixture from winrate-splitter tests
 const tournament = makeTournament({
 	players: {
-		a1: makePlayer('AggroWithBolt1', ['da1']),
-		a2: makePlayer('AggroWithBolt2', ['da2']),
-		a3: makePlayer('AggroNoBolt1', ['da3']),
-		a4: makePlayer('AggroNoBolt2', ['da4']),
-		c1: makePlayer('ControlPlayer1', ['dc1']),
-		c2: makePlayer('ControlPlayer2', ['dc2']),
+		a1: makePlayer("AggroWithBolt1", ["da1"]),
+		a2: makePlayer("AggroWithBolt2", ["da2"]),
+		a3: makePlayer("AggroNoBolt1", ["da3"]),
+		a4: makePlayer("AggroNoBolt2", ["da4"]),
+		c1: makePlayer("ControlPlayer1", ["dc1"]),
+		c2: makePlayer("ControlPlayer2", ["dc2"]),
 	},
 	decklists: {
-		da1: makeDeckWithCards('a1', [['Lightning Bolt', 4], ['Mountain', 20]]),
-		da2: makeDeckWithCards('a2', [['Lightning Bolt', 4], ['Mountain', 20]]),
-		da3: makeDeckWithCards('a3', [['Shock', 4], ['Mountain', 20]]),
-		da4: makeDeckWithCards('a4', [['Shock', 4], ['Mountain', 20]]),
-		dc1: makeDeckWithCards('c1', [['Island', 20], ['Counterspell', 4]]),
-		dc2: makeDeckWithCards('c2', [['Island', 20], ['Counterspell', 4]]),
+		da1: makeDeckWithCards("a1", [
+			["Lightning Bolt", 4],
+			["Mountain", 20],
+		]),
+		da2: makeDeckWithCards("a2", [
+			["Lightning Bolt", 4],
+			["Mountain", 20],
+		]),
+		da3: makeDeckWithCards("a3", [
+			["Shock", 4],
+			["Mountain", 20],
+		]),
+		da4: makeDeckWithCards("a4", [
+			["Shock", 4],
+			["Mountain", 20],
+		]),
+		dc1: makeDeckWithCards("c1", [
+			["Island", 20],
+			["Counterspell", 4],
+		]),
+		dc2: makeDeckWithCards("c2", [
+			["Island", 20],
+			["Counterspell", 4],
+		]),
 	},
 	matches: [
-		makeMatch('a1', 'c1', 'a1'),
-		makeMatch('a2', 'c2', 'a2'),
-		makeMatch('a3', 'c1', 'c1'),
-		makeMatch('a4', 'c2', 'c2'),
+		makeMatch("a1", "c1", "a1"),
+		makeMatch("a2", "c2", "a2"),
+		makeMatch("a3", "c1", "c1"),
+		makeMatch("a4", "c2", "c2"),
 	],
 });
 
 const archetypes = new Map([
-	['a1', 'Aggro'], ['a2', 'Aggro'],
-	['a3', 'Aggro'], ['a4', 'Aggro'],
-	['c1', 'Control'], ['c2', 'Control'],
+	["a1", "Aggro"],
+	["a2", "Aggro"],
+	["a3", "Aggro"],
+	["a4", "Aggro"],
+	["c1", "Control"],
+	["c2", "Control"],
 ]);
 
-describe('computeStatistics', () => {
-	it('produces CIs for each group row', () => {
-		const split = splitByCard([tournament], archetypes, 'Aggro', 'Lightning Bolt', 'binary', { threshold: 4 });
+describe("computeStatistics", () => {
+	it("produces CIs for each group row", () => {
+		const split = splitByCard(
+			[tournament],
+			archetypes,
+			"Aggro",
+			"Lightning Bolt",
+			"binary",
+			{ threshold: 4 },
+		);
 		const stats = computeStatistics(split);
 
 		expect(stats.rows).toHaveLength(2);
@@ -109,19 +150,33 @@ describe('computeStatistics', () => {
 		}
 	});
 
-	it('produces per-cell CIs for opponents with data', () => {
-		const split = splitByCard([tournament], archetypes, 'Aggro', 'Lightning Bolt', 'binary', { threshold: 4 });
+	it("produces per-cell CIs for opponents with data", () => {
+		const split = splitByCard(
+			[tournament],
+			archetypes,
+			"Aggro",
+			"Lightning Bolt",
+			"binary",
+			{ threshold: 4 },
+		);
 		const stats = computeStatistics(split);
 
-		const boltRow = stats.rows.find((r) => r.label.includes('4 copies'))!;
-		expect(boltRow.cellCIs.has('Control')).toBe(true);
-		const ci = boltRow.cellCIs.get('Control')!;
+		const boltRow = stats.rows.find((r) => r.label.includes("4 copies"))!;
+		expect(boltRow.cellCIs.has("Control")).toBe(true);
+		const ci = boltRow.cellCIs.get("Control")!;
 		// 2-0 record: mean should be high
 		expect(ci.mean).toBeGreaterThan(0.5);
 	});
 
-	it('produces Fisher significance for each cell', () => {
-		const split = splitByCard([tournament], archetypes, 'Aggro', 'Lightning Bolt', 'binary', { threshold: 4 });
+	it("produces Fisher significance for each cell", () => {
+		const split = splitByCard(
+			[tournament],
+			archetypes,
+			"Aggro",
+			"Lightning Bolt",
+			"binary",
+			{ threshold: 4 },
+		);
 		const stats = computeStatistics(split);
 
 		for (const row of stats.rows) {
@@ -134,8 +189,15 @@ describe('computeStatistics', () => {
 		}
 	});
 
-	it('produces pairwise comparisons', () => {
-		const split = splitByCard([tournament], archetypes, 'Aggro', 'Lightning Bolt', 'binary', { threshold: 4 });
+	it("produces pairwise comparisons", () => {
+		const split = splitByCard(
+			[tournament],
+			archetypes,
+			"Aggro",
+			"Lightning Bolt",
+			"binary",
+			{ threshold: 4 },
+		);
 		const stats = computeStatistics(split);
 
 		// 2 groups → 1 pairwise comparison
@@ -145,13 +207,20 @@ describe('computeStatistics', () => {
 		expect(pair.probABetter).toBeLessThanOrEqual(1);
 	});
 
-	it('bolt group has higher P(A>B) than no-bolt group', () => {
-		const split = splitByCard([tournament], archetypes, 'Aggro', 'Lightning Bolt', 'binary', { threshold: 4 });
+	it("bolt group has higher P(A>B) than no-bolt group", () => {
+		const split = splitByCard(
+			[tournament],
+			archetypes,
+			"Aggro",
+			"Lightning Bolt",
+			"binary",
+			{ threshold: 4 },
+		);
 		const stats = computeStatistics(split);
 
 		const pair = stats.pairwise[0];
 		// 4 copies (all wins) should be better than 0 copies (all losses)
-		if (pair.groupA.includes('4 copies')) {
+		if (pair.groupA.includes("4 copies")) {
 			expect(pair.probABetter).toBeGreaterThan(0.5);
 		} else {
 			expect(pair.probABetter).toBeLessThan(0.5);
@@ -159,7 +228,7 @@ describe('computeStatistics', () => {
 	});
 });
 
-describe('computeStatistics cumulative mode', () => {
+describe("computeStatistics cumulative mode", () => {
 	// Build a tournament with 3 distinct copy counts for "Flex Card": 0, 2, 4
 	const cumPlayers: Record<string, PlayerInfo> = {};
 	const cumDecklists: Record<string, DecklistInfo> = {};
@@ -172,27 +241,40 @@ describe('computeStatistics cumulative mode', () => {
 			const pid = `p${idx}`;
 			const did = `dl${idx}`;
 			cumPlayers[pid] = makePlayer(`P${idx}`, [did]);
-			cumDecklists[did] = makeDeckWithCards(pid, [['Flex Card', copies], ['Filler', 4 - copies]]);
+			cumDecklists[did] = makeDeckWithCards(pid, [
+				["Flex Card", copies],
+				["Filler", 4 - copies],
+			]);
 		}
 	}
-	cumPlayers['opp'] = makePlayer('Opp', ['dlopp']);
-	cumDecklists['dlopp'] = makeDeckWithCards('opp', [['Island', 20]]);
+	cumPlayers.opp = makePlayer("Opp", ["dlopp"]);
+	cumDecklists.dlopp = makeDeckWithCards("opp", [["Island", 20]]);
 
 	// Group 0 (0 copies): all lose; Group 1 (2 copies): mixed; Group 2 (4 copies): all win
 	for (let i = 0; i < 12; i++) {
 		const pid = `p${i}`;
 		const group = Math.floor(i / 4);
 		const wins = group === 2 ? true : group === 1 ? i % 2 === 0 : false;
-		cumMatches.push(makeMatch(pid, 'opp', wins ? pid : 'opp'));
+		cumMatches.push(makeMatch(pid, "opp", wins ? pid : "opp"));
 	}
 
-	const cumTournament = makeTournament({ players: cumPlayers, decklists: cumDecklists, matches: cumMatches });
+	const cumTournament = makeTournament({
+		players: cumPlayers,
+		decklists: cumDecklists,
+		matches: cumMatches,
+	});
 	const cumArchetypes = new Map<string, string>();
-	for (let i = 0; i < 12; i++) cumArchetypes.set(`p${i}`, 'Aggro');
-	cumArchetypes.set('opp', 'Control');
+	for (let i = 0; i < 12; i++) cumArchetypes.set(`p${i}`, "Aggro");
+	cumArchetypes.set("opp", "Control");
 
-	it('cumulative mode produces one comparison per group (group vs complement)', () => {
-		const split = splitByCard([cumTournament], cumArchetypes, 'Aggro', 'Flex Card', 'cumulative');
+	it("cumulative mode produces one comparison per group (group vs complement)", () => {
+		const split = splitByCard(
+			[cumTournament],
+			cumArchetypes,
+			"Aggro",
+			"Flex Card",
+			"cumulative",
+		);
 		const stats = computeStatistics(split);
 
 		// Each group should be compared against its complement, not adjacent groups
@@ -204,8 +286,14 @@ describe('computeStatistics cumulative mode', () => {
 		}
 	});
 
-	it('without cumulative mode, produces adjacent pairwise comparisons', () => {
-		const split = splitByCard([cumTournament], cumArchetypes, 'Aggro', 'Flex Card', 'per-copy');
+	it("without cumulative mode, produces adjacent pairwise comparisons", () => {
+		const split = splitByCard(
+			[cumTournament],
+			cumArchetypes,
+			"Aggro",
+			"Flex Card",
+			"per-copy",
+		);
 		const stats = computeStatistics(split);
 
 		// Adjacent comparisons: n-1 pairs for n groups
@@ -216,12 +304,14 @@ describe('computeStatistics cumulative mode', () => {
 	});
 });
 
-describe('autoScanCards', () => {
-	it('returns results sorted by adjusted p-value', async () => {
+describe("autoScanCards", () => {
+	it("returns results sorted by adjusted p-value", async () => {
 		const results = await autoScanCards(
-			[tournament], archetypes, 'Aggro',
-			['Lightning Bolt', 'Shock', 'Mountain'],
-			'binary',
+			[tournament],
+			archetypes,
+			"Aggro",
+			["Lightning Bolt", "Shock", "Mountain"],
+			"binary",
 			{ threshold: 4, minGroupSize: 1 },
 		);
 
@@ -234,11 +324,13 @@ describe('autoScanCards', () => {
 		}
 	});
 
-	it('reports effect size as difference between best and worst group', async () => {
+	it("reports effect size as difference between best and worst group", async () => {
 		const results = await autoScanCards(
-			[tournament], archetypes, 'Aggro',
-			['Lightning Bolt'],
-			'binary',
+			[tournament],
+			archetypes,
+			"Aggro",
+			["Lightning Bolt"],
+			"binary",
 			{ threshold: 4, minGroupSize: 1 },
 		);
 
@@ -247,11 +339,13 @@ describe('autoScanCards', () => {
 		expect(results[0].effectSize).toBeGreaterThan(0.5);
 	});
 
-	it('skips cards with fewer groups than 2', async () => {
+	it("skips cards with fewer groups than 2", async () => {
 		const results = await autoScanCards(
-			[tournament], archetypes, 'Aggro',
-			['Nonexistent Card'],
-			'binary',
+			[tournament],
+			archetypes,
+			"Aggro",
+			["Nonexistent Card"],
+			"binary",
 			{ threshold: 1, minGroupSize: 1 },
 		);
 
@@ -259,11 +353,13 @@ describe('autoScanCards', () => {
 		expect(results).toHaveLength(0);
 	});
 
-	it('binary split has no extraPairs (only 2 groups)', async () => {
+	it("binary split has no extraPairs (only 2 groups)", async () => {
 		const results = await autoScanCards(
-			[tournament], archetypes, 'Aggro',
-			['Lightning Bolt'],
-			'binary',
+			[tournament],
+			archetypes,
+			"Aggro",
+			["Lightning Bolt"],
+			"binary",
 			{ threshold: 4, minGroupSize: 1 },
 		);
 
@@ -271,7 +367,7 @@ describe('autoScanCards', () => {
 		expect(results[0].extraPairs).toHaveLength(0);
 	});
 
-	it('per-copy split produces extraPairs when 3+ groups exist', async () => {
+	it("per-copy split produces extraPairs when 3+ groups exist", async () => {
 		// Build a tournament with 3 distinct copy-count groups for "Flex Card":
 		// 0 copies (lose), 2 copies (mixed), 4 copies (win)
 		const players: Record<string, PlayerInfo> = {};
@@ -286,13 +382,16 @@ describe('autoScanCards', () => {
 				const pid = `a${idx}`;
 				const did = `d${idx}`;
 				players[pid] = makePlayer(`A${idx}`, [did]);
-				decklists[did] = makeDeckWithCards(pid, [['Flex Card', copies], ['Filler', 4 - copies]]);
+				decklists[did] = makeDeckWithCards(pid, [
+					["Flex Card", copies],
+					["Filler", 4 - copies],
+				]);
 			}
 		}
 
 		// 1 control opponent
-		players['c1'] = makePlayer('C1', ['dc1']);
-		decklists['dc1'] = makeDeckWithCards('c1', [['Island', 20]]);
+		players.c1 = makePlayer("C1", ["dc1"]);
+		decklists.dc1 = makeDeckWithCards("c1", [["Island", 20]]);
 
 		// Group 0 (0 copies): all lose; Group 1 (2 copies): mixed; Group 2 (4 copies): all win
 		for (let i = 0; i < 18; i++) {
@@ -302,27 +401,25 @@ describe('autoScanCards', () => {
 			if (group === 0) wins = false;
 			else if (group === 2) wins = true;
 			else wins = i % 2 === 0; // 50% for group 1
-			matches.push(makeMatch(pid, 'c1', wins ? pid : 'c1'));
+			matches.push(makeMatch(pid, "c1", wins ? pid : "c1"));
 		}
 
 		const t = makeTournament({ players, decklists, matches });
 		const arch = new Map<string, string>();
-		for (let i = 0; i < 18; i++) arch.set(`a${i}`, 'Aggro');
-		arch.set('c1', 'Control');
+		for (let i = 0; i < 18; i++) arch.set(`a${i}`, "Aggro");
+		arch.set("c1", "Control");
 
-		const results = await autoScanCards(
-			[t], arch, 'Aggro',
-			['Flex Card'],
-			'per-copy',
-			{ minGroupSize: 1, minEffectSize: 0.01 },
-		);
+		const results = await autoScanCards([t], arch, "Aggro", ["Flex Card"], "per-copy", {
+			minGroupSize: 1,
+			minEffectSize: 0.01,
+		});
 
 		expect(results).toHaveLength(1);
 		const r = results[0];
 
 		// Primary row should be best (4 copies) vs worst (0 copies)
-		expect(r.bestGroup).toContain('4');
-		expect(r.worstGroup).toContain('0');
+		expect(r.bestGroup).toContain("4");
+		expect(r.worstGroup).toContain("0");
 
 		// Should have extra pairs (e.g., 4 vs 2, 2 vs 0)
 		expect(r.extraPairs.length).toBeGreaterThan(0);
@@ -335,7 +432,7 @@ describe('autoScanCards', () => {
 		}
 	});
 
-	it('BH correction is applied across all pairs from all cards', async () => {
+	it("BH correction is applied across all pairs from all cards", async () => {
 		// With multiple cards producing multiple pairs, adjustedP should differ from rawP
 		const players: Record<string, PlayerInfo> = {};
 		const decklists: Record<string, DecklistInfo> = {};
@@ -349,31 +446,33 @@ describe('autoScanCards', () => {
 				const did = `d${idx}`;
 				players[pid] = makePlayer(`A${idx}`, [did]);
 				decklists[did] = makeDeckWithCards(pid, [
-					['CardA', copies],
-					['CardB', 4 - copies],
-					['Filler', 4],
+					["CardA", copies],
+					["CardB", 4 - copies],
+					["Filler", 4],
 				]);
 			}
 		}
-		players['c1'] = makePlayer('C1', ['dc1']);
-		decklists['dc1'] = makeDeckWithCards('c1', [['Island', 20]]);
+		players.c1 = makePlayer("C1", ["dc1"]);
+		decklists.dc1 = makeDeckWithCards("c1", [["Island", 20]]);
 
 		for (let i = 0; i < 18; i++) {
 			const pid = `a${i}`;
 			const group = Math.floor(i / 6);
 			const wins = group === 2;
-			matches.push(makeMatch(pid, 'c1', wins ? pid : 'c1'));
+			matches.push(makeMatch(pid, "c1", wins ? pid : "c1"));
 		}
 
 		const t = makeTournament({ players, decklists, matches });
 		const arch = new Map<string, string>();
-		for (let i = 0; i < 18; i++) arch.set(`a${i}`, 'Aggro');
-		arch.set('c1', 'Control');
+		for (let i = 0; i < 18; i++) arch.set(`a${i}`, "Aggro");
+		arch.set("c1", "Control");
 
 		const results = await autoScanCards(
-			[t], arch, 'Aggro',
-			['CardA', 'CardB'],
-			'per-copy',
+			[t],
+			arch,
+			"Aggro",
+			["CardA", "CardB"],
+			"per-copy",
 			{ minGroupSize: 1, minEffectSize: 0.01 },
 		);
 
@@ -400,12 +499,14 @@ describe('autoScanCards', () => {
 		}
 	});
 
-	it('calls onProgress callback', async () => {
+	it("calls onProgress callback", async () => {
 		const progressCalls: [number, number][] = [];
 		await autoScanCards(
-			[tournament], archetypes, 'Aggro',
-			['Lightning Bolt', 'Shock', 'Mountain', 'Island', 'Counterspell', 'Nonexistent'],
-			'binary',
+			[tournament],
+			archetypes,
+			"Aggro",
+			["Lightning Bolt", "Shock", "Mountain", "Island", "Counterspell", "Nonexistent"],
+			"binary",
 			{
 				threshold: 4,
 				minGroupSize: 1,

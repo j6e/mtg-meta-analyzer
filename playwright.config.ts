@@ -1,18 +1,18 @@
-import { defineConfig } from '@playwright/test';
+import { defineConfig } from "@playwright/test";
 
 export default defineConfig({
-	testDir: 'tests/e2e',
-	testMatch: '**/*.test.ts',
+	testDir: "tests/e2e",
+	testMatch: "**/*.test.ts",
 	fullyParallel: true,
 	forbidOnly: !!process.env.CI,
 	retries: process.env.CI ? 2 : 0,
 	workers: process.env.CI ? 1 : undefined,
 	use: {
-		baseURL: 'http://localhost:4173'
+		baseURL: "http://localhost:4173",
 	},
 	webServer: {
-		command: 'npx vite build && npx vite preview',
+		command: "npx vite build && npx vite preview",
 		port: 4173,
-		reuseExistingServer: !process.env.CI
-	}
+		reuseExistingServer: !process.env.CI,
+	},
 });

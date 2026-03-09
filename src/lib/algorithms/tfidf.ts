@@ -1,4 +1,4 @@
-import type { CardEntry } from '../types/decklist';
+import type { CardEntry } from "../types/decklist";
 
 /**
  * TF-IDF corpus built from a collection of decklists.

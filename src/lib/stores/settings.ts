@@ -2,9 +2,9 @@
  * User preference store for metagame analysis settings.
  * Values persist in memory (reset on page reload).
  */
-import { writable } from 'svelte/store';
+import { writable } from "svelte/store";
 
-export type OtherMode = 'topN' | 'minShare';
+export type OtherMode = "topN" | "minShare";
 
 export interface MetaSettings {
 	// Tournament filters
@@ -21,12 +21,12 @@ export interface MetaSettings {
 }
 
 const defaults: MetaSettings = {
-	format: '',
-	dateFrom: '',
-	dateTo: '',
+	format: "",
+	dateFrom: "",
+	dateTo: "",
 	selectedTournamentIds: [],
 	excludeMirrors: true,
-	otherMode: 'minShare',
+	otherMode: "minShare",
 	topN: 0,
 	minMetagameShare: 2,
 };

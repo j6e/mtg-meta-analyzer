@@ -1,5 +1,5 @@
-import { describe, it, expect } from 'vitest';
-import { validateArchetypeYaml } from '../../src/lib/utils/yaml-validator';
+import { describe, expect, it } from "vitest";
+import { validateArchetypeYaml } from "../../src/lib/utils/yaml-validator";
 
 const validYaml = `
 format: Standard
@@ -17,33 +17,33 @@ archetypes:
         exactCopies: 3
 `;
 
-describe('validateArchetypeYaml', () => {
-	it('returns ok for valid YAML', () => {
+describe("validateArchetypeYaml", () => {
+	it("returns ok for valid YAML", () => {
 		const result = validateArchetypeYaml(validYaml);
 		expect(result.ok).toBe(true);
 		expect(result.archetypeCount).toBe(2);
 		expect(result.errors).toHaveLength(0);
 	});
 
-	it('returns error for YAML syntax errors', () => {
-		const result = validateArchetypeYaml('archetypes:\n  - name: Bad\n  invalid: [');
+	it("returns error for YAML syntax errors", () => {
+		const result = validateArchetypeYaml("archetypes:\n  - name: Bad\n  invalid: [");
 		expect(result.ok).toBe(false);
-		expect(result.errors[0]).toContain('YAML syntax error');
+		expect(result.errors[0]).toContain("YAML syntax error");
 	});
 
-	it('returns error when archetypes is not an array', () => {
-		const result = validateArchetypeYaml('archetypes: not-an-array');
+	it("returns error when archetypes is not an array", () => {
+		const result = validateArchetypeYaml("archetypes: not-an-array");
 		expect(result.ok).toBe(false);
 		expect(result.errors).toContain('"archetypes" must be an array');
 	});
 
-	it('returns error when archetypes array is empty', () => {
-		const result = validateArchetypeYaml('archetypes: []');
+	it("returns error when archetypes array is empty", () => {
+		const result = validateArchetypeYaml("archetypes: []");
 		expect(result.ok).toBe(false);
 		expect(result.errors).toContain('"archetypes" array is empty');
 	});
 
-	it('returns error for archetype without name', () => {
+	it("returns error for archetype without name", () => {
 		const yaml = `
 archetypes:
   - signatureCards:
@@ -52,10 +52,12 @@ archetypes:
 `;
 		const result = validateArchetypeYaml(yaml);
 		expect(result.ok).toBe(false);
-		expect(result.errors.some((e) => e.includes('missing or invalid "name"'))).toBe(true);
+		expect(result.errors.some((e) => e.includes('missing or invalid "name"'))).toBe(
+			true,
+		);
 	});
 
-	it('returns error for archetype without signatureCards array', () => {
+	it("returns error for archetype without signatureCards array", () => {
 		const yaml = `
 archetypes:
   - name: Bad Archetype
@@ -63,10 +65,12 @@ archetypes:
 `;
 		const result = validateArchetypeYaml(yaml);
 		expect(result.ok).toBe(false);
-		expect(result.errors.some((e) => e.includes('"signatureCards" must be an array'))).toBe(true);
+		expect(
+			result.errors.some((e) => e.includes('"signatureCards" must be an array')),
+		).toBe(true);
 	});
 
-	it('warns on duplicate archetype names', () => {
+	it("warns on duplicate archetype names", () => {
 		const yaml = `
 archetypes:
   - name: Duplicate
@@ -80,10 +84,12 @@ archetypes:
 `;
 		const result = validateArchetypeYaml(yaml);
 		expect(result.ok).toBe(true);
-		expect(result.warnings.some((w) => w.includes('Duplicate archetype name'))).toBe(true);
+		expect(result.warnings.some((w) => w.includes("Duplicate archetype name"))).toBe(
+			true,
+		);
 	});
 
-	it('warns when signature card has neither minCopies nor exactCopies', () => {
+	it("warns when signature card has neither minCopies nor exactCopies", () => {
 		const yaml = `
 archetypes:
   - name: Test
@@ -92,10 +98,12 @@ archetypes:
 `;
 		const result = validateArchetypeYaml(yaml);
 		expect(result.ok).toBe(true);
-		expect(result.warnings.some((w) => w.includes('no minCopies or exactCopies'))).toBe(true);
+		expect(result.warnings.some((w) => w.includes("no minCopies or exactCopies"))).toBe(
+			true,
+		);
 	});
 
-	it('warns on missing format and date fields', () => {
+	it("warns on missing format and date fields", () => {
 		const yaml = `
 archetypes:
   - name: Test
@@ -108,8 +116,8 @@ archetypes:
 		expect(result.warnings.some((w) => w.includes('Missing "date"'))).toBe(true);
 	});
 
-	it('returns error for non-object YAML', () => {
-		const result = validateArchetypeYaml('just a string');
+	it("returns error for non-object YAML", () => {
+		const result = validateArchetypeYaml("just a string");
 		expect(result.ok).toBe(false);
 	});
 });

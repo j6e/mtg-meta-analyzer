@@ -6,14 +6,8 @@
 
 const LANCZOS_G = 7;
 const LANCZOS_COEFFS = [
-	0.99999999999980993,
-	676.5203681218851,
-	-1259.1392167224028,
-	771.32342877765313,
-	-176.61502916214059,
-	12.507343278686905,
-	-0.13857109526572012,
-	9.9843695780195716e-6,
+	0.99999999999980993, 676.5203681218851, -1259.1392167224028, 771.32342877765313,
+	-176.61502916214059, 12.507343278686905, -0.13857109526572012, 9.9843695780195716e-6,
 	1.5056327351493116e-7,
 ];
 
@@ -63,7 +57,7 @@ function betacf(a: number, b: number, x: number): number {
 	const qam = a - 1;
 
 	let c = 1;
-	let d = 1 - qab * x / qap;
+	let d = 1 - (qab * x) / qap;
 	if (Math.abs(d) < FPMIN) d = FPMIN;
 	d = 1 / d;
 	let h = d;
@@ -106,7 +100,7 @@ export function betaRegularized(x: number, a: number, b: number): number {
 	}
 
 	const lnPrefactor = a * Math.log(x) + b * Math.log(1 - x) - lnBeta(a, b);
-	return Math.exp(lnPrefactor) * betacf(a, b, x) / a;
+	return (Math.exp(lnPrefactor) * betacf(a, b, x)) / a;
 }
 
 function lnBeta(a: number, b: number): number {
@@ -155,7 +149,11 @@ export interface CredibleInterval {
  * 95% Bayesian credible interval using Beta(1+wins, 1+losses) posterior
  * (uniform Beta(1,1) prior).
  */
-export function credibleInterval(wins: number, losses: number, alpha = 0.05): CredibleInterval {
+export function credibleInterval(
+	wins: number,
+	losses: number,
+	alpha = 0.05,
+): CredibleInterval {
 	const a = 1 + wins;
 	const b = 1 + losses;
 	return {
@@ -171,9 +169,16 @@ export function credibleInterval(wins: number, losses: number, alpha = 0.05): Cr
  * Numerical probability that Beta(1+wA, 1+lA) > Beta(1+wB, 1+lB),
  * computed via Simpson's rule integration over the CDF.
  */
-export function probAGreaterThanB(wA: number, lA: number, wB: number, lB: number): number {
-	const aA = 1 + wA, bA = 1 + lA;
-	const aB = 1 + wB, bB = 1 + lB;
+export function probAGreaterThanB(
+	wA: number,
+	lA: number,
+	wB: number,
+	lB: number,
+): number {
+	const aA = 1 + wA,
+		bA = 1 + lA;
+	const aB = 1 + wB,
+		bB = 1 + lB;
 
 	// Integrate: P(A > B) = ∫₀¹ P(B < x) * f_A(x) dx
 	// where P(B < x) = I_x(aB, bB) and f_A(x) is Beta(aA, bA) PDF
@@ -185,11 +190,14 @@ export function probAGreaterThanB(wA: number, lA: number, wB: number, lB: number
 	for (let i = 0; i <= N; i++) {
 		const x = i * h;
 		// Beta PDF for A: f(x) = x^(a-1) * (1-x)^(b-1) / B(a,b)
-		const lnPdf = (aA - 1) * Math.log(x + 1e-300) + (bA - 1) * Math.log(1 - x + 1e-300) - lnBeta(aA, bA);
+		const lnPdf =
+			(aA - 1) * Math.log(x + 1e-300) +
+			(bA - 1) * Math.log(1 - x + 1e-300) -
+			lnBeta(aA, bA);
 		const pdfA = Math.exp(lnPdf);
 		const cdfB = betaCdf(x, aB, bB);
 
-		const weight = (i === 0 || i === N) ? 1 : (i % 2 === 0) ? 2 : 4;
+		const weight = i === 0 || i === N ? 1 : i % 2 === 0 ? 2 : 4;
 		sum += weight * cdfB * pdfA;
 	}
 
@@ -200,19 +208,32 @@ export function probAGreaterThanB(wA: number, lA: number, wB: number, lB: number
 
 function hypergeometricLnPmf(k: number, K: number, n: number, N: number): number {
 	// P(X=k) = C(K,k) * C(N-K, n-k) / C(N,n)
-	return lnFactorial(K) - lnFactorial(k) - lnFactorial(K - k)
-		+ lnFactorial(N - K) - lnFactorial(n - k) - lnFactorial(N - K - n + k)
-		- lnFactorial(N) + lnFactorial(n) + lnFactorial(N - n);
+	return (
+		lnFactorial(K) -
+		lnFactorial(k) -
+		lnFactorial(K - k) +
+		lnFactorial(N - K) -
+		lnFactorial(n - k) -
+		lnFactorial(N - K - n + k) -
+		lnFactorial(N) +
+		lnFactorial(n) +
+		lnFactorial(N - n)
+	);
 }
 
 /**
  * Two-sided Fisher's exact test for a 2×2 contingency table.
  * Table: [[gW, gL], [bW, bL]] (group wins/losses vs baseline wins/losses)
  */
-export function fisherExactTest(gW: number, gL: number, bW: number, bL: number): number {
+export function fisherExactTest(
+	gW: number,
+	gL: number,
+	bW: number,
+	bL: number,
+): number {
 	const N = gW + gL + bW + bL;
-	const K = gW + bW;       // total wins (column 1)
-	const n = gW + gL;       // group total (row 1)
+	const K = gW + bW; // total wins (column 1)
+	const n = gW + gL; // group total (row 1)
 
 	const observedLnP = hypergeometricLnPmf(gW, K, n, N);
 
@@ -223,7 +244,8 @@ export function fisherExactTest(gW: number, gL: number, bW: number, bL: number):
 
 	for (let k = kMin; k <= kMax; k++) {
 		const lnP = hypergeometricLnPmf(k, K, n, N);
-		if (lnP <= observedLnP + 1e-10) { // as extreme or more extreme
+		if (lnP <= observedLnP + 1e-10) {
+			// as extreme or more extreme
 			pValue += Math.exp(lnP);
 		}
 	}
@@ -251,7 +273,7 @@ export function benjaminiHochberg(pValues: number[]): number[] {
 	for (let rank = n; rank >= 1; rank--) {
 		const idx = indexed[rank - 1].i;
 		const raw = indexed[rank - 1].p;
-		const adj = Math.min(raw * n / rank, cumMin);
+		const adj = Math.min((raw * n) / rank, cumMin);
 		adjusted[idx] = Math.min(adj, 1);
 		cumMin = Math.min(cumMin, adjusted[idx]);
 	}
@@ -273,9 +295,13 @@ export function significanceLevel(p: number): number {
 
 export function significanceStars(level: number): string {
 	switch (level) {
-		case 3: return '***';
-		case 2: return '**';
-		case 1: return '*';
-		default: return '';
+		case 3:
+			return "***";
+		case 2:
+			return "**";
+		case 1:
+			return "*";
+		default:
+			return "";
 	}
 }

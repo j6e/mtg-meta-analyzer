@@ -154,7 +154,7 @@ function cholesky(a: Matrix): Matrix {
 		}
 		const diag = L.data[j * n + j] - sum;
 		if (diag <= 0) {
-			throw new Error('Matrix is not positive definite');
+			throw new Error("Matrix is not positive definite");
 		}
 		L.data[j * n + j] = Math.sqrt(diag);
 

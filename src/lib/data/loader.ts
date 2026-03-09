@@ -2,11 +2,11 @@
  * Build-time data loading via Vite's import.meta.glob.
  * Tournament JSON files are eagerly imported at build time — no runtime fetches needed.
  */
-import type { TournamentData } from '../types/tournament';
+import type { TournamentData } from "../types/tournament";
 
-const tournamentModules = import.meta.glob<TournamentData>('/data/tournaments/*.json', {
+const tournamentModules = import.meta.glob<TournamentData>("/data/tournaments/*.json", {
 	eager: true,
-	import: 'default',
+	import: "default",
 });
 
 /** All loaded tournaments, keyed by tournament ID. */

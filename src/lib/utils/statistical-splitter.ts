@@ -1,23 +1,22 @@
-import type { SplitResult, SplitRow } from './winrate-splitter';
-import type {
-	StatisticalSplitResult,
-	StatisticalSplitRow,
-	PairwiseComparison,
-	AutoScanResult,
-	AutoScanPair,
-	CellSignificance,
-} from '../types/statistics';
-import type { CredibleInterval } from '../algorithms/statistics';
-import type { TournamentData } from '../types/tournament';
+import type { CredibleInterval } from "../algorithms/statistics";
 import {
+	benjaminiHochberg,
 	credibleInterval,
 	fisherExactTest,
 	probAGreaterThanB,
-	benjaminiHochberg,
 	significanceLevel,
-} from '../algorithms/statistics';
-import { splitByCard, countCardCopies } from './winrate-splitter';
-import type { SplitMode } from './winrate-splitter';
+} from "../algorithms/statistics";
+import type {
+	AutoScanPair,
+	AutoScanResult,
+	CellSignificance,
+	PairwiseComparison,
+	StatisticalSplitResult,
+	StatisticalSplitRow,
+} from "../types/statistics";
+import type { TournamentData } from "../types/tournament";
+import type { SplitMode, SplitResult } from "./winrate-splitter";
+import { countCardCopies, splitByCard } from "./winrate-splitter";
 
 /**
  * Enrich a SplitResult with credible intervals, Fisher's exact test
@@ -36,7 +35,11 @@ export function computeStatistics(
 
 	// First pass: compute CIs and collect raw p-values for BH correction
 	const rawTests: { groupIdx: number; opponent: string; p: number }[] = [];
-	const perRow: { overallCI: CredibleInterval; cellCIs: Map<string, CredibleInterval>; rawPs: Map<string, number> }[] = [];
+	const perRow: {
+		overallCI: CredibleInterval;
+		cellCIs: Map<string, CredibleInterval>;
+		rawPs: Map<string, number>;
+	}[] = [];
 
 	for (let gi = 0; gi < split.groupRows.length; gi++) {
 		const row = split.groupRows[gi];
@@ -55,7 +58,7 @@ export function computeStatistics(
 				if (!groupTooSmall && baseCell && baseCell.total > 0) {
 					const compW = baseCell.wins - cell.wins;
 					const compL = baseCell.losses - cell.losses;
-					if (compW >= 0 && compL >= 0 && (compW + compL) > 0) {
+					if (compW >= 0 && compL >= 0 && compW + compL > 0) {
 						const p = fisherExactTest(cell.wins, cell.losses, compW, compL);
 						rawPs.set(opponent, p);
 						rawTests.push({ groupIdx: gi, opponent, p });
@@ -68,9 +71,8 @@ export function computeStatistics(
 	}
 
 	// BH correction across all per-cell tests
-	const adjustedPs = rawTests.length > 0
-		? benjaminiHochberg(rawTests.map((t) => t.p))
-		: [];
+	const adjustedPs =
+		rawTests.length > 0 ? benjaminiHochberg(rawTests.map((t) => t.p)) : [];
 
 	// Build final rows with corrected significance
 	const rows: StatisticalSplitRow[] = split.groupRows.map((row, gi) => {
@@ -92,7 +94,7 @@ export function computeStatistics(
 
 	// Pairwise comparisons
 	const pairwise: PairwiseComparison[] = [];
-	if (mode === 'cumulative') {
+	if (mode === "cumulative") {
 		// Cumulative groups overlap (≥N is a superset of ≥N+1), so compare
 		// each group against its complement derived from the baseline.
 		for (const row of split.groupRows) {
@@ -113,7 +115,12 @@ export function computeStatistics(
 			const a = split.groupRows[i];
 			const b = split.groupRows[i + 1];
 			if (a.totalMatches >= minGS && b.totalMatches >= minGS) {
-				const prob = probAGreaterThanB(a.totalWins, a.totalLosses, b.totalWins, b.totalLosses);
+				const prob = probAGreaterThanB(
+					a.totalWins,
+					a.totalLosses,
+					b.totalWins,
+					b.totalLosses,
+				);
 				pairwise.push({
 					groupA: a.label,
 					groupB: b.label,
@@ -154,8 +161,8 @@ export async function autoScanCards(
 	// BH correction is applied across ALL pairs, not per-card.
 	interface PairCandidate {
 		cardName: string;
-		groupA: string;   // higher WR
-		groupB: string;   // lower WR
+		groupA: string; // higher WR
+		groupB: string; // lower WR
 		effectSize: number;
 		rawP: number;
 		minN: number;
@@ -170,7 +177,12 @@ export async function autoScanCards(
 		// Pre-filter: skip low-variance cards where ≥threshold% of players
 		// have the same copy count — no meaningful split to test.
 		if (autoIncludeThreshold < 1) {
-			const playerCopies = countCardCopies(tournaments, playerArchetypes, archetypeName, cardName);
+			const playerCopies = countCardCopies(
+				tournaments,
+				playerArchetypes,
+				archetypeName,
+				cardName,
+			);
 			const n = playerCopies.size;
 			if (n > 0) {
 				const countFreq = new Map<number, number>();
@@ -182,23 +194,38 @@ export async function autoScanCards(
 			}
 		}
 
-		const split = splitByCard(tournaments, playerArchetypes, archetypeName, cardName, mode, {
-			threshold: options.threshold,
-			topN: options.topN,
-			minMetagameShare: options.minMetagameShare,
-		});
+		const split = splitByCard(
+			tournaments,
+			playerArchetypes,
+			archetypeName,
+			cardName,
+			mode,
+			{
+				threshold: options.threshold,
+				topN: options.topN,
+				minMetagameShare: options.minMetagameShare,
+			},
+		);
 
 		// Filter to groups that meet the minimum size
 		const eligibleRows = split.groupRows.filter((r) => r.totalMatches >= minGroupSize);
 		if (eligibleRows.length < 2) continue;
 
 		// Find best/worst for the primary row
-		let bestWR = -1, worstWR = 2;
-		let bestLabel = '', worstLabel = '';
+		let bestWR = -1,
+			worstWR = 2;
+		let bestLabel = "",
+			worstLabel = "";
 		for (const row of eligibleRows) {
 			const wr = row.overallWinrate ?? 0.5;
-			if (wr > bestWR) { bestWR = wr; bestLabel = row.label; }
-			if (wr < worstWR) { worstWR = wr; worstLabel = row.label; }
+			if (wr > bestWR) {
+				bestWR = wr;
+				bestLabel = row.label;
+			}
+			if (wr < worstWR) {
+				worstWR = wr;
+				worstLabel = row.label;
+			}
 		}
 
 		// Enumerate all C(k,2) pairwise comparisons
@@ -218,15 +245,23 @@ export async function autoScanCards(
 				if (effect < minEffectSize) continue;
 
 				const rawP = fisherExactTest(
-					higher.totalWins, higher.totalLosses,
-					lower.totalWins, lower.totalLosses,
+					higher.totalWins,
+					higher.totalLosses,
+					lower.totalWins,
+					lower.totalLosses,
 				);
 				const minN = Math.min(higher.totalMatches, lower.totalMatches);
 				const isBestWorst = higher.label === bestLabel && lower.label === worstLabel;
 
 				allPairs.push({
-					cardName, groupA: higher.label, groupB: lower.label,
-					effectSize: effect, rawP, minN, totalMatches, isBestWorst,
+					cardName,
+					groupA: higher.label,
+					groupB: lower.label,
+					effectSize: effect,
+					rawP,
+					minN,
+					totalMatches,
+					isBestWorst,
 				});
 			}
 		}
@@ -263,8 +298,9 @@ export async function autoScanCards(
 	const results: AutoScanResult[] = [];
 	for (const [cardName, pairs] of byCard) {
 		// Primary = best/worst pair; fallback to lowest adjusted p
-		const primary = pairs.find((p) => p.isBestWorst)
-			?? pairs.reduce((best, p) => p.adjustedP < best.adjustedP ? p : best);
+		const primary =
+			pairs.find((p) => p.isBestWorst) ??
+			pairs.reduce((best, p) => (p.adjustedP < best.adjustedP ? p : best));
 
 		const extras: AutoScanPair[] = pairs
 			.filter((p) => p !== primary)

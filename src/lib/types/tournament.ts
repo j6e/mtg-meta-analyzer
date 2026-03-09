@@ -1,4 +1,4 @@
-import type { DecklistInfo } from './decklist.ts';
+import type { DecklistInfo } from "./decklist.ts";
 
 export interface TournamentMeta {
 	id: number;

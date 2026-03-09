@@ -4,9 +4,16 @@
  */
 
 import {
-	zeros, fromArray, xTwX, xTv, matAdd, diagMat,
-	choleskySolve, choleskyInverse, get, type Matrix,
-} from './linalg';
+	choleskyInverse,
+	choleskySolve,
+	diagMat,
+	get,
+	type Matrix,
+	matAdd,
+	xTv,
+	xTwX,
+	zeros,
+} from "./linalg";
 
 // ── Types ──
 
@@ -31,9 +38,9 @@ export interface CardCoefficient {
 	name: string;
 	coefficient: number;
 	se: number;
-	lower: number;  // 95% CI lower
-	upper: number;  // 95% CI upper
-	impactScore: number;  // tanh(β/2)×100, bounded [-100, +100]
+	lower: number; // 95% CI lower
+	upper: number; // 95% CI upper
+	impactScore: number; // tanh(β/2)×100, bounded [-100, +100]
 }
 
 export interface LogisticRegressionResult {
@@ -62,7 +69,9 @@ export function sigmoid(x: number): number {
 
 // ── IRLS solver ──
 
-export function fitLogisticRegression(input: LogisticRegressionInput): LogisticRegressionResult {
+export function fitLogisticRegression(
+	input: LogisticRegressionInput,
+): LogisticRegressionResult {
 	const { X, y, featureNames } = input;
 	const priorVar = input.priorVariance ?? 1.0;
 	const interceptVar = input.interceptPriorVariance ?? 100;
@@ -74,7 +83,7 @@ export function fitLogisticRegression(input: LogisticRegressionInput): LogisticR
 	const warnings: string[] = [];
 
 	if (n < p * 2) {
-		warnings.push('Underpowered: fewer than 2 observations per feature');
+		warnings.push("Underpowered: fewer than 2 observations per feature");
 	}
 
 	// Prior precision matrix Λ = diag(1/σ²)
@@ -123,7 +132,7 @@ export function fitLogisticRegression(input: LogisticRegressionInput): LogisticR
 		try {
 			delta = choleskySolve(H, grad);
 		} catch {
-			warnings.push('Hessian not positive definite; stopping early');
+			warnings.push("Hessian not positive definite; stopping early");
 			break;
 		}
 
@@ -160,7 +169,7 @@ export function fitLogisticRegression(input: LogisticRegressionInput): LogisticR
 	try {
 		covariance = choleskyInverse(Hfinal);
 	} catch {
-		warnings.push('Could not compute posterior covariance');
+		warnings.push("Could not compute posterior covariance");
 		covariance = zeros(p, p);
 	}
 
@@ -170,7 +179,9 @@ export function fitLogisticRegression(input: LogisticRegressionInput): LogisticR
 	let llModel = 0;
 	for (let i = 0; i < n; i++) {
 		llNull += y[i] * Math.log(yMean + 1e-15) + (1 - y[i]) * Math.log(1 - yMean + 1e-15);
-		llModel += y[i] * Math.log(muFinal[i] + 1e-15) + (1 - y[i]) * Math.log(1 - muFinal[i] + 1e-15);
+		llModel +=
+			y[i] * Math.log(muFinal[i] + 1e-15) +
+			(1 - y[i]) * Math.log(1 - muFinal[i] + 1e-15);
 	}
 	const pseudoR2 = llNull !== 0 ? 1 - llModel / llNull : 0;
 

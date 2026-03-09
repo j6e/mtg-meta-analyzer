@@ -1,4 +1,4 @@
-import { toPng } from 'html-to-image';
+import { toPng } from "html-to-image";
 
 /**
  * Capture a DOM element as a PNG and trigger a download.
@@ -14,14 +14,14 @@ export async function exportElementAsImage(
 
 	if (captureStyles) {
 		for (const [prop, value] of Object.entries(captureStyles)) {
-			saved.set(prop, (element.style as any)[prop] ?? '');
+			saved.set(prop, (element.style as any)[prop] ?? "");
 			(element.style as any)[prop] = value;
 		}
 	}
 
 	try {
 		const dataUrl = await toPng(element, { cacheBust: true });
-		const link = document.createElement('a');
+		const link = document.createElement("a");
 		link.download = filename;
 		link.href = dataUrl;
 		link.click();

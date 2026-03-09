@@ -1,46 +1,52 @@
 <script lang="ts">
-	import { tournamentList } from '$lib/stores/tournaments';
+type SortKey =
+	| "name"
+	| "date"
+	| "formats"
+	| "playerCount"
+	| "roundCount"
+	| "matchCount";
+type SortDir = "asc" | "desc";
 
-	type SortKey = 'name' | 'date' | 'formats' | 'playerCount' | 'roundCount' | 'matchCount';
-	type SortDir = 'asc' | 'desc';
+let sortKey: SortKey = $state("date");
+let sortDir: SortDir = $state("desc");
 
-	let sortKey: SortKey = $state('date');
-	let sortDir: SortDir = $state('desc');
+function toggleSort(key: SortKey) {
+	if (sortKey === key) {
+		sortDir = sortDir === "asc" ? "desc" : "asc";
+	} else {
+		sortKey = key;
+		sortDir = key === "name" ? "asc" : "desc";
+	}
+}
 
-	function toggleSort(key: SortKey) {
-		if (sortKey === key) {
-			sortDir = sortDir === 'asc' ? 'desc' : 'asc';
-		} else {
-			sortKey = key;
-			sortDir = key === 'name' ? 'asc' : 'desc';
+const sorted = $derived.by(() => {
+	const list = [...$tournamentList];
+	const dir = sortDir === "asc" ? 1 : -1;
+	return list.sort((a, b) => {
+		switch (sortKey) {
+			case "name":
+				return dir * a.name.localeCompare(b.name);
+			case "date":
+				return dir * a.date.localeCompare(b.date);
+			case "formats":
+				return dir * a.formats.join(", ").localeCompare(b.formats.join(", "));
+			case "playerCount":
+				return dir * (a.playerCount - b.playerCount);
+			case "roundCount":
+				return dir * (a.roundCount - b.roundCount);
+			case "matchCount":
+				return dir * (a.matchCount - b.matchCount);
+			default:
+				return 0;
 		}
-	}
-
-	const sorted = $derived.by(() => {
-		const list = [...$tournamentList];
-		const dir = sortDir === 'asc' ? 1 : -1;
-		return list.sort((a, b) => {
-			switch (sortKey) {
-				case 'name':
-					return dir * a.name.localeCompare(b.name);
-				case 'date':
-					return dir * a.date.localeCompare(b.date);
-				case 'formats':
-					return dir * a.formats.join(', ').localeCompare(b.formats.join(', '));
-				case 'playerCount':
-					return dir * (a.playerCount - b.playerCount);
-				case 'roundCount':
-					return dir * (a.roundCount - b.roundCount);
-				case 'matchCount':
-					return dir * (a.matchCount - b.matchCount);
-			}
-		});
 	});
+});
 
-	function sortIndicator(key: SortKey): string {
-		if (sortKey !== key) return '';
-		return sortDir === 'asc' ? ' \u25B2' : ' \u25BC';
-	}
+function sortIndicator(key: SortKey): string {
+	if (sortKey !== key) return "";
+	return sortDir === "asc" ? " \u25B2" : " \u25BC";
+}
 </script>
 
 <svelte:head>

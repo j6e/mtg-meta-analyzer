@@ -1,25 +1,25 @@
 import type {
 	DataTablesColumn,
 	DataTablesResponse,
-	MeleeStandingRow,
-	MeleeMatchRow,
-	MeleeTournamentSearchRow,
 	MeleeDecklistDetails,
-} from './types';
+	MeleeMatchRow,
+	MeleeStandingRow,
+	MeleeTournamentSearchRow,
+} from "./types";
 
-const BASE_URL = 'https://melee.gg';
+const BASE_URL = "https://melee.gg";
 
 const DEFAULT_HEADERS: Record<string, string> = {
-	'User-Agent':
-		'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:130.0) Gecko/20100101 Firefox/130.0',
-	Accept: 'application/json, text/javascript, */*; q=0.01',
-	'X-Requested-With': 'XMLHttpRequest',
+	"User-Agent":
+		"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:130.0) Gecko/20100101 Firefox/130.0",
+	Accept: "application/json, text/javascript, */*; q=0.01",
+	"X-Requested-With": "XMLHttpRequest",
 };
 
 const HTML_HEADERS: Record<string, string> = {
-	'User-Agent':
-		'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:130.0) Gecko/20100101 Firefox/130.0',
-	Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+	"User-Agent":
+		"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:130.0) Gecko/20100101 Firefox/130.0",
+	Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
 };
 
 export interface MeleeClientOptions {
@@ -49,9 +49,9 @@ export class MeleeClient {
 	/** Fetch all standings for a round (auto-paginates) */
 	async fetchAllStandings(roundId: number): Promise<MeleeStandingRow[]> {
 		return this.fetchAllPages<MeleeStandingRow>(
-			'/Standing/GetRoundStandings',
+			"/Standing/GetRoundStandings",
 			STANDINGS_COLUMNS,
-			{ sortColumn: 0, sortDir: 'asc' },
+			{ sortColumn: 0, sortDir: "asc" },
 			{ roundId: String(roundId) },
 		);
 	}
@@ -61,7 +61,7 @@ export class MeleeClient {
 		return this.fetchAllPages<MeleeMatchRow>(
 			`/Match/GetRoundMatches/${roundId}`,
 			MATCHES_COLUMNS,
-			{ sortColumn: 0, sortDir: 'asc' },
+			{ sortColumn: 0, sortDir: "asc" },
 		);
 	}
 
@@ -73,10 +73,18 @@ export class MeleeClient {
 		if (!res.ok) {
 			throw new MeleeApiError(`GET ${url}`, res.status, await res.text());
 		}
-		const data = await res.json() as MeleeDecklistDetails & { Error?: boolean; Code?: number; Message?: string };
+		const data = (await res.json()) as MeleeDecklistDetails & {
+			Error?: boolean;
+			Code?: number;
+			Message?: string;
+		};
 		// The API returns 200 with error body for not-found decklists
-		if ('Error' in data && data.Error) {
-			throw new MeleeApiError(`GET ${url}`, data.Code ?? 404, data.Message ?? 'Unknown error');
+		if ("Error" in data && data.Error) {
+			throw new MeleeApiError(
+				`GET ${url}`,
+				data.Code ?? 404,
+				data.Message ?? "Unknown error",
+			);
 		}
 		return data;
 	}
@@ -92,14 +100,14 @@ export class MeleeClient {
 		endDate: Date,
 	): Promise<MeleeTournamentSearchRow[]> {
 		const extra = {
-			q: '',
+			q: "",
 			startDate: toIsoStartOfDay(startDate),
 			endDate: toIsoEndOfDay(endDate),
 		};
 		return this.fetchAllPages<MeleeTournamentSearchRow>(
-			'/Decklist/TournamentSearch',
+			"/Decklist/TournamentSearch",
 			TOURNAMENT_SEARCH_COLUMNS,
-			{ sortColumn: 2, sortDir: 'desc' },
+			{ sortColumn: 2, sortDir: "desc" },
 			extra,
 		);
 	}
@@ -108,7 +116,7 @@ export class MeleeClient {
 	async fetchPage<T>(
 		path: string,
 		columns: DataTablesColumn[],
-		sort: { sortColumn: number; sortDir: 'asc' | 'desc' },
+		sort: { sortColumn: number; sortDir: "asc" | "desc" },
 		offset: number,
 		extra: Record<string, string> = {},
 	): Promise<DataTablesResponse<T>> {
@@ -117,10 +125,10 @@ export class MeleeClient {
 
 		await this.rateLimit();
 		const res = await fetch(url, {
-			method: 'POST',
+			method: "POST",
 			headers: {
 				...DEFAULT_HEADERS,
-				'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+				"Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
 			},
 			body,
 		});
@@ -147,7 +155,7 @@ export class MeleeClient {
 	private async fetchAllPages<T>(
 		path: string,
 		columns: DataTablesColumn[],
-		sort: { sortColumn: number; sortDir: 'asc' | 'desc' },
+		sort: { sortColumn: number; sortDir: "asc" | "desc" },
 		extra: Record<string, string> = {},
 	): Promise<T[]> {
 		const allData: T[] = [];
@@ -185,7 +193,7 @@ export class MeleeApiError extends Error {
 		public readonly body: string,
 	) {
 		super(`Melee API error: ${request} returned ${status}`);
-		this.name = 'MeleeApiError';
+		this.name = "MeleeApiError";
 	}
 }
 
@@ -193,13 +201,13 @@ export class MeleeApiError extends Error {
 
 function buildDataTablesBody(
 	columns: DataTablesColumn[],
-	sort: { sortColumn: number; sortDir: 'asc' | 'desc' },
+	sort: { sortColumn: number; sortDir: "asc" | "desc" },
 	start: number,
 	length: number,
 	extra: Record<string, string> = {},
 ): string {
 	const params = new URLSearchParams();
-	params.set('draw', '1');
+	params.set("draw", "1");
 
 	for (let i = 0; i < columns.length; i++) {
 		const col = columns[i];
@@ -211,12 +219,12 @@ function buildDataTablesBody(
 		params.set(`columns[${i}][search][regex]`, String(col.search.regex));
 	}
 
-	params.set('order[0][column]', String(sort.sortColumn));
-	params.set('order[0][dir]', sort.sortDir);
-	params.set('start', String(start));
-	params.set('length', String(length));
-	params.set('search[value]', '');
-	params.set('search[regex]', 'false');
+	params.set("order[0][column]", String(sort.sortColumn));
+	params.set("order[0][dir]", sort.sortDir);
+	params.set("start", String(start));
+	params.set("length", String(length));
+	params.set("search[value]", "");
+	params.set("search[regex]", "false");
 
 	for (const [key, value] of Object.entries(extra)) {
 		params.set(key, value);
@@ -233,41 +241,41 @@ function col(data: string, searchable: boolean, orderable: boolean): DataTablesC
 		name: data,
 		searchable,
 		orderable,
-		search: { value: '', regex: false },
+		search: { value: "", regex: false },
 	};
 }
 
 const STANDINGS_COLUMNS: DataTablesColumn[] = [
-	col('Rank', true, true),
-	col('Player', false, false),
-	col('Decklists', false, true),
-	col('MatchRecord', false, false),
-	col('GameRecord', false, false),
-	col('Points', true, true),
-	col('OpponentMatchWinPercentage', false, true),
-	col('TeamGameWinPercentage', false, true),
-	col('OpponentGameWinPercentage', false, true),
-	col('FinalTiebreaker', true, true),
-	col('OpponentCount', true, true),
+	col("Rank", true, true),
+	col("Player", false, false),
+	col("Decklists", false, true),
+	col("MatchRecord", false, false),
+	col("GameRecord", false, false),
+	col("Points", true, true),
+	col("OpponentMatchWinPercentage", false, true),
+	col("TeamGameWinPercentage", false, true),
+	col("OpponentGameWinPercentage", false, true),
+	col("FinalTiebreaker", true, true),
+	col("OpponentCount", true, true),
 ];
 
 const MATCHES_COLUMNS: DataTablesColumn[] = [
-	col('TableNumber', true, true),
-	col('Player1', true, true),
-	col('Player1Decklist', true, true),
-	col('Player2', true, true),
-	col('Player2Decklist', true, true),
-	col('Result', false, false),
+	col("TableNumber", true, true),
+	col("Player1", true, true),
+	col("Player1Decklist", true, true),
+	col("Player2", true, true),
+	col("Player2Decklist", true, true),
+	col("Result", false, false),
 ];
 
 const TOURNAMENT_SEARCH_COLUMNS: DataTablesColumn[] = [
-	col('ID', false, false),
-	col('Name', true, true),
-	col('StartDate', false, true),
-	col('Status', true, true),
-	col('Format', true, true),
-	col('OrganizationName', true, true),
-	col('Decklists', true, true),
+	col("ID", false, false),
+	col("Name", true, true),
+	col("StartDate", false, true),
+	col("Status", true, true),
+	col("Format", true, true),
+	col("OrganizationName", true, true),
+	col("Decklists", true, true),
 ];
 
 // --- Utilities ---
@@ -277,9 +285,9 @@ function sleep(ms: number): Promise<void> {
 }
 
 function toIsoStartOfDay(date: Date): string {
-	return date.toISOString().split('T')[0] + 'T00:00:00.000Z';
+	return `${date.toISOString().split("T")[0]}T00:00:00.000Z`;
 }
 
 function toIsoEndOfDay(date: Date): string {
-	return date.toISOString().split('T')[0] + 'T23:59:59.999Z';
+	return `${date.toISOString().split("T")[0]}T23:59:59.999Z`;
 }

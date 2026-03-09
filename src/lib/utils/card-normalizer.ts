@@ -21,7 +21,7 @@ export function normalizeCardName(name: string): string {
 	normalized = normalized.replace(/[\u201C\u201D\u201E]/g, '"');
 
 	// Normalize // separator spacing: ensure exactly " // "
-	normalized = normalized.replace(SPLIT_SEPARATOR, ' // ');
+	normalized = normalized.replace(SPLIT_SEPARATOR, " // ");
 
 	return normalized;
 }
@@ -33,7 +33,7 @@ export function normalizeCardName(name: string): string {
  */
 export function getFrontFace(name: string): string {
 	const normalized = normalizeCardName(name);
-	const parts = normalized.split(' // ');
+	const parts = normalized.split(" // ");
 	return parts[0];
 }
 
@@ -46,7 +46,7 @@ export function getFrontFace(name: string): string {
  */
 export function getScryfallImageUrl(
 	cardName: string,
-	version: 'normal' | 'small' | 'large' | 'art_crop' | 'border_crop' = 'normal',
+	version: "normal" | "small" | "large" | "art_crop" | "border_crop" = "normal",
 ): string {
 	const frontFace = getFrontFace(cardName);
 	return `https://api.scryfall.com/cards/named?format=image&version=${version}&exact=${encodeURIComponent(frontFace)}`;

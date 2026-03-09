@@ -3,10 +3,13 @@
  * select flex features, and run Bayesian logistic regression.
  */
 
-import type { TournamentData } from '../types/tournament';
-import type { DecklistInfo } from '../types/decklist';
-import { fromArray, type Matrix } from '../algorithms/linalg';
-import { fitLogisticRegression, type LogisticRegressionResult } from '../algorithms/logistic-regression';
+import { fromArray, type Matrix } from "../algorithms/linalg";
+import {
+	fitLogisticRegression,
+	type LogisticRegressionResult,
+} from "../algorithms/logistic-regression";
+import type { DecklistInfo } from "../types/decklist";
+import type { TournamentData } from "../types/tournament";
 
 // ── Types ──
 
@@ -38,10 +41,17 @@ export interface CardImpactError {
 // ── Basic land set ──
 
 const BASIC_LANDS = new Set([
-	'Plains', 'Island', 'Swamp', 'Mountain', 'Forest',
-	'Snow-Covered Plains', 'Snow-Covered Island', 'Snow-Covered Swamp',
-	'Snow-Covered Mountain', 'Snow-Covered Forest',
-	'Wastes',
+	"Plains",
+	"Island",
+	"Swamp",
+	"Mountain",
+	"Forest",
+	"Snow-Covered Plains",
+	"Snow-Covered Island",
+	"Snow-Covered Swamp",
+	"Snow-Covered Mountain",
+	"Snow-Covered Forest",
+	"Wastes",
 ]);
 
 // ── Extract training data ──
@@ -146,7 +156,7 @@ export function selectFlexFeatures(
 	// Collect all card names and their counts across observations
 	const cardData = new Map<string, number[]>();
 	for (const obs of observations) {
-		for (const [card, qty] of obs.cardCounts) {
+		for (const [card, _qty] of obs.cardCounts) {
 			if (!cardData.has(card)) cardData.set(card, []);
 		}
 	}
@@ -210,7 +220,7 @@ export function buildDesignMatrix(
 		ydata[i] = observations[i].outcome;
 	}
 
-	const featureNames = ['intercept', ...features.map((f) => f.cardName)];
+	const featureNames = ["intercept", ...features.map((f) => f.cardName)];
 	return { X: fromArray(n, p, Xdata), y: ydata, featureNames };
 }
 
@@ -229,11 +239,16 @@ export function analyzeCardImpact(
 	const minObs = options.minObservations ?? 30;
 
 	const observations = extractTrainingData(
-		tournaments, playerArchetypes, archetypeName, options.opponent,
+		tournaments,
+		playerArchetypes,
+		archetypeName,
+		options.opponent,
 	);
 
 	if (observations.length < minObs) {
-		return { error: `Insufficient data: ${observations.length} matches (need ${minObs})` };
+		return {
+			error: `Insufficient data: ${observations.length} matches (need ${minObs})`,
+		};
 	}
 
 	const features = selectFlexFeatures(observations, {
@@ -241,13 +256,17 @@ export function analyzeCardImpact(
 	});
 
 	if (features.length === 0) {
-		return { error: 'No flex cards found — all cards have identical counts across decklists' };
+		return {
+			error: "No flex cards found — all cards have identical counts across decklists",
+		};
 	}
 
 	const { X, y, featureNames } = buildDesignMatrix(observations, features);
 
 	const regression = fitLogisticRegression({
-		X, y, featureNames,
+		X,
+		y,
+		featureNames,
 		priorVariance: 1.0,
 		interceptPriorVariance: 100,
 	});

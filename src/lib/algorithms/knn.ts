@@ -1,5 +1,5 @@
-import type { SparseVector } from './tfidf';
-import { cosineSimilaritySparse } from './cosine-similarity';
+import { cosineSimilaritySparse } from "./cosine-similarity";
+import type { SparseVector } from "./tfidf";
 
 export interface LabeledPoint {
 	vector: SparseVector;
@@ -50,7 +50,7 @@ export function knnClassify(
 	}
 
 	// Find label with most votes, breaking ties by average similarity
-	let bestLabel = '';
+	let bestLabel = "";
 	let bestCount = 0;
 	let bestAvgSim = 0;
 
