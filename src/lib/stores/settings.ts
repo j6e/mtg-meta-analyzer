@@ -20,19 +20,28 @@ export interface MetaSettings {
 	minMetagameShare: number; // 0-100 as percentage (only used when otherMode = 'minShare')
 }
 
-const defaults: MetaSettings = {
-	format: "",
-	dateFrom: "",
-	dateTo: "",
-	selectedTournamentIds: [],
-	excludeMirrors: true,
-	otherMode: "minShare",
-	topN: 0,
-	minMetagameShare: 2,
-};
+function isoDate(date: Date): string {
+	return date.toISOString().slice(0, 10);
+}
 
-export const settings = writable<MetaSettings>({ ...defaults });
+function makeDefaults(): MetaSettings {
+	const today = new Date();
+	const minus60 = new Date(today);
+	minus60.setDate(today.getDate() - 60);
+	return {
+		format: "Standard",
+		dateFrom: isoDate(minus60),
+		dateTo: isoDate(today),
+		selectedTournamentIds: [],
+		excludeMirrors: true,
+		otherMode: "minShare",
+		topN: 0,
+		minMetagameShare: 2,
+	};
+}
+
+export const settings = writable<MetaSettings>(makeDefaults());
 
 export function resetSettings(): void {
-	settings.set({ ...defaults });
+	settings.set(makeDefaults());
 }
