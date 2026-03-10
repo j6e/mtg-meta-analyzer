@@ -87,7 +87,7 @@
 		if (!value) return;
 		const today = new Date();
 		const from = new Date(today);
-		const days = { '7': 7, '14': 14, '30': 30, '60': 60 }[value];
+		const days = { '7': 7, '14': 14, '30': 30, '60': 60, '120': 120 }[value];
 		if (!days) return;
 		from.setDate(today.getDate() - days);
 		const dateFrom = toDateString(from);
@@ -184,6 +184,7 @@
 					<option value="14">Last 2 weeks</option>
 					<option value="30">Last month</option>
 					<option value="60">Last 2 months</option>
+				<option value="120">Last 4 months</option>
 				</select>
 			</label>
 		</div>

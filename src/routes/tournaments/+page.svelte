@@ -1,5 +1,7 @@
 <script lang="ts">
+import FormatMatchesChart from '$lib/components/FormatMatchesChart.svelte';
 import { filteredTournaments, tournamentList } from '$lib/stores/tournaments';
+import { settings } from '$lib/stores/settings';
 
 type SortKey =
 	| "cleanName"
@@ -34,8 +36,14 @@ function importanceStars(importance: string): string {
 	}
 }
 
+const formatFiltered = $derived(
+	$settings.format
+		? $tournamentList.filter(t => t.formats.includes($settings.format))
+		: $tournamentList
+);
+
 const sorted = $derived.by(() => {
-	const list = [...$tournamentList];
+	const list = [...formatFiltered];
 	const dir = sortDir === "asc" ? 1 : -1;
 	return list.sort((a, b) => {
 		switch (sortKey) {
@@ -93,6 +101,14 @@ function pct(value: number, total: number): string {
 </svelte:head>
 
 <h1>Tournaments</h1>
+
+<FormatMatchesChart
+	tournaments={$tournamentList}
+	format={$settings.format}
+	dateFrom={$settings.dateFrom}
+	dateTo={$settings.dateTo}
+	selectedIds={$settings.selectedTournamentIds}
+/>
 
 {#if sorted.length === 0}
 	<p class="empty">No tournaments loaded.</p>
