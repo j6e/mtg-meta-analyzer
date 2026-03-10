@@ -1,0 +1,197 @@
+format: Modern
+date: "2026-03-08"
+archetypes:
+  - name: Boros Energy
+    signatureCards:
+      - name: "Ocelot Pride"
+        minCopies: 3
+      - name: "Ragavan, Nimble Pilferer"
+        minCopies: 3
+      - name: "Phlage, Titan of Fire's Fury"
+        minCopies: 3
+      - name: "Guide of Souls"
+        minCopies: 3
+  - name: Izzet Affinity
+    signatureCards:
+      - name: "Mox Opal"
+        minCopies: 3
+      - name: "Spirebluff Canal"
+        minCopies: 3
+      - name: "Urza's Saga"
+        minCopies: 3
+      - name: "Mishra's Bauble"
+        minCopies: 3
+  - name: Izzet Prowess
+    signatureCards:
+      - name: "Slickshot Show-Off"
+        minCopies: 3
+      - name: "Cori-Steel Cutter"
+        minCopies: 3
+      - name: "Preordain"
+        minCopies: 3
+      - name: "Expressive Iteration"
+        minCopies: 3
+  - name: Amulet Titan
+    signatureCards:
+      - name: "Primeval Titan"
+        minCopies: 3
+      - name: "Amulet of Vigor"
+        minCopies: 4
+  - name: Jeskai Blink
+    signatureCards:
+      - name: "Phelia, Exuberant Shepherd"
+        minCopies: 3
+      - name: "Ragavan, Nimble Pilferer"
+        minCopies: 3
+      - name: "Consign to Memory"
+        minCopies: 1
+      - name: "Fable of the Mirror-Breaker"
+        minCopies: 2
+      - name: "Hallowed Fountain"
+        minCopies: 1
+  - name: Domain Zoo
+    signatureCards:
+      - name: "Leyline of the Guildpact"
+        minCopies: 3
+      - name: "Leyline Binding"
+        minCopies: 3
+      - name: "Scion of Draco"
+        minCopies: 3
+  - name: Mono-Blue Belcher
+    signatureCards:
+      - name: "Goblin Charbelcher"
+        minCopies: 3
+      - name: "Tameshi, Reality Architect"
+        minCopies: 3
+  - name: Simic Ritual
+    signatureCards:
+      - name: "Birthing Ritual"
+        minCopies: 3
+      - name: "Coiling Oracle"
+        minCopies: 3
+      - name: "Shardless Agent"
+        minCopies: 3
+  - name: Esper Reanimator
+    signatureCards:
+      - name: "Atraxa, Grand Unifier"
+        minCopies: 3
+      - name: "Psychic Frog"
+        minCopies: 3
+      - name: "Goryo's Vengeance"
+        minCopies: 3
+  - name: Golgari Yawgmoth
+    signatureCards:
+      - name: "Yawgmoth, Thran Physician"
+        minCopies: 3
+      - name: "Grist, the Hunger Tide"
+        minCopies: 1
+  - name: Gruul Eldrazi Ramp
+    signatureCards:
+      - name: "Malevolent Rumble"
+        minCopies: 3
+      - name: "Icetill Explorer"
+        minCopies: 1
+      - name: "Devourer of Destiny"
+        minCopies: 1
+      - name: "Stomping Ground"
+        minCopies: 1
+  - name: Gruul Eldrazi Aggro
+    signatureCards:
+      - name: "Eldrazi Linebreaker"
+        minCopies: 3
+      - name: "Forest"
+        minCopies: 1
+      - name: "Mountain"
+        minCopies: 1
+  - name: Broodscale Combo
+    signatureCards:
+      - name: "Basking Broodscale"
+        minCopies: 3
+      - name: "Blade of the Bloodchief"
+        minCopies: 3
+  - name: Ruby Storm
+    signatureCards:
+      - name: "Ral, Monsoon Mage"
+        minCopies: 3
+      - name: "Ruby Medallion"
+        minCopies: 3
+  - name: Eldrazi Tron
+    signatureCards:
+      - name: "Thought-Knot Seer"
+        minCopies: 3
+      - name: "Urza's Mine"
+        minCopies: 4
+      - name: "Urza's Tower"
+        minCopies: 4
+      - name: "Ugin, Eye of the Storms"
+        minCopies: 1
+      - name: "Karn, the Great Creator"
+        minCopies: 1
+  - name: Living End
+    signatureCards:
+      - name: "Living End"
+        minCopies: 3
+  - name: Dimir Midrange
+    signatureCards:
+      - name: "Kaito, Bane of Nightmares"
+        minCopies: 1
+      - name: Orcish Bowmasters
+        minCopies: 2
+      - name: "Fatal Push"
+        minCopies: 3
+  - name: Dimir Mill
+    signatureCards:
+      - name: "Hedron Crab"
+        minCopies: 3
+      - name: "Archive Trap"
+        minCopies: 3
+  - name: Simic Neoform
+    signatureCards:
+      - name: "Neoform"
+        minCopies: 3
+  - name: Grixis Reanimator
+    signatureCards:
+      - name: "Abhorrent Oculus"
+        minCopies: 2
+      - name: "Archon of Cruelty"
+        minCopies: 1
+      - name: "Faithless Looting"
+        minCopies: 3
+  - name: Burn
+    signatureCards:
+      - name: "Boltwave"
+        minCopies: 3
+      - name: "Lightning Bolt"
+        minCopies: 4
+  - name: Azorius Control
+    signatureCards:
+      - name: "Teferi, Time Raveler"
+        minCopies: 2
+      - name: "Isochron Scepter"
+        minCopies: 1
+      - name: "Orim's Chant"
+        minCopies: 1
+  - name: Esper Blink
+    signatureCards:
+      - name: "Phelia, Exuberant Shepherd"
+        minCopies: 3
+      - name: "Emperor of Bones"
+        minCopies: 2
+      - name: "Overlord of the Balemurk"
+        minCopies: 1
+      - name: "Hallowed Fountain"
+        minCopies: 1
+      - name: "Ephemerate"
+        minCopies: 1
+  - name: Mono-Blue Merfolk
+    signatureCards:
+      - name: "Lord of Atlantis"
+        minCopies: 3
+  - name: Jund Sagavan
+    signatureCards:
+      - name: "Wrenn and Six"
+        minCopies: 1
+      - name: "Ragavan, Nimble Pilferer"
+        minCopies: 3
+      - name: "Urza's Saga"
+        minCopies: 3
