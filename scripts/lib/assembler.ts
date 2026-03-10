@@ -76,10 +76,15 @@ export function assembleTournament(input: AssembleInput): TournamentData {
 		};
 	}
 
-	const { players: cleanedPlayers, rounds: cleanedRounds, removedCount } =
-		removeNoShows(players, rounds);
+	const {
+		players: cleanedPlayers,
+		rounds: cleanedRounds,
+		removedCount,
+	} = removeNoShows(players, rounds);
 	if (removedCount > 0) {
-		console.log(`  Removed ${removedCount} no-show player(s) and converted their R1 matches to byes.`);
+		console.log(
+			`  Removed ${removedCount} no-show player(s) and converted their R1 matches to byes.`,
+		);
 	}
 
 	return {
@@ -189,7 +194,11 @@ function isPlayoffRound(name: string): boolean {
 function removeNoShows(
 	players: Record<string, PlayerInfo>,
 	rounds: Record<string, RoundInfo>,
-): { players: Record<string, PlayerInfo>; rounds: Record<string, RoundInfo>; removedCount: number } {
+): {
+	players: Record<string, PlayerInfo>;
+	rounds: Record<string, RoundInfo>;
+	removedCount: number;
+} {
 	const sortedRoundKeys = Object.keys(rounds).sort(
 		(a, b) => rounds[a].number - rounds[b].number,
 	);

@@ -136,7 +136,10 @@ export function classifyAll(
 				archetype: knnResult.label,
 				method: "knn",
 				confidence: knnResult.confidence,
-				neighbors: knnResult.neighbors.map((n) => ({ archetype: n.label, similarity: n.similarity })),
+				neighbors: knnResult.neighbors.map((n) => ({
+					archetype: n.label,
+					similarity: n.similarity,
+				})),
 			});
 		} else {
 			results.push({

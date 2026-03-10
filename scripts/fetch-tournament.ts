@@ -140,7 +140,11 @@ async function main() {
 	// Step 4.5: Adjust ranks from standings-less rounds (e.g. Finals with no standings)
 	if (standingsLessRounds.length > 0) {
 		console.log(`\n[4.5/4] Adjusting ranks from standings-less rounds...`);
-		standings = applyStandingsLessRoundAdjustments(standings, standingsLessRounds, roundMatches);
+		standings = applyStandingsLessRoundAdjustments(
+			standings,
+			standingsLessRounds,
+			roundMatches,
+		);
 	}
 
 	// Assemble into TournamentData
@@ -198,7 +202,9 @@ function applyStandingsLessRoundAdjustments(
 
 	for (const round of standingsLessRounds) {
 		const matches = roundMatches.get(round.id) ?? [];
-		const decided = matches.filter((m) => !m.ByeReasonDescription && m.Competitors.length === 2);
+		const decided = matches.filter(
+			(m) => !m.ByeReasonDescription && m.Competitors.length === 2,
+		);
 
 		const winners: number[] = [];
 		const losers: number[] = [];

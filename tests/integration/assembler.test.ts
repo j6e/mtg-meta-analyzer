@@ -497,15 +497,29 @@ describe("assembleTournament", () => {
 				Points: 6,
 				MatchWins: 2,
 				MatchLosses: 1,
-				Team: { Players: [{ ID: 200, DisplayName: "Bob", Username: "bob456", TeamId: 2 }] },
-				Decklists: [{ DecklistId: "deck-bbb", PlayerId: 200, DecklistName: "Control", Format: "Standard", FormatId: "fmt-1" }],
+				Team: {
+					Players: [{ ID: 200, DisplayName: "Bob", Username: "bob456", TeamId: 2 }],
+				},
+				Decklists: [
+					{
+						DecklistId: "deck-bbb",
+						PlayerId: 200,
+						DecklistName: "Control",
+						Format: "Standard",
+						FormatId: "fmt-1",
+					},
+				],
 			}),
 			makeStanding({
 				Rank: 3,
 				Points: 0,
 				MatchWins: 0,
 				MatchLosses: 1,
-				Team: { Players: [{ ID: 300, DisplayName: "Charlie", Username: "charlie", TeamId: 3 }] },
+				Team: {
+					Players: [
+						{ ID: 300, DisplayName: "Charlie", Username: "charlie", TeamId: 3 },
+					],
+				},
 				Decklists: [], // no decklist
 			}),
 		];
@@ -520,15 +534,51 @@ describe("assembleTournament", () => {
 			Guid: "match-ac",
 			Competitors: [
 				{
-					ID: 1, CheckedIn: null, ResultConfirmed: null, SortOrder: 0,
-					GameByes: 0, GameWins: 2, GameWinsAndGameByes: 2, TeamId: 1,
-					Team: { ID: 1, Name: null, Players: [{ ID: 100, DisplayName: "Alice", DisplayNameLastFirst: "Alice", Username: "alice123", TeamId: 1 }] },
+					ID: 1,
+					CheckedIn: null,
+					ResultConfirmed: null,
+					SortOrder: 0,
+					GameByes: 0,
+					GameWins: 2,
+					GameWinsAndGameByes: 2,
+					TeamId: 1,
+					Team: {
+						ID: 1,
+						Name: null,
+						Players: [
+							{
+								ID: 100,
+								DisplayName: "Alice",
+								DisplayNameLastFirst: "Alice",
+								Username: "alice123",
+								TeamId: 1,
+							},
+						],
+					},
 					Decklists: [],
 				},
 				{
-					ID: 3, CheckedIn: null, ResultConfirmed: null, SortOrder: 1,
-					GameByes: 0, GameWins: 0, GameWinsAndGameByes: 0, TeamId: 3,
-					Team: { ID: 3, Name: null, Players: [{ ID: 300, DisplayName: "Charlie", DisplayNameLastFirst: "Charlie", Username: "charlie", TeamId: 3 }] },
+					ID: 3,
+					CheckedIn: null,
+					ResultConfirmed: null,
+					SortOrder: 1,
+					GameByes: 0,
+					GameWins: 0,
+					GameWinsAndGameByes: 0,
+					TeamId: 3,
+					Team: {
+						ID: 3,
+						Name: null,
+						Players: [
+							{
+								ID: 300,
+								DisplayName: "Charlie",
+								DisplayNameLastFirst: "Charlie",
+								Username: "charlie",
+								TeamId: 3,
+							},
+						],
+					},
 					Decklists: [],
 				},
 			],
@@ -542,7 +592,10 @@ describe("assembleTournament", () => {
 		roundMatches.set(5000, [aliceBeatsCharlie]);
 		roundMatches.set(5001, [aliceVsBob]);
 
-		const decklists = new Map<string, { details: MeleeDecklistDetails; playerId: number }>();
+		const decklists = new Map<
+			string,
+			{ details: MeleeDecklistDetails; playerId: number }
+		>();
 
 		const result = assembleTournament({
 			tournamentId: 999,
@@ -573,7 +626,11 @@ describe("assembleTournament", () => {
 				Points: 0,
 				MatchWins: 0,
 				MatchLosses: 1,
-				Team: { Players: [{ ID: 300, DisplayName: "Charlie", Username: "charlie", TeamId: 3 }] },
+				Team: {
+					Players: [
+						{ ID: 300, DisplayName: "Charlie", Username: "charlie", TeamId: 3 },
+					],
+				},
 				Decklists: [], // no decklist
 			}),
 		];
@@ -587,15 +644,51 @@ describe("assembleTournament", () => {
 			Guid: "match-ac",
 			Competitors: [
 				{
-					ID: 1, CheckedIn: null, ResultConfirmed: null, SortOrder: 0,
-					GameByes: 0, GameWins: 2, GameWinsAndGameByes: 2, TeamId: 1,
-					Team: { ID: 1, Name: null, Players: [{ ID: 100, DisplayName: "Alice", DisplayNameLastFirst: "Alice", Username: "alice123", TeamId: 1 }] },
+					ID: 1,
+					CheckedIn: null,
+					ResultConfirmed: null,
+					SortOrder: 0,
+					GameByes: 0,
+					GameWins: 2,
+					GameWinsAndGameByes: 2,
+					TeamId: 1,
+					Team: {
+						ID: 1,
+						Name: null,
+						Players: [
+							{
+								ID: 100,
+								DisplayName: "Alice",
+								DisplayNameLastFirst: "Alice",
+								Username: "alice123",
+								TeamId: 1,
+							},
+						],
+					},
 					Decklists: [],
 				},
 				{
-					ID: 3, CheckedIn: null, ResultConfirmed: null, SortOrder: 1,
-					GameByes: 0, GameWins: 0, GameWinsAndGameByes: 0, TeamId: 3,
-					Team: { ID: 3, Name: null, Players: [{ ID: 300, DisplayName: "Charlie", DisplayNameLastFirst: "Charlie", Username: "charlie", TeamId: 3 }] },
+					ID: 3,
+					CheckedIn: null,
+					ResultConfirmed: null,
+					SortOrder: 1,
+					GameByes: 0,
+					GameWins: 0,
+					GameWinsAndGameByes: 0,
+					TeamId: 3,
+					Team: {
+						ID: 3,
+						Name: null,
+						Players: [
+							{
+								ID: 300,
+								DisplayName: "Charlie",
+								DisplayNameLastFirst: "Charlie",
+								Username: "charlie",
+								TeamId: 3,
+							},
+						],
+					},
 					Decklists: [],
 				},
 			],
@@ -608,15 +701,51 @@ describe("assembleTournament", () => {
 			RoundId: 5001,
 			Competitors: [
 				{
-					ID: 1, CheckedIn: null, ResultConfirmed: null, SortOrder: 0,
-					GameByes: 0, GameWins: 2, GameWinsAndGameByes: 2, TeamId: 1,
-					Team: { ID: 1, Name: null, Players: [{ ID: 100, DisplayName: "Alice", DisplayNameLastFirst: "Alice", Username: "alice123", TeamId: 1 }] },
+					ID: 1,
+					CheckedIn: null,
+					ResultConfirmed: null,
+					SortOrder: 0,
+					GameByes: 0,
+					GameWins: 2,
+					GameWinsAndGameByes: 2,
+					TeamId: 1,
+					Team: {
+						ID: 1,
+						Name: null,
+						Players: [
+							{
+								ID: 100,
+								DisplayName: "Alice",
+								DisplayNameLastFirst: "Alice",
+								Username: "alice123",
+								TeamId: 1,
+							},
+						],
+					},
 					Decklists: [],
 				},
 				{
-					ID: 3, CheckedIn: null, ResultConfirmed: null, SortOrder: 1,
-					GameByes: 0, GameWins: 0, GameWinsAndGameByes: 0, TeamId: 3,
-					Team: { ID: 3, Name: null, Players: [{ ID: 300, DisplayName: "Charlie", DisplayNameLastFirst: "Charlie", Username: "charlie", TeamId: 3 }] },
+					ID: 3,
+					CheckedIn: null,
+					ResultConfirmed: null,
+					SortOrder: 1,
+					GameByes: 0,
+					GameWins: 0,
+					GameWinsAndGameByes: 0,
+					TeamId: 3,
+					Team: {
+						ID: 3,
+						Name: null,
+						Players: [
+							{
+								ID: 300,
+								DisplayName: "Charlie",
+								DisplayNameLastFirst: "Charlie",
+								Username: "charlie",
+								TeamId: 3,
+							},
+						],
+					},
 					Decklists: [],
 				},
 			],
