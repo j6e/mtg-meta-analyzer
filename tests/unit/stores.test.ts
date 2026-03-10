@@ -37,12 +37,12 @@ describe("settings store", () => {
 			...s,
 			dateFrom: "2025-01-01",
 			dateTo: "2025-12-31",
-			selectedTournamentIds: [123, 456],
+			selectedTournamentIds: ["melee-123", "melee-456"],
 		}));
 		const s = get(settings);
 		expect(s.dateFrom).toBe("2025-01-01");
 		expect(s.dateTo).toBe("2025-12-31");
-		expect(s.selectedTournamentIds).toEqual([123, 456]);
+		expect(s.selectedTournamentIds).toEqual(["melee-123", "melee-456"]);
 	});
 
 	it("can switch other mode", () => {
@@ -61,7 +61,7 @@ describe("settings store", () => {
 
 			format: "Standard",
 			dateFrom: "2025-01-01",
-			selectedTournamentIds: [123],
+			selectedTournamentIds: ["melee-123"],
 			otherMode: "topN" as const,
 			minMetagameShare: 5,
 		}));

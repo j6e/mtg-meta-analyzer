@@ -38,7 +38,7 @@
 		return d.toISOString().slice(0, 10);
 	}
 
-	function tournamentsInRange(from: string, to: string): number[] {
+	function tournamentsInRange(from: string, to: string): string[] {
 		return tournaments
 			.filter((t) => (!from || t.date >= from) && (!to || t.date <= to))
 			.map((t) => t.id);
@@ -83,7 +83,7 @@
 		}));
 	}
 
-	function handleTournamentToggle(id: number, checked: boolean) {
+	function handleTournamentToggle(id: string, checked: boolean) {
 		settings.update((s) => {
 			const ids = new Set(s.selectedTournamentIds);
 			if (checked) {
@@ -171,14 +171,14 @@
 			</div>
 			<div class="tournament-checks">
 				{#each tournaments as t}
-					<label class="tournament-check" title={t.name}>
+					<label class="tournament-check" title={t.cleanName}>
 						<input
 							type="checkbox"
 							checked={$settings.selectedTournamentIds.includes(t.id)}
 							onchange={(e) =>
 								handleTournamentToggle(t.id, (e.target as HTMLInputElement).checked)}
 						/>
-						<span class="t-name">{t.name}</span>
+						<span class="t-name">{t.cleanName}</span>
 						<span class="t-date">{t.date}</span>
 					</label>
 				{/each}

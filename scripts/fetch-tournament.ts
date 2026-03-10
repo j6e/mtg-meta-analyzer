@@ -9,9 +9,12 @@
  *   bun run scripts/fetch-tournament.ts https://melee.gg/Tournament/View/72980
  *   bun run scripts/fetch-tournament.ts 72980 --dry-run
  */
-import { mkdirSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
+import { join } from "node:path";
+import type { TournamentIndexEntry } from "../src/lib/types/tournament";
 import { assembleTournament } from "./lib/assembler";
 import { parseTournamentPage } from "./lib/html-parser";
+import { inferImportance } from "./lib/importance";
 import { MeleeApiError, MeleeClient } from "./lib/melee-client";
 import type { MeleeMatchRow, MeleeStandingRow, ParsedRound } from "./lib/types";
 
@@ -157,20 +160,42 @@ async function main() {
 		roundMatches,
 	});
 
+	// Determine output path: data/{format}/{year-month}/melee-{id}.json
+	const primaryFormat = getPrimaryFormat(tournament.meta.formats);
+	const formatSlug = primaryFormat.toLowerCase().replace(/\s+/g, "-");
+	const yearMonth = tournament.meta.date.slice(0, 7);
+	const filename = `melee-${tournamentId}.json`;
+	const relPath = `${yearMonth}/${filename}`;
+	const dir = join("data", formatSlug, yearMonth);
+	const filePath = join(dir, filename);
+
 	// Output
 	const json = JSON.stringify(tournament, null, 2);
 
 	if (dryRun) {
-		console.log(
-			`\n--- DRY RUN: would write to data/tournaments/${tournamentId}.json ---`,
-		);
+		console.log(`\n--- DRY RUN: would write to ${filePath} ---`);
 		console.log(`JSON size: ${json.length} bytes`);
 	} else {
-		const dir = "data/tournaments";
 		mkdirSync(dir, { recursive: true });
-		const path = `${dir}/${tournamentId}.json`;
-		writeFileSync(path, json);
-		console.log(`\nWritten to ${path} (${json.length} bytes)`);
+		writeFileSync(filePath, json);
+		console.log(`\nWritten to ${filePath} (${json.length} bytes)`);
+
+		// Update per-format index.json
+		updateFormatIndex(formatSlug, {
+			id: tournament.meta.id,
+			name: tournament.meta.name,
+			cleanName: tournament.meta.name,
+			date: tournament.meta.date,
+			format: primaryFormat,
+			source: tournament.meta.source,
+			url: tournament.meta.url,
+			playerCount: tournament.meta.playerCount,
+			roundCount: tournament.meta.roundCount,
+			importance: inferImportance(tournament.meta.name),
+			tabletop: tournament.meta.tabletop,
+			pairings: true,
+			path: relPath,
+		});
 	}
 
 	// Summary
@@ -249,6 +274,44 @@ function applyStandingsLessRoundAdjustments(
 
 	adjusted.sort((a, b) => a.Rank - b.Rank);
 	return adjusted;
+}
+
+/** Extract primary constructed format (skip Draft/Sealed/Limited). */
+function getPrimaryFormat(formats: string[]): string {
+	const constructed = formats.filter((f) => !/\b(draft|sealed|limited)\b/i.test(f));
+	return constructed[0] ?? formats[0] ?? "unknown";
+}
+
+/** Update or create a per-format index.json, preserving manual overrides. */
+function updateFormatIndex(formatSlug: string, newEntry: TournamentIndexEntry): void {
+	const indexPath = join("data", formatSlug, "index.json");
+	let entries: TournamentIndexEntry[] = [];
+
+	if (existsSync(indexPath)) {
+		entries = JSON.parse(readFileSync(indexPath, "utf-8"));
+	}
+
+	// Find existing entry and preserve manual overrides
+	const existingIdx = entries.findIndex((e) => e.id === newEntry.id);
+	if (existingIdx >= 0) {
+		const existing = entries[existingIdx];
+		// Preserve cleanName if it was manually edited (differs from name)
+		if (existing.cleanName !== existing.name) {
+			newEntry.cleanName = existing.cleanName;
+		}
+		// Preserve importance if it was manually overridden
+		if (existing.importance !== inferImportance(existing.name)) {
+			newEntry.importance = existing.importance;
+		}
+		entries[existingIdx] = newEntry;
+	} else {
+		entries.push(newEntry);
+	}
+
+	// Sort by date descending
+	entries.sort((a, b) => b.date.localeCompare(a.date));
+	writeFileSync(indexPath, JSON.stringify(entries, null, 2));
+	console.log(`Updated ${indexPath} (${entries.length} entries)`);
 }
 
 function parseTournamentId(input: string): number | null {

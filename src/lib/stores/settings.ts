@@ -11,7 +11,7 @@ export interface MetaSettings {
 	format: string; // '' = all formats
 	dateFrom: string; // '' = no lower bound (ISO date string)
 	dateTo: string; // '' = no upper bound (ISO date string)
-	selectedTournamentIds: number[]; // empty = all tournaments
+	selectedTournamentIds: string[]; // empty = all tournaments
 
 	// Matrix options
 	excludeMirrors: boolean;

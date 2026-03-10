@@ -3,7 +3,7 @@
 import { cleanup, fireEvent, render } from "@testing-library/svelte";
 import { get } from "svelte/store";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
-import type { TournamentMeta } from "../../src/lib/types/tournament";
+import type { TournamentListEntry } from "../../src/lib/stores/tournaments";
 
 // vi.hoisted ensures these are initialised before the hoisted vi.mock factory runs
 const { mockTournamentList, mockAvailableFormats } = vi.hoisted(() => {
@@ -50,27 +50,35 @@ beforeEach(() => {
 	mockAvailableFormats.set(sampleFormats);
 });
 
-const sampleTournaments: (TournamentMeta & { matchCount: number })[] = [
+const sampleTournaments: TournamentListEntry[] = [
 	{
-		id: 1,
+		id: "melee-1",
 		name: "Tournament A",
+		cleanName: "Tournament A",
+		importance: "other",
 		date: "2025-06-01",
 		formats: ["Standard"],
 		url: "",
 		fetchedAt: "",
 		playerCount: 100,
 		roundCount: 8,
+		source: "melee",
+		tabletop: true,
 		matchCount: 56,
 	},
 	{
-		id: 2,
+		id: "melee-2",
 		name: "Tournament B",
+		cleanName: "Tournament B",
+		importance: "other",
 		date: "2025-07-15",
 		formats: ["Standard", "Draft"],
 		url: "",
 		fetchedAt: "",
 		playerCount: 200,
 		roundCount: 12,
+		source: "melee",
+		tabletop: true,
 		matchCount: 132,
 	},
 ];

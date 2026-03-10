@@ -25,7 +25,7 @@ function makeTournament(overrides: {
 	const id = overrides.id ?? 1;
 	return {
 		meta: {
-			id,
+			id: `melee-${id}`,
 			name: "Test Tournament",
 			date: "2026-01-01",
 			formats: ["Standard"],
@@ -33,6 +33,8 @@ function makeTournament(overrides: {
 			fetchedAt: "2026-01-01T00:00:00Z",
 			playerCount: Object.keys(overrides.players ?? {}).length,
 			roundCount: Object.keys(overrides.rounds ?? {}).length,
+			source: "melee",
+			tabletop: true,
 		},
 		players: overrides.players ?? {},
 		decklists: overrides.decklists ?? {},
@@ -648,7 +650,7 @@ describe("buildAttributionMatrix", () => {
 
 		const resultsMap = new Map([
 			[
-				1,
+				"melee-1",
 				[
 					{
 						decklistId: "d1",
@@ -691,7 +693,7 @@ describe("buildAttributionMatrix", () => {
 
 		const resultsMap = new Map([
 			[
-				1,
+				"melee-1",
 				[
 					{
 						decklistId: "d1",
@@ -720,7 +722,7 @@ describe("buildAttributionMatrix", () => {
 
 		const resultsMap = new Map([
 			[
-				1,
+				"melee-1",
 				[
 					{
 						decklistId: "d1",
@@ -755,7 +757,7 @@ describe("buildAttributionMatrix", () => {
 
 		const resultsMap = new Map([
 			[
-				1,
+				"melee-1",
 				[
 					{
 						decklistId: "d1",
@@ -805,7 +807,7 @@ describe("buildAttributionMatrix", () => {
 
 		const resultsMap = new Map([
 			[
-				1,
+				"melee-1",
 				[
 					{
 						decklistId: "d1",
@@ -816,7 +818,7 @@ describe("buildAttributionMatrix", () => {
 				],
 			],
 			[
-				2,
+				"melee-2",
 				[
 					{
 						decklistId: "d2",
@@ -846,7 +848,7 @@ describe("buildAttributionMatrix", () => {
 
 		const resultsMap = new Map([
 			[
-				1,
+				"melee-1",
 				[
 					{
 						decklistId: "d1",
@@ -901,7 +903,7 @@ describe("buildAttributionMatrix", () => {
 
 		const resultsMap = new Map([
 			[
-				1,
+				"melee-1",
 				[
 					{
 						decklistId: "d1",
@@ -941,7 +943,7 @@ describe("buildAttributionMatrix", () => {
 
 	it("returns null when tournaments have no decklists", () => {
 		const tournament = makeTournament({ decklists: {} });
-		const resultsMap = new Map([[1, [] as ClassificationResult[]]]);
+		const resultsMap = new Map([["melee-1", [] as ClassificationResult[]]]);
 		const result = buildAttributionMatrix([tournament], resultsMap);
 		expect(result).toBeNull();
 	});
@@ -957,7 +959,7 @@ describe("buildAttributionMatrix", () => {
 
 		const resultsMap = new Map([
 			[
-				1,
+				"melee-1",
 				[
 					{
 						decklistId: "d1",

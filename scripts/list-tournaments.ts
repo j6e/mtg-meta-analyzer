@@ -21,6 +21,7 @@
  */
 import { writeFileSync } from "node:fs";
 import { parseTournamentPage } from "./lib/html-parser";
+import { inferImportance } from "./lib/importance";
 import { MeleeClient } from "./lib/melee-client";
 import type { MeleeTournamentSearchRow } from "./lib/types";
 
@@ -239,7 +240,10 @@ async function main() {
 
 	// Step 3: Fallback — fetch tournament page HTML for unmatched tournaments
 	if (unmatchedTournaments.length > 0) {
-		progress.startBar("Fetching unmatched tournament pages", unmatchedTournaments.length);
+		progress.startBar(
+			"Fetching unmatched tournament pages",
+			unmatchedTournaments.length,
+		);
 		let resolved = 0;
 		for (const t of unmatchedTournaments) {
 			try {
@@ -258,17 +262,13 @@ async function main() {
 			}
 			progress.tick();
 		}
-		progress.done(
-			`Resolved ${resolved}/${unmatchedTournaments.length} via page fetch`,
-		);
+		progress.done(`Resolved ${resolved}/${unmatchedTournaments.length} via page fetch`);
 	}
 
 	// Step 4: Apply filters
 	if (opts.format) {
 		const needle = opts.format.toLowerCase();
-		tournaments = tournaments.filter(
-			(t) => t.inferredFormat.toLowerCase() === needle,
-		);
+		tournaments = tournaments.filter((t) => t.inferredFormat.toLowerCase() === needle);
 	}
 
 	if (opts.minPlayers > 0) {
@@ -286,19 +286,22 @@ async function main() {
 
 	// Build CSV
 	const lines: string[] = [];
-	lines.push("Format,Players,Name,URL,Date,Status,Organization");
+	lines.push("Format,Importance,Players,Name,URL,Date,Status,Organization,Tabletop");
 
 	for (const t of tournaments) {
 		const url = `"https://melee.gg/Tournament/View/${t.ID}"`;
+		const importance = inferImportance(t.Name);
 		lines.push(
 			[
 				escapeCSV(t.inferredFormat),
+				importance,
 				String(t.Decklists),
 				escapeCSV(t.Name),
 				url,
 				t.StartDate.split("T")[0],
 				t.StatusDescription,
 				escapeCSV(t.OrganizationName),
+				"yes",
 			].join(","),
 		);
 	}

@@ -1,14 +1,21 @@
 import type { DecklistInfo } from "./decklist.ts";
 
+export type TournamentSource = "melee" | "spicerack" | "mtgo";
+
+/** professional (***), premier (**), competitive (*), other (blank) */
+export type TournamentImportance = "professional" | "premier" | "competitive" | "other";
+
 export interface TournamentMeta {
-	id: number;
+	id: string; // "{source}-{numericId}", e.g. "melee-339227"
 	name: string;
 	date: string; // ISO date
 	formats: string[]; // ["Standard"], ["Draft", "Standard", "Draft2"]
-	url: string; // original melee.gg URL
+	url: string; // original source URL
 	fetchedAt: string; // ISO timestamp
 	playerCount: number;
 	roundCount: number;
+	source: TournamentSource;
+	tabletop: boolean;
 }
 
 export interface PlayerInfo {
@@ -40,4 +47,21 @@ export interface TournamentData {
 	players: Record<string, PlayerInfo>;
 	decklists: Record<string, DecklistInfo>;
 	rounds: Record<string, RoundInfo>;
+}
+
+/** Entry in a per-format index.json — lightweight metadata for the filter panel */
+export interface TournamentIndexEntry {
+	id: string; // "melee-339227"
+	name: string; // raw name from source
+	cleanName: string; // display name (defaults to name, manually editable)
+	date: string; // ISO date
+	format: string; // primary format (implied by which index file this lives in)
+	source: TournamentSource;
+	url: string;
+	playerCount: number;
+	roundCount: number;
+	importance: TournamentImportance;
+	tabletop: boolean;
+	pairings: boolean; // whether match/round data is available (MTGO doesn't have this)
+	path: string; // relative path within format dir, e.g. "2026-03/melee-385576.json"
 }

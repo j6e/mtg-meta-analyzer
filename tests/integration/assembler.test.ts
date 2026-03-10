@@ -192,13 +192,15 @@ describe("assembleTournament", () => {
 		});
 
 		// Meta
-		expect(result.meta.id).toBe(999);
+		expect(result.meta.id).toBe("melee-999");
 		expect(result.meta.name).toBe("Test Tournament");
 		expect(result.meta.date).toBe("2024-01-15");
 		expect(result.meta.formats).toEqual(["Standard"]);
 		expect(result.meta.url).toBe("https://melee.gg/Tournament/View/999");
 		expect(result.meta.playerCount).toBe(2);
 		expect(result.meta.roundCount).toBe(1);
+		expect(result.meta.source).toBe("melee");
+		expect(result.meta.tabletop).toBe(true);
 
 		// Players
 		expect(result.players["100"]).toBeDefined();

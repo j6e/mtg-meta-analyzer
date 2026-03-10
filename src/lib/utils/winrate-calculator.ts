@@ -326,7 +326,7 @@ export function computeMetagameStats(
  */
 export function buildAttributionMatrix(
 	tournaments: TournamentData[],
-	classificationResultsMap: Map<number, ClassificationResult[]>,
+	classificationResultsMap: Map<string, ClassificationResult[]>,
 ): AttributionMatrix | null {
 	// Count: classified → reported → count
 	const counts = new Map<string, Map<string, number>>();

@@ -89,7 +89,7 @@ export function assembleTournament(input: AssembleInput): TournamentData {
 
 	return {
 		meta: {
-			id: tournamentId,
+			id: `melee-${tournamentId}`,
 			name: parsed.name,
 			date: parsed.date,
 			formats: parsed.formats,
@@ -97,6 +97,8 @@ export function assembleTournament(input: AssembleInput): TournamentData {
 			fetchedAt: new Date().toISOString(),
 			playerCount: Object.keys(cleanedPlayers).length,
 			roundCount: completedRounds.length,
+			source: "melee",
+			tabletop: true,
 		},
 		players: cleanedPlayers,
 		decklists: decklistsOut,

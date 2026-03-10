@@ -38,7 +38,7 @@ function makeTournament(overrides: {
 	const id = overrides.id ?? 1;
 	return {
 		meta: {
-			id,
+			id: `melee-${id}`,
 			name: overrides.name ?? "Test Tournament",
 			date: "2026-01-01",
 			formats: ["Standard"],
@@ -46,6 +46,8 @@ function makeTournament(overrides: {
 			fetchedAt: "2026-01-01T00:00:00Z",
 			playerCount: Object.keys(overrides.players ?? {}).length,
 			roundCount: 0,
+			source: "melee",
+			tabletop: true,
 		},
 		players: overrides.players ?? {},
 		decklists: overrides.decklists ?? {},
@@ -90,7 +92,7 @@ describe("collectArchetypeDecklists", () => {
 		expect(result[0]).toMatchObject({
 			playerRank: 5,
 			tournamentName: "Pro Tour",
-			tournamentId: 42,
+			tournamentId: "melee-42",
 		});
 	});
 
