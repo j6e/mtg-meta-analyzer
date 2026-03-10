@@ -1,5 +1,8 @@
 <script lang="ts">
 	import { base } from "$app/paths";
+	import { settingsQueryString } from "$lib/stores/url-settings";
+
+	const qs = $derived($settingsQueryString);
 </script>
 
 <svelte:head>
@@ -23,24 +26,24 @@
 	</p>
 
 	<div class="cards">
-		<a href="{base}/metagame" class="card">
+		<a href="{base}/metagame{qs}" class="card">
 			<h2>Metagame</h2>
 			<p>
 				Archetype win rates, matchup matrices, and metagame share
 				breakdowns.
 			</p>
 		</a>
-		<a href="{base}/tournaments" class="card">
+		<a href="{base}/tournaments{qs}" class="card">
 			<h2>Tournaments</h2>
 			<p>Browse tournament results and round-by-round match data.</p>
 		</a>
-		<a href="{base}/archetypes" class="card">
+		<a href="{base}/archetypes{qs}" class="card">
 			<h2>Archetypes</h2>
 			<p>
 				Browse archetype stats, matchups, decklists, and composition.
 			</p>
 		</a>
-		<a href="{base}/archetype-cleaner" class="card">
+		<a href="{base}/archetype-cleaner{qs}" class="card">
 			<h2>Archetype Cleaner</h2>
 			<p>
 				Edit signature card definitions and review classification attribution.

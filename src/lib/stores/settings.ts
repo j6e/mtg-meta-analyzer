@@ -20,11 +20,11 @@ export interface MetaSettings {
 	minMetagameShare: number; // 0-100 as percentage (only used when otherMode = 'minShare')
 }
 
-function isoDate(date: Date): string {
+export function isoDate(date: Date): string {
 	return date.toISOString().slice(0, 10);
 }
 
-function makeDefaults(): MetaSettings {
+export function makeDefaults(): MetaSettings {
 	const today = new Date();
 	const minus30 = new Date(today);
 	minus30.setDate(today.getDate() - 30);

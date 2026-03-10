@@ -5,6 +5,9 @@
 		classificationResults,
 		filteredTournaments,
 	} from '$lib/stores/tournaments';
+	import { settingsQueryString } from '$lib/stores/url-settings';
+
+	const qs = $derived($settingsQueryString);
 	import { activeArchetypeDefs } from '$lib/stores/archetype-configs';
 	import DecklistView from '$lib/components/DecklistView.svelte';
 	import CardTooltip from '$lib/components/CardTooltip.svelte';
@@ -84,7 +87,7 @@
 </svelte:head>
 
 <div class="breadcrumb">
-	<a href="{base}/archetype-cleaner">Archetype Cleaner</a> / Classification Assessment
+	<a href="{base}/archetype-cleaner{qs}">Archetype Cleaner</a> / Classification Assessment
 </div>
 
 {#if !hasValidParams}

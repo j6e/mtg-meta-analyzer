@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import { settings, type OtherMode } from '../stores/settings';
 	import { tournamentList, availableFormats } from '../stores/tournaments';
+	import { getInitialExcludeIds } from '../stores/url-settings';
 	import {
 		savedConfigs,
 		activeConfigId,
@@ -9,13 +10,28 @@
 		BUILTIN_CONFIGS,
 	} from '../stores/archetype-configs';
 
-	const tournaments = $derived($tournamentList);
+	const allTournaments = $derived($tournamentList);
 	const formats = $derived($availableFormats);
 
+	/** Tournaments filtered by the currently selected format. */
+	const tournaments = $derived(
+		$settings.format
+			? allTournaments.filter((t) => t.formats.includes($settings.format))
+			: allTournaments,
+	);
+
 	onMount(() => {
+		const excludeIds = getInitialExcludeIds();
 		settings.update((s) => ({
 			...s,
-			selectedTournamentIds: tournaments.map((t) => t.id),
+			selectedTournamentIds: tournaments
+				.filter(
+					(t) =>
+						(!s.dateFrom || t.date >= s.dateFrom) &&
+						(!s.dateTo || t.date <= s.dateTo) &&
+						!excludeIds.has(t.id),
+				)
+				.map((t) => t.id),
 		}));
 	});
 
@@ -29,7 +45,16 @@
 
 	function handleFormatChange(e: Event) {
 		const value = (e.target as HTMLSelectElement).value;
-		settings.update((s) => ({ ...s, format: value }));
+		const matching = value
+			? allTournaments.filter((t) => t.formats.includes(value))
+			: allTournaments;
+		const matchingInRange = matching
+			.filter((t) => {
+				const s = $settings;
+				return (!s.dateFrom || t.date >= s.dateFrom) && (!s.dateTo || t.date <= s.dateTo);
+			})
+			.map((t) => t.id);
+		settings.update((s) => ({ ...s, format: value, selectedTournamentIds: matchingInRange }));
 	}
 
 	let datePreset = $state('30');
@@ -39,9 +64,9 @@
 	}
 
 	function tournamentsInRange(from: string, to: string): string[] {
-		return tournaments
-			.filter((t) => (!from || t.date >= from) && (!to || t.date <= to))
-			.map((t) => t.id);
+		return tournaments.filter((t) => (!from || t.date >= from) && (!to || t.date <= to)).map(
+			(t) => t.id,
+		);
 	}
 
 	function handleDatePresetChange(e: Event) {
