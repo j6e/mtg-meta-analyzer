@@ -12,7 +12,7 @@ const PINNED_BOTTOM = ["Other", "Unknown"];
 const sortedStats = $derived.by(() => {
 	const stats = $metagameData?.stats ?? [];
 	const normal = stats.filter((s) => !PINNED_BOTTOM.includes(s.name));
-	const pinned = PINNED_BOTTOM.map((name) => stats.find((s) => s.name === name)).filter(Boolean);
+	const pinned = PINNED_BOTTOM.map((name) => stats.find((s) => s.name === name)).filter((x): x is NonNullable<typeof x> => x !== undefined);
 	const dir = sortAsc ? 1 : -1;
 	normal.sort((a, b) => {
 		switch (sortKey) {
