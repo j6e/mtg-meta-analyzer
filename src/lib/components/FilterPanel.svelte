@@ -55,6 +55,18 @@
 			})
 			.map((t) => t.id);
 		settings.update((s) => ({ ...s, format: value, selectedTournamentIds: matchingInRange }));
+
+		// Auto-switch archetype config to match the selected format
+		if (value) {
+			const currentId = $activeConfigId;
+			const builtinMatch = `builtin:${value.toLowerCase()}`;
+			const isCurrentMatchingFormat =
+				currentId === builtinMatch ||
+				$savedConfigs.some((c) => c.id === currentId && c.format === value);
+			if (!isCurrentMatchingFormat && BUILTIN_CONFIGS.some((c) => c.id === builtinMatch)) {
+				setActiveConfig(builtinMatch);
+			}
+		}
 	}
 
 	let datePreset = $state('30');
