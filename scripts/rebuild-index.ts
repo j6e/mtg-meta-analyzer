@@ -8,7 +8,7 @@
 import { existsSync, readdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import type { TournamentData, TournamentIndexEntry } from "../src/lib/types/tournament";
-import { inferImportance } from "./lib/importance";
+import { cleanTournamentName, inferImportance } from "./lib/importance";
 
 const DATA_DIR = join(import.meta.dir, "../data");
 
@@ -61,11 +61,13 @@ async function main() {
 				const existing = existingIndex.get(data.meta.id);
 
 				const autoImportance = inferImportance(data.meta.name);
-				// Preserve cleanName if manually edited
-				const cleanName =
-					existing && existing.cleanName !== existing.name
-						? existing.cleanName
-						: data.meta.name;
+				// Preserve cleanName if manually edited (differs from both raw name and auto-cleaned)
+				const autoCleaned = cleanTournamentName(data.meta.name);
+				const wasManuallyEdited =
+					existing &&
+					existing.cleanName !== existing.name &&
+					existing.cleanName !== cleanTournamentName(existing.name);
+				const cleanName = wasManuallyEdited ? existing.cleanName : autoCleaned;
 				// Preserve importance if manually overridden
 				const importance =
 					existing && existing.importance !== inferImportance(existing.name)

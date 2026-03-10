@@ -10,7 +10,7 @@ import type {
 	TournamentIndexEntry,
 	TournamentSource,
 } from "../src/lib/types/tournament";
-import { inferImportance } from "./lib/importance";
+import { cleanTournamentName, inferImportance } from "./lib/importance";
 
 const DATA_DIR = join(import.meta.dir, "../data");
 const TOURNAMENTS_DIR = join(DATA_DIR, "tournaments");
@@ -76,7 +76,7 @@ async function main() {
 		const entry: TournamentIndexEntry = {
 			id: newId,
 			name: data.meta.name,
-			cleanName: data.meta.name,
+			cleanName: cleanTournamentName(data.meta.name),
 			date: data.meta.date,
 			format: format,
 			source,

@@ -14,7 +14,7 @@ import { join } from "node:path";
 import type { TournamentIndexEntry } from "../src/lib/types/tournament";
 import { assembleTournament } from "./lib/assembler";
 import { parseTournamentPage } from "./lib/html-parser";
-import { inferImportance } from "./lib/importance";
+import { cleanTournamentName, inferImportance } from "./lib/importance";
 import { MeleeApiError, MeleeClient } from "./lib/melee-client";
 import type { MeleeMatchRow, MeleeStandingRow, ParsedRound } from "./lib/types";
 
@@ -184,7 +184,7 @@ async function main() {
 		updateFormatIndex(formatSlug, {
 			id: tournament.meta.id,
 			name: tournament.meta.name,
-			cleanName: tournament.meta.name,
+			cleanName: cleanTournamentName(tournament.meta.name),
 			date: tournament.meta.date,
 			format: primaryFormat,
 			source: tournament.meta.source,
@@ -295,8 +295,11 @@ function updateFormatIndex(formatSlug: string, newEntry: TournamentIndexEntry): 
 	const existingIdx = entries.findIndex((e) => e.id === newEntry.id);
 	if (existingIdx >= 0) {
 		const existing = entries[existingIdx];
-		// Preserve cleanName if it was manually edited (differs from name)
-		if (existing.cleanName !== existing.name) {
+		// Preserve cleanName if it was manually edited (differs from both raw and auto-cleaned)
+		const wasManuallyEdited =
+			existing.cleanName !== existing.name &&
+			existing.cleanName !== cleanTournamentName(existing.name);
+		if (wasManuallyEdited) {
 			newEntry.cleanName = existing.cleanName;
 		}
 		// Preserve importance if it was manually overridden
