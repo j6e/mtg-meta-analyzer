@@ -4,7 +4,7 @@
  */
 import { derived, get, writable } from "svelte/store";
 import { parseArchetypeYaml } from "../algorithms/archetype-classifier";
-import type { ArchetypeDefinition } from "../types/archetype";
+import type { ArchetypeDefinition, ParsedArchetypeConfig } from "../types/archetype";
 // --- Built-in config auto-discovery ---
 
 export interface BuiltinArchetypeConfig {
@@ -130,16 +130,22 @@ export const activeArchetypeYaml = derived(
 	},
 );
 
-/** Parsed archetype definitions from the active config. Returns [] on parse failure. */
-export const activeArchetypeDefs = derived(
+/** Parsed archetype config from the active YAML. Returns empty config on parse failure. */
+export const activeArchetypeConfig = derived(
 	activeArchetypeYaml,
-	($yaml): ArchetypeDefinition[] => {
+	($yaml): ParsedArchetypeConfig => {
 		try {
 			return parseArchetypeYaml($yaml);
 		} catch {
-			return [];
+			return { archetypes: [], nameEqualsCommander: false };
 		}
 	},
+);
+
+/** Parsed archetype definitions from the active config. Returns [] on parse failure. */
+export const activeArchetypeDefs = derived(
+	activeArchetypeConfig,
+	($config): ArchetypeDefinition[] => $config.archetypes,
 );
 
 // --- Actions ---

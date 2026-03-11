@@ -2,6 +2,7 @@ export interface SignatureCard {
 	name: string;
 	minCopies?: number;
 	exactCopies?: number;
+	usedAsCommander?: boolean;
 }
 
 export interface ArchetypeDefinition {
@@ -13,5 +14,11 @@ export interface ArchetypeDefinition {
 export interface ArchetypeYaml {
 	format: string;
 	date: string;
+	nameEqualsCommander?: boolean;
 	archetypes: ArchetypeDefinition[];
+}
+
+export interface ParsedArchetypeConfig {
+	archetypes: ArchetypeDefinition[];
+	nameEqualsCommander: boolean;
 }

@@ -1,24 +1,32 @@
 import { parse as parseYaml } from "yaml";
-import type { ArchetypeDefinition, ArchetypeYaml } from "../types/archetype";
+import type {
+	ArchetypeDefinition,
+	ArchetypeYaml,
+	ParsedArchetypeConfig,
+} from "../types/archetype";
 import type { CardEntry, DecklistInfo } from "../types/decklist";
-import { getFrontFace } from "../utils/card-normalizer";
+import { getCommanderShortName, getFrontFace } from "../utils/card-normalizer";
 import { knnClassify, type LabeledPoint } from "./knn";
 import { buildCorpus, vectorize } from "./tfidf";
 
 export interface ClassificationResult {
 	decklistId: string;
 	archetype: string;
-	method: "signature" | "knn" | "unknown";
+	method: "signature" | "knn" | "commander" | "unknown";
 	confidence: number; // 1.0 for signature match, KNN confidence for knn, 0 for unknown
 	neighbors?: { archetype: string; similarity: number }[]; // only present for method === "knn"
+	representativeCard?: string; // full card name for art lookup (commander method)
 }
 
 /**
- * Parse archetype YAML content into ArchetypeDefinition[].
+ * Parse archetype YAML content into a ParsedArchetypeConfig.
  */
-export function parseArchetypeYaml(yamlContent: string): ArchetypeDefinition[] {
+export function parseArchetypeYaml(yamlContent: string): ParsedArchetypeConfig {
 	const data = parseYaml(yamlContent) as ArchetypeYaml;
-	return data.archetypes ?? [];
+	return {
+		archetypes: data.archetypes ?? [],
+		nameEqualsCommander: data.nameEqualsCommander ?? false,
+	};
 }
 
 /**
@@ -30,6 +38,7 @@ export function parseArchetypeYaml(yamlContent: string): ArchetypeDefinition[] {
  */
 export function classifyBySignatureCards(
 	mainboard: CardEntry[],
+	commanders: CardEntry[] | null,
 	archetypeDefs: ArchetypeDefinition[],
 ): string | null {
 	const cardQuantities = new Map<string, number>();
@@ -38,11 +47,21 @@ export function classifyBySignatureCards(
 		cardQuantities.set(name, (cardQuantities.get(name) ?? 0) + entry.quantity);
 	}
 
+	const commanderNames = new Set<string>();
+	if (commanders) {
+		for (const entry of commanders) {
+			commanderNames.add(getFrontFace(entry.cardName));
+		}
+	}
+
 	let bestMatch: string | null = null;
 	let bestMatchCount = 0;
 
 	for (const archetype of archetypeDefs) {
 		const allMatch = archetype.signatureCards.every((sig) => {
+			if (sig.usedAsCommander) {
+				return commanderNames.has(sig.name);
+			}
 			const qty = cardQuantities.get(sig.name) ?? 0;
 			if (sig.exactCopies !== undefined) {
 				return qty === sig.exactCopies;
@@ -60,26 +79,31 @@ export function classifyBySignatureCards(
 }
 
 /**
- * Classify all decklists using a two-pass approach:
+ * Classify all decklists using a multi-pass approach:
  * 1. Signature card matching (rule-based)
- * 2. KNN classification for remaining unclassified decklists
+ * 2. Commander name fallback (if nameEqualsCommander is enabled)
+ * 3. KNN classification for remaining unclassified decklists
  */
 export function classifyAll(
 	decklists: Record<string, DecklistInfo>,
 	archetypeDefs: ArchetypeDefinition[],
-	options: { k?: number; minConfidence?: number } = {},
+	options: { k?: number; minConfidence?: number; nameEqualsCommander?: boolean } = {},
 ): ClassificationResult[] {
-	const { k = 5, minConfidence = 0.3 } = options;
+	const { k = 5, minConfidence = 0.3, nameEqualsCommander = false } = options;
 	const results: ClassificationResult[] = [];
 
 	const decklistEntries = Object.entries(decklists);
 
 	// Pass 1: Signature card matching
 	const classified = new Map<string, string>(); // decklistId → archetype
-	const unclassifiedIds: string[] = [];
+	let unclassifiedIds: string[] = [];
 
 	for (const [id, decklist] of decklistEntries) {
-		const archetype = classifyBySignatureCards(decklist.mainboard, archetypeDefs);
+		const archetype = classifyBySignatureCards(
+			decklist.mainboard,
+			decklist.commanders,
+			archetypeDefs,
+		);
 		if (archetype) {
 			classified.set(id, archetype);
 			results.push({
@@ -91,6 +115,36 @@ export function classifyAll(
 		} else {
 			unclassifiedIds.push(id);
 		}
+	}
+
+	// Pass 2: Commander name fallback
+	if (nameEqualsCommander && unclassifiedIds.length > 0) {
+		const stillUnclassified: string[] = [];
+		for (const id of unclassifiedIds) {
+			const decklist = decklists[id];
+			const commanders = decklist.commanders;
+			if (commanders && commanders.length > 0) {
+				const isPartners = commanders.length > 1;
+				const commanderName = isPartners
+					? commanders
+							.map((c) => getCommanderShortName(c.cardName))
+							.sort()
+							.join(" & ")
+					: getFrontFace(commanders[0].cardName);
+				const representativeCard = getFrontFace(commanders[0].cardName);
+				classified.set(id, commanderName);
+				results.push({
+					decklistId: id,
+					archetype: commanderName,
+					method: "commander",
+					confidence: 1.0,
+					representativeCard,
+				});
+			} else {
+				stillUnclassified.push(id);
+			}
+		}
+		unclassifiedIds = stillUnclassified;
 	}
 
 	// If no unclassified decklists or no labeled data, done
@@ -106,7 +160,7 @@ export function classifyAll(
 		return results;
 	}
 
-	// Pass 2: KNN classification
+	// Pass 3: KNN classification
 	// Build TF-IDF corpus from all decklists
 	const allMainboards = decklistEntries.map(([, d]) => d.mainboard);
 	const corpus = buildCorpus(allMainboards);

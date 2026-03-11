@@ -13,7 +13,7 @@ const data: TournamentData = JSON.parse(
 	readFileSync("data/tournaments/392401.json", "utf-8"),
 );
 const yaml = readFileSync("data/archetypes/standard.yaml", "utf-8");
-const archetypeDefs = parseArchetypeYaml(yaml);
+const { archetypes: archetypeDefs, nameEqualsCommander } = parseArchetypeYaml(yaml);
 
 console.log(`Tournament: ${data.meta.name}`);
 console.log(`Decklists: ${Object.keys(data.decklists).length}`);
@@ -21,6 +21,7 @@ console.log(`Archetypes defined: ${archetypeDefs.map((a) => a.name).join(", ")}`
 console.log();
 
 const results = classifyAll(data.decklists, archetypeDefs, {
+	nameEqualsCommander,
 	k: 5,
 	minConfidence: 0.3,
 });

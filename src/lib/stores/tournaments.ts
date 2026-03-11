@@ -21,7 +21,7 @@ import {
 	buildPlayerArchetypeMap,
 	type MatrixOptions,
 } from "../utils/winrate-calculator";
-import { activeArchetypeDefs } from "./archetype-configs";
+import { activeArchetypeConfig, activeArchetypeDefs } from "./archetype-configs";
 import { settings } from "./settings";
 
 // --- Raw data (loaded once at build time) ---
@@ -138,24 +138,41 @@ export const decklistMap = derived(
 	},
 );
 
-/** Mapping of archetype name → first signature card name (for representative art). */
+/** Classification results for all filtered tournaments. */
+export const classificationResults = derived(
+	[filteredTournaments, activeArchetypeConfig],
+	([$tournaments, $config]): Map<string, ClassificationResult[]> => {
+		const map = new Map<string, ClassificationResult[]>();
+		for (const t of $tournaments) {
+			map.set(
+				t.meta.id,
+				classifyAll(t.decklists, $config.archetypes, {
+					k: 5,
+					minConfidence: 0.3,
+					nameEqualsCommander: $config.nameEqualsCommander,
+				}),
+			);
+		}
+		return map;
+	},
+);
+
+/** Mapping of archetype name → representative card name (for art lookup). */
 export const archetypeCardMap = derived(
-	activeArchetypeDefs,
-	($defs): Map<string, string> =>
-		new Map(
+	[activeArchetypeDefs, classificationResults],
+	([$defs, $resultsMap]): Map<string, string> => {
+		const map = new Map<string, string>(
 			$defs
 				.filter((d) => d.signatureCards.length > 0)
 				.map((d) => [d.name, d.signatureCards[0].name]),
-		),
-);
-
-/** Classification results for all filtered tournaments. */
-export const classificationResults = derived(
-	[filteredTournaments, activeArchetypeDefs],
-	([$tournaments, $defs]): Map<string, ClassificationResult[]> => {
-		const map = new Map<string, ClassificationResult[]>();
-		for (const t of $tournaments) {
-			map.set(t.meta.id, classifyAll(t.decklists, $defs, { k: 5, minConfidence: 0.3 }));
+		);
+		// Add commander-classified archetypes (representativeCard → full card name for Scryfall)
+		for (const results of $resultsMap.values()) {
+			for (const r of results) {
+				if (r.representativeCard && !map.has(r.archetype)) {
+					map.set(r.archetype, r.representativeCard);
+				}
+			}
 		}
 		return map;
 	},
@@ -204,12 +221,13 @@ export const archetypeStats = derived(
 
 /** Player ID → archetype for the currently selected single tournament. */
 export const currentTournamentArchetypes = derived(
-	[currentTournament, activeArchetypeDefs],
-	([$tournament, $defs]): Map<string, string> => {
+	[currentTournament, activeArchetypeConfig],
+	([$tournament, $config]): Map<string, string> => {
 		if (!$tournament) return new Map();
-		const results = classifyAll($tournament.decklists, $defs, {
+		const results = classifyAll($tournament.decklists, $config.archetypes, {
 			k: 5,
 			minConfidence: 0.3,
+			nameEqualsCommander: $config.nameEqualsCommander,
 		});
 		return buildPlayerArchetypeMap($tournament, results);
 	},
@@ -227,11 +245,18 @@ const allTournamentArray = [...allTournaments.values()];
 
 /** Classification results across ALL tournaments. */
 export const globalClassificationResults = derived(
-	activeArchetypeDefs,
-	($defs): Map<string, ClassificationResult[]> => {
+	activeArchetypeConfig,
+	($config): Map<string, ClassificationResult[]> => {
 		const map = new Map<string, ClassificationResult[]>();
 		for (const t of allTournamentArray) {
-			map.set(t.meta.id, classifyAll(t.decklists, $defs, { k: 5, minConfidence: 0.3 }));
+			map.set(
+				t.meta.id,
+				classifyAll(t.decklists, $config.archetypes, {
+					k: 5,
+					minConfidence: 0.3,
+					nameEqualsCommander: $config.nameEqualsCommander,
+				}),
+			);
 		}
 		return map;
 	},

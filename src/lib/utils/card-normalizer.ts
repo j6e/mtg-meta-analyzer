@@ -38,6 +38,19 @@ export function getFrontFace(name: string): string {
 }
 
 /**
+ * Get a short display name from a commander card name by dropping the ", Title" suffix.
+ * Used for partner commanders to keep combined names concise.
+ * "Aragorn, King of Gondor" → "Aragorn"
+ * "Aclazotz, Deepest Betrayal // Temple of the Dead" → "Aclazotz"
+ * Cards without a comma are returned as-is.
+ */
+export function getCommanderShortName(name: string): string {
+	const frontFace = getFrontFace(name);
+	const commaIndex = frontFace.indexOf(",");
+	return commaIndex === -1 ? frontFace : frontFace.slice(0, commaIndex);
+}
+
+/**
  * Construct a Scryfall image URL for a card.
  * Uses the front face name for DFCs (Scryfall resolves these correctly).
  *
