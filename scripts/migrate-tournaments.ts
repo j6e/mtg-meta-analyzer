@@ -10,22 +10,15 @@ import type {
 	TournamentIndexEntry,
 	TournamentSource,
 } from "../src/lib/types/tournament";
-import { cleanTournamentName, inferImportance } from "./lib/importance";
+import {
+	cleanTournamentName,
+	getPrimaryFormat,
+	inferImportance,
+	toFormatSlug,
+} from "./lib/importance";
 
 const DATA_DIR = join(import.meta.dir, "../data");
 const TOURNAMENTS_DIR = join(DATA_DIR, "tournaments");
-
-/** Slugify a format name for use as a directory name. */
-function formatSlug(format: string): string {
-	return format.toLowerCase().replace(/\s+/g, "-");
-}
-
-/** Extract the primary constructed format from a tournament's format list. */
-function primaryFormat(formats: string[]): string {
-	// Filter out non-constructed formats (Draft, Sealed, etc.)
-	const constructed = formats.filter((f) => !/\b(draft|sealed|limited)\b/i.test(f));
-	return constructed[0] ?? formats[0] ?? "unknown";
-}
 
 /** Extract year-month from an ISO date string. */
 function yearMonth(date: string): string {
@@ -58,8 +51,8 @@ async function main() {
 		(data.meta as Record<string, unknown>).tabletop = true;
 
 		// Determine target path
-		const format = primaryFormat(data.meta.formats);
-		const slug = formatSlug(format);
+		const format = getPrimaryFormat(data.meta.formats);
+		const slug = toFormatSlug(format);
 		const ym = yearMonth(data.meta.date);
 		const targetDir = join(DATA_DIR, slug, ym);
 		const targetFile = join(targetDir, `melee-${numericId}.json`);

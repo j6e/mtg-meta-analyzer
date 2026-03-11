@@ -1,5 +1,16 @@
 import type { TournamentImportance } from "../../src/lib/types/tournament";
 
+/** Extract primary constructed format (skip Draft/Sealed/Limited). */
+export function getPrimaryFormat(formats: string[]): string {
+	const constructed = formats.filter((f) => !/\b(draft|sealed|limited)\b/i.test(f));
+	return constructed[0] ?? formats[0] ?? "unknown";
+}
+
+/** Convert a format name to a URL/directory slug. */
+export function toFormatSlug(format: string): string {
+	return format.toLowerCase().replace(/\s+/g, "-");
+}
+
 const IMPORTANCE_PATTERNS: { importance: TournamentImportance; pattern: RegExp }[] = [
 	{
 		importance: "professional",

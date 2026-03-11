@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
 	classifyAll,
+	classifyAllPooled,
 	classifyBySignatureCards,
 	parseArchetypeYaml,
 } from "../../src/lib/algorithms/archetype-classifier";
@@ -608,5 +609,206 @@ describe("classifyAll", () => {
 		// Without nameEqualsCommander, should NOT use commander name
 		expect(d2Result!.archetype).toBe("Unknown");
 		expect(d2Result!.method).toBe("unknown");
+	});
+});
+
+describe("classifyAllPooled", () => {
+	// Mono Red signature: Lightning Bolt ×4, Goblin Guide ×3
+	const monoRedDeck = cards(
+		["Lightning Bolt", 4],
+		["Goblin Guide", 3],
+		["Mountain", 20],
+		["Monastery Swiftspear", 4],
+		["Searing Blaze", 4],
+	);
+
+	// A deck similar to Mono Red but missing exact signature copies
+	// (has Bolt ×3 instead of ×4, no Goblin Guide) — won't match signature
+	// but should KNN-match to Mono Red due to shared cards
+	const monoRedLikeDeck = cards(
+		["Lightning Bolt", 3],
+		["Mountain", 20],
+		["Monastery Swiftspear", 4],
+		["Searing Blaze", 4],
+		["Rift Bolt", 4],
+	);
+
+	// A completely different deck
+	const controlDeck = cards(
+		["Counterspell", 3],
+		["Wrath of God", 2],
+		["Island", 20],
+		["Plains", 5],
+		["Teferi, Hero of Dominaria", 3],
+	);
+
+	it("classifies across tournaments via pooled KNN", () => {
+		// Tournament A: has a proper Mono Red deck (signature match)
+		const tournamentA: Record<string, DecklistInfo> = {
+			a1: makeDecklist(monoRedDeck, "pA1"),
+			a2: makeDecklist(controlDeck, "pA2"),
+		};
+		// Tournament B: has a Mono-Red-like deck that won't match signature
+		// but should be KNN-classified from Tournament A's training data
+		const tournamentB: Record<string, DecklistInfo> = {
+			b1: makeDecklist(monoRedLikeDeck, "pB1"),
+		};
+
+		const pool = new Map([
+			["tA", tournamentA],
+			["tB", tournamentB],
+		]);
+		const results = classifyAllPooled(pool, archetypeDefs, {
+			k: 5,
+			minConfidence: 0.1,
+		});
+
+		expect(results.get("tA")).toBeDefined();
+		expect(results.get("tB")).toBeDefined();
+
+		// Tournament A: both decks classified by signature
+		const a1 = results.get("tA")!.find((r) => r.decklistId === "a1");
+		expect(a1!.method).toBe("signature");
+		expect(a1!.archetype).toBe("Mono Red");
+
+		const a2 = results.get("tA")!.find((r) => r.decklistId === "a2");
+		expect(a2!.method).toBe("signature");
+		expect(a2!.archetype).toBe("Control");
+
+		// Tournament B: KNN-classified using pooled training set from Tournament A
+		const b1 = results.get("tB")!.find((r) => r.decklistId === "b1");
+		expect(b1!.method).toBe("knn");
+		expect(b1!.archetype).toBe("Mono Red");
+	});
+
+	it("produces identical results to classifyAll for a single tournament", () => {
+		const decklists: Record<string, DecklistInfo> = {
+			d1: makeDecklist(monoRedDeck, "p1"),
+			d2: makeDecklist(controlDeck, "p2"),
+			d3: makeDecklist(monoRedLikeDeck, "p3"),
+		};
+
+		const singleResults = classifyAll(decklists, archetypeDefs, {
+			k: 5,
+			minConfidence: 0.3,
+		});
+		const pooledResults = classifyAllPooled(
+			new Map([["t1", decklists]]),
+			archetypeDefs,
+			{ k: 5, minConfidence: 0.3 },
+		);
+
+		const pooled = pooledResults.get("t1")!;
+		expect(pooled).toHaveLength(singleResults.length);
+
+		for (const single of singleResults) {
+			const match = pooled.find((r) => r.decklistId === single.decklistId);
+			expect(match).toBeDefined();
+			expect(match!.archetype).toBe(single.archetype);
+			expect(match!.method).toBe(single.method);
+		}
+	});
+
+	it("returns empty map for empty input", () => {
+		const results = classifyAllPooled(new Map(), archetypeDefs);
+		expect(results.size).toBe(0);
+	});
+
+	it("marks all decks as Unknown when no signature matches exist", () => {
+		const unknownDeck = cards(["Raging Goblin", 4], ["Mountain", 20]);
+		const pool = new Map([
+			["t1", { d1: makeDecklist(unknownDeck, "p1") }],
+			["t2", { d2: makeDecklist(unknownDeck, "p2") }],
+		]);
+
+		const results = classifyAllPooled(pool, archetypeDefs);
+		for (const [, tournamentResults] of results) {
+			for (const r of tournamentResults) {
+				expect(r.archetype).toBe("Unknown");
+				expect(r.method).toBe("unknown");
+			}
+		}
+	});
+
+	it("respects strictMode across the pool", () => {
+		const strictDefs: ArchetypeDefinition[] = [
+			{
+				name: "Mono Red",
+				signatureCards: [
+					{ name: "Lightning Bolt", minCopies: 4 },
+					{ name: "Goblin Guide", minCopies: 3 },
+				],
+				strictMode: true, // KNN cannot produce this label
+			},
+			{
+				name: "Control",
+				signatureCards: [
+					{ name: "Counterspell", minCopies: 3 },
+					{ name: "Wrath of God", minCopies: 2 },
+				],
+			},
+		];
+
+		// Tournament A has a strict Mono Red signature match
+		const tournamentA: Record<string, DecklistInfo> = {
+			a1: makeDecklist(monoRedDeck, "pA1"),
+		};
+		// Tournament B has a Mono-Red-like deck — should NOT get KNN'd to Mono Red
+		const tournamentB: Record<string, DecklistInfo> = {
+			b1: makeDecklist(monoRedLikeDeck, "pB1"),
+		};
+
+		const results = classifyAllPooled(
+			new Map([
+				["tA", tournamentA],
+				["tB", tournamentB],
+			]),
+			strictDefs,
+			{ k: 5, minConfidence: 0.1 },
+		);
+
+		const b1 = results.get("tB")!.find((r) => r.decklistId === "b1");
+		// Mono Red is strict, so KNN cannot assign it — should be Unknown
+		expect(b1!.archetype).not.toBe("Mono Red");
+	});
+
+	it("handles tournaments with empty decklists", () => {
+		const pool = new Map<string, Record<string, DecklistInfo>>([
+			["tEmpty", {}],
+			["tReal", { d1: makeDecklist(monoRedDeck, "p1") }],
+		]);
+
+		const results = classifyAllPooled(pool, archetypeDefs);
+		expect(results.get("tEmpty")).toEqual([]);
+		expect(results.get("tReal")).toHaveLength(1);
+		expect(results.get("tReal")![0].archetype).toBe("Mono Red");
+	});
+
+	it("skips KNN when nameEqualsCommander classifies all decks", () => {
+		const decklists: Record<string, DecklistInfo> = {
+			d1: makeDecklist(
+				cards(["Sol Ring", 1], ["Forest", 30]),
+				"p1",
+				cards(["Atraxa, Praetors' Voice", 1]),
+			),
+			d2: makeDecklist(
+				cards(["Sol Ring", 1], ["Island", 30]),
+				"p2",
+				cards(["Kinnan, Bonder Prodigy", 1]),
+			),
+		};
+
+		const results = classifyAllPooled(
+			new Map([["t1", decklists]]),
+			[], // no archetype defs — signature pass matches nothing
+			{ nameEqualsCommander: true },
+		);
+
+		const tournamentResults = results.get("t1")!;
+		expect(tournamentResults).toHaveLength(2);
+		for (const r of tournamentResults) {
+			expect(r.method).toBe("commander");
+			expect(r.method).not.toBe("knn");
+		}
 	});
 });

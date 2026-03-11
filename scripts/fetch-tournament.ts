@@ -17,8 +17,14 @@ import { join } from "node:path";
 import type { TournamentIndexEntry } from "../src/lib/types/tournament";
 import { assembleTournament } from "./lib/assembler";
 import { parseTournamentPage } from "./lib/html-parser";
-import { cleanTournamentName, inferImportance } from "./lib/importance";
+import {
+	cleanTournamentName,
+	getPrimaryFormat,
+	inferImportance,
+	toFormatSlug,
+} from "./lib/importance";
 import { MeleeApiError, MeleeClient } from "./lib/melee-client";
+import { extractRoundNumber } from "./lib/round-utils";
 import type { MeleeMatchRow, MeleeStandingRow, ParsedRound } from "./lib/types";
 
 async function main() {
@@ -258,7 +264,7 @@ async function main() {
 
 	// Determine output path: data/{format}/{year-month}/melee-{id}.json
 	const primaryFormat = getPrimaryFormat(tournament.meta.formats);
-	const formatSlug = primaryFormat.toLowerCase().replace(/\s+/g, "-");
+	const formatSlug = toFormatSlug(primaryFormat);
 	const yearMonth = tournament.meta.date.slice(0, 7);
 	const filename = `melee-${tournamentId}.json`;
 	const relPath = `${yearMonth}/${filename}`;
@@ -459,28 +465,6 @@ function computeMatchRecords(
 		result.set(pid, `${r.w}-${r.l}-${r.d}`);
 	}
 	return result;
-}
-
-/** Extract round number from round name. */
-function extractRoundNumber(name: string): number {
-	const match = name.match(/Round\s+(\d+)/i);
-	if (match) return Number(match[1]);
-
-	const lower = name.toLowerCase();
-	if (lower.includes("quarterfinal")) return 900;
-	if (lower.includes("semifinal")) return 950;
-	if (lower.includes("final") && !lower.includes("semi") && !lower.includes("quarter"))
-		return 999;
-	if (lower.includes("top 8")) return 900;
-	if (lower.includes("top 4")) return 950;
-
-	return 0;
-}
-
-/** Extract primary constructed format (skip Draft/Sealed/Limited). */
-function getPrimaryFormat(formats: string[]): string {
-	const constructed = formats.filter((f) => !/\b(draft|sealed|limited)\b/i.test(f));
-	return constructed[0] ?? formats[0] ?? "unknown";
 }
 
 /** Parse a --flag value argument from argv. */

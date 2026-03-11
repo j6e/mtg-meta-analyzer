@@ -78,27 +78,27 @@ export function classifyBySignatureCards(
 	return bestMatch;
 }
 
+interface DeterministicResult {
+	results: ClassificationResult[];
+	classified: Map<string, string>; // decklistId → archetype
+	unclassifiedIds: string[];
+}
+
 /**
- * Classify all decklists using a multi-pass approach:
- * 1. Signature card matching (rule-based)
- * 2. Commander name fallback (if nameEqualsCommander is enabled)
- * 3. KNN classification for remaining unclassified decklists
+ * Run deterministic classification passes (signature cards + commander name).
+ * Returns classified results and the list of still-unclassified decklist IDs.
  */
-export function classifyAll(
+function classifyDeterministic(
 	decklists: Record<string, DecklistInfo>,
 	archetypeDefs: ArchetypeDefinition[],
-	options: { k?: number; minConfidence?: number; nameEqualsCommander?: boolean } = {},
-): ClassificationResult[] {
-	const { k = 5, minConfidence = 0.3, nameEqualsCommander = false } = options;
+	nameEqualsCommander: boolean,
+): DeterministicResult {
 	const results: ClassificationResult[] = [];
-
-	const decklistEntries = Object.entries(decklists);
-
-	// Pass 1: Signature card matching
-	const classified = new Map<string, string>(); // decklistId → archetype
+	const classified = new Map<string, string>();
 	let unclassifiedIds: string[] = [];
 
-	for (const [id, decklist] of decklistEntries) {
+	// Pass 1: Signature card matching
+	for (const [id, decklist] of Object.entries(decklists)) {
 		const archetype = classifyBySignatureCards(
 			decklist.mainboard,
 			decklist.commanders,
@@ -147,6 +147,28 @@ export function classifyAll(
 		unclassifiedIds = stillUnclassified;
 	}
 
+	return { results, classified, unclassifiedIds };
+}
+
+/**
+ * Classify all decklists using a multi-pass approach:
+ * 1. Signature card matching (rule-based)
+ * 2. Commander name fallback (if nameEqualsCommander is enabled)
+ * 3. KNN classification for remaining unclassified decklists
+ */
+export function classifyAll(
+	decklists: Record<string, DecklistInfo>,
+	archetypeDefs: ArchetypeDefinition[],
+	options: { k?: number; minConfidence?: number; nameEqualsCommander?: boolean } = {},
+): ClassificationResult[] {
+	const { k = 5, minConfidence = 0.3, nameEqualsCommander = false } = options;
+
+	const { results, classified, unclassifiedIds } = classifyDeterministic(
+		decklists,
+		archetypeDefs,
+		nameEqualsCommander,
+	);
+
 	// If no unclassified decklists or no labeled data, done
 	if (unclassifiedIds.length === 0 || classified.size === 0) {
 		for (const id of unclassifiedIds) {
@@ -162,6 +184,7 @@ export function classifyAll(
 
 	// Pass 3: KNN classification
 	// Build TF-IDF corpus from all decklists
+	const decklistEntries = Object.entries(decklists);
 	const allMainboards = decklistEntries.map(([, d]) => d.mainboard);
 	const corpus = buildCorpus(allMainboards);
 
@@ -206,4 +229,104 @@ export function classifyAll(
 	}
 
 	return results;
+}
+
+/**
+ * Classify decklists across multiple tournaments with a pooled KNN pass.
+ * Pass 1 (signature cards) and Pass 2 (commander name) run per-tournament.
+ * Pass 3 (KNN) pools all tournaments: the TF-IDF corpus and training set
+ * are built from all tournaments combined, so unclassified decks in small
+ * tournaments benefit from labeled decks in other tournaments.
+ */
+export function classifyAllPooled(
+	tournamentDecklists: Map<string, Record<string, DecklistInfo>>,
+	archetypeDefs: ArchetypeDefinition[],
+	options: { k?: number; minConfidence?: number; nameEqualsCommander?: boolean } = {},
+): Map<string, ClassificationResult[]> {
+	const { k = 5, minConfidence = 0.3, nameEqualsCommander = false } = options;
+	const resultMap = new Map<string, ClassificationResult[]>();
+
+	// Per-tournament deterministic passes
+	const allClassified = new Map<string, string>(); // global decklistId → archetype
+	const allUnclassified: { tournamentId: string; decklistId: string }[] = [];
+	const allDecklists = new Map<string, DecklistInfo>(); // global decklistId → decklist
+
+	for (const [tournamentId, decklists] of tournamentDecklists) {
+		const { results, classified, unclassifiedIds } = classifyDeterministic(
+			decklists,
+			archetypeDefs,
+			nameEqualsCommander,
+		);
+		resultMap.set(tournamentId, results);
+
+		for (const [id, archetype] of classified) {
+			allClassified.set(id, archetype);
+			allDecklists.set(id, decklists[id]);
+		}
+		for (const id of unclassifiedIds) {
+			allUnclassified.push({ tournamentId, decklistId: id });
+			allDecklists.set(id, decklists[id]);
+		}
+	}
+
+	// Early exit: nothing to KNN-classify or no training data
+	if (allUnclassified.length === 0 || allClassified.size === 0) {
+		for (const { tournamentId, decklistId } of allUnclassified) {
+			resultMap.get(tournamentId)!.push({
+				decklistId,
+				archetype: "Unknown",
+				method: "unknown",
+				confidence: 0,
+			});
+		}
+		return resultMap;
+	}
+
+	// Build pooled TF-IDF corpus from ALL mainboards across all tournaments
+	const allMainboards: CardEntry[][] = [];
+	for (const decklist of allDecklists.values()) {
+		allMainboards.push(decklist.mainboard);
+	}
+	const corpus = buildCorpus(allMainboards);
+
+	// Build pooled labeled training set (excluding strictMode archetypes)
+	const strictArchetypes = new Set(
+		archetypeDefs.filter((d) => d.strictMode).map((d) => d.name),
+	);
+	const labeledPoints: LabeledPoint[] = [];
+	for (const [id, archetype] of allClassified) {
+		if (strictArchetypes.has(archetype)) continue;
+		const decklist = allDecklists.get(id)!;
+		const vector = vectorize(decklist.mainboard, corpus);
+		labeledPoints.push({ vector, label: archetype });
+	}
+
+	// KNN classify all remaining unclassified decks against the pooled training set
+	for (const { tournamentId, decklistId } of allUnclassified) {
+		const decklist = allDecklists.get(decklistId)!;
+		const vector = vectorize(decklist.mainboard, corpus);
+		const knnResult = knnClassify(vector, labeledPoints, k);
+
+		if (knnResult && knnResult.confidence >= minConfidence) {
+			resultMap.get(tournamentId)!.push({
+				decklistId,
+				archetype: knnResult.label,
+				method: "knn",
+				confidence: knnResult.confidence,
+				neighbors: knnResult.neighbors.map((n) => ({
+					archetype: n.label,
+					similarity: n.similarity,
+				})),
+			});
+		} else {
+			resultMap.get(tournamentId)!.push({
+				decklistId,
+				archetype: "Unknown",
+				method: "unknown",
+				confidence: knnResult?.confidence ?? 0,
+			});
+		}
+	}
+
+	return resultMap;
 }

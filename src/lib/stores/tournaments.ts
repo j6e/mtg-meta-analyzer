@@ -4,7 +4,7 @@
  */
 import { derived, get, writable } from "svelte/store";
 import type { ClassificationResult } from "../algorithms/archetype-classifier";
-import { classifyAll } from "../algorithms/archetype-classifier";
+import { classifyAll, classifyAllPooled } from "../algorithms/archetype-classifier";
 import { loadIndexes, loadTournaments } from "../data/loader";
 import type { ArchetypeDefinition } from "../types/archetype";
 import type { DecklistInfo } from "../types/decklist";
@@ -138,22 +138,18 @@ export const decklistMap = derived(
 	},
 );
 
-/** Classification results for all filtered tournaments. */
+/** Classification results for all filtered tournaments (pooled KNN). */
 export const classificationResults = derived(
 	[filteredTournaments, activeArchetypeConfig],
 	([$tournaments, $config]): Map<string, ClassificationResult[]> => {
-		const map = new Map<string, ClassificationResult[]>();
-		for (const t of $tournaments) {
-			map.set(
-				t.meta.id,
-				classifyAll(t.decklists, $config.archetypes, {
-					k: 5,
-					minConfidence: 0.3,
-					nameEqualsCommander: $config.nameEqualsCommander,
-				}),
-			);
-		}
-		return map;
+		const tournamentDecklists = new Map(
+			$tournaments.map((t) => [t.meta.id, t.decklists]),
+		);
+		return classifyAllPooled(tournamentDecklists, $config.archetypes, {
+			k: 5,
+			minConfidence: 0.3,
+			nameEqualsCommander: $config.nameEqualsCommander,
+		});
 	},
 );
 
@@ -221,9 +217,15 @@ export const archetypeStats = derived(
 
 /** Player ID → archetype for the currently selected single tournament. */
 export const currentTournamentArchetypes = derived(
-	[currentTournament, activeArchetypeConfig],
-	([$tournament, $config]): Map<string, string> => {
+	[currentTournament, classificationResults, activeArchetypeConfig],
+	([$tournament, $resultsMap, $config]): Map<string, string> => {
 		if (!$tournament) return new Map();
+		// Reuse pooled results when the tournament is in the filtered set
+		const cached = $resultsMap.get($tournament.meta.id);
+		if (cached) {
+			return buildPlayerArchetypeMap($tournament, cached);
+		}
+		// Fallback: tournament not in filtered set (rare)
 		const results = classifyAll($tournament.decklists, $config.archetypes, {
 			k: 5,
 			minConfidence: 0.3,
@@ -243,22 +245,18 @@ export function getTournament(id: string): TournamentData | null {
 /** All tournaments as an array. */
 const allTournamentArray = [...allTournaments.values()];
 
-/** Classification results across ALL tournaments. */
+/** Classification results across ALL tournaments (pooled KNN). */
 export const globalClassificationResults = derived(
 	activeArchetypeConfig,
 	($config): Map<string, ClassificationResult[]> => {
-		const map = new Map<string, ClassificationResult[]>();
-		for (const t of allTournamentArray) {
-			map.set(
-				t.meta.id,
-				classifyAll(t.decklists, $config.archetypes, {
-					k: 5,
-					minConfidence: 0.3,
-					nameEqualsCommander: $config.nameEqualsCommander,
-				}),
-			);
-		}
-		return map;
+		const tournamentDecklists = new Map(
+			allTournamentArray.map((t) => [t.meta.id, t.decklists]),
+		);
+		return classifyAllPooled(tournamentDecklists, $config.archetypes, {
+			k: 5,
+			minConfidence: 0.3,
+			nameEqualsCommander: $config.nameEqualsCommander,
+		});
 	},
 );
 

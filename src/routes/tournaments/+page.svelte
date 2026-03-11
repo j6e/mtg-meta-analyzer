@@ -2,6 +2,7 @@
 import FormatMatchesChart from '$lib/components/FormatMatchesChart.svelte';
 import { filteredTournaments, tournamentList } from '$lib/stores/tournaments';
 import { settings } from '$lib/stores/settings';
+import { importanceRank, IMPORTANCE_STARS } from '$lib/types/tournament';
 
 type SortKey =
 	| "cleanName"
@@ -12,7 +13,6 @@ type SortKey =
 	| "roundCount"
 	| "matchCount";
 
-const importanceOrder = { professional: 0, premier: 1, competitive: 2, other: 3 } as const;
 type SortDir = "asc" | "desc";
 
 let sortKey: SortKey = $state("date");
@@ -24,15 +24,6 @@ function toggleSort(key: SortKey) {
 	} else {
 		sortKey = key;
 		sortDir = key === "cleanName" ? "asc" : "desc";
-	}
-}
-
-function importanceStars(importance: string): string {
-	switch (importance) {
-		case "professional": return "***";
-		case "premier": return "**";
-		case "competitive": return "*";
-		default: return "";
 	}
 }
 
@@ -54,7 +45,7 @@ const sorted = $derived.by(() => {
 			case "formats":
 				return dir * a.formats.join(", ").localeCompare(b.formats.join(", "));
 			case "importance":
-				return dir * (importanceOrder[a.importance] - importanceOrder[b.importance]);
+				return dir * (importanceRank(a.importance) - importanceRank(b.importance));
 			case "playerCount":
 				return dir * (a.playerCount - b.playerCount);
 			case "roundCount":
@@ -145,7 +136,7 @@ function pct(value: number, total: number): string {
 					{@const inFilter = filteredIds.has(t.id)}
 					{@const tMatchCount = filteredMatchCounts.get(t.id) ?? t.matchCount}
 					<tr class:filtered={inFilter}>
-						<td class="importance" title={t.importance}>{importanceStars(t.importance)}</td>
+						<td class="importance" title={t.importance}>{IMPORTANCE_STARS[t.importance]}</td>
 						<td>
 							<a href={t.url} target="_blank" rel="noopener">{t.cleanName}</a>
 						</td>

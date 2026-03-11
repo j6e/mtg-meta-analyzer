@@ -4,7 +4,7 @@
  * and on page load the URL initializes the settings store.
  */
 import { derived } from "svelte/store";
-import type { TournamentImportance } from "../types/tournament";
+import { importanceRank, type TournamentImportance } from "../types/tournament";
 import { type MetaSettings, makeDefaults, settings } from "./settings";
 import { type TournamentListEntry, tournamentList } from "./tournaments";
 
@@ -33,12 +33,15 @@ function eligibleIds(
 	format: string,
 	dateFrom: string,
 	dateTo: string,
+	minTier: TournamentImportance,
 ): string[] {
+	const minRank = importanceRank(minTier);
 	return tournaments
 		.filter((t) => {
 			if (format && !t.formats.includes(format)) return false;
 			if (dateFrom && t.date < dateFrom) return false;
 			if (dateTo && t.date > dateTo) return false;
+			if (minRank > 0 && importanceRank(t.importance) < minRank) return false;
 			return true;
 		})
 		.map((t) => t.id);
@@ -70,7 +73,7 @@ export function settingsToSearchParams(
 	}
 
 	// Exclude — compute deselected tournaments
-	const eligible = eligibleIds(tournaments, s.format, s.dateFrom, s.dateTo);
+	const eligible = eligibleIds(tournaments, s.format, s.dateFrom, s.dateTo, s.minTier);
 	const selectedSet = new Set(s.selectedTournamentIds);
 	const excluded = eligible.filter((id) => !selectedSet.has(id));
 	if (excluded.length > 0) {

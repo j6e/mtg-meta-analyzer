@@ -24,6 +24,10 @@ function stemToDisplayName(stem: string): string {
 	return stem.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
+export function builtinConfigId(format: string): string {
+	return `builtin:${format.toLowerCase().replace(/\s+/g, "-")}`;
+}
+
 export const BUILTIN_CONFIGS: BuiltinArchetypeConfig[] = Object.entries(builtinModules)
 	.map(([path, yamlContent]) => {
 		const filename = path.split("/").pop()!;

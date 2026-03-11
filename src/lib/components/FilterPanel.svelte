@@ -8,6 +8,7 @@
 		savedConfigs,
 		activeConfigId,
 		setActiveConfig,
+		builtinConfigId,
 		BUILTIN_CONFIGS,
 	} from '../stores/archetype-configs';
 
@@ -18,7 +19,7 @@
 	const matchingBuiltinConfigs = $derived(
 		$settings.format
 			? BUILTIN_CONFIGS.filter(
-					(c) => c.id === `builtin:${$settings.format.toLowerCase().replace(/\s+/g, '-')}`,
+					(c) => c.id === builtinConfigId($settings.format),
 				)
 			: BUILTIN_CONFIGS,
 	);
@@ -62,7 +63,7 @@
 		const format = $settings.format;
 		if (format) {
 			const currentId = $activeConfigId;
-			const builtinMatch = `builtin:${format.toLowerCase().replace(/\s+/g, '-')}`;
+			const builtinMatch = builtinConfigId(format);
 			const isMatchingFormat =
 				currentId === builtinMatch ||
 				$savedConfigs.some((c) => c.id === currentId && c.format === format);
@@ -98,7 +99,7 @@
 		// Auto-switch archetype config to match the selected format
 		if (value) {
 			const currentId = $activeConfigId;
-			const builtinMatch = `builtin:${value.toLowerCase().replace(/\s+/g, '-')}`;
+			const builtinMatch = builtinConfigId(value);
 			const isCurrentMatchingFormat =
 				currentId === builtinMatch ||
 				$savedConfigs.some((c) => c.id === currentId && c.format === value);

@@ -6,6 +6,7 @@ import {
 	searchParamsToSettings,
 	settingsToSearchParams,
 } from "../../src/lib/stores/url-settings";
+import type { TournamentImportance } from "../../src/lib/types/tournament";
 
 function makeTournament(id: string, format: string, date: string): TournamentListEntry {
 	return {
@@ -23,6 +24,15 @@ function makeTournament(id: string, format: string, date: string): TournamentLis
 		matchCount: 100,
 		importance: "other",
 	};
+}
+
+function makeTournamentWithTier(
+	id: string,
+	format: string,
+	date: string,
+	importance: TournamentImportance,
+): TournamentListEntry {
+	return { ...makeTournament(id, format, date), importance };
 }
 
 const TOURNAMENTS: TournamentListEntry[] = [
@@ -108,6 +118,33 @@ describe("settingsToSearchParams", () => {
 		s.dateTo = "2026-03-10";
 		s.selectedTournamentIds = ["t1", "t2", "t4"];
 		const params = settingsToSearchParams(s, TOURNAMENTS);
+		expect(params.has("exclude")).toBe(false);
+	});
+
+	it("does not put tier-excluded tournaments into the exclude param", () => {
+		// Scenario: 3 competitive + 2 "other" tournaments, minTier=competitive
+		// User has selected all 3 competitive ones (the correct set for this tier).
+		// The "other" tournaments should NOT appear in ?exclude= because they
+		// are already excluded by the ?tier= param.
+		const mixed: TournamentListEntry[] = [
+			makeTournamentWithTier("c1", "Standard", "2026-02-10", "competitive"),
+			makeTournamentWithTier("c2", "Standard", "2026-02-15", "competitive"),
+			makeTournamentWithTier("c3", "Standard", "2026-02-20", "competitive"),
+			makeTournamentWithTier("o1", "Standard", "2026-02-12", "other"),
+			makeTournamentWithTier("o2", "Standard", "2026-02-18", "other"),
+		];
+
+		const s = makeDefaults();
+		s.format = "Standard";
+		s.dateFrom = "2026-02-01";
+		s.dateTo = "2026-03-01";
+		s.minTier = "competitive";
+		s.selectedTournamentIds = ["c1", "c2", "c3"];
+
+		const params = settingsToSearchParams(s, mixed);
+
+		// The tier param handles filtering "other" tournaments, so exclude
+		// should be absent — o1 and o2 must NOT leak into it.
 		expect(params.has("exclude")).toBe(false);
 	});
 });
