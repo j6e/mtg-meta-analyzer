@@ -21,11 +21,23 @@ export interface AssembleInput {
 	decklists: Map<string, { details: MeleeDecklistDetails; playerId: number }>;
 	completedRounds: ParsedRound[];
 	roundMatches: Map<number, MeleeMatchRow[]>;
+	/** When set, filter player decklists/archetypes to only this format. */
+	formatFilter?: string;
+	/** When set, override standings-derived match records with these (from filtered rounds). */
+	matchRecordOverrides?: Map<string, string>;
 }
 
 export function assembleTournament(input: AssembleInput): TournamentData {
-	const { tournamentId, parsed, standings, decklists, completedRounds, roundMatches } =
-		input;
+	const {
+		tournamentId,
+		parsed,
+		standings,
+		decklists,
+		completedRounds,
+		roundMatches,
+		formatFilter,
+		matchRecordOverrides,
+	} = input;
 
 	// Build players from standings
 	const players: Record<string, PlayerInfo> = {};
@@ -34,14 +46,25 @@ export function assembleTournament(input: AssembleInput): TournamentData {
 		if (!player) continue;
 		const playerId = String(player.ID);
 
+		// Filter decklists by format if a format filter is active
+		const playerDecklists = formatFilter
+			? s.Decklists.filter((d) =>
+					d.Format.toLowerCase().includes(formatFilter.toLowerCase()),
+				)
+			: s.Decklists;
+
+		const matchRecord =
+			matchRecordOverrides?.get(playerId) ??
+			`${s.MatchWins}-${s.MatchLosses}-${s.MatchDraws}`;
+
 		players[playerId] = {
 			name: player.DisplayName,
 			username: player.Username,
 			rank: s.Rank,
 			points: s.Points,
-			matchRecord: `${s.MatchWins}-${s.MatchLosses}-${s.MatchDraws}`,
-			decklistIds: s.Decklists.map((d) => d.DecklistId),
-			reportedArchetypes: s.Decklists.map((d) => d.DecklistName || "Unknown"),
+			matchRecord,
+			decklistIds: playerDecklists.map((d) => d.DecklistId),
+			reportedArchetypes: playerDecklists.map((d) => d.DecklistName || "Unknown"),
 		};
 	}
 
@@ -93,7 +116,7 @@ export function assembleTournament(input: AssembleInput): TournamentData {
 			id: `melee-${tournamentId}`,
 			name: parsed.name,
 			date: parsed.date,
-			formats: parsed.formats,
+			formats: formatFilter ? [formatFilter] : parsed.formats,
 			url: `https://melee.gg/Tournament/View/${tournamentId}`,
 			fetchedAt: new Date().toISOString(),
 			playerCount: Object.keys(cleanedPlayers).length,
@@ -142,13 +165,13 @@ function parseMatchResult(m: MeleeMatchRow): MatchResult {
 
 		if (p1Wins > p2Wins) {
 			winnerId = player1Id;
-			result = `${p1Wins}-${p2Wins}-${m.GameDraws}`;
+			result = `${p1Wins}-${p2Wins}-${m.GameDraws ?? 0}`;
 		} else if (p2Wins > p1Wins) {
 			winnerId = player2Id;
-			result = `${p2Wins}-${p1Wins}-${m.GameDraws}`;
+			result = `${p2Wins}-${p1Wins}-${m.GameDraws ?? 0}`;
 		} else {
 			winnerId = null;
-			result = `${p1Wins}-${p2Wins}-${m.GameDraws}` || "draw";
+			result = `${p1Wins}-${p2Wins}-${m.GameDraws ?? 0}` || "draw";
 		}
 	}
 

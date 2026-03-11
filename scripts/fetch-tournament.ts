@@ -3,11 +3,14 @@
  *
  * Usage:
  *   bun run scripts/fetch-tournament.ts <tournament-url-or-id> [--dry-run]
+ *       [--format <name>] [--skip-rounds <comma-list>]
  *
  * Examples:
  *   bun run scripts/fetch-tournament.ts 72980
  *   bun run scripts/fetch-tournament.ts https://melee.gg/Tournament/View/72980
  *   bun run scripts/fetch-tournament.ts 72980 --dry-run
+ *   bun run scripts/fetch-tournament.ts 394299 --format Standard
+ *   bun run scripts/fetch-tournament.ts 394299 --skip-rounds 1,2,3,9,10,11
  */
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
@@ -21,11 +24,18 @@ import type { MeleeMatchRow, MeleeStandingRow, ParsedRound } from "./lib/types";
 async function main() {
 	const args = process.argv.slice(2);
 	const dryRun = args.includes("--dry-run");
-	const input = args.find((a) => !a.startsWith("--"));
+	const formatFilter = parseArgValue(args, "--format");
+	const skipRoundsArg = parseArgValue(args, "--skip-rounds");
+	const skipRoundNumbers = skipRoundsArg
+		? new Set(skipRoundsArg.split(",").map((n) => Number(n.trim())))
+		: null;
+	const input = args.find(
+		(a) => !a.startsWith("--") && a !== formatFilter && a !== skipRoundsArg,
+	);
 
 	if (!input) {
 		console.error(
-			"Usage: bun run scripts/fetch-tournament.ts <tournament-url-or-id> [--dry-run]",
+			"Usage: bun run scripts/fetch-tournament.ts <tournament-url-or-id> [--dry-run] [--format <name>] [--skip-rounds <list>]",
 		);
 		process.exit(1);
 	}
@@ -38,11 +48,13 @@ async function main() {
 
 	console.log(`Fetching tournament ${tournamentId}...`);
 	if (dryRun) console.log("(dry run — will not write file)");
+	if (formatFilter) console.log(`Format filter: ${formatFilter}`);
+	if (skipRoundNumbers) console.log(`Skip rounds: ${[...skipRoundNumbers].join(", ")}`);
 
 	const client = new MeleeClient({ delayMs: 300 });
 
 	// Step 1: Fetch and parse tournament page
-	console.log("\n[1/4] Fetching tournament page...");
+	console.log("\n[1/5] Fetching tournament page...");
 	const html = await client.fetchTournamentPage(tournamentId);
 	const parsed = parseTournamentPage(html);
 	console.log(`  Name: ${parsed.name}`);
@@ -66,7 +78,7 @@ async function main() {
 
 	for (let i = completedRounds.length - 1; i >= 0; i--) {
 		const round = completedRounds[i];
-		console.log(`\n[2/4] Fetching standings (${round.name}, id=${round.id})...`);
+		console.log(`\n[2/5] Fetching standings (${round.name}, id=${round.id})...`);
 		standings = await client.fetchAllStandings(round.id);
 		console.log(`  Players: ${standings.length}`);
 		if (standings.length > 0) {
@@ -87,17 +99,109 @@ async function main() {
 		);
 	}
 
-	// Collect unique decklist IDs
-	const decklistIds = new Set<string>();
-	for (const s of standings) {
-		for (const d of s.Decklists) {
-			if (d.DecklistId) decklistIds.add(d.DecklistId);
+	// Step 3: Fetch matches for ALL completed rounds (needed for format detection)
+	console.log(`\n[3/5] Fetching matches for ${completedRounds.length} rounds...`);
+	const roundMatches = new Map<number, MeleeMatchRow[]>();
+	for (const round of completedRounds) {
+		const matches = await client.fetchAllMatches(round.id);
+		roundMatches.set(round.id, matches);
+	}
+	console.log(
+		`  Total matches: ${[...roundMatches.values()].reduce((sum, m) => sum + m.length, 0)}`,
+	);
+
+	// Step 3.5: Adjust ranks from standings-less rounds (e.g. Finals with no standings)
+	if (standingsLessRounds.length > 0) {
+		console.log(`\n  Adjusting ranks from standings-less rounds...`);
+		standings = applyStandingsLessRoundAdjustments(
+			standings,
+			standingsLessRounds,
+			roundMatches,
+		);
+	}
+
+	// Step 3.6: Filter rounds by format (if --format or --skip-rounds provided)
+	let filteredRounds = completedRounds;
+	let filteredRoundMatches = roundMatches;
+
+	if (formatFilter || skipRoundNumbers) {
+		const roundFormats = detectRoundFormats(completedRounds, roundMatches);
+
+		console.log("\n  Round formats detected:");
+		for (const round of completedRounds) {
+			const fmt = roundFormats.get(round.id) ?? "unknown";
+			const num = extractRoundNumber(round.name);
+			console.log(`    ${round.name} (round ${num}): ${fmt}`);
+		}
+
+		if (formatFilter) {
+			// Validate that the format exists in detected rounds
+			const allFormats = new Set(roundFormats.values());
+			const hasMatch = [...allFormats].some((f) => formatMatches(f, formatFilter));
+			if (!hasMatch) {
+				console.error(
+					`\nError: Format "${formatFilter}" not found. Detected formats: ${[...allFormats].join(", ")}`,
+				);
+				process.exit(1);
+			}
+
+			filteredRounds = completedRounds.filter((r) => {
+				const fmt = roundFormats.get(r.id);
+				return fmt ? formatMatches(fmt, formatFilter) : false;
+			});
+		}
+
+		if (skipRoundNumbers) {
+			filteredRounds = filteredRounds.filter((r) => {
+				const num = extractRoundNumber(r.name);
+				return !skipRoundNumbers.has(num);
+			});
+		}
+
+		// Build filtered match map
+		filteredRoundMatches = new Map();
+		for (const round of filteredRounds) {
+			const matches = roundMatches.get(round.id);
+			if (matches) filteredRoundMatches.set(round.id, matches);
+		}
+
+		const excluded = completedRounds.filter((r) => !filteredRounds.includes(r));
+		console.log(
+			`\n  Rounds included: ${filteredRounds.map((r) => r.name).join(", ")} (${filteredRounds.length})`,
+		);
+		if (excluded.length > 0) {
+			console.log(
+				`  Rounds excluded: ${excluded.map((r) => r.name).join(", ")} (${excluded.length})`,
+			);
 		}
 	}
-	console.log(`  Decklists to fetch: ${decklistIds.size}`);
 
-	// Step 3: Fetch all decklists
-	console.log(`\n[3/4] Fetching decklists...`);
+	// Collect unique decklist IDs (filtered by format if applicable)
+	const decklistIds = new Set<string>();
+	let totalDecklistCount = 0;
+	for (const s of standings) {
+		for (const d of s.Decklists) {
+			if (!d.DecklistId) continue;
+			totalDecklistCount++;
+			if (formatFilter) {
+				if (formatMatches(d.Format, formatFilter)) {
+					decklistIds.add(d.DecklistId);
+				}
+			} else {
+				decklistIds.add(d.DecklistId);
+			}
+		}
+	}
+	if (formatFilter) {
+		console.log(
+			`  Decklists to fetch: ${decklistIds.size} (${formatFilter} only, skipped ${totalDecklistCount - decklistIds.size} other-format decklists)`,
+		);
+	} else {
+		console.log(`  Decklists to fetch: ${decklistIds.size}`);
+	}
+
+	// Step 4: Fetch decklists
+	console.log(`\n[4/5] Fetching decklists...`);
 	const decklists = new Map<
 		string,
 		{ details: import("./lib/types").MeleeDecklistDetails; playerId: number }
@@ -129,25 +233,15 @@ async function main() {
 	}
 	console.log(`  Fetched: ${fetchedCount}, Failed: ${failedCount}`);
 
-	// Step 4: Fetch matches for each completed round
-	console.log(`\n[4/4] Fetching matches for ${completedRounds.length} rounds...`);
-	const roundMatches = new Map<number, MeleeMatchRow[]>();
-	for (const round of completedRounds) {
-		const matches = await client.fetchAllMatches(round.id);
-		roundMatches.set(round.id, matches);
-	}
-	console.log(
-		`  Total matches: ${[...roundMatches.values()].reduce((sum, m) => sum + m.length, 0)}`,
-	);
-
-	// Step 4.5: Adjust ranks from standings-less rounds (e.g. Finals with no standings)
-	if (standingsLessRounds.length > 0) {
-		console.log(`\n[4.5/4] Adjusting ranks from standings-less rounds...`);
-		standings = applyStandingsLessRoundAdjustments(
-			standings,
-			standingsLessRounds,
-			roundMatches,
+	// Step 5: Compute match record overrides from filtered rounds (if format-filtering)
+	let matchRecordOverrides: Map<string, string> | undefined;
+	if (formatFilter || skipRoundNumbers) {
+		console.log(
+			`\n[5/5] Computing match records from ${filteredRounds.length} constructed rounds...`,
 		);
+		matchRecordOverrides = computeMatchRecords(filteredRoundMatches);
+	} else {
+		console.log(`\n[5/5] Assembling tournament data...`);
 	}
 
 	// Assemble into TournamentData
@@ -156,8 +250,10 @@ async function main() {
 		parsed,
 		standings,
 		decklists,
-		completedRounds,
-		roundMatches,
+		completedRounds: filteredRounds,
+		roundMatches: filteredRoundMatches,
+		formatFilter: formatFilter ?? undefined,
+		matchRecordOverrides,
 	});
 
 	// Determine output path: data/{format}/{year-month}/melee-{id}.json
@@ -276,10 +372,122 @@ function applyStandingsLessRoundAdjustments(
 	return adjusted;
 }
 
+/** Detect the format of each round by inspecting match FormatDescription. */
+function detectRoundFormats(
+	rounds: ParsedRound[],
+	roundMatches: Map<number, MeleeMatchRow[]>,
+): Map<number, string> {
+	const formatMap = new Map<number, string>();
+	for (const round of rounds) {
+		const matches = roundMatches.get(round.id) ?? [];
+		const formatCounts = new Map<string, number>();
+		for (const m of matches) {
+			if (m.FormatDescription) {
+				formatCounts.set(
+					m.FormatDescription,
+					(formatCounts.get(m.FormatDescription) ?? 0) + 1,
+				);
+			}
+		}
+		let bestFormat = "";
+		let bestCount = 0;
+		for (const [fmt, count] of formatCounts) {
+			if (count > bestCount) {
+				bestFormat = fmt;
+				bestCount = count;
+			}
+		}
+		if (bestFormat) formatMap.set(round.id, bestFormat);
+	}
+	return formatMap;
+}
+
+/** Case-insensitive format matching (e.g. "Standard Constructed" matches "Standard"). */
+function formatMatches(roundFormat: string, targetFormat: string): boolean {
+	return roundFormat.toLowerCase().includes(targetFormat.toLowerCase());
+}
+
+/** Compute match records from a set of rounds' matches. Returns Map<playerId, "W-L-D">. */
+function computeMatchRecords(
+	roundMatches: Map<number, MeleeMatchRow[]>,
+): Map<string, string> {
+	const records = new Map<string, { w: number; l: number; d: number }>();
+
+	const getOrCreate = (pid: string) => {
+		let r = records.get(pid);
+		if (!r) {
+			r = { w: 0, l: 0, d: 0 };
+			records.set(pid, r);
+		}
+		return r;
+	};
+
+	for (const matches of roundMatches.values()) {
+		for (const m of matches) {
+			const competitors = m.Competitors;
+
+			if (m.ByeReasonDescription && competitors.length >= 1) {
+				// Bye — winner gets +1 win
+				const pid = String(competitors[0].Team.Players[0]?.ID ?? competitors[0].TeamId);
+				getOrCreate(pid).w++;
+				continue;
+			}
+
+			if (competitors.length < 2) continue;
+
+			const [c1, c2] = competitors;
+			const p1Id = String(c1.Team.Players[0]?.ID ?? c1.TeamId);
+			const p2Id = String(c2.Team.Players[0]?.ID ?? c2.TeamId);
+			const p1Wins = c1.GameWinsAndGameByes ?? 0;
+			const p2Wins = c2.GameWinsAndGameByes ?? 0;
+
+			if (p1Wins > p2Wins) {
+				getOrCreate(p1Id).w++;
+				getOrCreate(p2Id).l++;
+			} else if (p2Wins > p1Wins) {
+				getOrCreate(p2Id).w++;
+				getOrCreate(p1Id).l++;
+			} else {
+				getOrCreate(p1Id).d++;
+				getOrCreate(p2Id).d++;
+			}
+		}
+	}
+
+	const result = new Map<string, string>();
+	for (const [pid, r] of records) {
+		result.set(pid, `${r.w}-${r.l}-${r.d}`);
+	}
+	return result;
+}
+
+/** Extract round number from round name. */
+function extractRoundNumber(name: string): number {
+	const match = name.match(/Round\s+(\d+)/i);
+	if (match) return Number(match[1]);
+
+	const lower = name.toLowerCase();
+	if (lower.includes("quarterfinal")) return 900;
+	if (lower.includes("semifinal")) return 950;
+	if (lower.includes("final") && !lower.includes("semi") && !lower.includes("quarter"))
+		return 999;
+	if (lower.includes("top 8")) return 900;
+	if (lower.includes("top 4")) return 950;
+
+	return 0;
+}
+
 /** Extract primary constructed format (skip Draft/Sealed/Limited). */
 function getPrimaryFormat(formats: string[]): string {
 	const constructed = formats.filter((f) => !/\b(draft|sealed|limited)\b/i.test(f));
 	return constructed[0] ?? formats[0] ?? "unknown";
+}
+
+/** Parse a --flag value argument from argv. */
+function parseArgValue(args: string[], flag: string): string | null {
+	const idx = args.indexOf(flag);
+	if (idx === -1 || idx + 1 >= args.length) return null;
+	return args[idx + 1];
 }
 
 /** Update or create a per-format index.json, preserving manual overrides. */
