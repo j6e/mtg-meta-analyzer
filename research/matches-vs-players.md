@@ -1,43 +1,39 @@
 # Matches vs Players Relationship
 
 **Date**: 2026-03-11
+**Data**: 128 tournaments across Standard, Modern, Duel Commander, Legacy, Pauper.
+**Script**: [`research/matches-vs-players.py`](matches-vs-players.py) — re-run with `uv run research/matches-vs-players.py`
 
-Regression analysis on 56 tournaments (Standard, Modern, Duel Commander, Pauper).
-Matches extracted as sum of all player W/L/D divided by 2 from `data/**/melee-*.json`.
+Matches extracted as `sum(W + L + D) / 2` across all players from `data/**/melee-*.json`.
 
-## Polynomial Fits (all 56 tournaments)
+## Outlier Detection
 
-| Degree | R² | Formula |
-|--------|------|---------|
-| 1 | 0.9892 | `matches = 4.11p - 86.09` |
-| 2 | 0.9892 | `matches = 0.000061p² + 4.05p - 81.58` |
-| 3 | 0.9898 | `matches = 0.0000011p³ - 0.00176p² + 4.70p - 116.42` |
+49% of tournaments (63/128) are local leagues or short events (e.g. Standard RCQs) that run 2-3 rounds regardless of player count. These are detected by comparing the actual matches/player ratio against the expected Swiss ratio `ceil(log2(p)) / 2`. Tournaments below 55% of the expected ratio are flagged as outliers and excluded from the regression.
 
-Quadratic and cubic terms are negligible — the relationship is essentially linear across the full dataset.
+## Regression Results (65 clean tournaments)
 
-## Swiss-Based Formula
+| Formula | R² | MAE | Definition |
+|---------|-----|-----|-----------|
+| **Linear** | **0.9912** | **52** | `m = 4.26p - 84.2` |
+| Cubic | 0.9917 | 49 | `m = -0.0000008p³ + 0.0011p² + 3.93p - 68.3` |
+| Scaled Swiss | 0.9898 | 56 | `m = 0.81 · p·⌈log₂p⌉/2 + 34.6` |
 
-The theoretical Swiss formula is `matches = p * ceil(log2(p)) / 2`. Fitting a scaling factor on all 56 tournaments gives:
+### Performance on Large Tournaments (500+ players, n=6)
 
-```
-matches = 0.77 * p * ceil(log2(p)) / 2 + 23
-```
+| Formula | MAE |
+|---------|-----|
+| Linear | 223 |
+| Cubic | 210 |
+| Scaled Swiss | 283 |
 
-The 0.77 factor accounts for drops and byes (~23% of theoretical matches not played). This serves as a ceiling estimate of rounds played.
+The linear model is the best general-purpose estimator. The cubic marginally improves on large events but adds complexity. The scaled Swiss formula, while theoretically motivated, loses accuracy due to the step-wise `ceil(log2(p))` rounding at certain player counts.
 
-## Comparison Across Tournament Sizes
+## Plot
 
-All formulas fitted on all 56 tournaments:
+![Matches vs Players regression](matches-vs-players.png)
 
-| Formula | R² (all) | MAE (all) | R² (500+) | MAE (500+) |
-|---------|----------|-----------|-----------|------------|
-| Linear | 0.9892 | 55 | 0.884 | 289 |
-| Cubic | 0.9898 | 56 | 0.903 | 263 |
-| Scaled Swiss | 0.9895 | 58 | 0.933 | 197 |
-
-- **Small tournaments (< 100 players)**: all models perform similarly (MAE ~55). High variance in actual match counts due to some events running fewer rounds than full Swiss.
-- **Large tournaments (500+ players)**: scaled Swiss is clearly best, especially for the 1193-player event (error of +27 vs -219 for linear). It captures the round-count step that polynomials miss.
+Left: all 128 tournaments. Right: zoomed to ≤250 players. Red points are outlier leagues excluded from the fit.
 
 ## Takeaway
 
-Use `matches ≈ 4.1p - 86` for quick estimates. For large events, prefer the scaled Swiss formula as it better models the ceil(log2(p)) round structure.
+**Use `matches ≈ 4.26p - 84` for estimating total matches in a full Swiss tournament.** About half the tournaments in the dataset are short-format events (leagues, RCQs) that don't follow the Swiss round structure and should be excluded from this model.
