@@ -49,6 +49,24 @@ export interface TournamentData {
 	rounds: Record<string, RoundInfo>;
 }
 
+const IMPORTANCE_RANK: Record<TournamentImportance, number> = {
+	other: 0,
+	competitive: 1,
+	premier: 2,
+	professional: 3,
+};
+
+export function importanceRank(importance: TournamentImportance): number {
+	return IMPORTANCE_RANK[importance] ?? 0;
+}
+
+export const IMPORTANCE_STARS: Record<TournamentImportance, string> = {
+	other: "",
+	competitive: "★",
+	premier: "★★",
+	professional: "★★★",
+};
+
 /** Entry in a per-format index.json — lightweight metadata for the filter panel */
 export interface TournamentIndexEntry {
 	id: string; // "melee-339227"

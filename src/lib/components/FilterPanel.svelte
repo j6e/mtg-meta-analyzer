@@ -3,6 +3,7 @@
 	import { settings, type OtherMode } from '../stores/settings';
 	import { tournamentList, availableFormats } from '../stores/tournaments';
 	import { getInitialExcludeIds } from '../stores/url-settings';
+	import { importanceRank, IMPORTANCE_STARS, type TournamentImportance } from '../types/tournament';
 	import {
 		savedConfigs,
 		activeConfigId,
@@ -41,17 +42,21 @@
 
 	onMount(() => {
 		const excludeIds = getInitialExcludeIds();
-		settings.update((s) => ({
-			...s,
-			selectedTournamentIds: tournaments
-				.filter(
-					(t) =>
-						(!s.dateFrom || t.date >= s.dateFrom) &&
-						(!s.dateTo || t.date <= s.dateTo) &&
-						!excludeIds.has(t.id),
-				)
-				.map((t) => t.id),
-		}));
+		settings.update((s) => {
+			const minRank = importanceRank(s.minTier);
+			return {
+				...s,
+				selectedTournamentIds: tournaments
+					.filter(
+						(t) =>
+							(!s.dateFrom || t.date >= s.dateFrom) &&
+							(!s.dateTo || t.date <= s.dateTo) &&
+							!excludeIds.has(t.id) &&
+							(minRank === 0 || importanceRank(t.importance) >= minRank),
+					)
+					.map((t) => t.id),
+			};
+		});
 
 		// Sync archetype config to match the active format
 		const format = $settings.format;
@@ -77,13 +82,15 @@
 
 	function handleFormatChange(e: Event) {
 		const value = (e.target as HTMLSelectElement).value;
+		const minRank = importanceRank($settings.minTier);
 		const matching = value
 			? allTournaments.filter((t) => t.formats.includes(value))
 			: allTournaments;
 		const matchingInRange = matching
 			.filter((t) => {
 				const s = $settings;
-				return (!s.dateFrom || t.date >= s.dateFrom) && (!s.dateTo || t.date <= s.dateTo);
+				return (!s.dateFrom || t.date >= s.dateFrom) && (!s.dateTo || t.date <= s.dateTo) &&
+					(minRank === 0 || importanceRank(t.importance) >= minRank);
 			})
 			.map((t) => t.id);
 		settings.update((s) => ({ ...s, format: value, selectedTournamentIds: matchingInRange }));
@@ -107,12 +114,15 @@
 		return d.toISOString().slice(0, 10);
 	}
 
-	function tournamentsInRange(from: string, to: string): string[] {
+	function tournamentsInRange(from: string, to: string, minTier?: TournamentImportance): string[] {
+		const tier = minTier ?? $settings.minTier;
+		const minRank = importanceRank(tier);
 		return allTournaments
 			.filter((t) => {
 				if ($settings.format && !t.formats.includes($settings.format)) return false;
 				if (from && t.date < from) return false;
 				if (to && t.date > to) return false;
+				if (minRank > 0 && importanceRank(t.importance) < minRank) return false;
 				return true;
 			})
 			.map((t) => t.id);
@@ -157,6 +167,15 @@
 		}));
 	}
 
+	function handleMinTierChange(e: Event) {
+		const minTier = (e.target as HTMLSelectElement).value as TournamentImportance;
+		const minRank = importanceRank(minTier);
+		const ids = tournaments
+			.filter((t) => minRank === 0 || importanceRank(t.importance) >= minRank)
+			.map((t) => t.id);
+		settings.update((s) => ({ ...s, minTier, selectedTournamentIds: ids }));
+	}
+
 	function handleTournamentToggle(id: string, checked: boolean) {
 		settings.update((s) => {
 			const ids = new Set(s.selectedTournamentIds);
@@ -170,7 +189,11 @@
 	}
 
 	function selectAllTournaments() {
-		settings.update((s) => ({ ...s, selectedTournamentIds: tournaments.map((t) => t.id) }));
+		const minRank = importanceRank($settings.minTier);
+		const ids = tournaments
+			.filter((t) => minRank === 0 || importanceRank(t.importance) >= minRank)
+			.map((t) => t.id);
+		settings.update((s) => ({ ...s, selectedTournamentIds: ids }));
 	}
 
 	function handleOtherModeChange(mode: OtherMode) {
@@ -236,6 +259,18 @@
 			</label>
 		</div>
 
+		<div class="filter-row">
+			<label>
+				Minimum tier
+				<select onchange={handleMinTierChange} value={$settings.minTier}>
+					<option value="other">None</option>
+					<option value="competitive">★ Competitive</option>
+					<option value="premier">★★ Premier</option>
+					<option value="professional">★★★ Professional</option>
+				</select>
+			</label>
+		</div>
+
 		<div class="filter-row tournament-list">
 			<div class="tournament-header">
 				<span>Select tournaments</span>
@@ -252,6 +287,9 @@
 							onchange={(e) =>
 								handleTournamentToggle(t.id, (e.target as HTMLInputElement).checked)}
 						/>
+						{#if IMPORTANCE_STARS[t.importance]}
+							<span class="t-tier" title={t.importance}>{IMPORTANCE_STARS[t.importance]}</span>
+						{/if}
 						<span class="t-name">{t.cleanName}</span>
 						<span class="t-date">{t.date}</span>
 					</label>
@@ -446,6 +484,13 @@
 		gap: 0.35rem;
 		padding: 0.2rem 0;
 		font-size: 0.8rem;
+	}
+
+	.t-tier {
+		color: var(--color-accent);
+		font-size: 0.7rem;
+		white-space: nowrap;
+		flex-shrink: 0;
 	}
 
 	.t-name {

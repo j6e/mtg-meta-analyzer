@@ -4,8 +4,16 @@
  * and on page load the URL initializes the settings store.
  */
 import { derived } from "svelte/store";
+import type { TournamentImportance } from "../types/tournament";
 import { type MetaSettings, makeDefaults, settings } from "./settings";
 import { type TournamentListEntry, tournamentList } from "./tournaments";
+
+const VALID_TIERS = new Set<TournamentImportance>([
+	"other",
+	"competitive",
+	"premier",
+	"professional",
+]);
 
 // --- Initial exclude set (populated once from URL, consumed once by FilterPanel) ---
 
@@ -56,6 +64,11 @@ export function settingsToSearchParams(
 	params.set("from", s.dateFrom);
 	params.set("to", s.dateTo);
 
+	// Minimum tier — omit when default
+	if (s.minTier !== "other") {
+		params.set("tier", s.minTier);
+	}
+
 	// Exclude — compute deselected tournaments
 	const eligible = eligibleIds(tournaments, s.format, s.dateFrom, s.dateTo);
 	const selectedSet = new Set(s.selectedTournamentIds);
@@ -86,6 +99,9 @@ export function searchParamsToSettings(params: URLSearchParams): MetaSettings {
 	const format = params.has("format") ? (params.get("format") ?? "") : defaults.format;
 	const dateFrom = params.get("from") ?? defaults.dateFrom;
 	const dateTo = params.get("to") ?? defaults.dateTo;
+	const tierRaw = params.get("tier") as TournamentImportance | null;
+	const minTier: TournamentImportance =
+		tierRaw && VALID_TIERS.has(tierRaw) ? tierRaw : "other";
 
 	// Store exclude IDs for FilterPanel to consume on mount
 	const excludeRaw = params.get("exclude");
@@ -116,6 +132,7 @@ export function searchParamsToSettings(params: URLSearchParams): MetaSettings {
 		format,
 		dateFrom,
 		dateTo,
+		minTier,
 		selectedTournamentIds: [], // filled by FilterPanel onMount
 		excludeMirrors,
 		otherMode,

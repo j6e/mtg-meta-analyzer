@@ -3,6 +3,7 @@
  * Values persist in memory (reset on page reload).
  */
 import { writable } from "svelte/store";
+import type { TournamentImportance } from "../types/tournament";
 
 export type OtherMode = "topN" | "minShare";
 
@@ -11,6 +12,7 @@ export interface MetaSettings {
 	format: string;
 	dateFrom: string; // '' = no lower bound (ISO date string)
 	dateTo: string; // '' = no upper bound (ISO date string)
+	minTier: TournamentImportance; // minimum importance for auto-selection ("other" = no filter)
 	selectedTournamentIds: string[]; // empty = all tournaments
 
 	// Matrix options
@@ -32,6 +34,7 @@ export function makeDefaults(): MetaSettings {
 		format: "Standard",
 		dateFrom: isoDate(minus30),
 		dateTo: isoDate(today),
+		minTier: "other",
 		selectedTournamentIds: [],
 		excludeMirrors: true,
 		otherMode: "minShare",
