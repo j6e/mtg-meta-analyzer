@@ -13,11 +13,30 @@
 	const allTournaments = $derived($tournamentList);
 	const formats = $derived($availableFormats);
 
-	/** Tournaments filtered by the currently selected format. */
-	const tournaments = $derived(
+	/** Built-in archetype configs matching the current format. */
+	const matchingBuiltinConfigs = $derived(
 		$settings.format
-			? allTournaments.filter((t) => t.formats.includes($settings.format))
-			: allTournaments,
+			? BUILTIN_CONFIGS.filter(
+					(c) => c.id === `builtin:${$settings.format.toLowerCase().replace(/\s+/g, '-')}`,
+				)
+			: BUILTIN_CONFIGS,
+	);
+
+	/** User-saved archetype configs matching the current format. */
+	const matchingSavedConfigs = $derived(
+		$settings.format
+			? $savedConfigs.filter((c) => c.format === $settings.format)
+			: $savedConfigs,
+	);
+
+	/** Tournaments filtered by the currently selected format and date range. */
+	const tournaments = $derived(
+		allTournaments.filter((t) => {
+			if ($settings.format && !t.formats.includes($settings.format)) return false;
+			if ($settings.dateFrom && t.date < $settings.dateFrom) return false;
+			if ($settings.dateTo && t.date > $settings.dateTo) return false;
+			return true;
+		}),
 	);
 
 	onMount(() => {
@@ -33,6 +52,19 @@
 				)
 				.map((t) => t.id),
 		}));
+
+		// Sync archetype config to match the active format
+		const format = $settings.format;
+		if (format) {
+			const currentId = $activeConfigId;
+			const builtinMatch = `builtin:${format.toLowerCase().replace(/\s+/g, '-')}`;
+			const isMatchingFormat =
+				currentId === builtinMatch ||
+				$savedConfigs.some((c) => c.id === currentId && c.format === format);
+			if (!isMatchingFormat && BUILTIN_CONFIGS.some((c) => c.id === builtinMatch)) {
+				setActiveConfig(builtinMatch);
+			}
+		}
 	});
 
 	// Debounce timer for numeric inputs
@@ -167,7 +199,6 @@
 			<label>
 				Format
 				<select onchange={handleFormatChange} value={$settings.format}>
-					<option value="">All formats</option>
 					{#each formats as f}
 						<option value={f}>{f}</option>
 					{/each}
@@ -231,10 +262,10 @@
 			<label class="stacked">
 				Archetype config
 				<select onchange={handleConfigChange} value={$activeConfigId}>
-					{#each BUILTIN_CONFIGS as cfg}
+					{#each matchingBuiltinConfigs as cfg}
 						<option value={cfg.id}>Built-in: {cfg.displayName}</option>
 					{/each}
-					{#each $savedConfigs as config}
+					{#each matchingSavedConfigs as config}
 						<option value={config.id}>{config.name} ({config.format})</option>
 					{/each}
 				</select>

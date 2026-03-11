@@ -8,7 +8,7 @@ export type OtherMode = "topN" | "minShare";
 
 export interface MetaSettings {
 	// Tournament filters
-	format: string; // '' = all formats
+	format: string;
 	dateFrom: string; // '' = no lower bound (ISO date string)
 	dateTo: string; // '' = no upper bound (ISO date string)
 	selectedTournamentIds: string[]; // empty = all tournaments

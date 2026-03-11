@@ -46,6 +46,8 @@ import { resetSettings, settings } from "../../src/lib/stores/settings";
 afterEach(() => cleanup());
 beforeEach(() => {
 	resetSettings();
+	// Widen date range to include sample tournament dates
+	settings.update((s) => ({ ...s, dateFrom: "2025-01-01", dateTo: "2025-12-31" }));
 	mockTournamentList.set(sampleTournaments);
 	mockAvailableFormats.set(sampleFormats);
 });
@@ -93,13 +95,13 @@ describe("FilterPanel component", () => {
 		expect(container.querySelector('[data-testid="filter-panel"]')).toBeTruthy();
 	});
 
-	it('shows format options including "All formats"', () => {
+	it("shows format options", () => {
 		mockTournamentList.set(sampleTournaments);
 		mockAvailableFormats.set(sampleFormats);
 		const { container } = render(FilterPanel);
 		const options = container.querySelectorAll("select option");
 		const labels = [...options].map((o) => o.textContent);
-		expect(labels).toContain("All formats");
+		expect(labels).not.toContain("All formats");
 		expect(labels).toContain("Standard");
 		expect(labels).toContain("Draft");
 	});
