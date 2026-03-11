@@ -81,6 +81,18 @@ export function vectorize(decklist: CardEntry[], corpus: TfIdfCorpus): SparseVec
 		}
 	}
 
+	// Normalize to unit length so cosine similarity = dot product
+	let norm = 0;
+	for (const [, val] of vector) {
+		norm += val * val;
+	}
+	if (norm > 0) {
+		norm = Math.sqrt(norm);
+		for (let i = 0; i < vector.length; i++) {
+			vector[i] = [vector[i][0], vector[i][1] / norm];
+		}
+	}
+
 	return vector;
 }
 
