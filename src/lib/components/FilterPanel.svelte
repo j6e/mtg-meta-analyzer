@@ -108,9 +108,14 @@
 	}
 
 	function tournamentsInRange(from: string, to: string): string[] {
-		return tournaments.filter((t) => (!from || t.date >= from) && (!to || t.date <= to)).map(
-			(t) => t.id,
-		);
+		return allTournaments
+			.filter((t) => {
+				if ($settings.format && !t.formats.includes($settings.format)) return false;
+				if (from && t.date < from) return false;
+				if (to && t.date > to) return false;
+				return true;
+			})
+			.map((t) => t.id);
 	}
 
 	function handleDatePresetChange(e: Event) {
