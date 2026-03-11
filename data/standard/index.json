@@ -159,7 +159,7 @@
     "url": "https://melee.gg/Tournament/View/408742",
     "playerCount": 19,
     "roundCount": 8,
-    "importance": "other",
+    "importance": "competitive",
     "tabletop": true,
     "pairings": true,
     "path": "2026-02/melee-408742.json"
@@ -220,7 +220,7 @@
     "playerCount": 119,
     "roundCount": 13,
     "importance": "professional",
-    "tabletop": true,
+    "tabletop": false,
     "pairings": true,
     "path": "2026-02/melee-402685.json"
   },
@@ -570,6 +570,21 @@
     "path": "2026-01/melee-401039.json"
   },
   {
+    "id": "melee-394299",
+    "name": "Pro Tour Lorwyn Eclipsed in Richmond, USA",
+    "cleanName": "Pro Tour Lorwyn Eclipsed in Richmond, USA",
+    "date": "2026-01-30",
+    "format": "Standard",
+    "source": "melee",
+    "url": "https://melee.gg/Tournament/View/394299",
+    "playerCount": 303,
+    "roundCount": 13,
+    "importance": "professional",
+    "tabletop": true,
+    "pairings": true,
+    "path": "2026-01/melee-394299.json"
+  },
+  {
     "id": "melee-390010",
     "name": "$uper $unday RCQ - Standard - SCG CON Portland - Sunday - 9:30 am",
     "cleanName": "$uper $unday RCQ - SCG CON Portland",
@@ -610,7 +625,7 @@
     "playerCount": 64,
     "roundCount": 9,
     "importance": "other",
-    "tabletop": true,
+    "tabletop": false,
     "pairings": true,
     "path": "2026-01/melee-396293.json"
   },
