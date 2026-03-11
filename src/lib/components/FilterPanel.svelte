@@ -59,7 +59,7 @@
 		// Auto-switch archetype config to match the selected format
 		if (value) {
 			const currentId = $activeConfigId;
-			const builtinMatch = `builtin:${value.toLowerCase()}`;
+			const builtinMatch = `builtin:${value.toLowerCase().replace(/\s+/g, '-')}`;
 			const isCurrentMatchingFormat =
 				currentId === builtinMatch ||
 				$savedConfigs.some((c) => c.id === currentId && c.format === value);

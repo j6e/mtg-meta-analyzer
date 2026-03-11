@@ -25,6 +25,14 @@
 			: null,
 	);
 
+	const sortByName = (cards: DecklistInfo['mainboard']) =>
+		[...cards].sort((a, b) => a.cardName.localeCompare(b.cardName));
+
+	const sortedCommanders = $derived(sortByName(decklist.commanders ?? []));
+	const sortedCompanion = $derived(sortByName(decklist.companion ?? []));
+	const sortedMainboard = $derived(sortByName(decklist.mainboard));
+	const sortedSideboard = $derived(sortByName(decklist.sideboard));
+
 	const mainboardCount = $derived(
 		decklist.mainboard.reduce((sum, c) => sum + c.quantity, 0),
 	);
@@ -52,11 +60,27 @@
 		</div>
 	{/if}
 
+	{#if decklist.commanders && decklist.commanders.length > 0}
+		<section>
+			<h3>Commander</h3>
+			<ul>
+				{#each sortedCommanders as card}
+					<li>
+						<span class="qty">{card.quantity}x</span>
+						<CardTooltip cardName={card.cardName}>
+							<span class="card-name">{card.cardName}</span>
+						</CardTooltip>
+					</li>
+				{/each}
+			</ul>
+		</section>
+	{/if}
+
 	{#if decklist.companion && decklist.companion.length > 0}
 		<section>
 			<h3>Companion</h3>
 			<ul>
-				{#each decklist.companion as card}
+				{#each sortedCompanion as card}
 					<li>
 						<span class="qty">{card.quantity}x</span>
 						<CardTooltip cardName={card.cardName}>
@@ -71,7 +95,7 @@
 	<section>
 		<h3>Mainboard <span class="count">({mainboardCount})</span></h3>
 		<ul>
-			{#each decklist.mainboard as card}
+			{#each sortedMainboard as card}
 				<li>
 					<span class="qty">{card.quantity}x</span>
 					<CardTooltip cardName={card.cardName}>
@@ -86,7 +110,7 @@
 		<section>
 			<h3>Sideboard <span class="count">({sideboardCount})</span></h3>
 			<ul>
-				{#each decklist.sideboard as card}
+				{#each sortedSideboard as card}
 					<li>
 						<span class="qty">{card.quantity}x</span>
 						<CardTooltip cardName={card.cardName}>

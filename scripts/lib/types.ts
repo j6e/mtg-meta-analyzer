@@ -138,6 +138,7 @@ export interface ParsedRound {
 export interface ParsedDecklist {
 	mainboard: { cardName: string; quantity: number }[];
 	sideboard: { cardName: string; quantity: number }[];
+	commanders: { cardName: string; quantity: number }[] | null;
 	companion: { cardName: string; quantity: number }[] | null;
 	reportedArchetype: string | null;
 }

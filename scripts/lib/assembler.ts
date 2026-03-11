@@ -53,6 +53,7 @@ export function assembleTournament(input: AssembleInput): TournamentData {
 			playerId: String(playerId),
 			mainboard: parsed.mainboard,
 			sideboard: parsed.sideboard,
+			commanders: parsed.commanders,
 			companion: parsed.companion,
 			reportedArchetype: parsed.reportedArchetype,
 		};
