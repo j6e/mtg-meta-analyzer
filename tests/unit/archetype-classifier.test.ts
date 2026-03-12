@@ -712,10 +712,9 @@ describe("classifyAllPooled", () => {
 
 	it("marks all decks as Unknown when no signature matches exist", () => {
 		const unknownDeck = cards(["Raging Goblin", 4], ["Mountain", 20]);
-		const pool = new Map([
-			["t1", { d1: makeDecklist(unknownDeck, "p1") }],
-			["t2", { d2: makeDecklist(unknownDeck, "p2") }],
-		]);
+		const pool = new Map<string, Record<string, DecklistInfo>>();
+		pool.set("t1", { d1: makeDecklist(unknownDeck, "p1") });
+		pool.set("t2", { d2: makeDecklist(unknownDeck, "p2") });
 
 		const results = classifyAllPooled(pool, archetypeDefs);
 		for (const [, tournamentResults] of results) {

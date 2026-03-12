@@ -16,6 +16,7 @@ function makeDeck(
 			cardName,
 			quantity,
 		})),
+		commanders: null,
 		companion: null,
 		reportedArchetype: null,
 	};

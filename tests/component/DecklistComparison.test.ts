@@ -15,6 +15,7 @@ const aggregate: DecklistInfo = {
 		{ cardName: "Shock", quantity: 2 },
 	],
 	sideboard: [{ cardName: "Negate", quantity: 3 }],
+	commanders: null,
 	companion: null,
 	reportedArchetype: null,
 };
@@ -30,6 +31,7 @@ const selected: DecklistInfo = {
 		{ cardName: "Negate", quantity: 2 },
 		{ cardName: "Searing Blood", quantity: 2 },
 	],
+	commanders: null,
 	companion: null,
 	reportedArchetype: null,
 };

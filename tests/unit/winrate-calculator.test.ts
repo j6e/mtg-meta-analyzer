@@ -59,6 +59,7 @@ function makeDecklist(playerId: string): DecklistInfo {
 		playerId,
 		mainboard: [{ cardName: "Mountain", quantity: 20 }],
 		sideboard: [],
+		commanders: null,
 		companion: null,
 		reportedArchetype: null,
 	};
@@ -72,6 +73,7 @@ function makeDecklistWithReport(
 		playerId,
 		mainboard: [{ cardName: "Mountain", quantity: 20 }],
 		sideboard: [],
+		commanders: null,
 		companion: null,
 		reportedArchetype,
 	};
@@ -124,7 +126,7 @@ describe("buildPlayerArchetypeMap", () => {
 			{
 				decklistId: "d2",
 				archetype: "Control",
-				method: "knn",
+				method: "centroid",
 				confidence: 0.8,
 			},
 		];
@@ -178,7 +180,7 @@ describe("buildPlayerArchetypeMap", () => {
 			{
 				decklistId: "d2",
 				archetype: "Midrange",
-				method: "knn",
+				method: "centroid",
 				confidence: 0.7,
 			},
 		];
@@ -661,7 +663,7 @@ describe("buildAttributionMatrix", () => {
 					{
 						decklistId: "d2",
 						archetype: "Midrange",
-						method: "knn" as const,
+						method: "centroid" as const,
 						confidence: 0.8,
 					},
 				],
@@ -733,7 +735,7 @@ describe("buildAttributionMatrix", () => {
 					{
 						decklistId: "d2",
 						archetype: "Control",
-						method: "knn" as const,
+						method: "centroid" as const,
 						confidence: 0.7,
 					},
 				],
@@ -774,7 +776,7 @@ describe("buildAttributionMatrix", () => {
 					{
 						decklistId: "d3",
 						archetype: "Control",
-						method: "knn" as const,
+						method: "centroid" as const,
 						confidence: 0.9,
 					},
 				],
@@ -859,7 +861,7 @@ describe("buildAttributionMatrix", () => {
 					{
 						decklistId: "d2",
 						archetype: "Control",
-						method: "knn" as const,
+						method: "centroid" as const,
 						confidence: 0.8,
 					},
 					{
@@ -908,7 +910,7 @@ describe("buildAttributionMatrix", () => {
 					{
 						decklistId: "d1",
 						archetype: "Small",
-						method: "knn" as const,
+						method: "centroid" as const,
 						confidence: 0.5,
 					},
 					{

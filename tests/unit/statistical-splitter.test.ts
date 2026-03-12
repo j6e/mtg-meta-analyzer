@@ -34,6 +34,7 @@ function makeDeckWithCards(
 			quantity,
 		})),
 		sideboard: [],
+		commanders: null,
 		companion: null,
 		reportedArchetype: null,
 	};

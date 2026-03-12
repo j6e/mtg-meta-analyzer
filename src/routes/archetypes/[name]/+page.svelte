@@ -169,6 +169,7 @@
 			playerId: '',
 			mainboard: aggregateResult.mainboard,
 			sideboard: aggregateResult.sideboard,
+			commanders: null,
 			companion: null,
 			reportedArchetype: null,
 		};

@@ -24,6 +24,7 @@ function makeDecklist(playerId: string): DecklistInfo {
 		playerId,
 		mainboard: [{ cardName: "Mountain", quantity: 20 }],
 		sideboard: [],
+		commanders: null,
 		companion: null,
 		reportedArchetype: null,
 	};
