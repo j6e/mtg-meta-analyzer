@@ -28,8 +28,7 @@ console.log();
 
 // Step 1: Classify decklists
 const classResults = classifyAll(data.decklists, archetypeDefs, {
-	k: 5,
-	minConfidence: 0.3,
+	minConfidence: 0.4,
 	nameEqualsCommander,
 });
 

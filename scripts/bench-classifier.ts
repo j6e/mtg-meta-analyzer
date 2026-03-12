@@ -104,8 +104,7 @@ function runBenchmark(
 	for (let i = 0; i < iterations; i++) {
 		const start = performance.now();
 		classifyAllPooled(decklistMap, archetypeDefs.archetypes, {
-			k: 5,
-			minConfidence: 0.3,
+			minConfidence: 0.4,
 			nameEqualsCommander: archetypeDefs.nameEqualsCommander,
 		});
 		times.push(performance.now() - start);

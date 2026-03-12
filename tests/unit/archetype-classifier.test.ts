@@ -410,13 +410,12 @@ describe("classifyAll", () => {
 		};
 
 		const results = classifyAll(decklists, archetypeDefs, {
-			k: 3,
 			minConfidence: 0,
 		});
 		const d5Result = results.find((r) => r.decklistId === "d5");
 
 		expect(d5Result!.archetype).toBe("Mono Red");
-		expect(d5Result!.method).toBe("knn");
+		expect(d5Result!.method).toBe("centroid");
 		expect(d5Result!.confidence).toBeGreaterThan(0);
 	});
 
@@ -494,11 +493,10 @@ describe("classifyAll", () => {
 		};
 
 		const results = classifyAll(decklists, strictDefs, {
-			k: 3,
 			minConfidence: 0,
 		});
 		const d3Result = results.find((r) => r.decklistId === "d3");
-		// KNN cannot assign Strict Combo because it's excluded from training set
+		// Centroid cannot assign Strict Combo because it's excluded from training set
 		expect(d3Result!.archetype).toBe("Unknown");
 		expect(d3Result!.method).toBe("unknown");
 	});
@@ -659,7 +657,6 @@ describe("classifyAllPooled", () => {
 			["tB", tournamentB],
 		]);
 		const results = classifyAllPooled(pool, archetypeDefs, {
-			k: 5,
 			minConfidence: 0.1,
 		});
 
@@ -675,9 +672,9 @@ describe("classifyAllPooled", () => {
 		expect(a2!.method).toBe("signature");
 		expect(a2!.archetype).toBe("Control");
 
-		// Tournament B: KNN-classified using pooled training set from Tournament A
+		// Tournament B: centroid-classified using pooled training set from Tournament A
 		const b1 = results.get("tB")!.find((r) => r.decklistId === "b1");
-		expect(b1!.method).toBe("knn");
+		expect(b1!.method).toBe("centroid");
 		expect(b1!.archetype).toBe("Mono Red");
 	});
 
@@ -689,13 +686,12 @@ describe("classifyAllPooled", () => {
 		};
 
 		const singleResults = classifyAll(decklists, archetypeDefs, {
-			k: 5,
 			minConfidence: 0.3,
 		});
 		const pooledResults = classifyAllPooled(
 			new Map([["t1", decklists]]),
 			archetypeDefs,
-			{ k: 5, minConfidence: 0.3 },
+			{ minConfidence: 0.3 },
 		);
 
 		const pooled = pooledResults.get("t1")!;
@@ -764,7 +760,7 @@ describe("classifyAllPooled", () => {
 				["tB", tournamentB],
 			]),
 			strictDefs,
-			{ k: 5, minConfidence: 0.1 },
+			{ minConfidence: 0.1 },
 		);
 
 		const b1 = results.get("tB")!.find((r) => r.decklistId === "b1");
@@ -808,7 +804,7 @@ describe("classifyAllPooled", () => {
 		expect(tournamentResults).toHaveLength(2);
 		for (const r of tournamentResults) {
 			expect(r.method).toBe("commander");
-			expect(r.method).not.toBe("knn");
+			expect(r.method).not.toBe("centroid");
 		}
 	});
 });

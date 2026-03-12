@@ -17,14 +17,6 @@
 		classificationResult?: ClassificationResult;
 	} = $props();
 
-	const knnTooltip = $derived(
-		classificationResult?.method === 'knn' && classificationResult.neighbors
-			? classificationResult.neighbors
-					.map((n) => `${n.archetype} (${n.similarity.toFixed(2)})`)
-					.join(', ')
-			: null,
-	);
-
 	const sortByName = (cards: DecklistInfo['mainboard']) =>
 		[...cards].sort((a, b) => a.cardName.localeCompare(b.cardName));
 
@@ -49,12 +41,9 @@
 			{#if archetype}<span class="archetype">{archetype}</span>{/if}
 			{#if classificationResult?.method === 'signature'}
 				<span class="method-badge method-rules" title="Classified by signature cards">By rules</span>
-			{:else if classificationResult?.method === 'knn'}
-				<span class="method-badge method-knn knn-tooltip-anchor">
-					By KNN
-					{#if knnTooltip}
-						<span class="knn-tooltip">{knnTooltip}</span>
-					{/if}
+			{:else if classificationResult?.method === 'centroid'}
+				<span class="method-badge method-centroid" title="Classified by nearest centroid (confidence: {classificationResult.confidence.toFixed(2)})">
+					By similarity
 				</span>
 			{/if}
 		</div>
@@ -176,37 +165,9 @@
 		background: var(--color-surface-alt, rgba(0, 0, 0, 0.05));
 	}
 
-	.method-knn {
+	.method-centroid {
 		color: #1d6fb8;
 		background: rgba(29, 111, 184, 0.08);
-	}
-
-	.knn-tooltip-anchor {
-		position: relative;
-		cursor: default;
-	}
-
-	.knn-tooltip {
-		display: none;
-		position: absolute;
-		top: calc(100% + 4px);
-		left: 0;
-		z-index: 10;
-		background: var(--color-surface);
-		border: 1px solid var(--color-border);
-		border-radius: 6px;
-		padding: 0.4rem 0.6rem;
-		font-size: 0.72rem;
-		color: var(--color-text);
-		white-space: normal;
-		min-width: 300px;
-		max-width: 480px;
-		line-height: 1.5;
-		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
-	}
-
-	.knn-tooltip-anchor:hover .knn-tooltip {
-		display: block;
 	}
 
 	section {

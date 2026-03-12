@@ -34,8 +34,7 @@ const archetypeDefs = parsed.archetypes;
 const playerArchetypes = new Map<string, string>();
 for (const t of tournaments) {
 	const results = classifyAll(t.decklists, archetypeDefs, {
-		k: 5,
-		minConfidence: 0.3,
+		minConfidence: 0.4,
 	});
 	for (const r of results) {
 		const playerId = t.decklists[r.decklistId]?.playerId;

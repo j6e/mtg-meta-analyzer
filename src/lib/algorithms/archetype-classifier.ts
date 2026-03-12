@@ -6,15 +6,15 @@ import type {
 } from "../types/archetype";
 import type { CardEntry, DecklistInfo } from "../types/decklist";
 import { getCommanderShortName, getFrontFace } from "../utils/card-normalizer";
-import { knnClassify, type LabeledPoint } from "./knn";
+import { buildCentroids, classifyCentroid } from "./centroid";
+import type { LabeledPoint } from "./knn";
 import { buildCorpus, vectorize } from "./tfidf";
 
 export interface ClassificationResult {
 	decklistId: string;
 	archetype: string;
-	method: "signature" | "knn" | "commander" | "unknown";
-	confidence: number; // 1.0 for signature match, KNN confidence for knn, 0 for unknown
-	neighbors?: { archetype: string; similarity: number }[]; // only present for method === "knn"
+	method: "signature" | "centroid" | "commander" | "unknown";
+	confidence: number; // 1.0 for signature/commander, centroid similarity, 0 for unknown
 	representativeCard?: string; // full card name for art lookup (commander method)
 }
 
@@ -154,14 +154,14 @@ function classifyDeterministic(
  * Classify all decklists using a multi-pass approach:
  * 1. Signature card matching (rule-based)
  * 2. Commander name fallback (if nameEqualsCommander is enabled)
- * 3. KNN classification for remaining unclassified decklists
+ * 3. Centroid classification for remaining unclassified decklists
  */
 export function classifyAll(
 	decklists: Record<string, DecklistInfo>,
 	archetypeDefs: ArchetypeDefinition[],
-	options: { k?: number; minConfidence?: number; nameEqualsCommander?: boolean } = {},
+	options: { minConfidence?: number; nameEqualsCommander?: boolean } = {},
 ): ClassificationResult[] {
-	const { k = 5, minConfidence = 0.3, nameEqualsCommander = false } = options;
+	const { minConfidence = 0.4, nameEqualsCommander = false } = options;
 
 	const { results, classified, unclassifiedIds } = classifyDeterministic(
 		decklists,
@@ -201,29 +201,27 @@ export function classifyAll(
 		labeledPoints.push({ vector, label: archetype });
 	}
 
-	// Classify unclassified decklists
+	// Classify unclassified decklists by nearest centroid
+	const centroids = buildCentroids(labeledPoints);
+
 	for (const id of unclassifiedIds) {
 		const decklist = decklists[id];
 		const vector = vectorize(decklist.mainboard, corpus);
-		const knnResult = knnClassify(vector, labeledPoints, k);
+		const result = classifyCentroid(vector, centroids);
 
-		if (knnResult && knnResult.confidence >= minConfidence) {
+		if (result && result.confidence >= minConfidence) {
 			results.push({
 				decklistId: id,
-				archetype: knnResult.label,
-				method: "knn",
-				confidence: knnResult.confidence,
-				neighbors: knnResult.neighbors.map((n) => ({
-					archetype: n.label,
-					similarity: n.similarity,
-				})),
+				archetype: result.label,
+				method: "centroid",
+				confidence: result.confidence,
 			});
 		} else {
 			results.push({
 				decklistId: id,
 				archetype: "Unknown",
 				method: "unknown",
-				confidence: knnResult?.confidence ?? 0,
+				confidence: result?.confidence ?? 0,
 			});
 		}
 	}
@@ -232,18 +230,18 @@ export function classifyAll(
 }
 
 /**
- * Classify decklists across multiple tournaments with a pooled KNN pass.
+ * Classify decklists across multiple tournaments with a pooled centroid pass.
  * Pass 1 (signature cards) and Pass 2 (commander name) run per-tournament.
- * Pass 3 (KNN) pools all tournaments: the TF-IDF corpus and training set
+ * Pass 3 (centroid) pools all tournaments: the TF-IDF corpus and training set
  * are built from all tournaments combined, so unclassified decks in small
  * tournaments benefit from labeled decks in other tournaments.
  */
 export function classifyAllPooled(
 	tournamentDecklists: Map<string, Record<string, DecklistInfo>>,
 	archetypeDefs: ArchetypeDefinition[],
-	options: { k?: number; minConfidence?: number; nameEqualsCommander?: boolean } = {},
+	options: { minConfidence?: number; nameEqualsCommander?: boolean } = {},
 ): Map<string, ClassificationResult[]> {
-	const { k = 5, minConfidence = 0.3, nameEqualsCommander = false } = options;
+	const { minConfidence = 0.4, nameEqualsCommander = false } = options;
 	const resultMap = new Map<string, ClassificationResult[]>();
 
 	// Per-tournament deterministic passes
@@ -269,7 +267,7 @@ export function classifyAllPooled(
 		}
 	}
 
-	// Early exit: nothing to KNN-classify or no training data
+	// Early exit: nothing to classify or no training data
 	if (allUnclassified.length === 0 || allClassified.size === 0) {
 		for (const { tournamentId, decklistId } of allUnclassified) {
 			resultMap.get(tournamentId)!.push({
@@ -301,29 +299,27 @@ export function classifyAllPooled(
 		labeledPoints.push({ vector, label: archetype });
 	}
 
-	// KNN classify all remaining unclassified decks against the pooled training set
+	// Classify all remaining unclassified decks by nearest centroid
+	const centroids = buildCentroids(labeledPoints);
+
 	for (const { tournamentId, decklistId } of allUnclassified) {
 		const decklist = allDecklists.get(decklistId)!;
 		const vector = vectorize(decklist.mainboard, corpus);
-		const knnResult = knnClassify(vector, labeledPoints, k);
+		const result = classifyCentroid(vector, centroids);
 
-		if (knnResult && knnResult.confidence >= minConfidence) {
+		if (result && result.confidence >= minConfidence) {
 			resultMap.get(tournamentId)!.push({
 				decklistId,
-				archetype: knnResult.label,
-				method: "knn",
-				confidence: knnResult.confidence,
-				neighbors: knnResult.neighbors.map((n) => ({
-					archetype: n.label,
-					similarity: n.similarity,
-				})),
+				archetype: result.label,
+				method: "centroid",
+				confidence: result.confidence,
 			});
 		} else {
 			resultMap.get(tournamentId)!.push({
 				decklistId,
 				archetype: "Unknown",
 				method: "unknown",
-				confidence: knnResult?.confidence ?? 0,
+				confidence: result?.confidence ?? 0,
 			});
 		}
 	}

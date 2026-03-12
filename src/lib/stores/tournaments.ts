@@ -146,8 +146,7 @@ export const classificationResults = derived(
 			$tournaments.map((t) => [t.meta.id, t.decklists]),
 		);
 		return classifyAllPooled(tournamentDecklists, $config.archetypes, {
-			k: 5,
-			minConfidence: 0.3,
+			minConfidence: 0.4,
 			nameEqualsCommander: $config.nameEqualsCommander,
 		});
 	},
@@ -227,8 +226,7 @@ export const currentTournamentArchetypes = derived(
 		}
 		// Fallback: tournament not in filtered set (rare)
 		const results = classifyAll($tournament.decklists, $config.archetypes, {
-			k: 5,
-			minConfidence: 0.3,
+			minConfidence: 0.4,
 			nameEqualsCommander: $config.nameEqualsCommander,
 		});
 		return buildPlayerArchetypeMap($tournament, results);
@@ -253,8 +251,7 @@ export const globalClassificationResults = derived(
 			allTournamentArray.map((t) => [t.meta.id, t.decklists]),
 		);
 		return classifyAllPooled(tournamentDecklists, $config.archetypes, {
-			k: 5,
-			minConfidence: 0.3,
+			minConfidence: 0.4,
 			nameEqualsCommander: $config.nameEqualsCommander,
 		});
 	},

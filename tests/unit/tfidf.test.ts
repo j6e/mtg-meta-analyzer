@@ -80,7 +80,8 @@ describe("vectorize", () => {
 		expect(vec.length).toBe(1); // Only Lightning Bolt (Mountain has IDF=0)
 		const boltIdx = corpus.vocabulary.get("Lightning Bolt")!;
 		expect(vec[0][0]).toBe(boltIdx);
-		expect(vec[0][1]).toBeCloseTo((4 / 24) * Math.log(2), 10);
+		// Single non-zero entry → after unit normalization, value = 1.0
+		expect(vec[0][1]).toBeCloseTo(1.0, 10);
 	});
 
 	it("two identical decklists produce identical vectors", () => {
@@ -94,21 +95,22 @@ describe("vectorize", () => {
 	});
 
 	it("quantity affects TF proportionally", () => {
-		const deck1 = cards(["Unique Card", 1], ["Filler", 59]);
-		const deck2 = cards(["Unique Card", 4], ["Filler", 56]);
+		// "Semi Shared" appears in deck1+deck2 but not otherDeck → IDF > 0
+		// This gives vectors 2 non-zero entries so normalization doesn't collapse to 1.0
+		const deck1 = cards(["Unique Card", 1], ["Semi Shared", 4], ["Filler", 55]);
+		const deck2 = cards(["Unique Card", 4], ["Semi Shared", 4], ["Filler", 52]);
 		const otherDeck = cards(["Other Card", 4], ["Filler", 56]);
 
 		const corpus = buildCorpus([deck1, deck2, otherDeck]);
 		const vec1 = vectorize(deck1, corpus);
 		const vec2 = vectorize(deck2, corpus);
 
-		// Both have Unique Card, but deck2 has 4x the quantity
 		const uniqueIdx = corpus.vocabulary.get("Unique Card")!;
 		const val1 = vec1.find(([idx]) => idx === uniqueIdx)?.[1] ?? 0;
 		const val2 = vec2.find(([idx]) => idx === uniqueIdx)?.[1] ?? 0;
 
-		// TF1 = 1/60, TF2 = 4/60 → ratio should be 4:1
-		expect(val2 / val1).toBeCloseTo(4, 5);
+		// Higher quantity → higher normalized weight for that component
+		expect(val2).toBeGreaterThan(val1);
 	});
 
 	it("returns empty vector for empty decklist", () => {
