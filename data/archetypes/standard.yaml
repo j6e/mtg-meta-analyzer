@@ -140,7 +140,7 @@ archetypes:
         minCopies: 2
       - name: Vibrance
         minCopies: 2
- 
+
   - name: Jeskai Control
     signatureCards:
       - name: Jeskai Revelation
@@ -301,3 +301,21 @@ archetypes:
         minCopies: 3
       - name: Springleaf Drum
         minCopies: 3
+
+  - name: Azorius Otters
+    signatureCards:
+      - name: "Valley Floodcaller"
+        minCopies: 3
+      - name: "Firdoch Core"
+        minCopies: 2
+      - name: "Hallowed Fountain"
+        minCopies: 4
+
+  - name: Golgari Rythm
+    signatureCards:
+      - name: "Overgrown Tomb"
+        minCopies: 4
+      - name: "Badgermole Cub"
+        minCopies: 4
+      - name: "Nature's Rhythm"
+        minCopies: 2
