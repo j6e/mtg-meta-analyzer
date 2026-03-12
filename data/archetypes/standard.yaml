@@ -74,6 +74,8 @@ archetypes:
         minCopies: 3
       - name: Llanowar Elves
         minCopies: 4
+      - name: Blooming Marsh
+        exactCopies: 0
 
   - name: Bant Rhythm
     signatureCards:
@@ -96,10 +98,10 @@ archetypes:
         minCopies: 2
       - name: Enduring Curiosity
         minCopies: 2
-      - name: Floodpits Drowner
-        minCopies: 3
-      - name: Spyglass Siren
-        minCopies: 3
+      - name: Watery Grave
+        minCopies: 4
+      - name: Soulstone Sanctuary
+        minCopies: 1
 
   - name: Azorius Tempo
     signatureCards:
@@ -313,9 +315,88 @@ archetypes:
 
   - name: Golgari Rythm
     signatureCards:
-      - name: "Overgrown Tomb"
+      - name: "Blooming Marsh"
         minCopies: 4
       - name: "Badgermole Cub"
         minCopies: 4
       - name: "Nature's Rhythm"
         minCopies: 2
+
+  - name: Boros Burn
+    signatureCards:
+      - name: "Boros Charm"
+        minCopies: 3
+      - name: "Lightning Helix"
+        minCopies: 1
+      - name: "Emberheart Challenger"
+        minCopies: 3
+
+  - name: Simic Jackal
+    signatureCards:
+      - name: "Jackal, Genius Geneticist"
+        minCopies: 3
+      - name: "Pawpatch Recruit"
+        minCopies: 3
+      - name: "Llanowar Elves"
+        minCopies: 4
+
+  - name: Temur Battlecrier
+    signatureCards:
+      - name: "Temur Battlecrier"
+        minCopies: 4
+      - name: "Outcaster Trailblazer"
+        minCopies: 4
+
+  - name: Izzet Looting
+    signatureCards:
+      - name: "Tiger-Seal"
+        minCopies: 4
+      - name: "Duelist of the Mind"
+        minCopies: 4
+      - name: "Fear of Missing Out"
+        minCopies: 3
+
+  - name: Jeskai Artifacts
+    signatureCards:
+      - name: "Simulacrum Synthesizer"
+        minCopies: 3
+      - name: "Repurposing Bay"
+        minCopies: 3
+      - name: "United Battlefront"
+        minCopies: 3
+
+  - name: Leyline Aggro
+    signatureCards:
+      - name: "Leyline of Resonance"
+        minCopies: 4
+      - name: "Callous Sell-Sword"
+        minCopies: 3
+      - name: "Might of the Meek"
+        minCopies: 4
+
+  - name: 4-Color Allies
+    signatureCards:
+      - name: "Earth King's Lieutenant"
+        minCopies: 4
+      - name: "Cavern of Souls"
+        minCopies: 4
+      - name: "Jasmine Dragon Tea Shop"
+        minCopies: 3
+
+  - name: Temur Otters
+    signatureCards:
+      - name: "Enduring Vitality"
+        minCopies: 4
+      - name: "Stormchaser's Talent"
+        minCopies: 4
+      - name: "Breeding Pool"
+        minCopies: 4
+
+  - name: Mono-Black Demons
+    signatureCards:
+      - name: "Bloodletter of Aclazotz"
+        minCopies: 2
+      - name: "Unholy Annex"
+        minCopies: 4
+      - name: "Swamp"
+        minCopies: 10
