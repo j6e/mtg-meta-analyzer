@@ -13,6 +13,7 @@
 	import CardTooltip from '$lib/components/CardTooltip.svelte';
 	import type { DecklistInfo } from '$lib/types/decklist';
 	import type { ClassificationResult } from '$lib/algorithms/archetype-classifier';
+	import { computeCardComposition } from '$lib/utils/card-composition';
 
 	const classifiedName = $derived(page.url.searchParams.get('classified') ?? '');
 	const reportedName = $derived(page.url.searchParams.get('reported') ?? '');
@@ -80,6 +81,33 @@
 		const fmtStr = formats.length > 0 ? formats.join(', ') : 'All formats';
 		return `${ts.length} tournament${ts.length !== 1 ? 's' : ''} · ${fmtStr}`;
 	});
+
+	const DEFINING_THRESHOLD = 0.8;
+
+	const definingCards = $derived.by(() => {
+		if (decklists.length < 2) return [];
+		const composition = computeCardComposition(decklists.map((d) => d.decklist));
+		const results: { cardName: string; minCopies: number; inclusion: number }[] = [];
+		for (const row of composition.mainboard) {
+			if (row.thresholds[0] < DEFINING_THRESHOLD) continue;
+			// Find highest copy count shared by 90%+ of decks
+			let minCopies = 1;
+			if (row.thresholds[3] >= DEFINING_THRESHOLD) minCopies = 4;
+			else if (row.thresholds[2] >= DEFINING_THRESHOLD) minCopies = 3;
+			else if (row.thresholds[1] >= DEFINING_THRESHOLD) minCopies = 2;
+			results.push({
+				cardName: row.cardName,
+				minCopies,
+				inclusion: row.thresholds[0],
+			});
+		}
+		results.sort((a, b) => {
+			const diff = b.minCopies - a.minCopies;
+			if (diff !== 0) return diff;
+			return b.inclusion - a.inclusion;
+		});
+		return results;
+	});
 </script>
 
 <svelte:head>
@@ -101,40 +129,71 @@
 		Classified as <strong>{classifiedName}</strong>, reported as <strong>{reportedName}</strong>
 	</p>
 
-	{#if archetypeDef}
-		<section class="definition-section">
-			<h2>Archetype Definition: {classifiedName}</h2>
-			<p class="section-desc">Signature cards used for rule-based classification</p>
-			<table class="sig-table">
-				<thead>
-					<tr>
-						<th>Card Name</th>
-						<th class="num">Copies</th>
-					</tr>
-				</thead>
-				<tbody>
-					{#each archetypeDef.signatureCards as card}
+	<div class="cards-row">
+		{#if archetypeDef}
+			<section class="definition-section">
+				<h2>Archetype Definition: {classifiedName}</h2>
+				<p class="section-desc">Signature cards used for rule-based classification</p>
+				<table class="sig-table">
+					<thead>
 						<tr>
-							<td>
-								<CardTooltip cardName={card.name}>
-									<span class="card-name">{card.name}</span>
-								</CardTooltip>
-							</td>
-							<td class="num">
-								{#if card.exactCopies !== undefined}
-									= {card.exactCopies}
-								{:else}
-									≥ {card.minCopies ?? 1}
-								{/if}
-							</td>
+							<th>Card Name</th>
+							<th class="num">Copies</th>
 						</tr>
-					{/each}
-				</tbody>
-			</table>
-		</section>
-	{:else if classifiedName !== 'Unknown'}
-		<p class="no-def">No archetype definition found for "{classifiedName}" (classified via KNN).</p>
-	{/if}
+					</thead>
+					<tbody>
+						{#each archetypeDef.signatureCards as card}
+							<tr>
+								<td>
+									<CardTooltip cardName={card.name}>
+										<span class="card-name">{card.name}</span>
+									</CardTooltip>
+								</td>
+								<td class="num">
+									{#if card.exactCopies !== undefined}
+										= {card.exactCopies}
+									{:else}
+										≥ {card.minCopies ?? 1}
+									{/if}
+								</td>
+							</tr>
+						{/each}
+					</tbody>
+				</table>
+			</section>
+		{:else if classifiedName !== 'Unknown'}
+			<p class="no-def">No archetype definition found for "{classifiedName}" (classified via KNN).</p>
+		{/if}
+
+		{#if definingCards.length > 0}
+			<section class="defining-section">
+				<h2>Defining Cards</h2>
+				<p class="section-desc">Cards found in 80%+ of the {decklists.length} decklists in this group</p>
+				<table class="sig-table">
+					<thead>
+						<tr>
+							<th>Card Name</th>
+							<th class="num">Copies</th>
+							<th class="num">Inclusion</th>
+						</tr>
+					</thead>
+					<tbody>
+						{#each definingCards as card}
+							<tr>
+								<td>
+									<CardTooltip cardName={card.cardName}>
+										<span class="card-name">{card.cardName}</span>
+									</CardTooltip>
+								</td>
+								<td class="num">{card.minCopies}+</td>
+								<td class="num">{Math.round(card.inclusion * 100)}%</td>
+							</tr>
+						{/each}
+					</tbody>
+				</table>
+			</section>
+		{/if}
+	</div>
 
 	{#if decklists.length > 0}
 		<section>
@@ -202,8 +261,15 @@
 		color: var(--color-text);
 	}
 
-	.definition-section {
+	.cards-row {
+		display: flex;
+		gap: 2rem;
+		align-items: flex-start;
 		margin-bottom: 2rem;
+	}
+
+	.definition-section {
+		flex: 0 1 auto;
 	}
 
 	.section-desc {
@@ -241,6 +307,10 @@
 
 	.card-name {
 		color: var(--color-text);
+	}
+
+	.defining-section {
+		flex: 0 1 auto;
 	}
 
 	.no-def {
