@@ -45,6 +45,10 @@
 				<span class="method-badge method-centroid" title="Classified by nearest centroid (confidence: {classificationResult.confidence.toFixed(2)})">
 					By similarity
 				</span>
+			{:else if classificationResult?.method === 'unknown' && classificationResult.nearestArchetype}
+				<span class="method-badge method-unknown" title="Below confidence threshold — nearest: {classificationResult.nearestArchetype} ({classificationResult.confidence.toFixed(2)})">
+					Unknown
+				</span>
 			{/if}
 		</div>
 	{/if}
@@ -168,6 +172,12 @@
 	.method-centroid {
 		color: #1d6fb8;
 		background: rgba(29, 111, 184, 0.08);
+	}
+
+	.method-unknown {
+		color: var(--color-text-muted);
+		background: var(--color-surface-alt, rgba(0, 0, 0, 0.05));
+		cursor: help;
 	}
 
 	section {

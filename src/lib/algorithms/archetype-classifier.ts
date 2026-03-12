@@ -15,6 +15,7 @@ export interface ClassificationResult {
 	archetype: string;
 	method: "signature" | "centroid" | "commander" | "unknown";
 	confidence: number; // 1.0 for signature/commander, centroid similarity, 0 for unknown
+	nearestArchetype?: string; // nearest centroid label when below minConfidence (debug)
 	representativeCard?: string; // full card name for art lookup (commander method)
 }
 
@@ -222,6 +223,7 @@ export function classifyAll(
 				archetype: "Unknown",
 				method: "unknown",
 				confidence: result?.confidence ?? 0,
+				nearestArchetype: result?.label,
 			});
 		}
 	}
@@ -320,6 +322,7 @@ export function classifyAllPooled(
 				archetype: "Unknown",
 				method: "unknown",
 				confidence: result?.confidence ?? 0,
+				nearestArchetype: result?.label,
 			});
 		}
 	}
