@@ -18,6 +18,7 @@ const sampleDecklist: DecklistInfo = {
 		{ cardName: "Searing Blood", quantity: 3 },
 		{ cardName: "Roiling Vortex", quantity: 2 },
 	],
+	commanders: null,
 	companion: null,
 	reportedArchetype: "Mono-Red Aggro",
 };

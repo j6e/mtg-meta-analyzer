@@ -1,6 +1,9 @@
 <script lang="ts">
 	import { base } from '$app/paths';
 	import type { AttributionMatrix } from '../types/metagame';
+	import { settingsQueryString } from '../stores/url-settings';
+
+	const qs = $derived($settingsQueryString);
 
 	let { matrix }: { matrix: AttributionMatrix } = $props();
 
@@ -144,7 +147,7 @@
 						>
 							{#if count > 0}
 								<a
-									href="{base}/archetype-cleaner/attribution?classified={encodeURIComponent(rowName)}&reported={encodeURIComponent(matrix.reportedArchetypes[j])}"
+									href="{base}/archetype-cleaner/attribution{qs}{qs ? '&' : '?'}classified={encodeURIComponent(rowName)}&reported={encodeURIComponent(matrix.reportedArchetypes[j])}"
 									class="cell-link"
 								>
 									<span class="count">{count}</span>

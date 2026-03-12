@@ -44,6 +44,12 @@
 			});
 	}
 
+	const commanderDiff = $derived(
+		selectedDecklist
+			? buildDiff(aggregateDecklist.commanders ?? [], selectedDecklist.commanders ?? [])
+			: null,
+	);
+
 	const mainDiff = $derived(
 		selectedDecklist
 			? buildDiff(aggregateDecklist.mainboard, selectedDecklist.mainboard)
@@ -110,6 +116,13 @@
 	{/snippet}
 
 	{#if !selectedDecklist}
+		{#if aggregateDecklist.commanders && aggregateDecklist.commanders.length > 0}
+			<h4>Commander</h4>
+			{@render diffTable(
+				aggregateDecklist.commanders.map((c) => ({ cardName: c.cardName, aggQty: c.quantity, selQty: 0 })),
+				false,
+			)}
+		{/if}
 		<h4>Mainboard</h4>
 		{@render diffTable(
 			aggregateDecklist.mainboard.map((c) => ({ cardName: c.cardName, aggQty: c.quantity, selQty: 0 })),
@@ -123,6 +136,11 @@
 			)}
 		{/if}
 	{:else}
+		{#if commanderDiff && commanderDiff.length > 0}
+			<h4>Commander</h4>
+			{@render diffTable(commanderDiff, true)}
+		{/if}
+
 		{#if mainDiff && mainDiff.length > 0}
 			<h4>Mainboard</h4>
 			{@render diffTable(mainDiff, true)}

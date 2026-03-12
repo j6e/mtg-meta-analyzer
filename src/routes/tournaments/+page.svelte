@@ -1,13 +1,18 @@
 <script lang="ts">
+import FormatMatchesChart from '$lib/components/FormatMatchesChart.svelte';
 import { filteredTournaments, tournamentList } from '$lib/stores/tournaments';
+import { settings } from '$lib/stores/settings';
+import { importanceRank, IMPORTANCE_STARS } from '$lib/types/tournament';
 
 type SortKey =
-	| "name"
+	| "cleanName"
 	| "date"
 	| "formats"
+	| "importance"
 	| "playerCount"
 	| "roundCount"
 	| "matchCount";
+
 type SortDir = "asc" | "desc";
 
 let sortKey: SortKey = $state("date");
@@ -18,21 +23,29 @@ function toggleSort(key: SortKey) {
 		sortDir = sortDir === "asc" ? "desc" : "asc";
 	} else {
 		sortKey = key;
-		sortDir = key === "name" ? "asc" : "desc";
+		sortDir = key === "cleanName" ? "asc" : "desc";
 	}
 }
 
+const formatFiltered = $derived(
+	$settings.format
+		? $tournamentList.filter(t => t.formats.includes($settings.format))
+		: $tournamentList
+);
+
 const sorted = $derived.by(() => {
-	const list = [...$tournamentList];
+	const list = [...formatFiltered];
 	const dir = sortDir === "asc" ? 1 : -1;
 	return list.sort((a, b) => {
 		switch (sortKey) {
-			case "name":
-				return dir * a.name.localeCompare(b.name);
+			case "cleanName":
+				return dir * a.cleanName.localeCompare(b.cleanName);
 			case "date":
 				return dir * a.date.localeCompare(b.date);
 			case "formats":
 				return dir * a.formats.join(", ").localeCompare(b.formats.join(", "));
+			case "importance":
+				return dir * (importanceRank(a.importance) - importanceRank(b.importance));
 			case "playerCount":
 				return dir * (a.playerCount - b.playerCount);
 			case "roundCount":
@@ -80,6 +93,14 @@ function pct(value: number, total: number): string {
 
 <h1>Tournaments</h1>
 
+<FormatMatchesChart
+	tournaments={$tournamentList}
+	format={$settings.format}
+	dateFrom={$settings.dateFrom}
+	dateTo={$settings.dateTo}
+	selectedIds={$settings.selectedTournamentIds}
+/>
+
 {#if sorted.length === 0}
 	<p class="empty">No tournaments loaded.</p>
 {:else}
@@ -87,8 +108,11 @@ function pct(value: number, total: number): string {
 		<table>
 			<thead>
 				<tr>
-					<th class="sortable" onclick={() => toggleSort('name')}>
-						Name{sortIndicator('name')}
+					<th class="sortable" onclick={() => toggleSort('importance')}>
+						Tier{sortIndicator('importance')}
+					</th>
+					<th class="sortable" onclick={() => toggleSort('cleanName')}>
+						Name{sortIndicator('cleanName')}
 					</th>
 					<th class="sortable" onclick={() => toggleSort('date')}>
 						Date{sortIndicator('date')}
@@ -112,8 +136,9 @@ function pct(value: number, total: number): string {
 					{@const inFilter = filteredIds.has(t.id)}
 					{@const tMatchCount = filteredMatchCounts.get(t.id) ?? t.matchCount}
 					<tr class:filtered={inFilter}>
+						<td class="importance" title={t.importance}>{IMPORTANCE_STARS[t.importance]}</td>
 						<td>
-							<a href={t.url} target="_blank" rel="noopener">{t.name}</a>
+							<a href={t.url} target="_blank" rel="noopener">{t.cleanName}</a>
 						</td>
 						<td class="mono">{t.date}</td>
 						<td>{t.formats.join(', ')}</td>
@@ -193,6 +218,12 @@ function pct(value: number, total: number): string {
 	.mono {
 		font-family: var(--font-mono);
 		font-size: 0.8rem;
+	}
+
+	.importance {
+		text-align: center;
+		color: var(--color-text-muted);
+		white-space: nowrap;
 	}
 
 	tbody tr:hover {

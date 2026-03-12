@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
 	classifyAll,
+	classifyAllPooled,
 	classifyBySignatureCards,
 	parseArchetypeYaml,
 } from "../../src/lib/algorithms/archetype-classifier";
@@ -42,11 +43,16 @@ const archetypeDefs: ArchetypeDefinition[] = [
 	},
 ];
 
-function makeDecklist(mainboard: CardEntry[], id = "player1"): DecklistInfo {
+function makeDecklist(
+	mainboard: CardEntry[],
+	id = "player1",
+	commanders: CardEntry[] | null = null,
+): DecklistInfo {
 	return {
 		playerId: id,
 		mainboard,
 		sideboard: [],
+		commanders,
 		companion: null,
 		reportedArchetype: null,
 	};
@@ -59,19 +65,19 @@ function cards(...entries: [string, number][]): CardEntry[] {
 describe("parseArchetypeYaml", () => {
 	it("parses YAML into archetype definitions", () => {
 		const result = parseArchetypeYaml(sampleYaml);
-		expect(result).toHaveLength(2);
-		expect(result[0].name).toBe("Mono Red");
-		expect(result[0].signatureCards).toHaveLength(2);
-		expect(result[0].signatureCards[0]).toEqual({
+		expect(result.archetypes).toHaveLength(2);
+		expect(result.archetypes[0].name).toBe("Mono Red");
+		expect(result.archetypes[0].signatureCards).toHaveLength(2);
+		expect(result.archetypes[0].signatureCards[0]).toEqual({
 			name: "Lightning Bolt",
 			minCopies: 4,
 		});
-		expect(result[1].name).toBe("Control");
+		expect(result.archetypes[1].name).toBe("Control");
 	});
 
 	it("returns empty array for YAML with no archetypes", () => {
 		const result = parseArchetypeYaml('format: Standard\ndate: "2026-01-01"');
-		expect(result).toEqual([]);
+		expect(result.archetypes).toEqual([]);
 	});
 
 	it("parses exactCopies and strictMode fields", () => {
@@ -88,15 +94,55 @@ archetypes:
         minCopies: 2
 `;
 		const result = parseArchetypeYaml(yaml);
-		expect(result).toHaveLength(1);
-		expect(result[0].strictMode).toBe(true);
-		expect(result[0].signatureCards[0]).toEqual({
+		expect(result.archetypes).toHaveLength(1);
+		expect(result.archetypes[0].strictMode).toBe(true);
+		expect(result.archetypes[0].signatureCards[0]).toEqual({
 			name: "Combo Piece",
 			exactCopies: 4,
 		});
-		expect(result[0].signatureCards[1]).toEqual({
+		expect(result.archetypes[0].signatureCards[1]).toEqual({
 			name: "Enabler",
 			minCopies: 2,
+		});
+	});
+
+	it("defaults nameEqualsCommander to false", () => {
+		const result = parseArchetypeYaml(sampleYaml);
+		expect(result.nameEqualsCommander).toBe(false);
+	});
+
+	it("parses nameEqualsCommander: true", () => {
+		const yaml = `
+format: Duel Commander
+date: "2026-03-11"
+nameEqualsCommander: true
+archetypes: []
+`;
+		const result = parseArchetypeYaml(yaml);
+		expect(result.nameEqualsCommander).toBe(true);
+		expect(result.archetypes).toEqual([]);
+	});
+
+	it("parses usedAsCommander on signature cards", () => {
+		const yaml = `
+format: Duel Commander
+date: "2026-03-11"
+archetypes:
+  - name: Aragorn Voltron
+    signatureCards:
+      - name: "Aragorn, King of Gondor"
+        usedAsCommander: true
+      - name: Lightning Greaves
+        minCopies: 1
+`;
+		const result = parseArchetypeYaml(yaml);
+		expect(result.archetypes[0].signatureCards[0]).toEqual({
+			name: "Aragorn, King of Gondor",
+			usedAsCommander: true,
+		});
+		expect(result.archetypes[0].signatureCards[1]).toEqual({
+			name: "Lightning Greaves",
+			minCopies: 1,
 		});
 	});
 });
@@ -108,7 +154,7 @@ describe("classifyBySignatureCards", () => {
 			["Goblin Guide", 4],
 			["Mountain", 16],
 		);
-		const result = classifyBySignatureCards(mainboard, archetypeDefs);
+		const result = classifyBySignatureCards(mainboard, null, archetypeDefs);
 		expect(result).toBe("Mono Red");
 	});
 
@@ -118,23 +164,22 @@ describe("classifyBySignatureCards", () => {
 			["Goblin Guide", 2], // needs 3
 			["Mountain", 16],
 		);
-		const result = classifyBySignatureCards(mainboard, archetypeDefs);
+		const result = classifyBySignatureCards(mainboard, null, archetypeDefs);
 		expect(result).toBeNull();
 	});
 
 	it("returns null when a signature card is missing", () => {
 		const mainboard = cards(["Lightning Bolt", 4], ["Mountain", 20]);
-		const result = classifyBySignatureCards(mainboard, archetypeDefs);
+		const result = classifyBySignatureCards(mainboard, null, archetypeDefs);
 		expect(result).toBeNull();
 	});
 
 	it("returns null for empty mainboard", () => {
-		const result = classifyBySignatureCards([], archetypeDefs);
+		const result = classifyBySignatureCards([], null, archetypeDefs);
 		expect(result).toBeNull();
 	});
 
 	it("matches the archetype with the most signature cards if multiple match", () => {
-		// Create archetypes where a broader one also matches
 		const defs: ArchetypeDefinition[] = [
 			{
 				name: "Red Aggro",
@@ -155,7 +200,7 @@ describe("classifyBySignatureCards", () => {
 			["Mountain", 16],
 		);
 
-		const result = classifyBySignatureCards(mainboard, defs);
+		const result = classifyBySignatureCards(mainboard, null, defs);
 		expect(result).toBe("Mono Red"); // more signature cards
 	});
 
@@ -170,7 +215,7 @@ describe("classifyBySignatureCards", () => {
 			},
 		];
 		const mainboard = cards(["Combo Piece", 4], ["Enabler", 3], ["Land", 17]);
-		expect(classifyBySignatureCards(mainboard, defs)).toBe("Exact Combo");
+		expect(classifyBySignatureCards(mainboard, null, defs)).toBe("Exact Combo");
 	});
 
 	it("rejects when deck has more copies than exactCopies", () => {
@@ -181,7 +226,7 @@ describe("classifyBySignatureCards", () => {
 			},
 		];
 		const mainboard = cards(["Combo Piece", 4], ["Land", 20]);
-		expect(classifyBySignatureCards(mainboard, defs)).toBeNull();
+		expect(classifyBySignatureCards(mainboard, null, defs)).toBeNull();
 	});
 
 	it("rejects when deck has fewer copies than exactCopies", () => {
@@ -192,7 +237,7 @@ describe("classifyBySignatureCards", () => {
 			},
 		];
 		const mainboard = cards(["Combo Piece", 3], ["Land", 21]);
-		expect(classifyBySignatureCards(mainboard, defs)).toBeNull();
+		expect(classifyBySignatureCards(mainboard, null, defs)).toBeNull();
 	});
 
 	it("exactCopies 0 matches when card is absent from deck", () => {
@@ -206,7 +251,7 @@ describe("classifyBySignatureCards", () => {
 			},
 		];
 		const mainboard = cards(["Key Card", 4], ["Land", 20]);
-		expect(classifyBySignatureCards(mainboard, defs)).toBe("No Combo");
+		expect(classifyBySignatureCards(mainboard, null, defs)).toBe("No Combo");
 	});
 
 	it("exactCopies 0 rejects when card is present in deck", () => {
@@ -220,7 +265,89 @@ describe("classifyBySignatureCards", () => {
 			},
 		];
 		const mainboard = cards(["Key Card", 4], ["Banned Card", 1], ["Land", 19]);
-		expect(classifyBySignatureCards(mainboard, defs)).toBeNull();
+		expect(classifyBySignatureCards(mainboard, null, defs)).toBeNull();
+	});
+
+	// --- usedAsCommander tests ---
+
+	it("usedAsCommander matches when card is in commanders", () => {
+		const defs: ArchetypeDefinition[] = [
+			{
+				name: "Aragorn Deck",
+				signatureCards: [{ name: "Aragorn, King of Gondor", usedAsCommander: true }],
+			},
+		];
+		const commanders = cards(["Aragorn, King of Gondor", 1]);
+		const result = classifyBySignatureCards([], commanders, defs);
+		expect(result).toBe("Aragorn Deck");
+	});
+
+	it("usedAsCommander rejects when card is not in commanders", () => {
+		const defs: ArchetypeDefinition[] = [
+			{
+				name: "Aragorn Deck",
+				signatureCards: [{ name: "Aragorn, King of Gondor", usedAsCommander: true }],
+			},
+		];
+		const commanders = cards(["Lumra, Bellow of the Woods", 1]);
+		const result = classifyBySignatureCards([], commanders, defs);
+		expect(result).toBeNull();
+	});
+
+	it("usedAsCommander handles null commanders", () => {
+		const defs: ArchetypeDefinition[] = [
+			{
+				name: "Aragorn Deck",
+				signatureCards: [{ name: "Aragorn, King of Gondor", usedAsCommander: true }],
+			},
+		];
+		const result = classifyBySignatureCards([], null, defs);
+		expect(result).toBeNull();
+	});
+
+	it("usedAsCommander handles empty commanders array", () => {
+		const defs: ArchetypeDefinition[] = [
+			{
+				name: "Aragorn Deck",
+				signatureCards: [{ name: "Aragorn, King of Gondor", usedAsCommander: true }],
+			},
+		];
+		const result = classifyBySignatureCards([], [], defs);
+		expect(result).toBeNull();
+	});
+
+	it("usedAsCommander normalizes DFC names via getFrontFace", () => {
+		const defs: ArchetypeDefinition[] = [
+			{
+				name: "Aclazotz Deck",
+				signatureCards: [{ name: "Aclazotz, Deepest Betrayal", usedAsCommander: true }],
+			},
+		];
+		const commanders = cards(["Aclazotz, Deepest Betrayal // Temple of the Dead", 1]);
+		const result = classifyBySignatureCards([], commanders, defs);
+		expect(result).toBe("Aclazotz Deck");
+	});
+
+	it("mixed usedAsCommander and minCopies signature cards", () => {
+		const defs: ArchetypeDefinition[] = [
+			{
+				name: "Aragorn Voltron",
+				signatureCards: [
+					{ name: "Aragorn, King of Gondor", usedAsCommander: true },
+					{ name: "Lightning Greaves", minCopies: 1 },
+				],
+			},
+		];
+		const commanders = cards(["Aragorn, King of Gondor", 1]);
+
+		// Has commander but missing mainboard card
+		expect(classifyBySignatureCards([], commanders, defs)).toBeNull();
+
+		// Has both commander and mainboard card
+		const mainboard = cards(["Lightning Greaves", 1], ["Land", 98]);
+		expect(classifyBySignatureCards(mainboard, commanders, defs)).toBe(
+			"Aragorn Voltron",
+		);
 	});
 });
 
@@ -283,13 +410,12 @@ describe("classifyAll", () => {
 		};
 
 		const results = classifyAll(decklists, archetypeDefs, {
-			k: 3,
 			minConfidence: 0,
 		});
 		const d5Result = results.find((r) => r.decklistId === "d5");
 
 		expect(d5Result!.archetype).toBe("Mono Red");
-		expect(d5Result!.method).toBe("knn");
+		expect(d5Result!.method).toBe("centroid");
 		expect(d5Result!.confidence).toBeGreaterThan(0);
 	});
 
@@ -367,12 +493,317 @@ describe("classifyAll", () => {
 		};
 
 		const results = classifyAll(decklists, strictDefs, {
-			k: 3,
 			minConfidence: 0,
 		});
 		const d3Result = results.find((r) => r.decklistId === "d3");
-		// KNN cannot assign Strict Combo because it's excluded from training set
+		// Centroid cannot assign Strict Combo because it's excluded from training set
 		expect(d3Result!.archetype).toBe("Unknown");
 		expect(d3Result!.method).toBe("unknown");
+	});
+
+	// --- nameEqualsCommander tests ---
+
+	it("nameEqualsCommander uses full commander name for single commanders", () => {
+		const decklists: Record<string, DecklistInfo> = {
+			d1: makeDecklist(
+				cards(["Sol Ring", 1], ["Land", 98]),
+				"player1",
+				cards(["Aragorn, King of Gondor", 1]),
+			),
+		};
+
+		const results = classifyAll(decklists, [], { nameEqualsCommander: true });
+		const d1Result = results.find((r) => r.decklistId === "d1");
+		expect(d1Result!.archetype).toBe("Aragorn, King of Gondor");
+		expect(d1Result!.method).toBe("commander");
+		expect(d1Result!.confidence).toBe(1.0);
+		expect(d1Result!.representativeCard).toBe("Aragorn, King of Gondor");
+	});
+
+	it("signature match takes priority over commander name", () => {
+		const defs: ArchetypeDefinition[] = [
+			{
+				name: "Aragorn Voltron",
+				signatureCards: [
+					{ name: "Aragorn, King of Gondor", usedAsCommander: true },
+					{ name: "Lightning Greaves", minCopies: 1 },
+				],
+			},
+		];
+		const decklists: Record<string, DecklistInfo> = {
+			d1: makeDecklist(
+				cards(["Lightning Greaves", 1], ["Land", 98]),
+				"player1",
+				cards(["Aragorn, King of Gondor", 1]),
+			),
+		};
+
+		const results = classifyAll(decklists, defs, { nameEqualsCommander: true });
+		const d1Result = results.find((r) => r.decklistId === "d1");
+		expect(d1Result!.archetype).toBe("Aragorn Voltron");
+		expect(d1Result!.method).toBe("signature");
+	});
+
+	it("null commanders fall through to Unknown with nameEqualsCommander", () => {
+		const decklists: Record<string, DecklistInfo> = {
+			d1: makeDecklist(cards(["Unique Card", 60])),
+		};
+
+		const results = classifyAll(decklists, [], { nameEqualsCommander: true });
+		const d1Result = results.find((r) => r.decklistId === "d1");
+		expect(d1Result!.archetype).toBe("Unknown");
+		expect(d1Result!.method).toBe("unknown");
+	});
+
+	it("partner commanders are joined with & (sorted)", () => {
+		const decklists: Record<string, DecklistInfo> = {
+			d1: makeDecklist(
+				cards(["Sol Ring", 1], ["Land", 97]),
+				"player1",
+				cards(["Yoshimaru, Ever Faithful", 1], ["Ludevic, Necro-Alchemist", 1]),
+			),
+		};
+
+		const results = classifyAll(decklists, [], { nameEqualsCommander: true });
+		const d1Result = results.find((r) => r.decklistId === "d1");
+		// Sorted alphabetically, short names
+		expect(d1Result!.archetype).toBe("Ludevic & Yoshimaru");
+		expect(d1Result!.method).toBe("commander");
+	});
+
+	it("nameEqualsCommander normalizes DFC commander names", () => {
+		const decklists: Record<string, DecklistInfo> = {
+			d1: makeDecklist(
+				cards(["Sol Ring", 1], ["Land", 98]),
+				"player1",
+				cards(["Aclazotz, Deepest Betrayal // Temple of the Dead", 1]),
+			),
+		};
+
+		const results = classifyAll(decklists, [], { nameEqualsCommander: true });
+		const d1Result = results.find((r) => r.decklistId === "d1");
+		expect(d1Result!.archetype).toBe("Aclazotz, Deepest Betrayal");
+	});
+
+	it("nameEqualsCommander false preserves existing KNN behavior", () => {
+		const decklists: Record<string, DecklistInfo> = {
+			d1: makeDecklist(
+				cards(["Lightning Bolt", 4], ["Goblin Guide", 4], ["Mountain", 16]),
+				"player1",
+				cards(["Some Commander", 1]),
+			),
+			// Unclassified deck with commander
+			d2: makeDecklist(
+				cards(["Unique Card", 60]),
+				"player2",
+				cards(["Another Commander", 1]),
+			),
+		};
+
+		const results = classifyAll(decklists, archetypeDefs, {
+			nameEqualsCommander: false,
+		});
+		const d2Result = results.find((r) => r.decklistId === "d2");
+		// Without nameEqualsCommander, should NOT use commander name
+		expect(d2Result!.archetype).toBe("Unknown");
+		expect(d2Result!.method).toBe("unknown");
+	});
+});
+
+describe("classifyAllPooled", () => {
+	// Mono Red signature: Lightning Bolt ×4, Goblin Guide ×3
+	const monoRedDeck = cards(
+		["Lightning Bolt", 4],
+		["Goblin Guide", 3],
+		["Mountain", 20],
+		["Monastery Swiftspear", 4],
+		["Searing Blaze", 4],
+	);
+
+	// A deck similar to Mono Red but missing exact signature copies
+	// (has Bolt ×3 instead of ×4, no Goblin Guide) — won't match signature
+	// but should KNN-match to Mono Red due to shared cards
+	const monoRedLikeDeck = cards(
+		["Lightning Bolt", 3],
+		["Mountain", 20],
+		["Monastery Swiftspear", 4],
+		["Searing Blaze", 4],
+		["Rift Bolt", 4],
+	);
+
+	// A completely different deck
+	const controlDeck = cards(
+		["Counterspell", 3],
+		["Wrath of God", 2],
+		["Island", 20],
+		["Plains", 5],
+		["Teferi, Hero of Dominaria", 3],
+	);
+
+	it("classifies across tournaments via pooled KNN", () => {
+		// Tournament A: has a proper Mono Red deck (signature match)
+		const tournamentA: Record<string, DecklistInfo> = {
+			a1: makeDecklist(monoRedDeck, "pA1"),
+			a2: makeDecklist(controlDeck, "pA2"),
+		};
+		// Tournament B: has a Mono-Red-like deck that won't match signature
+		// but should be KNN-classified from Tournament A's training data
+		const tournamentB: Record<string, DecklistInfo> = {
+			b1: makeDecklist(monoRedLikeDeck, "pB1"),
+		};
+
+		const pool = new Map([
+			["tA", tournamentA],
+			["tB", tournamentB],
+		]);
+		const results = classifyAllPooled(pool, archetypeDefs, {
+			minConfidence: 0.1,
+		});
+
+		expect(results.get("tA")).toBeDefined();
+		expect(results.get("tB")).toBeDefined();
+
+		// Tournament A: both decks classified by signature
+		const a1 = results.get("tA")!.find((r) => r.decklistId === "a1");
+		expect(a1!.method).toBe("signature");
+		expect(a1!.archetype).toBe("Mono Red");
+
+		const a2 = results.get("tA")!.find((r) => r.decklistId === "a2");
+		expect(a2!.method).toBe("signature");
+		expect(a2!.archetype).toBe("Control");
+
+		// Tournament B: centroid-classified using pooled training set from Tournament A
+		const b1 = results.get("tB")!.find((r) => r.decklistId === "b1");
+		expect(b1!.method).toBe("centroid");
+		expect(b1!.archetype).toBe("Mono Red");
+	});
+
+	it("produces identical results to classifyAll for a single tournament", () => {
+		const decklists: Record<string, DecklistInfo> = {
+			d1: makeDecklist(monoRedDeck, "p1"),
+			d2: makeDecklist(controlDeck, "p2"),
+			d3: makeDecklist(monoRedLikeDeck, "p3"),
+		};
+
+		const singleResults = classifyAll(decklists, archetypeDefs, {
+			minConfidence: 0.3,
+		});
+		const pooledResults = classifyAllPooled(
+			new Map([["t1", decklists]]),
+			archetypeDefs,
+			{ minConfidence: 0.3 },
+		);
+
+		const pooled = pooledResults.get("t1")!;
+		expect(pooled).toHaveLength(singleResults.length);
+
+		for (const single of singleResults) {
+			const match = pooled.find((r) => r.decklistId === single.decklistId);
+			expect(match).toBeDefined();
+			expect(match!.archetype).toBe(single.archetype);
+			expect(match!.method).toBe(single.method);
+		}
+	});
+
+	it("returns empty map for empty input", () => {
+		const results = classifyAllPooled(new Map(), archetypeDefs);
+		expect(results.size).toBe(0);
+	});
+
+	it("marks all decks as Unknown when no signature matches exist", () => {
+		const unknownDeck = cards(["Raging Goblin", 4], ["Mountain", 20]);
+		const pool = new Map<string, Record<string, DecklistInfo>>();
+		pool.set("t1", { d1: makeDecklist(unknownDeck, "p1") });
+		pool.set("t2", { d2: makeDecklist(unknownDeck, "p2") });
+
+		const results = classifyAllPooled(pool, archetypeDefs);
+		for (const [, tournamentResults] of results) {
+			for (const r of tournamentResults) {
+				expect(r.archetype).toBe("Unknown");
+				expect(r.method).toBe("unknown");
+			}
+		}
+	});
+
+	it("respects strictMode across the pool", () => {
+		const strictDefs: ArchetypeDefinition[] = [
+			{
+				name: "Mono Red",
+				signatureCards: [
+					{ name: "Lightning Bolt", minCopies: 4 },
+					{ name: "Goblin Guide", minCopies: 3 },
+				],
+				strictMode: true, // KNN cannot produce this label
+			},
+			{
+				name: "Control",
+				signatureCards: [
+					{ name: "Counterspell", minCopies: 3 },
+					{ name: "Wrath of God", minCopies: 2 },
+				],
+			},
+		];
+
+		// Tournament A has a strict Mono Red signature match
+		const tournamentA: Record<string, DecklistInfo> = {
+			a1: makeDecklist(monoRedDeck, "pA1"),
+		};
+		// Tournament B has a Mono-Red-like deck — should NOT get KNN'd to Mono Red
+		const tournamentB: Record<string, DecklistInfo> = {
+			b1: makeDecklist(monoRedLikeDeck, "pB1"),
+		};
+
+		const results = classifyAllPooled(
+			new Map([
+				["tA", tournamentA],
+				["tB", tournamentB],
+			]),
+			strictDefs,
+			{ minConfidence: 0.1 },
+		);
+
+		const b1 = results.get("tB")!.find((r) => r.decklistId === "b1");
+		// Mono Red is strict, so KNN cannot assign it — should be Unknown
+		expect(b1!.archetype).not.toBe("Mono Red");
+	});
+
+	it("handles tournaments with empty decklists", () => {
+		const pool = new Map<string, Record<string, DecklistInfo>>([
+			["tEmpty", {}],
+			["tReal", { d1: makeDecklist(monoRedDeck, "p1") }],
+		]);
+
+		const results = classifyAllPooled(pool, archetypeDefs);
+		expect(results.get("tEmpty")).toEqual([]);
+		expect(results.get("tReal")).toHaveLength(1);
+		expect(results.get("tReal")![0].archetype).toBe("Mono Red");
+	});
+
+	it("skips KNN when nameEqualsCommander classifies all decks", () => {
+		const decklists: Record<string, DecklistInfo> = {
+			d1: makeDecklist(
+				cards(["Sol Ring", 1], ["Forest", 30]),
+				"p1",
+				cards(["Atraxa, Praetors' Voice", 1]),
+			),
+			d2: makeDecklist(
+				cards(["Sol Ring", 1], ["Island", 30]),
+				"p2",
+				cards(["Kinnan, Bonder Prodigy", 1]),
+			),
+		};
+
+		const results = classifyAllPooled(
+			new Map([["t1", decklists]]),
+			[], // no archetype defs — signature pass matches nothing
+			{ nameEqualsCommander: true },
+		);
+
+		const tournamentResults = results.get("t1")!;
+		expect(tournamentResults).toHaveLength(2);
+		for (const r of tournamentResults) {
+			expect(r.method).toBe("commander");
+			expect(r.method).not.toBe("centroid");
+		}
 	});
 });

@@ -148,6 +148,15 @@
 		loadConfig(DEFAULT_BUILTIN_ID);
 	}
 
+	function handleNew() {
+		selectedConfigId = '';
+		validationResult = null;
+		showSaveForm = true;
+		saveName = '';
+		saveFormat = 'Standard';
+		editorYaml = `format: Standard\ndate: ${new Date().toISOString().slice(0, 10)}\narchetypes:\n  - name: New Archetype\n    signatureCards:\n      - name: Card Name\n`;
+	}
+
 	function handleSetActive() {
 		setActiveConfig(selectedConfigId);
 	}
@@ -204,6 +213,7 @@
 		</div>
 
 		<div class="actions">
+			<button class="btn btn-accent" onclick={handleNew}>New</button>
 			<button class="btn" onclick={handleCheck}>Check</button>
 			<button class="btn" onclick={() => (showSaveForm = !showSaveForm)}>Save As…</button>
 			<button class="btn" onclick={handleUpdate} disabled={isBuiltin}>Update</button>

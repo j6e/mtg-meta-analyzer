@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+	getCommanderShortName,
 	getFrontFace,
 	getScryfallImageUrl,
 	normalizeCardName,
@@ -67,6 +68,26 @@ describe("getFrontFace", () => {
 
 	it("normalizes before splitting", () => {
 		expect(getFrontFace("  Fire//Ice  ")).toBe("Fire");
+	});
+});
+
+describe("getCommanderShortName", () => {
+	it("drops the comma-separated title from a commander name", () => {
+		expect(getCommanderShortName("Aragorn, King of Gondor")).toBe("Aragorn");
+	});
+
+	it("returns the full name if no comma exists", () => {
+		expect(getCommanderShortName("Emrakul")).toBe("Emrakul");
+	});
+
+	it("handles DFC commanders by using front face only", () => {
+		expect(
+			getCommanderShortName("Aclazotz, Deepest Betrayal // Temple of the Dead"),
+		).toBe("Aclazotz");
+	});
+
+	it("handles names with multiple commas (drops at first comma)", () => {
+		expect(getCommanderShortName("Ojer Axonil, Deepest Might")).toBe("Ojer Axonil");
 	});
 });
 

@@ -1,7 +1,10 @@
 <script lang="ts">
 import { base } from '$app/paths';
 import { metagameData } from '$lib/stores/tournaments';
+import { settingsQueryString } from '$lib/stores/url-settings';
 import { pct } from '$lib/utils/format';
+
+const qs = $derived($settingsQueryString);
 
 type SortKey = "name" | "share" | "winrate" | "players" | "matches";
 let sortKey = $state<SortKey>("share");
@@ -119,7 +122,7 @@ function sortIndicator(key: SortKey): string {
 							{#if PINNED_BOTTOM.includes(s.name)}
 								<span class="pinned-name">{s.name}</span>
 							{:else}
-								<a href="{base}/archetypes/{encodeURIComponent(s.name)}">{s.name}</a>
+								<a href="{base}/archetypes/{encodeURIComponent(s.name)}{qs}">{s.name}</a>
 							{/if}
 						</td>
 						<td class="num-col">{pct(s.metagameShare)}</td>

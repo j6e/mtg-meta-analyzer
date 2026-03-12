@@ -1,6 +1,9 @@
 <script lang="ts">
 	import { page } from '$app/state';
 	import { base } from '$app/paths';
+	import { settingsQueryString } from '$lib/stores/url-settings';
+
+	const qs = $derived($settingsQueryString);
 </script>
 
 <svelte:head>
@@ -10,7 +13,7 @@
 <div class="error-page">
 	<h1>{page.status}</h1>
 	<p class="message">{page.error?.message ?? 'Page not found'}</p>
-	<a href="{base}/">Back to home</a>
+	<a href="{base}/{qs}">Back to home</a>
 </div>
 
 <style>

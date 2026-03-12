@@ -4,47 +4,69 @@
  */
 import { derived, get, writable } from "svelte/store";
 import type { ClassificationResult } from "../algorithms/archetype-classifier";
-import { classifyAll } from "../algorithms/archetype-classifier";
-import { loadTournaments } from "../data/loader";
+import { classifyAll, classifyAllPooled } from "../algorithms/archetype-classifier";
+import { loadIndexes, loadTournaments } from "../data/loader";
 import type { ArchetypeDefinition } from "../types/archetype";
 import type { DecklistInfo } from "../types/decklist";
 import type { ArchetypeStats } from "../types/metagame";
-import type { TournamentData, TournamentMeta } from "../types/tournament";
+import type {
+	TournamentData,
+	TournamentImportance,
+	TournamentIndexEntry,
+	TournamentMeta,
+} from "../types/tournament";
 import {
 	buildAttributionMatrix,
 	buildMatchupMatrix,
 	buildPlayerArchetypeMap,
 	type MatrixOptions,
 } from "../utils/winrate-calculator";
-import { activeArchetypeDefs } from "./archetype-configs";
+import { activeArchetypeConfig, activeArchetypeDefs } from "./archetype-configs";
 import { settings } from "./settings";
 
 // --- Raw data (loaded once at build time) ---
 
 const allTournaments = loadTournaments();
+const allIndexes = loadIndexes();
+
+/** Flat lookup of index entries by tournament ID (merged across all formats). */
+const indexById = new Map<string, TournamentIndexEntry>();
+for (const entries of allIndexes.values()) {
+	for (const entry of entries) {
+		indexById.set(entry.id, entry);
+	}
+}
 
 /** Writable store for the currently selected tournament ID (single-select for decklist view). */
-export const selectedTournamentId = writable<number | null>(
+export const selectedTournamentId = writable<string | null>(
 	allTournaments.size > 0 ? [...allTournaments.keys()][0] : null,
 );
 
 // --- Derived stores ---
 
-/** List of all tournament metadata (with computed match count), sorted by date descending. */
-export const tournamentList = derived(
-	[],
-	(): (TournamentMeta & { matchCount: number })[] => {
-		return [...allTournaments.values()]
-			.map((t) => ({
+export type TournamentListEntry = TournamentMeta & {
+	matchCount: number;
+	cleanName: string;
+	importance: TournamentImportance;
+};
+
+/** List of all tournament metadata (with computed match count + index data), sorted by date descending. */
+export const tournamentList = derived([], (): TournamentListEntry[] => {
+	return [...allTournaments.values()]
+		.map((t) => {
+			const idx = indexById.get(t.meta.id);
+			return {
 				...t.meta,
 				matchCount: Object.values(t.rounds).reduce(
 					(sum, r) => sum + r.matches.length,
 					0,
 				),
-			}))
-			.sort((a, b) => b.date.localeCompare(a.date));
-	},
-);
+				cleanName: idx?.cleanName ?? t.meta.name,
+				importance: idx?.importance ?? "other",
+			};
+		})
+		.sort((a, b) => b.date.localeCompare(a.date));
+});
 
 /** All unique formats across all tournaments. */
 export const availableFormats = derived([], (): string[] => {
@@ -55,6 +77,11 @@ export const availableFormats = derived([], (): string[] => {
 		}
 	}
 	return [...formats].sort();
+});
+
+/** All format slugs that have index files (e.g. "standard", "modern"). */
+export const availableFormatSlugs = derived([], (): string[] => {
+	return [...allIndexes.keys()].sort();
 });
 
 /** Tournaments filtered by the current settings (format, date range, selection). */
@@ -111,24 +138,36 @@ export const decklistMap = derived(
 	},
 );
 
-/** Mapping of archetype name → first signature card name (for representative art). */
+/** Classification results for all filtered tournaments (pooled KNN). */
+export const classificationResults = derived(
+	[filteredTournaments, activeArchetypeConfig],
+	([$tournaments, $config]): Map<string, ClassificationResult[]> => {
+		const tournamentDecklists = new Map(
+			$tournaments.map((t) => [t.meta.id, t.decklists]),
+		);
+		return classifyAllPooled(tournamentDecklists, $config.archetypes, {
+			minConfidence: 0.4,
+			nameEqualsCommander: $config.nameEqualsCommander,
+		});
+	},
+);
+
+/** Mapping of archetype name → representative card name (for art lookup). */
 export const archetypeCardMap = derived(
-	activeArchetypeDefs,
-	($defs): Map<string, string> =>
-		new Map(
+	[activeArchetypeDefs, classificationResults],
+	([$defs, $resultsMap]): Map<string, string> => {
+		const map = new Map<string, string>(
 			$defs
 				.filter((d) => d.signatureCards.length > 0)
 				.map((d) => [d.name, d.signatureCards[0].name]),
-		),
-);
-
-/** Classification results for all filtered tournaments. */
-export const classificationResults = derived(
-	[filteredTournaments, activeArchetypeDefs],
-	([$tournaments, $defs]): Map<number, ClassificationResult[]> => {
-		const map = new Map<number, ClassificationResult[]>();
-		for (const t of $tournaments) {
-			map.set(t.meta.id, classifyAll(t.decklists, $defs, { k: 5, minConfidence: 0.3 }));
+		);
+		// Add commander-classified archetypes (representativeCard → full card name for Scryfall)
+		for (const results of $resultsMap.values()) {
+			for (const r of results) {
+				if (r.representativeCard && !map.has(r.archetype)) {
+					map.set(r.archetype, r.representativeCard);
+				}
+			}
 		}
 		return map;
 	},
@@ -177,19 +216,25 @@ export const archetypeStats = derived(
 
 /** Player ID → archetype for the currently selected single tournament. */
 export const currentTournamentArchetypes = derived(
-	[currentTournament, activeArchetypeDefs],
-	([$tournament, $defs]): Map<string, string> => {
+	[currentTournament, classificationResults, activeArchetypeConfig],
+	([$tournament, $resultsMap, $config]): Map<string, string> => {
 		if (!$tournament) return new Map();
-		const results = classifyAll($tournament.decklists, $defs, {
-			k: 5,
-			minConfidence: 0.3,
+		// Reuse pooled results when the tournament is in the filtered set
+		const cached = $resultsMap.get($tournament.meta.id);
+		if (cached) {
+			return buildPlayerArchetypeMap($tournament, cached);
+		}
+		// Fallback: tournament not in filtered set (rare)
+		const results = classifyAll($tournament.decklists, $config.archetypes, {
+			minConfidence: 0.4,
+			nameEqualsCommander: $config.nameEqualsCommander,
 		});
 		return buildPlayerArchetypeMap($tournament, results);
 	},
 );
 
 /** Look up a tournament by ID (non-reactive). */
-export function getTournament(id: number): TournamentData | null {
+export function getTournament(id: string): TournamentData | null {
 	return allTournaments.get(id) ?? null;
 }
 
@@ -198,15 +243,17 @@ export function getTournament(id: number): TournamentData | null {
 /** All tournaments as an array. */
 const allTournamentArray = [...allTournaments.values()];
 
-/** Classification results across ALL tournaments. */
+/** Classification results across ALL tournaments (pooled KNN). */
 export const globalClassificationResults = derived(
-	activeArchetypeDefs,
-	($defs): Map<number, ClassificationResult[]> => {
-		const map = new Map<number, ClassificationResult[]>();
-		for (const t of allTournamentArray) {
-			map.set(t.meta.id, classifyAll(t.decklists, $defs, { k: 5, minConfidence: 0.3 }));
-		}
-		return map;
+	activeArchetypeConfig,
+	($config): Map<string, ClassificationResult[]> => {
+		const tournamentDecklists = new Map(
+			allTournamentArray.map((t) => [t.meta.id, t.decklists]),
+		);
+		return classifyAllPooled(tournamentDecklists, $config.archetypes, {
+			minConfidence: 0.4,
+			nameEqualsCommander: $config.nameEqualsCommander,
+		});
 	},
 );
 
@@ -260,4 +307,9 @@ export function getArchetypeDefinition(name: string): ArchetypeDefinition | null
 /** All tournament data values (for player pages). */
 export function getAllTournaments(): TournamentData[] {
 	return allTournamentArray;
+}
+
+/** Look up index entry for a tournament (non-reactive). */
+export function getIndexEntry(id: string): TournamentIndexEntry | undefined {
+	return indexById.get(id);
 }

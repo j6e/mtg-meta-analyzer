@@ -34,6 +34,7 @@ function makeDeckWithCards(
 			quantity,
 		})),
 		sideboard: [],
+		commanders: null,
 		companion: null,
 		reportedArchetype: null,
 	};
@@ -55,7 +56,7 @@ function makeTournament(overrides: {
 }): TournamentData {
 	return {
 		meta: {
-			id: 1,
+			id: "melee-1",
 			name: "Test",
 			date: "2026-01-01",
 			formats: ["Standard"],
@@ -63,6 +64,8 @@ function makeTournament(overrides: {
 			fetchedAt: "2026-01-01T00:00:00Z",
 			playerCount: Object.keys(overrides.players).length,
 			roundCount: 1,
+			source: "melee",
+			tabletop: true,
 		},
 		players: overrides.players,
 		decklists: overrides.decklists,

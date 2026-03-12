@@ -28,7 +28,7 @@ test.describe("Navigation", () => {
 	test("navigate to archetypes page", async ({ page }) => {
 		await page.goto("/");
 		await page.locator("nav a", { hasText: /^Archetypes$/ }).click();
-		await expect(page).toHaveURL(/\/archetypes$/);
+		await expect(page).toHaveURL(/\/archetypes(\?|$)/);
 		await expect(page.locator("h1")).toHaveText("Archetypes");
 	});
 
@@ -99,7 +99,7 @@ test.describe("Navigation", () => {
 	test("logo navigates back to home", async ({ page }) => {
 		await page.goto("/metagame");
 		await page.locator(".logo").click();
-		await expect(page).toHaveURL(/\/$/);
+		await expect(page).toHaveURL(/\/(\?|$)/);
 		await expect(page.locator("h1")).toHaveText("MTG Meta Analyzer");
 	});
 });

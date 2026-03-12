@@ -8,7 +8,7 @@ export interface EnrichedDecklist {
 	playerId: string;
 	playerRank: number;
 	tournamentName: string;
-	tournamentId: number;
+	tournamentId: string;
 }
 
 /**

@@ -6,6 +6,9 @@
 		playerArchetypes,
 		filteredTournaments,
 	} from '$lib/stores/tournaments';
+	import { settingsQueryString } from '$lib/stores/url-settings';
+
+	const qs = $derived($settingsQueryString);
 	import DecklistView from '$lib/components/DecklistView.svelte';
 	import DecklistComparison from '$lib/components/DecklistComparison.svelte';
 	import CardCompositionTable from '$lib/components/CardCompositionTable.svelte';
@@ -166,6 +169,7 @@
 			playerId: '',
 			mainboard: aggregateResult.mainboard,
 			sideboard: aggregateResult.sideboard,
+			commanders: null,
 			companion: null,
 			reportedArchetype: null,
 		};
@@ -230,7 +234,7 @@
 </svelte:head>
 
 <div class="breadcrumb">
-	<a href="{base}/archetypes">Archetypes</a> / {archetypeName}
+	<a href="{base}/archetypes{qs}">Archetypes</a> / {archetypeName}
 </div>
 
 {#if stats}
@@ -325,7 +329,7 @@
 							{#each matchups as m}
 								<tr>
 									<td>
-										<a href="{base}/archetypes/{encodeURIComponent(m.opponent)}">{m.opponent}</a>
+										<a href="{base}/archetypes/{encodeURIComponent(m.opponent)}{qs}">{m.opponent}</a>
 									</td>
 									<td class="num" class:above50={(m.cell.winrate ?? 0) >= 0.5} class:below50={(m.cell.winrate ?? 0) < 0.5}>
 										{m.cell.winrate !== null ? pct(m.cell.winrate) : '—'}

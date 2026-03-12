@@ -1,4 +1,3 @@
-import { cosineSimilaritySparse } from "./cosine-similarity";
 import type { SparseVector } from "./tfidf";
 
 export interface LabeledPoint {
@@ -10,6 +9,21 @@ export interface ClassificationResult {
 	label: string;
 	confidence: number; // average similarity of k nearest neighbors with winning label
 	neighbors: { label: string; similarity: number }[];
+}
+
+/**
+ * Dot product of a pre-built target map against a sparse vector.
+ * Both vectors must be unit-length (pre-normalized) for this to equal cosine similarity.
+ */
+function dotWithMap(targetMap: Map<number, number>, b: SparseVector): number {
+	let dot = 0;
+	for (const [idx, val] of b) {
+		const other = targetMap.get(idx);
+		if (other !== undefined) {
+			dot += val * other;
+		}
+	}
+	return dot;
 }
 
 /**
@@ -29,17 +43,53 @@ export function knnClassify(
 
 	const effectiveK = Math.min(k, labeled.length);
 
-	// Compute similarity to all labeled points
-	const similarities = labeled.map((point) => ({
-		label: point.label,
-		similarity: cosineSimilaritySparse(target, point.vector),
+	// Build target map once, reuse for all labeled point comparisons
+	const targetMap = new Map<number, number>();
+	for (const [idx, val] of target) {
+		targetMap.set(idx, val);
+	}
+
+	// Min-heap of size k: maintains the k highest similarities.
+	// Each entry is [similarity, index into labeled[]].
+	// heap[0] is always the smallest similarity in the heap.
+	const heap: [number, number][] = [];
+
+	for (let i = 0; i < labeled.length; i++) {
+		const sim = dotWithMap(targetMap, labeled[i].vector);
+
+		if (heap.length < effectiveK) {
+			heap.push([sim, i]);
+			// Bubble up
+			let ci = heap.length - 1;
+			while (ci > 0) {
+				const pi = (ci - 1) >> 1;
+				if (heap[ci][0] < heap[pi][0]) {
+					[heap[ci], heap[pi]] = [heap[pi], heap[ci]];
+					ci = pi;
+				} else break;
+			}
+		} else if (sim > heap[0][0]) {
+			// Replace the smallest element and sift down
+			heap[0] = [sim, i];
+			let pi = 0;
+			while (true) {
+				let smallest = pi;
+				const li = 2 * pi + 1;
+				const ri = 2 * pi + 2;
+				if (li < effectiveK && heap[li][0] < heap[smallest][0]) smallest = li;
+				if (ri < effectiveK && heap[ri][0] < heap[smallest][0]) smallest = ri;
+				if (smallest === pi) break;
+				[heap[pi], heap[smallest]] = [heap[smallest], heap[pi]];
+				pi = smallest;
+			}
+		}
+	}
+
+	// Extract neighbors from heap
+	const neighbors = heap.map(([sim, idx]) => ({
+		label: labeled[idx].label,
+		similarity: sim,
 	}));
-
-	// Sort by descending similarity
-	similarities.sort((a, b) => b.similarity - a.similarity);
-
-	// Take top k
-	const neighbors = similarities.slice(0, effectiveK);
 
 	// Count votes and track total similarity per label
 	const votes = new Map<string, { count: number; totalSimilarity: number }>();

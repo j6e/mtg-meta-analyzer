@@ -1,0 +1,185 @@
+format: Pauper
+date: "2026-03-10"
+archetypes:
+  - name: Mono-Blue Terror
+    signatureCards:
+      - name: "Tolarian Terror"
+        minCopies: 3
+      - name: "Cryptic Serpent"
+        minCopies: 3
+      - name: "Thought Scour"
+        minCopies: 3
+      - name: "Sneaky Snacker"
+        exactCopies: 0
+  - name: Dimir Terror
+    signatureCards:
+      - name: "Snuff Out"
+        minCopies: 1
+      - name: "Tolarian Terror"
+        minCopies: 3
+      - name: "Thought Scour"
+        minCopies: 3
+      - name: "Sneaky Snacker"
+        minCopies: 3
+  - name: Mono-Green Elves
+    signatureCards:
+      - name: "Priest of Titania"
+        minCopies: 3
+      - name: "Lead the Stampede"
+        minCopies: 3
+      - name: "Quirion Ranger"
+        minCopies: 2
+  - name: Jund Wildfire
+    signatureCards:
+      - name: "Cleansing Wildfire"
+        minCopies: 3
+      - name: "Drossforge Bridge"
+        minCopies: 3
+      - name: "Slagwoods Bridge"
+        minCopies: 3
+  - name: Mono-Red Rally
+    signatureCards:
+      - name: "Goblin Bushwhacker"
+        minCopies: 3
+      - name: "Great Furnace"
+        minCopies: 3
+      - name: "Sneaky Snacker"
+        exactCopies: 0
+  - name: Mono-Red Burn
+    signatureCards:
+      - name: "Lightning Bolt"
+        minCopies: 3
+      - name: "Sneaky Snacker"
+        minCopies: 3
+      - name: "Grab the Prize"
+        minCopies: 3
+      - name: "Alms of the Vein"
+        exactCopies: 0
+  - name: Grixis Affinity
+    signatureCards:
+      - name: "Myr Enforcer"
+        minCopies: 3
+      - name: "Mistvault Bridge"
+        minCopies: 3
+      - name: "Refurbished Familiar"
+        minCopies: 3
+  - name: Azorius Caw-Gates
+    signatureCards:
+      - name: "Squadron Hawk"
+        minCopies: 4
+      - name: "Sacred Cat"
+        minCopies: 3
+      - name: "The Modern Age"
+        minCopies: 3
+  - name: Mono-White Aggro
+    signatureCards:
+      - name: "Battle Screech"
+        minCopies: 3
+      - name: "Thraben Charm"
+        minCopies: 3
+      - name: "Raffine's Informant"
+        minCopies: 3
+  - name: Mono-Blue Faeries
+    signatureCards:
+      - name: "Spellstutter Sprite"
+        minCopies: 3
+      - name: "Of One Mind"
+        minCopies: 3
+      - name: "Ninja of the Deep Hours"
+        minCopies: 3
+      - name: "Swamp"
+        exactCopies: 0
+  - name: Dimir Faeries
+    signatureCards:
+      - name: "Cast Down"
+        minCopies: 1
+      - name: "Swamp"
+        minCopies: 1
+      - name: "Spellstutter Sprite"
+        minCopies: 3
+  - name: Azorius Familiars
+    signatureCards:
+      - name: "Snap"
+        minCopies: 3
+      - name: "Sunscape Familiar"
+        minCopies: 3
+      - name: "Azorius Chancery"
+        minCopies: 2
+  - name: Gruul Ramp
+    signatureCards:
+      - name: "Writhing Chrysalis"
+        minCopies: 3
+      - name: "Arbor Elf"
+        minCopies: 3
+      - name: "Utopia Sprawl"
+        minCopies: 3
+  - name: Rakdos Madness Burn
+    signatureCards:
+      - name: "Vampire's Kiss"
+        minCopies: 3
+      - name: "Kitchen Imp"
+        minCopies: 3
+      - name: "Alms of the Vein"
+        minCopies: 3
+  - name: Golgari Spy Combo
+    signatureCards:
+      - name: "Balustrade Spy"
+        minCopies: 3
+      - name: "Overgrown Battlement"
+        minCopies: 3
+      - name: "Generous Ent"
+        minCopies: 3
+  - name: Golgari Gardens
+    signatureCards:
+      - name: "Khalni Garden"
+        minCopies: 3
+      - name: "Fanatical Offering"
+        minCopies: 3
+      - name: "Cast Down"
+        minCopies: 2
+  - name: Selesnya Bogles
+    signatureCards:
+      - name: "Ancestral Mask"
+        minCopies: 3
+      - name: "Abundant Growth"
+        minCopies: 3
+      - name: "Ethereal Armor"
+        minCopies: 3
+  - name: Gruul Storm
+    signatureCards:
+      - name: "Seize the Storm"
+        minCopies: 1
+      - name: "Goblin Anarchomancer"
+        minCopies: 3
+      - name: "Manamorphose"
+        minCopies: 3
+  - name: Altar Tron
+    signatureCards:
+      - name: "Ashnod's Altar"
+        minCopies: 1
+      - name: "Myr Retriever"
+        minCopies: 1
+      - name: "Urza's Mine"
+        minCopies: 1
+  - name: Ephemerate Tron
+    signatureCards:
+      - name: "Urza's Tower"
+        minCopies: 1
+      - name: "Mulldrifter"
+        minCopies: 1
+      - name: "Urza's Mine"
+        minCopies: 1
+  - name: Walls Combo
+    signatureCards:
+      - name: "Axebane Guardian"
+        minCopies: 2
+      - name: "Drift of Phantasms"
+        minCopies: 1
+  - name: Mono-Black Sacrifice
+    signatureCards:
+      - name: "Nezumi Linkbreaker"
+        minCopies: 1
+      - name: "Supernatural Stamina"
+        minCopies: 2
+      - name: "Village Rites"
+        minCopies: 3

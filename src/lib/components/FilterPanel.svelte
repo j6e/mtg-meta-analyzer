@@ -2,21 +2,75 @@
 	import { onMount } from 'svelte';
 	import { settings, type OtherMode } from '../stores/settings';
 	import { tournamentList, availableFormats } from '../stores/tournaments';
+	import { getInitialExcludeIds } from '../stores/url-settings';
+	import { importanceRank, IMPORTANCE_STARS, type TournamentImportance } from '../types/tournament';
 	import {
 		savedConfigs,
 		activeConfigId,
 		setActiveConfig,
+		builtinConfigId,
 		BUILTIN_CONFIGS,
 	} from '../stores/archetype-configs';
 
-	const tournaments = $derived($tournamentList);
+	const allTournaments = $derived($tournamentList);
 	const formats = $derived($availableFormats);
 
+	/** Built-in archetype configs matching the current format. */
+	const matchingBuiltinConfigs = $derived(
+		$settings.format
+			? BUILTIN_CONFIGS.filter(
+					(c) => c.id === builtinConfigId($settings.format),
+				)
+			: BUILTIN_CONFIGS,
+	);
+
+	/** User-saved archetype configs matching the current format. */
+	const matchingSavedConfigs = $derived(
+		$settings.format
+			? $savedConfigs.filter((c) => c.format === $settings.format)
+			: $savedConfigs,
+	);
+
+	/** Tournaments filtered by the currently selected format and date range. */
+	const tournaments = $derived(
+		allTournaments.filter((t) => {
+			if ($settings.format && !t.formats.includes($settings.format)) return false;
+			if ($settings.dateFrom && t.date < $settings.dateFrom) return false;
+			if ($settings.dateTo && t.date > $settings.dateTo) return false;
+			return true;
+		}),
+	);
+
 	onMount(() => {
-		settings.update((s) => ({
-			...s,
-			selectedTournamentIds: tournaments.map((t) => t.id),
-		}));
+		const excludeIds = getInitialExcludeIds();
+		settings.update((s) => {
+			const minRank = importanceRank(s.minTier);
+			return {
+				...s,
+				selectedTournamentIds: tournaments
+					.filter(
+						(t) =>
+							(!s.dateFrom || t.date >= s.dateFrom) &&
+							(!s.dateTo || t.date <= s.dateTo) &&
+							!excludeIds.has(t.id) &&
+							(minRank === 0 || importanceRank(t.importance) >= minRank),
+					)
+					.map((t) => t.id),
+			};
+		});
+
+		// Sync archetype config to match the active format
+		const format = $settings.format;
+		if (format) {
+			const currentId = $activeConfigId;
+			const builtinMatch = builtinConfigId(format);
+			const isMatchingFormat =
+				currentId === builtinMatch ||
+				$savedConfigs.some((c) => c.id === currentId && c.format === format);
+			if (!isMatchingFormat && BUILTIN_CONFIGS.some((c) => c.id === builtinMatch)) {
+				setActiveConfig(builtinMatch);
+			}
+		}
 	});
 
 	// Debounce timer for numeric inputs
@@ -29,7 +83,30 @@
 
 	function handleFormatChange(e: Event) {
 		const value = (e.target as HTMLSelectElement).value;
-		settings.update((s) => ({ ...s, format: value }));
+		const minRank = importanceRank($settings.minTier);
+		const matching = value
+			? allTournaments.filter((t) => t.formats.includes(value))
+			: allTournaments;
+		const matchingInRange = matching
+			.filter((t) => {
+				const s = $settings;
+				return (!s.dateFrom || t.date >= s.dateFrom) && (!s.dateTo || t.date <= s.dateTo) &&
+					(minRank === 0 || importanceRank(t.importance) >= minRank);
+			})
+			.map((t) => t.id);
+		settings.update((s) => ({ ...s, format: value, selectedTournamentIds: matchingInRange }));
+
+		// Auto-switch archetype config to match the selected format
+		if (value) {
+			const currentId = $activeConfigId;
+			const builtinMatch = builtinConfigId(value);
+			const isCurrentMatchingFormat =
+				currentId === builtinMatch ||
+				$savedConfigs.some((c) => c.id === currentId && c.format === value);
+			if (!isCurrentMatchingFormat && BUILTIN_CONFIGS.some((c) => c.id === builtinMatch)) {
+				setActiveConfig(builtinMatch);
+			}
+		}
 	}
 
 	let datePreset = $state('30');
@@ -38,9 +115,17 @@
 		return d.toISOString().slice(0, 10);
 	}
 
-	function tournamentsInRange(from: string, to: string): number[] {
-		return tournaments
-			.filter((t) => (!from || t.date >= from) && (!to || t.date <= to))
+	function tournamentsInRange(from: string, to: string, minTier?: TournamentImportance): string[] {
+		const tier = minTier ?? $settings.minTier;
+		const minRank = importanceRank(tier);
+		return allTournaments
+			.filter((t) => {
+				if ($settings.format && !t.formats.includes($settings.format)) return false;
+				if (from && t.date < from) return false;
+				if (to && t.date > to) return false;
+				if (minRank > 0 && importanceRank(t.importance) < minRank) return false;
+				return true;
+			})
 			.map((t) => t.id);
 	}
 
@@ -50,7 +135,7 @@
 		if (!value) return;
 		const today = new Date();
 		const from = new Date(today);
-		const days = { '7': 7, '14': 14, '30': 30, '60': 60 }[value];
+		const days = { '7': 7, '14': 14, '30': 30, '60': 60, '120': 120 }[value];
 		if (!days) return;
 		from.setDate(today.getDate() - days);
 		const dateFrom = toDateString(from);
@@ -83,7 +168,16 @@
 		}));
 	}
 
-	function handleTournamentToggle(id: number, checked: boolean) {
+	function handleMinTierChange(e: Event) {
+		const minTier = (e.target as HTMLSelectElement).value as TournamentImportance;
+		const minRank = importanceRank(minTier);
+		const ids = tournaments
+			.filter((t) => minRank === 0 || importanceRank(t.importance) >= minRank)
+			.map((t) => t.id);
+		settings.update((s) => ({ ...s, minTier, selectedTournamentIds: ids }));
+	}
+
+	function handleTournamentToggle(id: string, checked: boolean) {
 		settings.update((s) => {
 			const ids = new Set(s.selectedTournamentIds);
 			if (checked) {
@@ -96,7 +190,11 @@
 	}
 
 	function selectAllTournaments() {
-		settings.update((s) => ({ ...s, selectedTournamentIds: tournaments.map((t) => t.id) }));
+		const minRank = importanceRank($settings.minTier);
+		const ids = tournaments
+			.filter((t) => minRank === 0 || importanceRank(t.importance) >= minRank)
+			.map((t) => t.id);
+		settings.update((s) => ({ ...s, selectedTournamentIds: ids }));
 	}
 
 	function handleOtherModeChange(mode: OtherMode) {
@@ -130,7 +228,6 @@
 			<label>
 				Format
 				<select onchange={handleFormatChange} value={$settings.format}>
-					<option value="">All formats</option>
 					{#each formats as f}
 						<option value={f}>{f}</option>
 					{/each}
@@ -147,6 +244,7 @@
 					<option value="14">Last 2 weeks</option>
 					<option value="30">Last month</option>
 					<option value="60">Last 2 months</option>
+				<option value="120">Last 4 months</option>
 				</select>
 			</label>
 		</div>
@@ -162,6 +260,18 @@
 			</label>
 		</div>
 
+		<div class="filter-row">
+			<label>
+				Minimum tier
+				<select onchange={handleMinTierChange} value={$settings.minTier}>
+					<option value="other">None</option>
+					<option value="competitive">★ Competitive</option>
+					<option value="premier">★★ Premier</option>
+					<option value="professional">★★★ Professional</option>
+				</select>
+			</label>
+		</div>
+
 		<div class="filter-row tournament-list">
 			<div class="tournament-header">
 				<span>Select tournaments</span>
@@ -171,14 +281,17 @@
 			</div>
 			<div class="tournament-checks">
 				{#each tournaments as t}
-					<label class="tournament-check" title={t.name}>
+					<label class="tournament-check" title={t.cleanName}>
 						<input
 							type="checkbox"
 							checked={$settings.selectedTournamentIds.includes(t.id)}
 							onchange={(e) =>
 								handleTournamentToggle(t.id, (e.target as HTMLInputElement).checked)}
 						/>
-						<span class="t-name">{t.name}</span>
+						{#if IMPORTANCE_STARS[t.importance]}
+							<span class="t-tier" title={t.importance}>{IMPORTANCE_STARS[t.importance]}</span>
+						{/if}
+						<span class="t-name">{t.cleanName}</span>
 						<span class="t-date">{t.date}</span>
 					</label>
 				{/each}
@@ -193,10 +306,10 @@
 			<label class="stacked">
 				Archetype config
 				<select onchange={handleConfigChange} value={$activeConfigId}>
-					{#each BUILTIN_CONFIGS as cfg}
+					{#each matchingBuiltinConfigs as cfg}
 						<option value={cfg.id}>Built-in: {cfg.displayName}</option>
 					{/each}
-					{#each $savedConfigs as config}
+					{#each matchingSavedConfigs as config}
 						<option value={config.id}>{config.name} ({config.format})</option>
 					{/each}
 				</select>
@@ -372,6 +485,13 @@
 		gap: 0.35rem;
 		padding: 0.2rem 0;
 		font-size: 0.8rem;
+	}
+
+	.t-tier {
+		color: var(--color-accent);
+		font-size: 0.7rem;
+		white-space: nowrap;
+		flex-shrink: 0;
 	}
 
 	.t-name {

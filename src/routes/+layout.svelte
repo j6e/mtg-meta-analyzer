@@ -1,8 +1,12 @@
 <script lang="ts">
 	import '../app.css';
+	import { onMount } from 'svelte';
 	import { base } from '$app/paths';
+	import { replaceState } from '$app/navigation';
 	import { page } from '$app/state';
 	import AppSidebar from '$lib/components/AppSidebar.svelte';
+	import { settings } from '$lib/stores/settings';
+	import { searchParamsToSettings, settingsQueryString } from '$lib/stores/url-settings';
 
 	let { children } = $props();
 
@@ -16,15 +20,38 @@
 	function isActive(href: string): boolean {
 		return page.url.pathname.startsWith(base + href);
 	}
+
+	// Parse URL params synchronously (before children mount) so FilterPanel
+	// sees the correct format/dateFrom/dateTo when its onMount fires.
+	const parsed = searchParamsToSettings(page.url.searchParams);
+	settings.set(parsed);
+
+	const qs = $derived($settingsQueryString);
+
+	let initialized = false;
+
+	onMount(() => {
+		// Allow one tick for FilterPanel to populate selectedTournamentIds
+		requestAnimationFrame(() => {
+			initialized = true;
+		});
+	});
+
+	$effect(() => {
+		// Read qs to establish reactivity
+		const q = qs;
+		if (!initialized) return;
+		replaceState(`${page.url.pathname}${q}`, {});
+	});
 </script>
 
 <div class="app">
 	<header>
 		<nav>
-			<a href="{base}/" class="logo">MTG Meta Analyzer</a>
+			<a href="{base}/{qs}" class="logo">MTG Meta Analyzer</a>
 			<div class="nav-links">
 				{#each navLinks as link}
-					<a href="{base}{link.href}" class:active={isActive(link.href)}>{link.label}</a>
+					<a href="{base}{link.href}{qs}" class:active={isActive(link.href)}>{link.label}</a>
 				{/each}
 			</div>
 		</nav>

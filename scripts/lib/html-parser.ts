@@ -94,6 +94,7 @@ export function parseDecklistString(decklistString: string): ParsedDecklist {
 	return {
 		mainboard,
 		sideboard,
+		commanders: null,
 		companion: companion.length > 0 ? companion : null,
 		reportedArchetype: null,
 	};
@@ -101,16 +102,19 @@ export function parseDecklistString(decklistString: string): ParsedDecklist {
 
 /**
  * Convert melee.gg decklist JSON Records to a ParsedDecklist.
- * Records use c=0 for mainboard and c=99 for sideboard.
+ * Records use c=0 for mainboard, c=2 for commander, c=3 for partner, and c=99 for sideboard.
  */
 export function parseDecklistRecords(details: MeleeDecklistDetails): ParsedDecklist {
 	const mainboard: { cardName: string; quantity: number }[] = [];
 	const sideboard: { cardName: string; quantity: number }[] = [];
+	const commanders: { cardName: string; quantity: number }[] = [];
 
 	for (const record of details.Records) {
 		const entry = { cardName: record.n, quantity: record.q };
 		if (record.c === 0) {
 			mainboard.push(entry);
+		} else if (record.c === 2 || record.c === 3) {
+			commanders.push(entry);
 		} else if (record.c === 99) {
 			sideboard.push(entry);
 		}
@@ -119,6 +123,7 @@ export function parseDecklistRecords(details: MeleeDecklistDetails): ParsedDeckl
 	return {
 		mainboard,
 		sideboard,
+		commanders: commanders.length > 0 ? commanders : null,
 		companion: null, // companion cards appear in sideboard in the Records format
 		reportedArchetype: details.DecklistName || null,
 	};

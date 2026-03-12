@@ -1,0 +1,186 @@
+format: Legacy
+date: "2026-03-11"
+archetypes:
+  - name: Dimir Tempo
+    strictMode: true
+    signatureCards:
+      - name: "Orcish Bowmasters"
+        minCopies: 1
+      - name: "Tamiyo, Inquisitive Student"
+        minCopies: 3
+      - name: "Wasteland"
+        minCopies: 2
+      - name: Thoughtseize
+        minCopies: 2
+      - name: Up the Beanstalk
+        exactCopies: 0
+      - name: Doomsday
+        exactCopies: 0
+  - name: Boros Energy
+    signatureCards:
+      - name: "Ocelot Pride"
+        minCopies: 3
+      - name: "Amped Raptor"
+        minCopies: 3
+  - name: Izzet Affinity
+    signatureCards:
+      - name: "Pinnacle Emissary"
+        minCopies: 1
+      - name: "Mox Opal"
+        minCopies: 3
+      - name: "Mishra's Bauble"
+        minCopies: 3
+      - name: "Urza's Saga"
+        minCopies: 3
+  - name: Sultai Doomsday
+    signatureCards:
+      - name: "Doomsday"
+        minCopies: 3
+      - name: "Dark Ritual"
+        minCopies: 3
+      - name: "Ponder"
+        minCopies: 1
+  - name: Azorius Stoneblade
+    signatureCards:
+      - name: "Stoneforge Mystic"
+        minCopies: 1
+      - name: "Force of Will"
+        minCopies: 3
+      - name: "Phelia, Exuberant Shepherd"
+        minCopies: 2
+  - name: Mono-Red Eldrazi
+    signatureCards:
+      - name: "Thought-Knot Seer"
+        minCopies: 3
+      - name: "Lotus Petal"
+        minCopies: 3
+      - name: "Eldrazi Linebreaker"
+        minCopies: 3
+  - name: Izzet Delver
+    signatureCards:
+      - name: "Dragon's Rage Channeler"
+        minCopies: 3
+      - name: "Force of Will"
+        minCopies: 3
+      - name: "Daze"
+        minCopies: 2
+  - name: Bant Beanstalk
+    signatureCards:
+      - name: "Up the Beanstalk"
+        minCopies: 3
+      - name: "Quantum Riddler"
+        minCopies: 3
+      - name: "Swords to Plowshares"
+        minCopies: 3
+  - name: Lands
+    signatureCards:
+      - name: "Exploration"
+        minCopies: 3
+      - name: "Wasteland"
+        minCopies: 2
+      - name: "Life from the Loam"
+        minCopies: 2
+  - name: Oops! All Spells
+    signatureCards:
+      - name: "Undercity Informer"
+        minCopies: 3
+      - name: "Simian Spirit Guide"
+        minCopies: 3
+      - name: "Elvish Spirit Guide"
+        minCopies: 3
+  - name: Omni-Tell
+    signatureCards:
+      - name: "Omniscience"
+        minCopies: 3
+      - name: "Show and Tell"
+        minCopies: 3
+      - name: "Ponder"
+        minCopies: 2
+  - name: Sneak and Show
+    signatureCards:
+      - name: "Sneak Attack"
+        minCopies: 3
+      - name: "Scalding Tarn"
+        minCopies: 3
+      - name: "Show and Tell"
+        minCopies: 3
+  - name: Painter Combo
+    signatureCards:
+      - name: "Painter's Servant"
+        minCopies: 3
+      - name: "Goblin Welder"
+        minCopies: 2
+      - name: "Goblin Engineer"
+        minCopies: 2
+  - name: Death and Taxes (Yorion)
+    signatureCards:
+      - name: "Phelia, Exuberant Shepherd"
+        minCopies: 3
+      - name: "Thoughtseize"
+        minCopies: 3
+      - name: "Swords to Plowshares"
+        minCopies: 3
+  - name: Cephalid Breakfast
+    signatureCards:
+      - name: "Cephalid Illusionist"
+        minCopies: 3
+      - name: "Force of Will"
+        minCopies: 3
+      - name: "Dread Return"
+        minCopies: 1
+  - name: Cradle Control
+    signatureCards:
+      - name: "Green Sun's Zenith"
+        minCopies: 3
+      - name: "Wight of the Reliquary"
+        minCopies: 3
+      - name: "Badgermole Cub"
+        minCopies: 2
+  - name: Aluren
+    signatureCards:
+      - name: "Aluren"
+        minCopies: 3
+  - name: Tendrils Storm
+    signatureCards:
+      - name: "Tendrils of Agony"
+        minCopies: 1
+      - name: "Dark Ritual"
+        minCopies: 3
+      - name: "Lion's Eye Diamond"
+        minCopies: 3
+  - name: Dredge
+    signatureCards:
+      - name: "Stinkweed Imp"
+        minCopies: 2
+      - name: "Golgari Thug"
+        minCopies: 2
+      - name: "Narcomoeba"
+        minCopies: 2
+  - name: Mono-Black Midrange
+    signatureCards:
+      - name: "Dauthi Voidwalker"
+        minCopies: 3
+      - name: "Barrowgoyf"
+        minCopies: 3
+      - name: "Dark Ritual"
+        minCopies: 3
+  - name: High Tide
+    signatureCards:
+      - name: "High Tide"
+        minCopies: 4
+      - name: "Time Spiral"
+        minCopies: 2
+  - name: Ruby Storm
+    signatureCards:
+      - name: "Ruby Medallion"
+        minCopies: 3
+      - name: "Seething Song"
+        minCopies: 3
+      - name: "Rite of Flame"
+        minCopies: 3
+  - name: Cloudpost
+    signatureCards:
+      - name: "Cloudpost"
+        minCopies: 4
+      - name: "Kozilek's Command"
+        minCopies: 2

@@ -62,3 +62,28 @@ export function cosineSimilaritySparse(a: SparseVector, b: SparseVector): number
 
 	return dot / denom;
 }
+
+/**
+ * Dot product of two unit-length sparse vectors (pre-normalized).
+ * Equivalent to cosine similarity when both vectors have L2 norm = 1.
+ * Both vectors must be sorted by index for the merge-intersect to work.
+ */
+export function dotSparse(a: SparseVector, b: SparseVector): number {
+	const [shorter, longer] = a.length <= b.length ? [a, b] : [b, a];
+
+	// Build a map from the shorter vector for O(shorter + longer) lookup
+	const map = new Map<number, number>();
+	for (const [idx, val] of shorter) {
+		map.set(idx, val);
+	}
+
+	let dot = 0;
+	for (const [idx, val] of longer) {
+		const other = map.get(idx);
+		if (other !== undefined) {
+			dot += val * other;
+		}
+	}
+
+	return dot;
+}

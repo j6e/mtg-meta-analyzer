@@ -17,13 +17,13 @@
 		classificationResult?: ClassificationResult;
 	} = $props();
 
-	const knnTooltip = $derived(
-		classificationResult?.method === 'knn' && classificationResult.neighbors
-			? classificationResult.neighbors
-					.map((n) => `${n.archetype} (${n.similarity.toFixed(2)})`)
-					.join(', ')
-			: null,
-	);
+	const sortByName = (cards: DecklistInfo['mainboard']) =>
+		[...cards].sort((a, b) => a.cardName.localeCompare(b.cardName));
+
+	const sortedCommanders = $derived(sortByName(decklist.commanders ?? []));
+	const sortedCompanion = $derived(sortByName(decklist.companion ?? []));
+	const sortedMainboard = $derived(sortByName(decklist.mainboard));
+	const sortedSideboard = $derived(sortByName(decklist.sideboard));
 
 	const mainboardCount = $derived(
 		decklist.mainboard.reduce((sum, c) => sum + c.quantity, 0),
@@ -41,22 +41,39 @@
 			{#if archetype}<span class="archetype">{archetype}</span>{/if}
 			{#if classificationResult?.method === 'signature'}
 				<span class="method-badge method-rules" title="Classified by signature cards">By rules</span>
-			{:else if classificationResult?.method === 'knn'}
-				<span class="method-badge method-knn knn-tooltip-anchor">
-					By KNN
-					{#if knnTooltip}
-						<span class="knn-tooltip">{knnTooltip}</span>
-					{/if}
+			{:else if classificationResult?.method === 'centroid'}
+				<span class="method-badge method-centroid" title="Classified by nearest centroid (confidence: {classificationResult.confidence.toFixed(2)})">
+					By similarity
+				</span>
+			{:else if classificationResult?.method === 'unknown' && classificationResult.nearestArchetype}
+				<span class="method-badge method-unknown" title="Below confidence threshold — nearest: {classificationResult.nearestArchetype} ({classificationResult.confidence.toFixed(2)})">
+					Unknown
 				</span>
 			{/if}
 		</div>
+	{/if}
+
+	{#if decklist.commanders && decklist.commanders.length > 0}
+		<section>
+			<h3>Commander</h3>
+			<ul>
+				{#each sortedCommanders as card}
+					<li>
+						<span class="qty">{card.quantity}x</span>
+						<CardTooltip cardName={card.cardName}>
+							<span class="card-name">{card.cardName}</span>
+						</CardTooltip>
+					</li>
+				{/each}
+			</ul>
+		</section>
 	{/if}
 
 	{#if decklist.companion && decklist.companion.length > 0}
 		<section>
 			<h3>Companion</h3>
 			<ul>
-				{#each decklist.companion as card}
+				{#each sortedCompanion as card}
 					<li>
 						<span class="qty">{card.quantity}x</span>
 						<CardTooltip cardName={card.cardName}>
@@ -71,7 +88,7 @@
 	<section>
 		<h3>Mainboard <span class="count">({mainboardCount})</span></h3>
 		<ul>
-			{#each decklist.mainboard as card}
+			{#each sortedMainboard as card}
 				<li>
 					<span class="qty">{card.quantity}x</span>
 					<CardTooltip cardName={card.cardName}>
@@ -86,7 +103,7 @@
 		<section>
 			<h3>Sideboard <span class="count">({sideboardCount})</span></h3>
 			<ul>
-				{#each decklist.sideboard as card}
+				{#each sortedSideboard as card}
 					<li>
 						<span class="qty">{card.quantity}x</span>
 						<CardTooltip cardName={card.cardName}>
@@ -152,37 +169,15 @@
 		background: var(--color-surface-alt, rgba(0, 0, 0, 0.05));
 	}
 
-	.method-knn {
+	.method-centroid {
 		color: #1d6fb8;
 		background: rgba(29, 111, 184, 0.08);
 	}
 
-	.knn-tooltip-anchor {
-		position: relative;
-		cursor: default;
-	}
-
-	.knn-tooltip {
-		display: none;
-		position: absolute;
-		top: calc(100% + 4px);
-		left: 0;
-		z-index: 10;
-		background: var(--color-surface);
-		border: 1px solid var(--color-border);
-		border-radius: 6px;
-		padding: 0.4rem 0.6rem;
-		font-size: 0.72rem;
-		color: var(--color-text);
-		white-space: normal;
-		min-width: 300px;
-		max-width: 480px;
-		line-height: 1.5;
-		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
-	}
-
-	.knn-tooltip-anchor:hover .knn-tooltip {
-		display: block;
+	.method-unknown {
+		color: var(--color-text-muted);
+		background: var(--color-surface-alt, rgba(0, 0, 0, 0.05));
+		cursor: help;
 	}
 
 	section {
