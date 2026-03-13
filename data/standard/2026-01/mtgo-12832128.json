@@ -1,0 +1,4413 @@
+{
+  "meta": {
+    "id": "mtgo-12832128",
+    "name": "Standard Challenge 32",
+    "date": "2026-01-30",
+    "formats": [
+      "Standard"
+    ],
+    "url": "https://www.mtgo.com/decklist/standard-challenge-32-2026-01-3012832128",
+    "fetchedAt": "2026-03-13T12:06:25.369Z",
+    "playerCount": 39,
+    "roundCount": 9,
+    "source": "mtgo",
+    "tabletop": false
+  },
+  "players": {
+    "181637": {
+      "name": "Boin",
+      "username": "Boin",
+      "rank": 20,
+      "points": 9,
+      "matchRecord": "3-3-0",
+      "decklistIds": [
+        "mtgo-deck-58442213"
+      ],
+      "reportedArchetypes": []
+    },
+    "277034": {
+      "name": "Marxelo",
+      "username": "Marxelo",
+      "rank": 4,
+      "points": 15,
+      "matchRecord": "6-2-0",
+      "decklistIds": [
+        "mtgo-deck-58442184"
+      ],
+      "reportedArchetypes": []
+    },
+    "814429": {
+      "name": "MJ_23",
+      "username": "MJ_23",
+      "rank": 16,
+      "points": 9,
+      "matchRecord": "3-3-0",
+      "decklistIds": [
+        "mtgo-deck-58442188"
+      ],
+      "reportedArchetypes": []
+    },
+    "850973": {
+      "name": "jready",
+      "username": "jready",
+      "rank": 30,
+      "points": 3,
+      "matchRecord": "1-3-0",
+      "decklistIds": [
+        "mtgo-deck-58442177"
+      ],
+      "reportedArchetypes": []
+    },
+    "858562": {
+      "name": "Pacman2810",
+      "username": "Pacman2810",
+      "rank": 17,
+      "points": 9,
+      "matchRecord": "3-3-0",
+      "decklistIds": [
+        "mtgo-deck-58442212"
+      ],
+      "reportedArchetypes": []
+    },
+    "1017550": {
+      "name": "O_danielakos",
+      "username": "O_danielakos",
+      "rank": 1,
+      "points": 15,
+      "matchRecord": "8-1-0",
+      "decklistIds": [
+        "mtgo-deck-58442179"
+      ],
+      "reportedArchetypes": []
+    },
+    "1018764": {
+      "name": "OafMcNamara",
+      "username": "OafMcNamara",
+      "rank": 32,
+      "points": 3,
+      "matchRecord": "1-2-0",
+      "decklistIds": [
+        "mtgo-deck-58442209"
+      ],
+      "reportedArchetypes": []
+    },
+    "1171430": {
+      "name": "anzze",
+      "username": "anzze",
+      "rank": 25,
+      "points": 6,
+      "matchRecord": "1-4-0",
+      "decklistIds": [
+        "mtgo-deck-58442186"
+      ],
+      "reportedArchetypes": []
+    },
+    "1205798": {
+      "name": "TSPJendrek",
+      "username": "TSPJendrek",
+      "rank": 5,
+      "points": 15,
+      "matchRecord": "5-2-0",
+      "decklistIds": [
+        "mtgo-deck-58442182"
+      ],
+      "reportedArchetypes": []
+    },
+    "1348253": {
+      "name": "SoulStrong",
+      "username": "SoulStrong",
+      "rank": 19,
+      "points": 9,
+      "matchRecord": "3-3-0",
+      "decklistIds": [
+        "mtgo-deck-58442217"
+      ],
+      "reportedArchetypes": []
+    },
+    "1802874": {
+      "name": "DannyStarchild",
+      "username": "DannyStarchild",
+      "rank": 6,
+      "points": 12,
+      "matchRecord": "4-3-0",
+      "decklistIds": [
+        "mtgo-deck-58442204"
+      ],
+      "reportedArchetypes": []
+    },
+    "1819848": {
+      "name": "lucadaky",
+      "username": "lucadaky",
+      "rank": 11,
+      "points": 12,
+      "matchRecord": "4-2-0",
+      "decklistIds": [
+        "mtgo-deck-58442219"
+      ],
+      "reportedArchetypes": []
+    },
+    "2139100": {
+      "name": "Manny-",
+      "username": "Manny-",
+      "rank": 12,
+      "points": 12,
+      "matchRecord": "4-2-0",
+      "decklistIds": [
+        "mtgo-deck-58442223"
+      ],
+      "reportedArchetypes": []
+    },
+    "2235037": {
+      "name": "LuffyDoChapeuDePalha",
+      "username": "LuffyDoChapeuDePalha",
+      "rank": 26,
+      "points": 6,
+      "matchRecord": "2-4-0",
+      "decklistIds": [
+        "mtgo-deck-58442208"
+      ],
+      "reportedArchetypes": []
+    },
+    "2329353": {
+      "name": "deleon91",
+      "username": "deleon91",
+      "rank": 24,
+      "points": 6,
+      "matchRecord": "2-4-0",
+      "decklistIds": [
+        "mtgo-deck-58442180"
+      ],
+      "reportedArchetypes": []
+    },
+    "2449332": {
+      "name": "xfile",
+      "username": "xfile",
+      "rank": 9,
+      "points": 12,
+      "matchRecord": "4-2-0",
+      "decklistIds": [
+        "mtgo-deck-58442185"
+      ],
+      "reportedArchetypes": []
+    },
+    "2676588": {
+      "name": "John1111",
+      "username": "John1111",
+      "rank": 29,
+      "points": 3,
+      "matchRecord": "1-3-0",
+      "decklistIds": [
+        "mtgo-deck-58442193"
+      ],
+      "reportedArchetypes": []
+    },
+    "2698605": {
+      "name": "Hamuda",
+      "username": "Hamuda",
+      "rank": 14,
+      "points": 9,
+      "matchRecord": "2-3-0",
+      "decklistIds": [
+        "mtgo-deck-58442194"
+      ],
+      "reportedArchetypes": []
+    },
+    "2756131": {
+      "name": "SaculSueahtam",
+      "username": "SaculSueahtam",
+      "rank": 15,
+      "points": 9,
+      "matchRecord": "3-3-0",
+      "decklistIds": [
+        "mtgo-deck-58442178"
+      ],
+      "reportedArchetypes": []
+    },
+    "2760324": {
+      "name": "jayrod115",
+      "username": "jayrod115",
+      "rank": 13,
+      "points": 9,
+      "matchRecord": "3-3-0",
+      "decklistIds": [
+        "mtgo-deck-58442216"
+      ],
+      "reportedArchetypes": []
+    },
+    "2809443": {
+      "name": "ZendicardGames",
+      "username": "ZendicardGames",
+      "rank": 22,
+      "points": 9,
+      "matchRecord": "3-3-0",
+      "decklistIds": [
+        "mtgo-deck-58442222"
+      ],
+      "reportedArchetypes": []
+    },
+    "2898953": {
+      "name": "SpockVidaLoka",
+      "username": "SpockVidaLoka",
+      "rank": 27,
+      "points": 6,
+      "matchRecord": "2-4-0",
+      "decklistIds": [
+        "mtgo-deck-58442192"
+      ],
+      "reportedArchetypes": []
+    },
+    "3086606": {
+      "name": "itstime",
+      "username": "itstime",
+      "rank": 7,
+      "points": 12,
+      "matchRecord": "4-3-0",
+      "decklistIds": [
+        "mtgo-deck-58442175"
+      ],
+      "reportedArchetypes": []
+    },
+    "3094324": {
+      "name": "PedraStone",
+      "username": "PedraStone",
+      "rank": 23,
+      "points": 6,
+      "matchRecord": "2-4-0",
+      "decklistIds": [
+        "mtgo-deck-58442207"
+      ],
+      "reportedArchetypes": []
+    },
+    "3106246": {
+      "name": "fazparte",
+      "username": "fazparte",
+      "rank": 8,
+      "points": 12,
+      "matchRecord": "4-3-0",
+      "decklistIds": [
+        "mtgo-deck-58442176"
+      ],
+      "reportedArchetypes": []
+    },
+    "3143667": {
+      "name": "DayBreakMe",
+      "username": "DayBreakMe",
+      "rank": 3,
+      "points": 18,
+      "matchRecord": "7-1-0",
+      "decklistIds": [
+        "mtgo-deck-58442206"
+      ],
+      "reportedArchetypes": []
+    },
+    "3270024": {
+      "name": "Milkshake_",
+      "username": "Milkshake_",
+      "rank": 10,
+      "points": 12,
+      "matchRecord": "4-2-0",
+      "decklistIds": [
+        "mtgo-deck-58442205"
+      ],
+      "reportedArchetypes": []
+    },
+    "3295882": {
+      "name": "VitorCarvalho01",
+      "username": "VitorCarvalho01",
+      "rank": 28,
+      "points": 6,
+      "matchRecord": "1-4-0",
+      "decklistIds": [
+        "mtgo-deck-58442218"
+      ],
+      "reportedArchetypes": []
+    },
+    "3323058": {
+      "name": "Will_Split",
+      "username": "Will_Split",
+      "rank": 18,
+      "points": 9,
+      "matchRecord": "3-3-0",
+      "decklistIds": [
+        "mtgo-deck-58442191"
+      ],
+      "reportedArchetypes": []
+    },
+    "3405199": {
+      "name": "Strongmind",
+      "username": "Strongmind",
+      "rank": 21,
+      "points": 9,
+      "matchRecord": "3-3-0",
+      "decklistIds": [
+        "mtgo-deck-58442214"
+      ],
+      "reportedArchetypes": []
+    },
+    "3405508": {
+      "name": "stefansson30952",
+      "username": "stefansson30952",
+      "rank": 31,
+      "points": 3,
+      "matchRecord": "0-2-0",
+      "decklistIds": [
+        "mtgo-deck-58442221"
+      ],
+      "reportedArchetypes": []
+    },
+    "3438702": {
+      "name": "GLSwadow",
+      "username": "GLSwadow",
+      "rank": 2,
+      "points": 15,
+      "matchRecord": "7-2-0",
+      "decklistIds": [
+        "mtgo-deck-58442203"
+      ],
+      "reportedArchetypes": []
+    }
+  },
+  "decklists": {
+    "mtgo-deck-58442213": {
+      "playerId": "181637",
+      "mainboard": [
+        {
+          "cardName": "Burst Lightning",
+          "quantity": 4
+        },
+        {
+          "cardName": "Burnout Bashtronaut",
+          "quantity": 4
+        },
+        {
+          "cardName": "Hired Claw",
+          "quantity": 4
+        },
+        {
+          "cardName": "Ojer Axonil, Deepest Might",
+          "quantity": 2
+        },
+        {
+          "cardName": "Soulstone Sanctuary",
+          "quantity": 2
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 20
+        },
+        {
+          "cardName": "Lightning Strike",
+          "quantity": 3
+        },
+        {
+          "cardName": "Razorkin Needlehead",
+          "quantity": 4
+        },
+        {
+          "cardName": "Nova Hellkite",
+          "quantity": 4
+        },
+        {
+          "cardName": "Howlsquad Heavy",
+          "quantity": 4
+        },
+        {
+          "cardName": "Rockface Village",
+          "quantity": 2
+        },
+        {
+          "cardName": "Hexing Squelcher",
+          "quantity": 4
+        },
+        {
+          "cardName": "Shock",
+          "quantity": 3
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Sunspine Lynx",
+          "quantity": 4
+        },
+        {
+          "cardName": "Magebane Lizard",
+          "quantity": 4
+        },
+        {
+          "cardName": "Pyroclasm",
+          "quantity": 2
+        },
+        {
+          "cardName": "Sear",
+          "quantity": 4
+        },
+        {
+          "cardName": "Soulstone Sanctuary",
+          "quantity": 1
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58442184": {
+      "playerId": "277034",
+      "mainboard": [
+        {
+          "cardName": "Deceit",
+          "quantity": 4
+        },
+        {
+          "cardName": "Watery Grave",
+          "quantity": 4
+        },
+        {
+          "cardName": "Restless Reef",
+          "quantity": 4
+        },
+        {
+          "cardName": "Kavaero, Mind-Bitten",
+          "quantity": 4
+        },
+        {
+          "cardName": "Deadly Cover-Up",
+          "quantity": 2
+        },
+        {
+          "cardName": "Swamp",
+          "quantity": 11
+        },
+        {
+          "cardName": "Multiversal Passage",
+          "quantity": 2
+        },
+        {
+          "cardName": "Bitter Triumph",
+          "quantity": 3
+        },
+        {
+          "cardName": "Archenemy's Charm",
+          "quantity": 1
+        },
+        {
+          "cardName": "Doomsday Excruciator",
+          "quantity": 3
+        },
+        {
+          "cardName": "Intimidation Tactics",
+          "quantity": 2
+        },
+        {
+          "cardName": "Undercity Sewers",
+          "quantity": 1
+        },
+        {
+          "cardName": "Harvester of Misery",
+          "quantity": 3
+        },
+        {
+          "cardName": "Winternight Stories",
+          "quantity": 2
+        },
+        {
+          "cardName": "Requiting Hex",
+          "quantity": 4
+        },
+        {
+          "cardName": "Gloomlake Verge",
+          "quantity": 4
+        },
+        {
+          "cardName": "Insatiable Avarice",
+          "quantity": 3
+        },
+        {
+          "cardName": "Stock Up",
+          "quantity": 3
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Soul-Guide Lantern",
+          "quantity": 1
+        },
+        {
+          "cardName": "Duress",
+          "quantity": 1
+        },
+        {
+          "cardName": "Shoot the Sheriff",
+          "quantity": 2
+        },
+        {
+          "cardName": "Cruelclaw's Heist",
+          "quantity": 1
+        },
+        {
+          "cardName": "Quantum Riddler",
+          "quantity": 3
+        },
+        {
+          "cardName": "Duress",
+          "quantity": 3
+        },
+        {
+          "cardName": "Torpor Orb",
+          "quantity": 2
+        },
+        {
+          "cardName": "Soul-Guide Lantern",
+          "quantity": 1
+        },
+        {
+          "cardName": "Negate",
+          "quantity": 1
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58442188": {
+      "playerId": "814429",
+      "mainboard": [
+        {
+          "cardName": "Marang River Regent",
+          "quantity": 1
+        },
+        {
+          "cardName": "Nature's Rhythm",
+          "quantity": 3
+        },
+        {
+          "cardName": "Craterhoof Behemoth",
+          "quantity": 1
+        },
+        {
+          "cardName": "Forest",
+          "quantity": 5
+        },
+        {
+          "cardName": "Gene Pollinator",
+          "quantity": 4
+        },
+        {
+          "cardName": "Llanowar Elves",
+          "quantity": 4
+        },
+        {
+          "cardName": "Badgermole Cub",
+          "quantity": 4
+        },
+        {
+          "cardName": "Multiversal Passage",
+          "quantity": 4
+        },
+        {
+          "cardName": "Ouroboroid",
+          "quantity": 4
+        },
+        {
+          "cardName": "Leyline Weaver",
+          "quantity": 4
+        },
+        {
+          "cardName": "Keen-Eyed Curator",
+          "quantity": 1
+        },
+        {
+          "cardName": "Botanical Sanctum",
+          "quantity": 4
+        },
+        {
+          "cardName": "Ba Sing Se",
+          "quantity": 1
+        },
+        {
+          "cardName": "Mockingbird",
+          "quantity": 2
+        },
+        {
+          "cardName": "Quantum Riddler",
+          "quantity": 4
+        },
+        {
+          "cardName": "Formidable Speaker",
+          "quantity": 4
+        },
+        {
+          "cardName": "Breeding Pool",
+          "quantity": 4
+        },
+        {
+          "cardName": "Detect Intrusion",
+          "quantity": 2
+        },
+        {
+          "cardName": "Willowrush Verge",
+          "quantity": 4
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Reclamation Sage",
+          "quantity": 1
+        },
+        {
+          "cardName": "Vivien Reid",
+          "quantity": 1
+        },
+        {
+          "cardName": "Soul-Guide Lantern",
+          "quantity": 3
+        },
+        {
+          "cardName": "Unable to Scream",
+          "quantity": 4
+        },
+        {
+          "cardName": "Detect Intrusion",
+          "quantity": 2
+        },
+        {
+          "cardName": "Surrak, Elusive Hunter",
+          "quantity": 1
+        },
+        {
+          "cardName": "Keen-Eyed Curator",
+          "quantity": 1
+        },
+        {
+          "cardName": "Spell Snare",
+          "quantity": 1
+        },
+        {
+          "cardName": "Wistfulness",
+          "quantity": 1
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58442177": {
+      "playerId": "850973",
+      "mainboard": [
+        {
+          "cardName": "Island",
+          "quantity": 5
+        },
+        {
+          "cardName": "Spell Snare",
+          "quantity": 2
+        },
+        {
+          "cardName": "Burst Lightning",
+          "quantity": 4
+        },
+        {
+          "cardName": "Sear",
+          "quantity": 3
+        },
+        {
+          "cardName": "Multiversal Passage",
+          "quantity": 2
+        },
+        {
+          "cardName": "Fire Magic",
+          "quantity": 1
+        },
+        {
+          "cardName": "Riverpyre Verge",
+          "quantity": 4
+        },
+        {
+          "cardName": "Stock Up",
+          "quantity": 4
+        },
+        {
+          "cardName": "Bounce Off",
+          "quantity": 1
+        },
+        {
+          "cardName": "Into the Flood Maw",
+          "quantity": 2
+        },
+        {
+          "cardName": "Hearth Elemental",
+          "quantity": 4
+        },
+        {
+          "cardName": "Opt",
+          "quantity": 4
+        },
+        {
+          "cardName": "Spirebluff Canal",
+          "quantity": 4
+        },
+        {
+          "cardName": "Ashling, Rekindled",
+          "quantity": 2
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 2
+        },
+        {
+          "cardName": "Sleight of Hand",
+          "quantity": 4
+        },
+        {
+          "cardName": "Eddymurk Crab",
+          "quantity": 4
+        },
+        {
+          "cardName": "Steam Vents",
+          "quantity": 4
+        },
+        {
+          "cardName": "Island",
+          "quantity": 1
+        },
+        {
+          "cardName": "Sunderflock",
+          "quantity": 3
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Quantum Riddler",
+          "quantity": 1
+        },
+        {
+          "cardName": "Annul",
+          "quantity": 2
+        },
+        {
+          "cardName": "Ral, Crackling Wit",
+          "quantity": 2
+        },
+        {
+          "cardName": "Negate",
+          "quantity": 1
+        },
+        {
+          "cardName": "Pyroclasm",
+          "quantity": 1
+        },
+        {
+          "cardName": "Flashfreeze",
+          "quantity": 1
+        },
+        {
+          "cardName": "Spell Snare",
+          "quantity": 1
+        },
+        {
+          "cardName": "Soul-Guide Lantern",
+          "quantity": 3
+        },
+        {
+          "cardName": "Sunspine Lynx",
+          "quantity": 2
+        },
+        {
+          "cardName": "Roaring Furnace // Steaming Sauna",
+          "quantity": 1
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58442212": {
+      "playerId": "858562",
+      "mainboard": [
+        {
+          "cardName": "Consult the Star Charts",
+          "quantity": 3
+        },
+        {
+          "cardName": "The Rise of Sozin",
+          "quantity": 1
+        },
+        {
+          "cardName": "Spell Snare",
+          "quantity": 2
+        },
+        {
+          "cardName": "Urgent Necropsy",
+          "quantity": 1
+        },
+        {
+          "cardName": "Duress",
+          "quantity": 2
+        },
+        {
+          "cardName": "Strategic Betrayal",
+          "quantity": 1
+        },
+        {
+          "cardName": "Insidious Roots",
+          "quantity": 2
+        },
+        {
+          "cardName": "Deadly Cover-Up",
+          "quantity": 1
+        },
+        {
+          "cardName": "Requiting Hex",
+          "quantity": 3
+        },
+        {
+          "cardName": "Bitter Triumph",
+          "quantity": 2
+        },
+        {
+          "cardName": "Gloomlake Verge",
+          "quantity": 2
+        },
+        {
+          "cardName": "Island",
+          "quantity": 1
+        },
+        {
+          "cardName": "Watery Grave",
+          "quantity": 4
+        },
+        {
+          "cardName": "Breeding Pool",
+          "quantity": 2
+        },
+        {
+          "cardName": "Breeding Pool",
+          "quantity": 2
+        },
+        {
+          "cardName": "Fang, Fearless l'Cie",
+          "quantity": 1
+        },
+        {
+          "cardName": "Forest",
+          "quantity": 1
+        },
+        {
+          "cardName": "Swamp",
+          "quantity": 2
+        },
+        {
+          "cardName": "Overgrown Tomb",
+          "quantity": 2
+        },
+        {
+          "cardName": "Restless Reef",
+          "quantity": 2
+        },
+        {
+          "cardName": "Wastewood Verge",
+          "quantity": 4
+        },
+        {
+          "cardName": "Fangkeeper's Familiar",
+          "quantity": 2
+        },
+        {
+          "cardName": "Glen Elendra's Answer",
+          "quantity": 1
+        },
+        {
+          "cardName": "Glen Elendra Guardian",
+          "quantity": 2
+        },
+        {
+          "cardName": "Awaken the Honored Dead",
+          "quantity": 2
+        },
+        {
+          "cardName": "Repulsive Mutation",
+          "quantity": 2
+        },
+        {
+          "cardName": "Dawnhand Dissident",
+          "quantity": 4
+        },
+        {
+          "cardName": "Nashi, Searcher in the Dark",
+          "quantity": 2
+        },
+        {
+          "cardName": "Scavenging Ooze",
+          "quantity": 2
+        },
+        {
+          "cardName": "Ancient Cornucopia",
+          "quantity": 2
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "The End",
+          "quantity": 1
+        },
+        {
+          "cardName": "Maelstrom Pulse",
+          "quantity": 1
+        },
+        {
+          "cardName": "Urgent Necropsy",
+          "quantity": 1
+        },
+        {
+          "cardName": "Requiting Hex",
+          "quantity": 1
+        },
+        {
+          "cardName": "Shoot the Sheriff",
+          "quantity": 2
+        },
+        {
+          "cardName": "Day of Black Sun",
+          "quantity": 1
+        },
+        {
+          "cardName": "Heritage Reclamation",
+          "quantity": 2
+        },
+        {
+          "cardName": "Bitterbloom Bearer",
+          "quantity": 2
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58442179": {
+      "playerId": "1017550",
+      "mainboard": [
+        {
+          "cardName": "Bitter Triumph",
+          "quantity": 2
+        },
+        {
+          "cardName": "Spyglass Siren",
+          "quantity": 4
+        },
+        {
+          "cardName": "Enduring Curiosity",
+          "quantity": 4
+        },
+        {
+          "cardName": "Kaito, Bane of Nightmares",
+          "quantity": 4
+        },
+        {
+          "cardName": "Gloomlake Verge",
+          "quantity": 4
+        },
+        {
+          "cardName": "Island",
+          "quantity": 4
+        },
+        {
+          "cardName": "Restless Reef",
+          "quantity": 1
+        },
+        {
+          "cardName": "Swamp",
+          "quantity": 4
+        },
+        {
+          "cardName": "Watery Grave",
+          "quantity": 4
+        },
+        {
+          "cardName": "Floodpits Drowner",
+          "quantity": 4
+        },
+        {
+          "cardName": "Shoot the Sheriff",
+          "quantity": 2
+        },
+        {
+          "cardName": "Starting Town",
+          "quantity": 1
+        },
+        {
+          "cardName": "Soulstone Sanctuary",
+          "quantity": 2
+        },
+        {
+          "cardName": "Deep-Cavern Bat",
+          "quantity": 4
+        },
+        {
+          "cardName": "Tishana's Tidebinder",
+          "quantity": 3
+        },
+        {
+          "cardName": "Cecil, Dark Knight",
+          "quantity": 2
+        },
+        {
+          "cardName": "Fountainport",
+          "quantity": 1
+        },
+        {
+          "cardName": "Requiting Hex",
+          "quantity": 2
+        },
+        {
+          "cardName": "Multiversal Passage",
+          "quantity": 4
+        },
+        {
+          "cardName": "Spell Snare",
+          "quantity": 2
+        },
+        {
+          "cardName": "Glamer Gifter",
+          "quantity": 1
+        },
+        {
+          "cardName": "Wan Shi Tong, Librarian",
+          "quantity": 1
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Duress",
+          "quantity": 2
+        },
+        {
+          "cardName": "Essence Scatter",
+          "quantity": 1
+        },
+        {
+          "cardName": "Annul",
+          "quantity": 2
+        },
+        {
+          "cardName": "Requiting Hex",
+          "quantity": 2
+        },
+        {
+          "cardName": "Disdainful Stroke",
+          "quantity": 1
+        },
+        {
+          "cardName": "The Unagi of Kyoshi Island",
+          "quantity": 1
+        },
+        {
+          "cardName": "Spell Pierce",
+          "quantity": 1
+        },
+        {
+          "cardName": "Kaito, Cunning Infiltrator",
+          "quantity": 1
+        },
+        {
+          "cardName": "Faebloom Trick",
+          "quantity": 1
+        },
+        {
+          "cardName": "Soul-Guide Lantern",
+          "quantity": 2
+        },
+        {
+          "cardName": "Tishana's Tidebinder",
+          "quantity": 1
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58442209": {
+      "playerId": "1018764",
+      "mainboard": [
+        {
+          "cardName": "Omniscience",
+          "quantity": 4
+        },
+        {
+          "cardName": "Cavern of Souls",
+          "quantity": 3
+        },
+        {
+          "cardName": "Marang River Regent",
+          "quantity": 4
+        },
+        {
+          "cardName": "Multiversal Passage",
+          "quantity": 4
+        },
+        {
+          "cardName": "Get Lost",
+          "quantity": 3
+        },
+        {
+          "cardName": "Seam Rip",
+          "quantity": 4
+        },
+        {
+          "cardName": "Stock Up",
+          "quantity": 4
+        },
+        {
+          "cardName": "Roiling Dragonstorm",
+          "quantity": 4
+        },
+        {
+          "cardName": "Voice of Victory",
+          "quantity": 2
+        },
+        {
+          "cardName": "Adagia, Windswept Bastion",
+          "quantity": 4
+        },
+        {
+          "cardName": "Floodfarm Verge",
+          "quantity": 4
+        },
+        {
+          "cardName": "Formidable Speaker",
+          "quantity": 3
+        },
+        {
+          "cardName": "Plains",
+          "quantity": 1
+        },
+        {
+          "cardName": "Terror of the Peaks",
+          "quantity": 1
+        },
+        {
+          "cardName": "Breeding Pool",
+          "quantity": 1
+        },
+        {
+          "cardName": "Willowrush Verge",
+          "quantity": 1
+        },
+        {
+          "cardName": "Temple Garden",
+          "quantity": 3
+        },
+        {
+          "cardName": "Consult the Star Charts",
+          "quantity": 2
+        },
+        {
+          "cardName": "Uthros, Titanic Godcore",
+          "quantity": 4
+        },
+        {
+          "cardName": "Kona, Rescue Beastie",
+          "quantity": 4
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Rest in Peace",
+          "quantity": 1
+        },
+        {
+          "cardName": "Overlord of the Mistmoors",
+          "quantity": 2
+        },
+        {
+          "cardName": "Heritage Reclamation",
+          "quantity": 2
+        },
+        {
+          "cardName": "Beza, the Bounding Spring",
+          "quantity": 2
+        },
+        {
+          "cardName": "Soul-Guide Lantern",
+          "quantity": 2
+        },
+        {
+          "cardName": "Quantum Riddler",
+          "quantity": 2
+        },
+        {
+          "cardName": "Clarion Conqueror",
+          "quantity": 2
+        },
+        {
+          "cardName": "Voice of Victory",
+          "quantity": 2
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58442186": {
+      "playerId": "1171430",
+      "mainboard": [
+        {
+          "cardName": "Appa, Steadfast Guardian",
+          "quantity": 4
+        },
+        {
+          "cardName": "Aang, Swift Savior",
+          "quantity": 4
+        },
+        {
+          "cardName": "Seam Rip",
+          "quantity": 1
+        },
+        {
+          "cardName": "Gene Pollinator",
+          "quantity": 1
+        },
+        {
+          "cardName": "Bramble Familiar",
+          "quantity": 3
+        },
+        {
+          "cardName": "Badgermole Cub",
+          "quantity": 4
+        },
+        {
+          "cardName": "Airbender Ascension",
+          "quantity": 3
+        },
+        {
+          "cardName": "Doc Aurlock, Grizzled Genius",
+          "quantity": 4
+        },
+        {
+          "cardName": "Reality Fulcrum",
+          "quantity": 4
+        },
+        {
+          "cardName": "Hallowed Fountain",
+          "quantity": 3
+        },
+        {
+          "cardName": "Temple Garden",
+          "quantity": 4
+        },
+        {
+          "cardName": "Breeding Pool",
+          "quantity": 4
+        },
+        {
+          "cardName": "Floodfarm Verge",
+          "quantity": 3
+        },
+        {
+          "cardName": "Starting Town",
+          "quantity": 2
+        },
+        {
+          "cardName": "Cavern of Souls",
+          "quantity": 1
+        },
+        {
+          "cardName": "Botanical Sanctum",
+          "quantity": 2
+        },
+        {
+          "cardName": "Hushwood Verge",
+          "quantity": 4
+        },
+        {
+          "cardName": "Plains",
+          "quantity": 1
+        },
+        {
+          "cardName": "Llanowar Elves",
+          "quantity": 4
+        },
+        {
+          "cardName": "Aang, at the Crossroads",
+          "quantity": 3
+        },
+        {
+          "cardName": "Leyline Weaver",
+          "quantity": 1
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Seam Rip",
+          "quantity": 3
+        },
+        {
+          "cardName": "Avatar's Wrath",
+          "quantity": 2
+        },
+        {
+          "cardName": "Rest in Peace",
+          "quantity": 1
+        },
+        {
+          "cardName": "Aven Interrupter",
+          "quantity": 1
+        },
+        {
+          "cardName": "Chomping Changeling",
+          "quantity": 1
+        },
+        {
+          "cardName": "Oko, Lorwyn Liege",
+          "quantity": 2
+        },
+        {
+          "cardName": "Kutzil's Flanker",
+          "quantity": 1
+        },
+        {
+          "cardName": "Detect Intrusion",
+          "quantity": 1
+        },
+        {
+          "cardName": "Wistfulness",
+          "quantity": 1
+        },
+        {
+          "cardName": "Ultima",
+          "quantity": 1
+        },
+        {
+          "cardName": "Rest in Peace",
+          "quantity": 1
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58442182": {
+      "playerId": "1205798",
+      "mainboard": [
+        {
+          "cardName": "Ashling, Rekindled",
+          "quantity": 2
+        },
+        {
+          "cardName": "Bounce Off",
+          "quantity": 1
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 2
+        },
+        {
+          "cardName": "Eddymurk Crab",
+          "quantity": 4
+        },
+        {
+          "cardName": "Fire Magic",
+          "quantity": 1
+        },
+        {
+          "cardName": "Hearth Elemental",
+          "quantity": 4
+        },
+        {
+          "cardName": "Into the Flood Maw",
+          "quantity": 2
+        },
+        {
+          "cardName": "Island",
+          "quantity": 6
+        },
+        {
+          "cardName": "Multiversal Passage",
+          "quantity": 2
+        },
+        {
+          "cardName": "Riverpyre Verge",
+          "quantity": 4
+        },
+        {
+          "cardName": "Sear",
+          "quantity": 3
+        },
+        {
+          "cardName": "Burst Lightning",
+          "quantity": 4
+        },
+        {
+          "cardName": "Stock Up",
+          "quantity": 4
+        },
+        {
+          "cardName": "Sunderflock",
+          "quantity": 3
+        },
+        {
+          "cardName": "Opt",
+          "quantity": 4
+        },
+        {
+          "cardName": "Sleight of Hand",
+          "quantity": 4
+        },
+        {
+          "cardName": "Spell Snare",
+          "quantity": 2
+        },
+        {
+          "cardName": "Spirebluff Canal",
+          "quantity": 4
+        },
+        {
+          "cardName": "Steam Vents",
+          "quantity": 4
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Annul",
+          "quantity": 2
+        },
+        {
+          "cardName": "Spell Snare",
+          "quantity": 1
+        },
+        {
+          "cardName": "Soul-Guide Lantern",
+          "quantity": 3
+        },
+        {
+          "cardName": "Pyroclasm",
+          "quantity": 1
+        },
+        {
+          "cardName": "Quantum Riddler",
+          "quantity": 1
+        },
+        {
+          "cardName": "Ral, Crackling Wit",
+          "quantity": 2
+        },
+        {
+          "cardName": "Roaring Furnace // Steaming Sauna",
+          "quantity": 1
+        },
+        {
+          "cardName": "Negate",
+          "quantity": 1
+        },
+        {
+          "cardName": "Flashfreeze",
+          "quantity": 1
+        },
+        {
+          "cardName": "Sunspine Lynx",
+          "quantity": 2
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58442217": {
+      "playerId": "1348253",
+      "mainboard": [
+        {
+          "cardName": "Ardyn, the Usurper",
+          "quantity": 2
+        },
+        {
+          "cardName": "Awaken the Honored Dead",
+          "quantity": 4
+        },
+        {
+          "cardName": "Bitter Triumph",
+          "quantity": 2
+        },
+        {
+          "cardName": "Swamp",
+          "quantity": 1
+        },
+        {
+          "cardName": "Breeding Pool",
+          "quantity": 1
+        },
+        {
+          "cardName": "Deceit",
+          "quantity": 4
+        },
+        {
+          "cardName": "Overgrown Tomb",
+          "quantity": 4
+        },
+        {
+          "cardName": "Wistfulness",
+          "quantity": 2
+        },
+        {
+          "cardName": "Formidable Speaker",
+          "quantity": 3
+        },
+        {
+          "cardName": "Gloomlake Verge",
+          "quantity": 1
+        },
+        {
+          "cardName": "Island",
+          "quantity": 1
+        },
+        {
+          "cardName": "Oblivious Bookworm",
+          "quantity": 4
+        },
+        {
+          "cardName": "Cavern of Souls",
+          "quantity": 1
+        },
+        {
+          "cardName": "Requiting Hex",
+          "quantity": 4
+        },
+        {
+          "cardName": "Kavaero, Mind-Bitten",
+          "quantity": 4
+        },
+        {
+          "cardName": "Cavern of Souls",
+          "quantity": 1
+        },
+        {
+          "cardName": "Town Greeter",
+          "quantity": 3
+        },
+        {
+          "cardName": "Undercity Sewers",
+          "quantity": 1
+        },
+        {
+          "cardName": "Underground Mortuary",
+          "quantity": 1
+        },
+        {
+          "cardName": "Blooming Marsh",
+          "quantity": 4
+        },
+        {
+          "cardName": "Willowrush Verge",
+          "quantity": 4
+        },
+        {
+          "cardName": "Watery Grave",
+          "quantity": 1
+        },
+        {
+          "cardName": "Watery Grave",
+          "quantity": 3
+        },
+        {
+          "cardName": "Bringer of the Last Gift",
+          "quantity": 4
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Deep-Cavern Bat",
+          "quantity": 3
+        },
+        {
+          "cardName": "Disruptive Stormbrood",
+          "quantity": 1
+        },
+        {
+          "cardName": "Ghost Vacuum",
+          "quantity": 1
+        },
+        {
+          "cardName": "Glarb, Calamity's Augur",
+          "quantity": 1
+        },
+        {
+          "cardName": "Harvester of Misery",
+          "quantity": 2
+        },
+        {
+          "cardName": "Intimidation Tactics",
+          "quantity": 3
+        },
+        {
+          "cardName": "Soul-Guide Lantern",
+          "quantity": 1
+        },
+        {
+          "cardName": "Urgent Necropsy",
+          "quantity": 1
+        },
+        {
+          "cardName": "Wistfulness",
+          "quantity": 2
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58442204": {
+      "playerId": "1802874",
+      "mainboard": [
+        {
+          "cardName": "Mountain",
+          "quantity": 15
+        },
+        {
+          "cardName": "Callous Sell-Sword",
+          "quantity": 4
+        },
+        {
+          "cardName": "Dreadmaw's Ire",
+          "quantity": 3
+        },
+        {
+          "cardName": "Slickshot Show-Off",
+          "quantity": 4
+        },
+        {
+          "cardName": "Hired Claw",
+          "quantity": 4
+        },
+        {
+          "cardName": "Might of the Meek",
+          "quantity": 4
+        },
+        {
+          "cardName": "Emberheart Challenger",
+          "quantity": 4
+        },
+        {
+          "cardName": "Leyline of Resonance",
+          "quantity": 4
+        },
+        {
+          "cardName": "Turn Inside Out",
+          "quantity": 4
+        },
+        {
+          "cardName": "Bulk Up",
+          "quantity": 1
+        },
+        {
+          "cardName": "Stadium Headliner",
+          "quantity": 4
+        },
+        {
+          "cardName": "Full Bore",
+          "quantity": 4
+        },
+        {
+          "cardName": "Fire Nation Palace",
+          "quantity": 4
+        },
+        {
+          "cardName": "Redirect Lightning",
+          "quantity": 1
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Soul-Guide Lantern",
+          "quantity": 3
+        },
+        {
+          "cardName": "Magebane Lizard",
+          "quantity": 4
+        },
+        {
+          "cardName": "Sunspine Lynx",
+          "quantity": 3
+        },
+        {
+          "cardName": "Redirect Lightning",
+          "quantity": 2
+        },
+        {
+          "cardName": "Pyroclasm",
+          "quantity": 3
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58442219": {
+      "playerId": "1819848",
+      "mainboard": [
+        {
+          "cardName": "Blooming Marsh",
+          "quantity": 4
+        },
+        {
+          "cardName": "Bitter Triumph",
+          "quantity": 4
+        },
+        {
+          "cardName": "Breeding Pool",
+          "quantity": 3
+        },
+        {
+          "cardName": "Cavern of Souls",
+          "quantity": 4
+        },
+        {
+          "cardName": "Overgrown Tomb",
+          "quantity": 2
+        },
+        {
+          "cardName": "Deceit",
+          "quantity": 4
+        },
+        {
+          "cardName": "Formidable Speaker",
+          "quantity": 4
+        },
+        {
+          "cardName": "Gloomlake Verge",
+          "quantity": 1
+        },
+        {
+          "cardName": "Harvester of Misery",
+          "quantity": 1
+        },
+        {
+          "cardName": "Oblivious Bookworm",
+          "quantity": 4
+        },
+        {
+          "cardName": "Watery Grave",
+          "quantity": 4
+        },
+        {
+          "cardName": "Overlord of the Balemurk",
+          "quantity": 1
+        },
+        {
+          "cardName": "Kavaero, Mind-Bitten",
+          "quantity": 4
+        },
+        {
+          "cardName": "Swamp",
+          "quantity": 1
+        },
+        {
+          "cardName": "Town Greeter",
+          "quantity": 1
+        },
+        {
+          "cardName": "Ardyn, the Usurper",
+          "quantity": 3
+        },
+        {
+          "cardName": "Underground Mortuary",
+          "quantity": 2
+        },
+        {
+          "cardName": "Wastewood Verge",
+          "quantity": 1
+        },
+        {
+          "cardName": "Willowrush Verge",
+          "quantity": 2
+        },
+        {
+          "cardName": "Wistfulness",
+          "quantity": 4
+        },
+        {
+          "cardName": "Bringer of the Last Gift",
+          "quantity": 4
+        },
+        {
+          "cardName": "Undercity Sewers",
+          "quantity": 2
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Disruptive Stormbrood",
+          "quantity": 1
+        },
+        {
+          "cardName": "Harvester of Misery",
+          "quantity": 1
+        },
+        {
+          "cardName": "Intimidation Tactics",
+          "quantity": 4
+        },
+        {
+          "cardName": "Myojin of Night's Reach",
+          "quantity": 1
+        },
+        {
+          "cardName": "Oko, Lorwyn Liege",
+          "quantity": 1
+        },
+        {
+          "cardName": "Overlord of the Balemurk",
+          "quantity": 1
+        },
+        {
+          "cardName": "Requiting Hex",
+          "quantity": 2
+        },
+        {
+          "cardName": "Soul-Guide Lantern",
+          "quantity": 1
+        },
+        {
+          "cardName": "Soul-Guide Lantern",
+          "quantity": 1
+        },
+        {
+          "cardName": "Spell Snare",
+          "quantity": 2
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58442223": {
+      "playerId": "2139100",
+      "mainboard": [
+        {
+          "cardName": "Spirebluff Canal",
+          "quantity": 4
+        },
+        {
+          "cardName": "Bounce Off",
+          "quantity": 1
+        },
+        {
+          "cardName": "Burst Lightning",
+          "quantity": 4
+        },
+        {
+          "cardName": "Eddymurk Crab",
+          "quantity": 4
+        },
+        {
+          "cardName": "Fire Magic",
+          "quantity": 1
+        },
+        {
+          "cardName": "Hearth Elemental",
+          "quantity": 4
+        },
+        {
+          "cardName": "Into the Flood Maw",
+          "quantity": 2
+        },
+        {
+          "cardName": "Island",
+          "quantity": 1
+        },
+        {
+          "cardName": "Spell Snare",
+          "quantity": 2
+        },
+        {
+          "cardName": "Multiversal Passage",
+          "quantity": 2
+        },
+        {
+          "cardName": "Sleight of Hand",
+          "quantity": 4
+        },
+        {
+          "cardName": "Riverpyre Verge",
+          "quantity": 4
+        },
+        {
+          "cardName": "Sear",
+          "quantity": 3
+        },
+        {
+          "cardName": "Opt",
+          "quantity": 4
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 1
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 1
+        },
+        {
+          "cardName": "Island",
+          "quantity": 5
+        },
+        {
+          "cardName": "Stock Up",
+          "quantity": 4
+        },
+        {
+          "cardName": "Ashling, Rekindled",
+          "quantity": 2
+        },
+        {
+          "cardName": "Steam Vents",
+          "quantity": 4
+        },
+        {
+          "cardName": "Sunderflock",
+          "quantity": 3
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Spell Snare",
+          "quantity": 1
+        },
+        {
+          "cardName": "Soul-Guide Lantern",
+          "quantity": 3
+        },
+        {
+          "cardName": "Pyroclasm",
+          "quantity": 1
+        },
+        {
+          "cardName": "Negate",
+          "quantity": 1
+        },
+        {
+          "cardName": "Quantum Riddler",
+          "quantity": 1
+        },
+        {
+          "cardName": "Ral, Crackling Wit",
+          "quantity": 2
+        },
+        {
+          "cardName": "Roaring Furnace // Steaming Sauna",
+          "quantity": 1
+        },
+        {
+          "cardName": "Flashfreeze",
+          "quantity": 1
+        },
+        {
+          "cardName": "Annul",
+          "quantity": 2
+        },
+        {
+          "cardName": "Sunspine Lynx",
+          "quantity": 2
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58442208": {
+      "playerId": "2235037",
+      "mainboard": [
+        {
+          "cardName": "Shock",
+          "quantity": 2
+        },
+        {
+          "cardName": "Ojer Axonil, Deepest Might",
+          "quantity": 3
+        },
+        {
+          "cardName": "Fanatical Firebrand",
+          "quantity": 1
+        },
+        {
+          "cardName": "Razorkin Needlehead",
+          "quantity": 4
+        },
+        {
+          "cardName": "Nova Hellkite",
+          "quantity": 4
+        },
+        {
+          "cardName": "Shock",
+          "quantity": 1
+        },
+        {
+          "cardName": "Soulstone Sanctuary",
+          "quantity": 3
+        },
+        {
+          "cardName": "Rockface Village",
+          "quantity": 2
+        },
+        {
+          "cardName": "Hexing Squelcher",
+          "quantity": 4
+        },
+        {
+          "cardName": "Steam Vents",
+          "quantity": 2
+        },
+        {
+          "cardName": "Burst Lightning",
+          "quantity": 4
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 13
+        },
+        {
+          "cardName": "Lightning Strike",
+          "quantity": 4
+        },
+        {
+          "cardName": "Hired Claw",
+          "quantity": 4
+        },
+        {
+          "cardName": "Shock",
+          "quantity": 1
+        },
+        {
+          "cardName": "Scalding Viper",
+          "quantity": 4
+        },
+        {
+          "cardName": "Riverpyre Verge",
+          "quantity": 4
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Soul-Guide Lantern",
+          "quantity": 2
+        },
+        {
+          "cardName": "Iroh's Demonstration",
+          "quantity": 2
+        },
+        {
+          "cardName": "Magebane Lizard",
+          "quantity": 4
+        },
+        {
+          "cardName": "Sunspine Lynx",
+          "quantity": 3
+        },
+        {
+          "cardName": "Sear",
+          "quantity": 2
+        },
+        {
+          "cardName": "The Legend of Roku",
+          "quantity": 2
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58442180": {
+      "playerId": "2329353",
+      "mainboard": [
+        {
+          "cardName": "Burst Lightning",
+          "quantity": 4
+        },
+        {
+          "cardName": "Hired Claw",
+          "quantity": 4
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 10
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 4
+        },
+        {
+          "cardName": "Nova Hellkite",
+          "quantity": 4
+        },
+        {
+          "cardName": "Lightning Strike",
+          "quantity": 4
+        },
+        {
+          "cardName": "Riverpyre Verge",
+          "quantity": 4
+        },
+        {
+          "cardName": "Razorkin Needlehead",
+          "quantity": 4
+        },
+        {
+          "cardName": "Scalding Viper",
+          "quantity": 4
+        },
+        {
+          "cardName": "Rockface Village",
+          "quantity": 2
+        },
+        {
+          "cardName": "Soulstone Sanctuary",
+          "quantity": 3
+        },
+        {
+          "cardName": "Ojer Axonil, Deepest Might",
+          "quantity": 3
+        },
+        {
+          "cardName": "Fanatical Firebrand",
+          "quantity": 3
+        },
+        {
+          "cardName": "Boulder Dash",
+          "quantity": 3
+        },
+        {
+          "cardName": "Tersa Lightshatter",
+          "quantity": 2
+        },
+        {
+          "cardName": "Spirebluff Canal",
+          "quantity": 2
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Soul-Guide Lantern",
+          "quantity": 4
+        },
+        {
+          "cardName": "Sear",
+          "quantity": 3
+        },
+        {
+          "cardName": "Sunspine Lynx",
+          "quantity": 3
+        },
+        {
+          "cardName": "Magebane Lizard",
+          "quantity": 4
+        },
+        {
+          "cardName": "Sunspine Lynx",
+          "quantity": 1
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58442185": {
+      "playerId": "2449332",
+      "mainboard": [
+        {
+          "cardName": "Badgermole Cub",
+          "quantity": 4
+        },
+        {
+          "cardName": "Temple Garden",
+          "quantity": 3
+        },
+        {
+          "cardName": "Brightglass Gearhulk",
+          "quantity": 1
+        },
+        {
+          "cardName": "Llanowar Elves",
+          "quantity": 4
+        },
+        {
+          "cardName": "Explosive Prodigy",
+          "quantity": 1
+        },
+        {
+          "cardName": "Formidable Speaker",
+          "quantity": 4
+        },
+        {
+          "cardName": "Gene Pollinator",
+          "quantity": 4
+        },
+        {
+          "cardName": "Hushwood Verge",
+          "quantity": 4
+        },
+        {
+          "cardName": "Craterhoof Behemoth",
+          "quantity": 1
+        },
+        {
+          "cardName": "Marang River Regent",
+          "quantity": 1
+        },
+        {
+          "cardName": "Meltstrider's Resolve",
+          "quantity": 1
+        },
+        {
+          "cardName": "Mockingbird",
+          "quantity": 4
+        },
+        {
+          "cardName": "Multiversal Passage",
+          "quantity": 4
+        },
+        {
+          "cardName": "Nature's Rhythm",
+          "quantity": 4
+        },
+        {
+          "cardName": "Quantum Riddler",
+          "quantity": 4
+        },
+        {
+          "cardName": "Leyline Weaver",
+          "quantity": 4
+        },
+        {
+          "cardName": "Starting Town",
+          "quantity": 4
+        },
+        {
+          "cardName": "Breeding Pool",
+          "quantity": 4
+        },
+        {
+          "cardName": "Willowrush Verge",
+          "quantity": 2
+        },
+        {
+          "cardName": "Forest",
+          "quantity": 1
+        },
+        {
+          "cardName": "Ouroboroid",
+          "quantity": 1
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Glen Elendra Guardian",
+          "quantity": 1
+        },
+        {
+          "cardName": "Keen-Eyed Curator",
+          "quantity": 1
+        },
+        {
+          "cardName": "Meltstrider's Resolve",
+          "quantity": 1
+        },
+        {
+          "cardName": "Reclamation Sage",
+          "quantity": 1
+        },
+        {
+          "cardName": "Seam Rip",
+          "quantity": 1
+        },
+        {
+          "cardName": "Detect Intrusion",
+          "quantity": 2
+        },
+        {
+          "cardName": "Voice of Victory",
+          "quantity": 1
+        },
+        {
+          "cardName": "Wistfulness",
+          "quantity": 1
+        },
+        {
+          "cardName": "Adept Watershaper",
+          "quantity": 1
+        },
+        {
+          "cardName": "Clarion Conqueror",
+          "quantity": 1
+        },
+        {
+          "cardName": "Rest in Peace",
+          "quantity": 4
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58442193": {
+      "playerId": "2676588",
+      "mainboard": [
+        {
+          "cardName": "Bitter Triumph",
+          "quantity": 2
+        },
+        {
+          "cardName": "Enduring Curiosity",
+          "quantity": 4
+        },
+        {
+          "cardName": "Cecil, Dark Knight",
+          "quantity": 2
+        },
+        {
+          "cardName": "Deep-Cavern Bat",
+          "quantity": 4
+        },
+        {
+          "cardName": "Flitterwing Nuisance",
+          "quantity": 4
+        },
+        {
+          "cardName": "Restless Reef",
+          "quantity": 2
+        },
+        {
+          "cardName": "Gloomlake Verge",
+          "quantity": 4
+        },
+        {
+          "cardName": "Island",
+          "quantity": 1
+        },
+        {
+          "cardName": "Kaito, Bane of Nightmares",
+          "quantity": 4
+        },
+        {
+          "cardName": "Multiversal Passage",
+          "quantity": 4
+        },
+        {
+          "cardName": "Requiting Hex",
+          "quantity": 4
+        },
+        {
+          "cardName": "Tishana's Tidebinder",
+          "quantity": 4
+        },
+        {
+          "cardName": "Shoot the Sheriff",
+          "quantity": 2
+        },
+        {
+          "cardName": "Spell Stutter",
+          "quantity": 2
+        },
+        {
+          "cardName": "Island",
+          "quantity": 3
+        },
+        {
+          "cardName": "Watery Grave",
+          "quantity": 4
+        },
+        {
+          "cardName": "Swamp",
+          "quantity": 4
+        },
+        {
+          "cardName": "Swamp",
+          "quantity": 2
+        },
+        {
+          "cardName": "Bitterbloom Bearer",
+          "quantity": 4
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Duress",
+          "quantity": 3
+        },
+        {
+          "cardName": "Day of Black Sun",
+          "quantity": 3
+        },
+        {
+          "cardName": "Negate",
+          "quantity": 1
+        },
+        {
+          "cardName": "Ghost Vacuum",
+          "quantity": 1
+        },
+        {
+          "cardName": "Essence Scatter",
+          "quantity": 1
+        },
+        {
+          "cardName": "Soul-Guide Lantern",
+          "quantity": 1
+        },
+        {
+          "cardName": "The Unagi of Kyoshi Island",
+          "quantity": 1
+        },
+        {
+          "cardName": "Vren, the Relentless",
+          "quantity": 2
+        },
+        {
+          "cardName": "Annul",
+          "quantity": 2
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58442194": {
+      "playerId": "2698605",
+      "mainboard": [
+        {
+          "cardName": "Ba Sing Se",
+          "quantity": 2
+        },
+        {
+          "cardName": "Badgermole Cub",
+          "quantity": 4
+        },
+        {
+          "cardName": "Sear",
+          "quantity": 2
+        },
+        {
+          "cardName": "Earthbender Ascension",
+          "quantity": 4
+        },
+        {
+          "cardName": "Escape Tunnel",
+          "quantity": 4
+        },
+        {
+          "cardName": "Llanowar Elves",
+          "quantity": 2
+        },
+        {
+          "cardName": "Esper Origins",
+          "quantity": 2
+        },
+        {
+          "cardName": "Mightform Harmonizer",
+          "quantity": 4
+        },
+        {
+          "cardName": "Sazh's Chocobo",
+          "quantity": 3
+        },
+        {
+          "cardName": "Llanowar Elves",
+          "quantity": 2
+        },
+        {
+          "cardName": "Fabled Passage",
+          "quantity": 2
+        },
+        {
+          "cardName": "Icetill Explorer",
+          "quantity": 3
+        },
+        {
+          "cardName": "Lumbering Worldwagon",
+          "quantity": 2
+        },
+        {
+          "cardName": "Forest",
+          "quantity": 10
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 1
+        },
+        {
+          "cardName": "Fabled Passage",
+          "quantity": 1
+        },
+        {
+          "cardName": "Fabled Passage",
+          "quantity": 1
+        },
+        {
+          "cardName": "Icetill Explorer",
+          "quantity": 1
+        },
+        {
+          "cardName": "Sapling Nursery",
+          "quantity": 1
+        },
+        {
+          "cardName": "Stomping Ground",
+          "quantity": 4
+        },
+        {
+          "cardName": "Vibrance",
+          "quantity": 4
+        },
+        {
+          "cardName": "Thornspire Verge",
+          "quantity": 1
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Soul-Guide Lantern",
+          "quantity": 2
+        },
+        {
+          "cardName": "Soul-Guide Lantern",
+          "quantity": 1
+        },
+        {
+          "cardName": "Scrapshooter",
+          "quantity": 2
+        },
+        {
+          "cardName": "Origin of Metalbending",
+          "quantity": 2
+        },
+        {
+          "cardName": "Sapling Nursery",
+          "quantity": 2
+        },
+        {
+          "cardName": "Pyroclasm",
+          "quantity": 2
+        },
+        {
+          "cardName": "Mossborn Hydra",
+          "quantity": 2
+        },
+        {
+          "cardName": "Fire Magic",
+          "quantity": 2
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58442178": {
+      "playerId": "2756131",
+      "mainboard": [
+        {
+          "cardName": "Callous Sell-Sword",
+          "quantity": 3
+        },
+        {
+          "cardName": "Dreadmaw's Ire",
+          "quantity": 4
+        },
+        {
+          "cardName": "Slickshot Show-Off",
+          "quantity": 4
+        },
+        {
+          "cardName": "Emberheart Challenger",
+          "quantity": 4
+        },
+        {
+          "cardName": "Leyline of Resonance",
+          "quantity": 4
+        },
+        {
+          "cardName": "Might of the Meek",
+          "quantity": 4
+        },
+        {
+          "cardName": "Stadium Headliner",
+          "quantity": 4
+        },
+        {
+          "cardName": "Turn Inside Out",
+          "quantity": 4
+        },
+        {
+          "cardName": "Bulk Up",
+          "quantity": 1
+        },
+        {
+          "cardName": "Full Bore",
+          "quantity": 4
+        },
+        {
+          "cardName": "Redirect Lightning",
+          "quantity": 1
+        },
+        {
+          "cardName": "Fire Nation Palace",
+          "quantity": 4
+        },
+        {
+          "cardName": "Hired Claw",
+          "quantity": 4
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 15
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Razorkin Needlehead",
+          "quantity": 3
+        },
+        {
+          "cardName": "Magebane Lizard",
+          "quantity": 4
+        },
+        {
+          "cardName": "Sunspine Lynx",
+          "quantity": 2
+        },
+        {
+          "cardName": "Soul-Guide Lantern",
+          "quantity": 1
+        },
+        {
+          "cardName": "Redirect Lightning",
+          "quantity": 2
+        },
+        {
+          "cardName": "The Last Agni Kai",
+          "quantity": 3
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58442216": {
+      "playerId": "2760324",
+      "mainboard": [
+        {
+          "cardName": "Abandon Attachments",
+          "quantity": 4
+        },
+        {
+          "cardName": "Accumulate Wisdom",
+          "quantity": 4
+        },
+        {
+          "cardName": "Agna Qel'a",
+          "quantity": 2
+        },
+        {
+          "cardName": "Artist's Talent",
+          "quantity": 4
+        },
+        {
+          "cardName": "Combustion Technique",
+          "quantity": 4
+        },
+        {
+          "cardName": "Firebending Lesson",
+          "quantity": 4
+        },
+        {
+          "cardName": "Gran-Gran",
+          "quantity": 4
+        },
+        {
+          "cardName": "Iroh's Demonstration",
+          "quantity": 2
+        },
+        {
+          "cardName": "Island",
+          "quantity": 1
+        },
+        {
+          "cardName": "It'll Quench Ya!",
+          "quantity": 1
+        },
+        {
+          "cardName": "Monument to Endurance",
+          "quantity": 4
+        },
+        {
+          "cardName": "Island",
+          "quantity": 3
+        },
+        {
+          "cardName": "Spirebluff Canal",
+          "quantity": 4
+        },
+        {
+          "cardName": "Spell Snare",
+          "quantity": 2
+        },
+        {
+          "cardName": "Steam Vents",
+          "quantity": 1
+        },
+        {
+          "cardName": "Three Steps Ahead",
+          "quantity": 2
+        },
+        {
+          "cardName": "Multiversal Passage",
+          "quantity": 2
+        },
+        {
+          "cardName": "Island",
+          "quantity": 1
+        },
+        {
+          "cardName": "Sear",
+          "quantity": 1
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 2
+        },
+        {
+          "cardName": "Spell Pierce",
+          "quantity": 1
+        },
+        {
+          "cardName": "Riverpyre Verge",
+          "quantity": 4
+        },
+        {
+          "cardName": "Steam Vents",
+          "quantity": 3
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Sear",
+          "quantity": 1
+        },
+        {
+          "cardName": "Spell Pierce",
+          "quantity": 1
+        },
+        {
+          "cardName": "Annul",
+          "quantity": 1
+        },
+        {
+          "cardName": "Soul-Guide Lantern",
+          "quantity": 2
+        },
+        {
+          "cardName": "Negate",
+          "quantity": 1
+        },
+        {
+          "cardName": "Spell Snare",
+          "quantity": 1
+        },
+        {
+          "cardName": "Wan Shi Tong, Librarian",
+          "quantity": 1
+        },
+        {
+          "cardName": "Flashfreeze",
+          "quantity": 1
+        },
+        {
+          "cardName": "Ral, Crackling Wit",
+          "quantity": 1
+        },
+        {
+          "cardName": "Quantum Riddler",
+          "quantity": 2
+        },
+        {
+          "cardName": "Flashfreeze",
+          "quantity": 1
+        },
+        {
+          "cardName": "Slagstorm",
+          "quantity": 2
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58442222": {
+      "playerId": "2809443",
+      "mainboard": [
+        {
+          "cardName": "Mountain",
+          "quantity": 1
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 1
+        },
+        {
+          "cardName": "Maelstrom of the Spirit Dragon",
+          "quantity": 4
+        },
+        {
+          "cardName": "Inspiring Vantage",
+          "quantity": 4
+        },
+        {
+          "cardName": "Get Lost",
+          "quantity": 2
+        },
+        {
+          "cardName": "Dragonhawk, Fate's Tempest",
+          "quantity": 2
+        },
+        {
+          "cardName": "Clarion Conqueror",
+          "quantity": 4
+        },
+        {
+          "cardName": "Magmatic Hellkite",
+          "quantity": 4
+        },
+        {
+          "cardName": "Momo, Friendly Flier",
+          "quantity": 4
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 1
+        },
+        {
+          "cardName": "Multiversal Passage",
+          "quantity": 2
+        },
+        {
+          "cardName": "Cavern of Souls",
+          "quantity": 2
+        },
+        {
+          "cardName": "Burst Lightning",
+          "quantity": 4
+        },
+        {
+          "cardName": "Sarkhan, Dragon Ascendant",
+          "quantity": 4
+        },
+        {
+          "cardName": "Sear",
+          "quantity": 1
+        },
+        {
+          "cardName": "Sunbillow Verge",
+          "quantity": 4
+        },
+        {
+          "cardName": "The Legend of Roku",
+          "quantity": 1
+        },
+        {
+          "cardName": "Twinmaw Stormbrood",
+          "quantity": 3
+        },
+        {
+          "cardName": "Voice of Victory",
+          "quantity": 3
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 1
+        },
+        {
+          "cardName": "Nova Hellkite",
+          "quantity": 4
+        },
+        {
+          "cardName": "Sacred Foundry",
+          "quantity": 4
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Rest in Peace",
+          "quantity": 2
+        },
+        {
+          "cardName": "Exorcise",
+          "quantity": 2
+        },
+        {
+          "cardName": "Fire Magic",
+          "quantity": 3
+        },
+        {
+          "cardName": "Get Lost",
+          "quantity": 1
+        },
+        {
+          "cardName": "High Noon",
+          "quantity": 2
+        },
+        {
+          "cardName": "Abrade",
+          "quantity": 1
+        },
+        {
+          "cardName": "Sunspine Lynx",
+          "quantity": 1
+        },
+        {
+          "cardName": "The Legend of Roku",
+          "quantity": 1
+        },
+        {
+          "cardName": "Rest in Peace",
+          "quantity": 2
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58442192": {
+      "playerId": "2898953",
+      "mainboard": [
+        {
+          "cardName": "Cavern of Souls",
+          "quantity": 4
+        },
+        {
+          "cardName": "Breeding Pool",
+          "quantity": 4
+        },
+        {
+          "cardName": "Omniscience",
+          "quantity": 4
+        },
+        {
+          "cardName": "Kona, Rescue Beastie",
+          "quantity": 4
+        },
+        {
+          "cardName": "Terror of the Peaks",
+          "quantity": 1
+        },
+        {
+          "cardName": "Willowrush Verge",
+          "quantity": 4
+        },
+        {
+          "cardName": "Stock Up",
+          "quantity": 4
+        },
+        {
+          "cardName": "Marang River Regent",
+          "quantity": 4
+        },
+        {
+          "cardName": "Dispelling Exhale",
+          "quantity": 4
+        },
+        {
+          "cardName": "Roiling Dragonstorm",
+          "quantity": 4
+        },
+        {
+          "cardName": "Consult the Star Charts",
+          "quantity": 4
+        },
+        {
+          "cardName": "Evendo, Waking Haven",
+          "quantity": 4
+        },
+        {
+          "cardName": "Uthros, Titanic Godcore",
+          "quantity": 4
+        },
+        {
+          "cardName": "Formidable Speaker",
+          "quantity": 3
+        },
+        {
+          "cardName": "Island",
+          "quantity": 4
+        },
+        {
+          "cardName": "Lost in the Maze",
+          "quantity": 4
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Spell Pierce",
+          "quantity": 3
+        },
+        {
+          "cardName": "Spell Snare",
+          "quantity": 3
+        },
+        {
+          "cardName": "Soul-Guide Lantern",
+          "quantity": 3
+        },
+        {
+          "cardName": "Aetherize",
+          "quantity": 2
+        },
+        {
+          "cardName": "Unable to Scream",
+          "quantity": 4
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58442175": {
+      "playerId": "3086606",
+      "mainboard": [
+        {
+          "cardName": "Mountain",
+          "quantity": 4
+        },
+        {
+          "cardName": "Burst Lightning",
+          "quantity": 4
+        },
+        {
+          "cardName": "Sunbillow Verge",
+          "quantity": 4
+        },
+        {
+          "cardName": "Voice of Victory",
+          "quantity": 3
+        },
+        {
+          "cardName": "Dragonhawk, Fate's Tempest",
+          "quantity": 2
+        },
+        {
+          "cardName": "Get Lost",
+          "quantity": 2
+        },
+        {
+          "cardName": "Magmatic Hellkite",
+          "quantity": 4
+        },
+        {
+          "cardName": "Cavern of Souls",
+          "quantity": 2
+        },
+        {
+          "cardName": "Twinmaw Stormbrood",
+          "quantity": 3
+        },
+        {
+          "cardName": "Clarion Conqueror",
+          "quantity": 4
+        },
+        {
+          "cardName": "Multiversal Passage",
+          "quantity": 2
+        },
+        {
+          "cardName": "Momo, Friendly Flier",
+          "quantity": 4
+        },
+        {
+          "cardName": "The Legend of Roku",
+          "quantity": 1
+        },
+        {
+          "cardName": "Sear",
+          "quantity": 1
+        },
+        {
+          "cardName": "Inspiring Vantage",
+          "quantity": 4
+        },
+        {
+          "cardName": "Sacred Foundry",
+          "quantity": 4
+        },
+        {
+          "cardName": "Maelstrom of the Spirit Dragon",
+          "quantity": 4
+        },
+        {
+          "cardName": "Sarkhan, Dragon Ascendant",
+          "quantity": 4
+        },
+        {
+          "cardName": "Nova Hellkite",
+          "quantity": 4
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Abrade",
+          "quantity": 1
+        },
+        {
+          "cardName": "Get Lost",
+          "quantity": 2
+        },
+        {
+          "cardName": "High Noon",
+          "quantity": 2
+        },
+        {
+          "cardName": "Sunspine Lynx",
+          "quantity": 1
+        },
+        {
+          "cardName": "Exorcise",
+          "quantity": 1
+        },
+        {
+          "cardName": "Fire Magic",
+          "quantity": 3
+        },
+        {
+          "cardName": "The Legend of Roku",
+          "quantity": 1
+        },
+        {
+          "cardName": "Rest in Peace",
+          "quantity": 4
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58442207": {
+      "playerId": "3094324",
+      "mainboard": [
+        {
+          "cardName": "Mountain",
+          "quantity": 9
+        },
+        {
+          "cardName": "Boulder Dash",
+          "quantity": 2
+        },
+        {
+          "cardName": "Emberheart Challenger",
+          "quantity": 4
+        },
+        {
+          "cardName": "Lightning Helix",
+          "quantity": 4
+        },
+        {
+          "cardName": "Burnout Bashtronaut",
+          "quantity": 4
+        },
+        {
+          "cardName": "Burst Lightning",
+          "quantity": 4
+        },
+        {
+          "cardName": "Sacred Foundry",
+          "quantity": 4
+        },
+        {
+          "cardName": "Hired Claw",
+          "quantity": 4
+        },
+        {
+          "cardName": "Rockface Village",
+          "quantity": 1
+        },
+        {
+          "cardName": "Boros Charm",
+          "quantity": 4
+        },
+        {
+          "cardName": "Nova Hellkite",
+          "quantity": 4
+        },
+        {
+          "cardName": "Slickshot Show-Off",
+          "quantity": 4
+        },
+        {
+          "cardName": "Inspiring Vantage",
+          "quantity": 4
+        },
+        {
+          "cardName": "Sunbillow Verge",
+          "quantity": 4
+        },
+        {
+          "cardName": "Shock",
+          "quantity": 4
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Soul-Guide Lantern",
+          "quantity": 3
+        },
+        {
+          "cardName": "Magebane Lizard",
+          "quantity": 4
+        },
+        {
+          "cardName": "The Legend of Roku",
+          "quantity": 2
+        },
+        {
+          "cardName": "Sunspine Lynx",
+          "quantity": 3
+        },
+        {
+          "cardName": "Get Lost",
+          "quantity": 3
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58442176": {
+      "playerId": "3106246",
+      "mainboard": [
+        {
+          "cardName": "Bounce Off",
+          "quantity": 1
+        },
+        {
+          "cardName": "Island",
+          "quantity": 6
+        },
+        {
+          "cardName": "Eddymurk Crab",
+          "quantity": 4
+        },
+        {
+          "cardName": "Fire Magic",
+          "quantity": 1
+        },
+        {
+          "cardName": "Hearth Elemental",
+          "quantity": 4
+        },
+        {
+          "cardName": "Into the Flood Maw",
+          "quantity": 2
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 2
+        },
+        {
+          "cardName": "Multiversal Passage",
+          "quantity": 2
+        },
+        {
+          "cardName": "Riverpyre Verge",
+          "quantity": 4
+        },
+        {
+          "cardName": "Sear",
+          "quantity": 3
+        },
+        {
+          "cardName": "Sleight of Hand",
+          "quantity": 4
+        },
+        {
+          "cardName": "Spell Snare",
+          "quantity": 1
+        },
+        {
+          "cardName": "Burst Lightning",
+          "quantity": 4
+        },
+        {
+          "cardName": "Stock Up",
+          "quantity": 4
+        },
+        {
+          "cardName": "Ashling, Rekindled",
+          "quantity": 2
+        },
+        {
+          "cardName": "Opt",
+          "quantity": 4
+        },
+        {
+          "cardName": "Spell Snare",
+          "quantity": 1
+        },
+        {
+          "cardName": "Spirebluff Canal",
+          "quantity": 4
+        },
+        {
+          "cardName": "Steam Vents",
+          "quantity": 1
+        },
+        {
+          "cardName": "Steam Vents",
+          "quantity": 3
+        },
+        {
+          "cardName": "Sunderflock",
+          "quantity": 3
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Annul",
+          "quantity": 2
+        },
+        {
+          "cardName": "Spell Snare",
+          "quantity": 1
+        },
+        {
+          "cardName": "Soul-Guide Lantern",
+          "quantity": 3
+        },
+        {
+          "cardName": "Pyroclasm",
+          "quantity": 1
+        },
+        {
+          "cardName": "Quantum Riddler",
+          "quantity": 1
+        },
+        {
+          "cardName": "Ral, Crackling Wit",
+          "quantity": 2
+        },
+        {
+          "cardName": "Roaring Furnace // Steaming Sauna",
+          "quantity": 1
+        },
+        {
+          "cardName": "Negate",
+          "quantity": 1
+        },
+        {
+          "cardName": "Flashfreeze",
+          "quantity": 1
+        },
+        {
+          "cardName": "Sunspine Lynx",
+          "quantity": 2
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58442206": {
+      "playerId": "3143667",
+      "mainboard": [
+        {
+          "cardName": "Ashling, Rekindled",
+          "quantity": 1
+        },
+        {
+          "cardName": "Bounce Off",
+          "quantity": 1
+        },
+        {
+          "cardName": "Spell Snare",
+          "quantity": 1
+        },
+        {
+          "cardName": "Eddymurk Crab",
+          "quantity": 3
+        },
+        {
+          "cardName": "Fire Magic",
+          "quantity": 1
+        },
+        {
+          "cardName": "Hearth Elemental",
+          "quantity": 4
+        },
+        {
+          "cardName": "Into the Flood Maw",
+          "quantity": 2
+        },
+        {
+          "cardName": "Island",
+          "quantity": 6
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 2
+        },
+        {
+          "cardName": "Multiversal Passage",
+          "quantity": 2
+        },
+        {
+          "cardName": "Eddymurk Crab",
+          "quantity": 1
+        },
+        {
+          "cardName": "Sear",
+          "quantity": 3
+        },
+        {
+          "cardName": "Ashling, Rekindled",
+          "quantity": 1
+        },
+        {
+          "cardName": "Spell Snare",
+          "quantity": 1
+        },
+        {
+          "cardName": "Burst Lightning",
+          "quantity": 4
+        },
+        {
+          "cardName": "Stock Up",
+          "quantity": 4
+        },
+        {
+          "cardName": "Sunderflock",
+          "quantity": 3
+        },
+        {
+          "cardName": "Opt",
+          "quantity": 4
+        },
+        {
+          "cardName": "Riverpyre Verge",
+          "quantity": 4
+        },
+        {
+          "cardName": "Sleight of Hand",
+          "quantity": 4
+        },
+        {
+          "cardName": "Spirebluff Canal",
+          "quantity": 4
+        },
+        {
+          "cardName": "Steam Vents",
+          "quantity": 4
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Annul",
+          "quantity": 2
+        },
+        {
+          "cardName": "Soul-Guide Lantern",
+          "quantity": 2
+        },
+        {
+          "cardName": "Soul-Guide Lantern",
+          "quantity": 1
+        },
+        {
+          "cardName": "Pyroclasm",
+          "quantity": 1
+        },
+        {
+          "cardName": "Ral, Crackling Wit",
+          "quantity": 2
+        },
+        {
+          "cardName": "Roaring Furnace // Steaming Sauna",
+          "quantity": 1
+        },
+        {
+          "cardName": "Disdainful Stroke",
+          "quantity": 2
+        },
+        {
+          "cardName": "Spell Snare",
+          "quantity": 1
+        },
+        {
+          "cardName": "Sunspine Lynx",
+          "quantity": 1
+        },
+        {
+          "cardName": "Sunspine Lynx",
+          "quantity": 1
+        },
+        {
+          "cardName": "Negate",
+          "quantity": 1
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58442205": {
+      "playerId": "3270024",
+      "mainboard": [
+        {
+          "cardName": "Island",
+          "quantity": 1
+        },
+        {
+          "cardName": "Watery Grave",
+          "quantity": 4
+        },
+        {
+          "cardName": "Godless Shrine",
+          "quantity": 4
+        },
+        {
+          "cardName": "Hallowed Fountain",
+          "quantity": 4
+        },
+        {
+          "cardName": "Concealed Courtyard",
+          "quantity": 4
+        },
+        {
+          "cardName": "Spyglass Siren",
+          "quantity": 3
+        },
+        {
+          "cardName": "Get Lost",
+          "quantity": 1
+        },
+        {
+          "cardName": "No More Lies",
+          "quantity": 2
+        },
+        {
+          "cardName": "Nurturing Pixie",
+          "quantity": 4
+        },
+        {
+          "cardName": "Shoot the Sheriff",
+          "quantity": 2
+        },
+        {
+          "cardName": "Stormchaser's Talent",
+          "quantity": 4
+        },
+        {
+          "cardName": "Nowhere to Run",
+          "quantity": 4
+        },
+        {
+          "cardName": "Gloomlake Verge",
+          "quantity": 4
+        },
+        {
+          "cardName": "Kaito, Bane of Nightmares",
+          "quantity": 4
+        },
+        {
+          "cardName": "Grim Bauble",
+          "quantity": 4
+        },
+        {
+          "cardName": "Sunpearl Kirin",
+          "quantity": 4
+        },
+        {
+          "cardName": "Starting Town",
+          "quantity": 2
+        },
+        {
+          "cardName": "Quantum Riddler",
+          "quantity": 1
+        },
+        {
+          "cardName": "Boomerang Basics",
+          "quantity": 4
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Duress",
+          "quantity": 2
+        },
+        {
+          "cardName": "Soul-Guide Lantern",
+          "quantity": 3
+        },
+        {
+          "cardName": "Tishana's Tidebinder",
+          "quantity": 2
+        },
+        {
+          "cardName": "No More Lies",
+          "quantity": 1
+        },
+        {
+          "cardName": "Requisition Raid",
+          "quantity": 2
+        },
+        {
+          "cardName": "Intimidation Tactics",
+          "quantity": 2
+        },
+        {
+          "cardName": "Clarion Conqueror",
+          "quantity": 2
+        },
+        {
+          "cardName": "Quantum Riddler",
+          "quantity": 1
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58442218": {
+      "playerId": "3295882",
+      "mainboard": [
+        {
+          "cardName": "Bitter Triumph",
+          "quantity": 3
+        },
+        {
+          "cardName": "Cecil, Dark Knight",
+          "quantity": 3
+        },
+        {
+          "cardName": "Enduring Curiosity",
+          "quantity": 4
+        },
+        {
+          "cardName": "Floodpits Drowner",
+          "quantity": 4
+        },
+        {
+          "cardName": "Gloomlake Verge",
+          "quantity": 4
+        },
+        {
+          "cardName": "Swamp",
+          "quantity": 2
+        },
+        {
+          "cardName": "Multiversal Passage",
+          "quantity": 4
+        },
+        {
+          "cardName": "Bitterbloom Bearer",
+          "quantity": 4
+        },
+        {
+          "cardName": "Restless Reef",
+          "quantity": 2
+        },
+        {
+          "cardName": "Shoot the Sheriff",
+          "quantity": 2
+        },
+        {
+          "cardName": "Requiting Hex",
+          "quantity": 4
+        },
+        {
+          "cardName": "Starting Town",
+          "quantity": 2
+        },
+        {
+          "cardName": "Island",
+          "quantity": 1
+        },
+        {
+          "cardName": "Swamp",
+          "quantity": 3
+        },
+        {
+          "cardName": "Watery Grave",
+          "quantity": 4
+        },
+        {
+          "cardName": "Tishana's Tidebinder",
+          "quantity": 4
+        },
+        {
+          "cardName": "Deep-Cavern Bat",
+          "quantity": 4
+        },
+        {
+          "cardName": "Kaito, Bane of Nightmares",
+          "quantity": 4
+        },
+        {
+          "cardName": "Soulstone Sanctuary",
+          "quantity": 2
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Spell Pierce",
+          "quantity": 1
+        },
+        {
+          "cardName": "Day of Black Sun",
+          "quantity": 3
+        },
+        {
+          "cardName": "Negate",
+          "quantity": 1
+        },
+        {
+          "cardName": "Duress",
+          "quantity": 3
+        },
+        {
+          "cardName": "Disdainful Stroke",
+          "quantity": 1
+        },
+        {
+          "cardName": "Vren, the Relentless",
+          "quantity": 2
+        },
+        {
+          "cardName": "Soul-Guide Lantern",
+          "quantity": 2
+        },
+        {
+          "cardName": "Spell Snare",
+          "quantity": 1
+        },
+        {
+          "cardName": "The Unagi of Kyoshi Island",
+          "quantity": 1
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58442191": {
+      "playerId": "3323058",
+      "mainboard": [
+        {
+          "cardName": "Bringer of the Last Gift",
+          "quantity": 4
+        },
+        {
+          "cardName": "Deceit",
+          "quantity": 4
+        },
+        {
+          "cardName": "Willowrush Verge",
+          "quantity": 2
+        },
+        {
+          "cardName": "Watery Grave",
+          "quantity": 3
+        },
+        {
+          "cardName": "Wastewood Verge",
+          "quantity": 4
+        },
+        {
+          "cardName": "Formidable Speaker",
+          "quantity": 4
+        },
+        {
+          "cardName": "Undercity Sewers",
+          "quantity": 1
+        },
+        {
+          "cardName": "Kavaero, Mind-Bitten",
+          "quantity": 4
+        },
+        {
+          "cardName": "Hedge Maze",
+          "quantity": 1
+        },
+        {
+          "cardName": "Underground Mortuary",
+          "quantity": 1
+        },
+        {
+          "cardName": "Sunderflock",
+          "quantity": 3
+        },
+        {
+          "cardName": "Gloomlake Verge",
+          "quantity": 2
+        },
+        {
+          "cardName": "Wistfulness",
+          "quantity": 4
+        },
+        {
+          "cardName": "Swamp",
+          "quantity": 1
+        },
+        {
+          "cardName": "Cavern of Souls",
+          "quantity": 3
+        },
+        {
+          "cardName": "Breeding Pool",
+          "quantity": 3
+        },
+        {
+          "cardName": "Town Greeter",
+          "quantity": 4
+        },
+        {
+          "cardName": "Overlord of the Balemurk",
+          "quantity": 3
+        },
+        {
+          "cardName": "Oblivious Bookworm",
+          "quantity": 4
+        },
+        {
+          "cardName": "Overgrown Tomb",
+          "quantity": 3
+        },
+        {
+          "cardName": "Ardyn, the Usurper",
+          "quantity": 2
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Harvester of Misery",
+          "quantity": 3
+        },
+        {
+          "cardName": "Glarb, Calamity's Augur",
+          "quantity": 2
+        },
+        {
+          "cardName": "Detect Intrusion",
+          "quantity": 3
+        },
+        {
+          "cardName": "Lazav, Wearer of Faces",
+          "quantity": 2
+        },
+        {
+          "cardName": "Bitter Triumph",
+          "quantity": 3
+        },
+        {
+          "cardName": "Requiting Hex",
+          "quantity": 2
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58442214": {
+      "playerId": "3405199",
+      "mainboard": [
+        {
+          "cardName": "Bitter Triumph",
+          "quantity": 2
+        },
+        {
+          "cardName": "Cecil, Dark Knight",
+          "quantity": 2
+        },
+        {
+          "cardName": "Enduring Curiosity",
+          "quantity": 4
+        },
+        {
+          "cardName": "Kaito, Bane of Nightmares",
+          "quantity": 4
+        },
+        {
+          "cardName": "Gloomlake Verge",
+          "quantity": 4
+        },
+        {
+          "cardName": "Multiversal Passage",
+          "quantity": 4
+        },
+        {
+          "cardName": "Restless Reef",
+          "quantity": 3
+        },
+        {
+          "cardName": "Shoot the Sheriff",
+          "quantity": 2
+        },
+        {
+          "cardName": "Island",
+          "quantity": 3
+        },
+        {
+          "cardName": "Bitterbloom Bearer",
+          "quantity": 4
+        },
+        {
+          "cardName": "Requiting Hex",
+          "quantity": 4
+        },
+        {
+          "cardName": "Swamp",
+          "quantity": 6
+        },
+        {
+          "cardName": "Flitterwing Nuisance",
+          "quantity": 3
+        },
+        {
+          "cardName": "Deep-Cavern Bat",
+          "quantity": 4
+        },
+        {
+          "cardName": "Watery Grave",
+          "quantity": 4
+        },
+        {
+          "cardName": "Spell Stutter",
+          "quantity": 2
+        },
+        {
+          "cardName": "Tishana's Tidebinder",
+          "quantity": 4
+        },
+        {
+          "cardName": "Starting Town",
+          "quantity": 1
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Essence Scatter",
+          "quantity": 1
+        },
+        {
+          "cardName": "Negate",
+          "quantity": 1
+        },
+        {
+          "cardName": "Disdainful Stroke",
+          "quantity": 1
+        },
+        {
+          "cardName": "Duress",
+          "quantity": 1
+        },
+        {
+          "cardName": "Duress",
+          "quantity": 2
+        },
+        {
+          "cardName": "Day of Black Sun",
+          "quantity": 3
+        },
+        {
+          "cardName": "Annul",
+          "quantity": 1
+        },
+        {
+          "cardName": "Soul-Guide Lantern",
+          "quantity": 1
+        },
+        {
+          "cardName": "Vren, the Relentless",
+          "quantity": 2
+        },
+        {
+          "cardName": "The Unagi of Kyoshi Island",
+          "quantity": 1
+        },
+        {
+          "cardName": "Ghost Vacuum",
+          "quantity": 1
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58442221": {
+      "playerId": "3405508",
+      "mainboard": [
+        {
+          "cardName": "Ardyn, the Usurper",
+          "quantity": 3
+        },
+        {
+          "cardName": "Bitter Triumph",
+          "quantity": 2
+        },
+        {
+          "cardName": "Willowrush Verge",
+          "quantity": 2
+        },
+        {
+          "cardName": "Bringer of the Last Gift",
+          "quantity": 3
+        },
+        {
+          "cardName": "Undercity Sewers",
+          "quantity": 2
+        },
+        {
+          "cardName": "Deceit",
+          "quantity": 2
+        },
+        {
+          "cardName": "Formidable Speaker",
+          "quantity": 3
+        },
+        {
+          "cardName": "Gloomlake Verge",
+          "quantity": 4
+        },
+        {
+          "cardName": "Swamp",
+          "quantity": 1
+        },
+        {
+          "cardName": "Huskburster Swarm",
+          "quantity": 1
+        },
+        {
+          "cardName": "Kavaero, Mind-Bitten",
+          "quantity": 4
+        },
+        {
+          "cardName": "Multiversal Passage",
+          "quantity": 1
+        },
+        {
+          "cardName": "Oblivious Bookworm",
+          "quantity": 4
+        },
+        {
+          "cardName": "Overgrown Tomb",
+          "quantity": 4
+        },
+        {
+          "cardName": "Overlord of the Balemurk",
+          "quantity": 2
+        },
+        {
+          "cardName": "Requiting Hex",
+          "quantity": 2
+        },
+        {
+          "cardName": "Sunderflock",
+          "quantity": 2
+        },
+        {
+          "cardName": "Harvester of Misery",
+          "quantity": 1
+        },
+        {
+          "cardName": "Town Greeter",
+          "quantity": 2
+        },
+        {
+          "cardName": "Deceit",
+          "quantity": 2
+        },
+        {
+          "cardName": "Wastewood Verge",
+          "quantity": 1
+        },
+        {
+          "cardName": "Watery Grave",
+          "quantity": 4
+        },
+        {
+          "cardName": "Cavern of Souls",
+          "quantity": 2
+        },
+        {
+          "cardName": "Breeding Pool",
+          "quantity": 3
+        },
+        {
+          "cardName": "Wistfulness",
+          "quantity": 3
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Glarb, Calamity's Augur",
+          "quantity": 1
+        },
+        {
+          "cardName": "Wistfulness",
+          "quantity": 1
+        },
+        {
+          "cardName": "Huskburster Swarm",
+          "quantity": 1
+        },
+        {
+          "cardName": "Intimidation Tactics",
+          "quantity": 3
+        },
+        {
+          "cardName": "Myojin of Night's Reach",
+          "quantity": 1
+        },
+        {
+          "cardName": "Soul-Guide Lantern",
+          "quantity": 2
+        },
+        {
+          "cardName": "Oko, Lorwyn Liege",
+          "quantity": 1
+        },
+        {
+          "cardName": "Spell Snare",
+          "quantity": 2
+        },
+        {
+          "cardName": "Sunderflock",
+          "quantity": 1
+        },
+        {
+          "cardName": "Harvester of Misery",
+          "quantity": 1
+        },
+        {
+          "cardName": "Zero Point Ballad",
+          "quantity": 1
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58442203": {
+      "playerId": "3438702",
+      "mainboard": [
+        {
+          "cardName": "Plains",
+          "quantity": 1
+        },
+        {
+          "cardName": "Island",
+          "quantity": 3
+        },
+        {
+          "cardName": "Hallowed Fountain",
+          "quantity": 4
+        },
+        {
+          "cardName": "Mistrise Village",
+          "quantity": 1
+        },
+        {
+          "cardName": "Marang River Regent",
+          "quantity": 1
+        },
+        {
+          "cardName": "Get Lost",
+          "quantity": 4
+        },
+        {
+          "cardName": "Spell Snare",
+          "quantity": 2
+        },
+        {
+          "cardName": "Restless Anchorage",
+          "quantity": 2
+        },
+        {
+          "cardName": "Steam Vents",
+          "quantity": 2
+        },
+        {
+          "cardName": "Tishana's Tidebinder",
+          "quantity": 1
+        },
+        {
+          "cardName": "No More Lies",
+          "quantity": 4
+        },
+        {
+          "cardName": "Elegant Parlor",
+          "quantity": 1
+        },
+        {
+          "cardName": "Meticulous Archive",
+          "quantity": 3
+        },
+        {
+          "cardName": "Three Steps Ahead",
+          "quantity": 1
+        },
+        {
+          "cardName": "Floodfarm Verge",
+          "quantity": 4
+        },
+        {
+          "cardName": "Stock Up",
+          "quantity": 3
+        },
+        {
+          "cardName": "Sunbillow Verge",
+          "quantity": 4
+        },
+        {
+          "cardName": "Rest in Peace",
+          "quantity": 1
+        },
+        {
+          "cardName": "Cori Mountain Monastery",
+          "quantity": 1
+        },
+        {
+          "cardName": "Day of Judgment",
+          "quantity": 2
+        },
+        {
+          "cardName": "Jeskai Revelation",
+          "quantity": 3
+        },
+        {
+          "cardName": "Seam Rip",
+          "quantity": 4
+        },
+        {
+          "cardName": "Consult the Star Charts",
+          "quantity": 4
+        },
+        {
+          "cardName": "Aang's Iceberg",
+          "quantity": 1
+        },
+        {
+          "cardName": "The Unagi of Kyoshi Island",
+          "quantity": 1
+        },
+        {
+          "cardName": "Ultima",
+          "quantity": 2
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Annul",
+          "quantity": 1
+        },
+        {
+          "cardName": "Riverchurn Monument",
+          "quantity": 1
+        },
+        {
+          "cardName": "Beza, the Bounding Spring",
+          "quantity": 1
+        },
+        {
+          "cardName": "Rest in Peace",
+          "quantity": 2
+        },
+        {
+          "cardName": "Spell Snare",
+          "quantity": 1
+        },
+        {
+          "cardName": "Authority of the Consuls",
+          "quantity": 2
+        },
+        {
+          "cardName": "Tishana's Tidebinder",
+          "quantity": 1
+        },
+        {
+          "cardName": "Negate",
+          "quantity": 1
+        },
+        {
+          "cardName": "Torpor Orb",
+          "quantity": 1
+        },
+        {
+          "cardName": "Voice of Victory",
+          "quantity": 2
+        },
+        {
+          "cardName": "Wan Shi Tong, Librarian",
+          "quantity": 2
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    }
+  },
+  "rounds": {
+    "playoffs-qf": {
+      "name": "Quarterfinals",
+      "number": 900,
+      "isPlayoff": true,
+      "matches": [
+        {
+          "player1Id": "3438702",
+          "player2Id": "1205798",
+          "result": "2-1-0",
+          "winnerId": "3438702"
+        },
+        {
+          "player1Id": "277034",
+          "player2Id": "3086606",
+          "result": "2-0-0",
+          "winnerId": "277034"
+        },
+        {
+          "player1Id": "3143667",
+          "player2Id": "3106246",
+          "result": "2-0-0",
+          "winnerId": "3143667"
+        },
+        {
+          "player1Id": "1017550",
+          "player2Id": "1802874",
+          "result": "2-0-0",
+          "winnerId": "1017550"
+        }
+      ]
+    },
+    "playoffs-sf": {
+      "name": "Semifinals",
+      "number": 950,
+      "isPlayoff": true,
+      "matches": [
+        {
+          "player1Id": "3438702",
+          "player2Id": "3143667",
+          "result": "2-0-0",
+          "winnerId": "3438702"
+        },
+        {
+          "player1Id": "1017550",
+          "player2Id": "277034",
+          "result": "2-0-0",
+          "winnerId": "1017550"
+        }
+      ]
+    },
+    "playoffs-f": {
+      "name": "Finals",
+      "number": 999,
+      "isPlayoff": true,
+      "matches": [
+        {
+          "player1Id": "1017550",
+          "player2Id": "3438702",
+          "result": "2-0-0",
+          "winnerId": "1017550"
+        }
+      ]
+    }
+  }
+}

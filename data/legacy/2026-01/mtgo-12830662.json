@@ -1,0 +1,4981 @@
+{
+  "meta": {
+    "id": "mtgo-12830662",
+    "name": "Legacy Challenge 32",
+    "date": "2026-01-25",
+    "formats": [
+      "Legacy"
+    ],
+    "url": "https://www.mtgo.com/decklist/legacy-challenge-32-2026-01-2512830662",
+    "fetchedAt": "2026-03-13T12:11:06.392Z",
+    "playerCount": 74,
+    "roundCount": 10,
+    "source": "mtgo",
+    "tabletop": false
+  },
+  "players": {
+    "92003": {
+      "name": "Statuskrow",
+      "username": "Statuskrow",
+      "rank": 32,
+      "points": 9,
+      "matchRecord": "2-4-0",
+      "decklistIds": [
+        "mtgo-deck-58436441"
+      ],
+      "reportedArchetypes": []
+    },
+    "116095": {
+      "name": "ncsu31sb",
+      "username": "ncsu31sb",
+      "rank": 4,
+      "points": 15,
+      "matchRecord": "6-3-0",
+      "decklistIds": [
+        "mtgo-deck-58436417"
+      ],
+      "reportedArchetypes": []
+    },
+    "266831": {
+      "name": "joker10289",
+      "username": "joker10289",
+      "rank": 26,
+      "points": 12,
+      "matchRecord": "4-3-0",
+      "decklistIds": [
+        "mtgo-deck-58436487"
+      ],
+      "reportedArchetypes": []
+    },
+    "575927": {
+      "name": "kentaro_hokori",
+      "username": "kentaro_hokori",
+      "rank": 16,
+      "points": 12,
+      "matchRecord": "4-3-0",
+      "decklistIds": [
+        "mtgo-deck-58436497"
+      ],
+      "reportedArchetypes": []
+    },
+    "736655": {
+      "name": "Peppe",
+      "username": "Peppe",
+      "rank": 7,
+      "points": 18,
+      "matchRecord": "6-2-0",
+      "decklistIds": [
+        "mtgo-deck-58436436"
+      ],
+      "reportedArchetypes": []
+    },
+    "771726": {
+      "name": "l337erhosen",
+      "username": "l337erhosen",
+      "rank": 11,
+      "points": 15,
+      "matchRecord": "5-2-0",
+      "decklistIds": [
+        "mtgo-deck-58436455"
+      ],
+      "reportedArchetypes": []
+    },
+    "927132": {
+      "name": "Akaleth",
+      "username": "Akaleth",
+      "rank": 20,
+      "points": 12,
+      "matchRecord": "4-3-0",
+      "decklistIds": [
+        "mtgo-deck-58436461"
+      ],
+      "reportedArchetypes": []
+    },
+    "971109": {
+      "name": "Stryfo",
+      "username": "Stryfo",
+      "rank": 14,
+      "points": 15,
+      "matchRecord": "5-2-0",
+      "decklistIds": [
+        "mtgo-deck-58436266"
+      ],
+      "reportedArchetypes": []
+    },
+    "1196775": {
+      "name": "mmapson125",
+      "username": "mmapson125",
+      "rank": 30,
+      "points": 12,
+      "matchRecord": "4-3-0",
+      "decklistIds": [
+        "mtgo-deck-58436492"
+      ],
+      "reportedArchetypes": []
+    },
+    "1203557": {
+      "name": "Oceansoul92",
+      "username": "Oceansoul92",
+      "rank": 15,
+      "points": 15,
+      "matchRecord": "5-2-0",
+      "decklistIds": [
+        "mtgo-deck-58436392"
+      ],
+      "reportedArchetypes": []
+    },
+    "1752148": {
+      "name": "takuto8240",
+      "username": "takuto8240",
+      "rank": 21,
+      "points": 12,
+      "matchRecord": "4-3-0",
+      "decklistIds": [
+        "mtgo-deck-58436423"
+      ],
+      "reportedArchetypes": []
+    },
+    "1755522": {
+      "name": "Ozymandias17",
+      "username": "Ozymandias17",
+      "rank": 28,
+      "points": 12,
+      "matchRecord": "4-3-0",
+      "decklistIds": [
+        "mtgo-deck-58436438"
+      ],
+      "reportedArchetypes": []
+    },
+    "1757638": {
+      "name": "Harry1232",
+      "username": "Harry1232",
+      "rank": 5,
+      "points": 18,
+      "matchRecord": "6-2-0",
+      "decklistIds": [
+        "mtgo-deck-58436505"
+      ],
+      "reportedArchetypes": []
+    },
+    "1857598": {
+      "name": "oOMegaGenesis",
+      "username": "oOMegaGenesis",
+      "rank": 24,
+      "points": 12,
+      "matchRecord": "4-3-0",
+      "decklistIds": [
+        "mtgo-deck-58436485"
+      ],
+      "reportedArchetypes": []
+    },
+    "2338318": {
+      "name": "xDingusKhan",
+      "username": "xDingusKhan",
+      "rank": 1,
+      "points": 18,
+      "matchRecord": "9-1-0",
+      "decklistIds": [
+        "mtgo-deck-58436421"
+      ],
+      "reportedArchetypes": []
+    },
+    "2391802": {
+      "name": "TonyScapone",
+      "username": "TonyScapone",
+      "rank": 31,
+      "points": 12,
+      "matchRecord": "4-3-0",
+      "decklistIds": [
+        "mtgo-deck-58436464"
+      ],
+      "reportedArchetypes": []
+    },
+    "2453652": {
+      "name": "kiyoaggro",
+      "username": "kiyoaggro",
+      "rank": 13,
+      "points": 15,
+      "matchRecord": "5-2-0",
+      "decklistIds": [
+        "mtgo-deck-58436459"
+      ],
+      "reportedArchetypes": []
+    },
+    "2729770": {
+      "name": "EmperorOppai",
+      "username": "EmperorOppai",
+      "rank": 3,
+      "points": 18,
+      "matchRecord": "7-2-0",
+      "decklistIds": [
+        "mtgo-deck-58436463"
+      ],
+      "reportedArchetypes": []
+    },
+    "2800236": {
+      "name": "SauTay",
+      "username": "SauTay",
+      "rank": 19,
+      "points": 12,
+      "matchRecord": "4-3-0",
+      "decklistIds": [
+        "mtgo-deck-58436415"
+      ],
+      "reportedArchetypes": []
+    },
+    "2847686": {
+      "name": "ItsSwiftyTime",
+      "username": "ItsSwiftyTime",
+      "rank": 12,
+      "points": 15,
+      "matchRecord": "5-2-0",
+      "decklistIds": [
+        "mtgo-deck-58436498"
+      ],
+      "reportedArchetypes": []
+    },
+    "2865556": {
+      "name": "DawsonCreep",
+      "username": "DawsonCreep",
+      "rank": 9,
+      "points": 15,
+      "matchRecord": "5-2-0",
+      "decklistIds": [
+        "mtgo-deck-58436502"
+      ],
+      "reportedArchetypes": []
+    },
+    "2873256": {
+      "name": "HamAndCheese",
+      "username": "HamAndCheese",
+      "rank": 6,
+      "points": 18,
+      "matchRecord": "6-2-0",
+      "decklistIds": [
+        "mtgo-deck-58436483"
+      ],
+      "reportedArchetypes": []
+    },
+    "2906954": {
+      "name": "tao_bye_bye",
+      "username": "tao_bye_bye",
+      "rank": 25,
+      "points": 12,
+      "matchRecord": "4-3-0",
+      "decklistIds": [
+        "mtgo-deck-58436437"
+      ],
+      "reportedArchetypes": []
+    },
+    "2935059": {
+      "name": "kyataoka",
+      "username": "kyataoka",
+      "rank": 23,
+      "points": 12,
+      "matchRecord": "4-3-0",
+      "decklistIds": [
+        "mtgo-deck-58436422"
+      ],
+      "reportedArchetypes": []
+    },
+    "2952084": {
+      "name": "Gabri091",
+      "username": "Gabri091",
+      "rank": 18,
+      "points": 12,
+      "matchRecord": "4-3-0",
+      "decklistIds": [
+        "mtgo-deck-58436494"
+      ],
+      "reportedArchetypes": []
+    },
+    "2957500": {
+      "name": "unworldlyorigin",
+      "username": "unworldlyorigin",
+      "rank": 10,
+      "points": 15,
+      "matchRecord": "5-2-0",
+      "decklistIds": [
+        "mtgo-deck-58436393"
+      ],
+      "reportedArchetypes": []
+    },
+    "3012305": {
+      "name": "misteriggins",
+      "username": "misteriggins",
+      "rank": 2,
+      "points": 18,
+      "matchRecord": "8-2-0",
+      "decklistIds": [
+        "mtgo-deck-58436495"
+      ],
+      "reportedArchetypes": []
+    },
+    "3035942": {
+      "name": "Sven745",
+      "username": "Sven745",
+      "rank": 17,
+      "points": 12,
+      "matchRecord": "4-2-0",
+      "decklistIds": [
+        "mtgo-deck-58436501"
+      ],
+      "reportedArchetypes": []
+    },
+    "3221299": {
+      "name": "TeaW1thRum",
+      "username": "TeaW1thRum",
+      "rank": 27,
+      "points": 12,
+      "matchRecord": "4-3-0",
+      "decklistIds": [
+        "mtgo-deck-58436457"
+      ],
+      "reportedArchetypes": []
+    },
+    "3310009": {
+      "name": "Shuichi_Saito",
+      "username": "Shuichi_Saito",
+      "rank": 8,
+      "points": 15,
+      "matchRecord": "5-3-0",
+      "decklistIds": [
+        "mtgo-deck-58436482"
+      ],
+      "reportedArchetypes": []
+    },
+    "3499698": {
+      "name": "giabella",
+      "username": "giabella",
+      "rank": 29,
+      "points": 12,
+      "matchRecord": "4-3-0",
+      "decklistIds": [
+        "mtgo-deck-58436440"
+      ],
+      "reportedArchetypes": []
+    },
+    "3514641": {
+      "name": "AGlobin",
+      "username": "AGlobin",
+      "rank": 22,
+      "points": 12,
+      "matchRecord": "4-3-0",
+      "decklistIds": [
+        "mtgo-deck-58436416"
+      ],
+      "reportedArchetypes": []
+    }
+  },
+  "decklists": {
+    "mtgo-deck-58436441": {
+      "playerId": "92003",
+      "mainboard": [
+        {
+          "cardName": "Grim Monolith",
+          "quantity": 1
+        },
+        {
+          "cardName": "Ancient Tomb",
+          "quantity": 4
+        },
+        {
+          "cardName": "Wastescape Battlemage",
+          "quantity": 3
+        },
+        {
+          "cardName": "Cavern of Souls",
+          "quantity": 4
+        },
+        {
+          "cardName": "Reality Smasher",
+          "quantity": 3
+        },
+        {
+          "cardName": "Wastes",
+          "quantity": 1
+        },
+        {
+          "cardName": "Kozilek's Command",
+          "quantity": 4
+        },
+        {
+          "cardName": "City of Traitors",
+          "quantity": 2
+        },
+        {
+          "cardName": "Lotus Petal",
+          "quantity": 4
+        },
+        {
+          "cardName": "Glaring Fleshraker",
+          "quantity": 4
+        },
+        {
+          "cardName": "Thought-Knot Seer",
+          "quantity": 4
+        },
+        {
+          "cardName": "Eye of Ugin",
+          "quantity": 3
+        },
+        {
+          "cardName": "Wasteland",
+          "quantity": 4
+        },
+        {
+          "cardName": "Eldrazi Linebreaker",
+          "quantity": 4
+        },
+        {
+          "cardName": "Secluded Courtyard",
+          "quantity": 3
+        },
+        {
+          "cardName": "Chalice of the Void",
+          "quantity": 4
+        },
+        {
+          "cardName": "Eldrazi Temple",
+          "quantity": 4
+        },
+        {
+          "cardName": "It That Heralds the End",
+          "quantity": 4
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Leyline of the Void",
+          "quantity": 4
+        },
+        {
+          "cardName": "Disruptor Flute",
+          "quantity": 3
+        },
+        {
+          "cardName": "Wastescape Battlemage",
+          "quantity": 1
+        },
+        {
+          "cardName": "Dismember",
+          "quantity": 3
+        },
+        {
+          "cardName": "Null Rod",
+          "quantity": 1
+        },
+        {
+          "cardName": "Mindbreak Trap",
+          "quantity": 3
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58436417": {
+      "playerId": "116095",
+      "mainboard": [
+        {
+          "cardName": "Wastescape Battlemage",
+          "quantity": 4
+        },
+        {
+          "cardName": "Reality Smasher",
+          "quantity": 2
+        },
+        {
+          "cardName": "City of Traitors",
+          "quantity": 1
+        },
+        {
+          "cardName": "Thought-Knot Seer",
+          "quantity": 4
+        },
+        {
+          "cardName": "Ancient Tomb",
+          "quantity": 4
+        },
+        {
+          "cardName": "Eldrazi Linebreaker",
+          "quantity": 4
+        },
+        {
+          "cardName": "Chalice of the Void",
+          "quantity": 4
+        },
+        {
+          "cardName": "Secluded Courtyard",
+          "quantity": 4
+        },
+        {
+          "cardName": "Eldrazi Temple",
+          "quantity": 4
+        },
+        {
+          "cardName": "Eye of Ugin",
+          "quantity": 3
+        },
+        {
+          "cardName": "Wastes",
+          "quantity": 1
+        },
+        {
+          "cardName": "Cavern of Souls",
+          "quantity": 4
+        },
+        {
+          "cardName": "It That Heralds the End",
+          "quantity": 3
+        },
+        {
+          "cardName": "Glaring Fleshraker",
+          "quantity": 4
+        },
+        {
+          "cardName": "Wasteland",
+          "quantity": 4
+        },
+        {
+          "cardName": "Devourer of Destiny",
+          "quantity": 1
+        },
+        {
+          "cardName": "Sire of Seven Deaths",
+          "quantity": 1
+        },
+        {
+          "cardName": "Lotus Petal",
+          "quantity": 3
+        },
+        {
+          "cardName": "Lotus Petal",
+          "quantity": 1
+        },
+        {
+          "cardName": "Kozilek's Command",
+          "quantity": 4
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Eldrazi Obligator",
+          "quantity": 1
+        },
+        {
+          "cardName": "Mindbreak Trap",
+          "quantity": 2
+        },
+        {
+          "cardName": "Grim Monolith",
+          "quantity": 1
+        },
+        {
+          "cardName": "Dismember",
+          "quantity": 3
+        },
+        {
+          "cardName": "Faerie Macabre",
+          "quantity": 1
+        },
+        {
+          "cardName": "Null Rod",
+          "quantity": 2
+        },
+        {
+          "cardName": "Warping Wail",
+          "quantity": 1
+        },
+        {
+          "cardName": "Faerie Macabre",
+          "quantity": 2
+        },
+        {
+          "cardName": "Disruptor Flute",
+          "quantity": 2
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58436487": {
+      "playerId": "266831",
+      "mainboard": [
+        {
+          "cardName": "Barrowgoyf",
+          "quantity": 2
+        },
+        {
+          "cardName": "Brainstorm",
+          "quantity": 4
+        },
+        {
+          "cardName": "Flooded Strand",
+          "quantity": 2
+        },
+        {
+          "cardName": "Brazen Borrower",
+          "quantity": 1
+        },
+        {
+          "cardName": "Daze",
+          "quantity": 4
+        },
+        {
+          "cardName": "Fatal Push",
+          "quantity": 3
+        },
+        {
+          "cardName": "Force of Will",
+          "quantity": 4
+        },
+        {
+          "cardName": "Kaito, Bane of Nightmares",
+          "quantity": 2
+        },
+        {
+          "cardName": "Swamp",
+          "quantity": 1
+        },
+        {
+          "cardName": "Polluted Delta",
+          "quantity": 4
+        },
+        {
+          "cardName": "Misty Rainforest",
+          "quantity": 1
+        },
+        {
+          "cardName": "Murktide Regent",
+          "quantity": 3
+        },
+        {
+          "cardName": "Orcish Bowmasters",
+          "quantity": 4
+        },
+        {
+          "cardName": "Ponder",
+          "quantity": 2
+        },
+        {
+          "cardName": "Ponder",
+          "quantity": 1
+        },
+        {
+          "cardName": "Scalding Tarn",
+          "quantity": 1
+        },
+        {
+          "cardName": "Snuff Out",
+          "quantity": 1
+        },
+        {
+          "cardName": "Island",
+          "quantity": 1
+        },
+        {
+          "cardName": "Tamiyo, Inquisitive Student",
+          "quantity": 4
+        },
+        {
+          "cardName": "Undercity Sewers",
+          "quantity": 2
+        },
+        {
+          "cardName": "Underground Sea",
+          "quantity": 4
+        },
+        {
+          "cardName": "Wasteland",
+          "quantity": 4
+        },
+        {
+          "cardName": "Baleful Strix",
+          "quantity": 2
+        },
+        {
+          "cardName": "Thoughtseize",
+          "quantity": 3
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Barrowgoyf",
+          "quantity": 1
+        },
+        {
+          "cardName": "Grafdigger's Cage",
+          "quantity": 2
+        },
+        {
+          "cardName": "Consign to Memory",
+          "quantity": 2
+        },
+        {
+          "cardName": "Force of Negation",
+          "quantity": 2
+        },
+        {
+          "cardName": "Mystical Dispute",
+          "quantity": 1
+        },
+        {
+          "cardName": "Plague Engineer",
+          "quantity": 1
+        },
+        {
+          "cardName": "Sheoldred's Edict",
+          "quantity": 2
+        },
+        {
+          "cardName": "Snuff Out",
+          "quantity": 1
+        },
+        {
+          "cardName": "Surgical Extraction",
+          "quantity": 1
+        },
+        {
+          "cardName": "Blue Elemental Blast",
+          "quantity": 2
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58436497": {
+      "playerId": "575927",
+      "mainboard": [
+        {
+          "cardName": "Thoughtseize",
+          "quantity": 2
+        },
+        {
+          "cardName": "Barrowgoyf",
+          "quantity": 1
+        },
+        {
+          "cardName": "Thoughtseize",
+          "quantity": 2
+        },
+        {
+          "cardName": "Brazen Borrower",
+          "quantity": 1
+        },
+        {
+          "cardName": "Daze",
+          "quantity": 3
+        },
+        {
+          "cardName": "Fatal Push",
+          "quantity": 3
+        },
+        {
+          "cardName": "Tamiyo, Inquisitive Student",
+          "quantity": 4
+        },
+        {
+          "cardName": "Island",
+          "quantity": 1
+        },
+        {
+          "cardName": "Snuff Out",
+          "quantity": 2
+        },
+        {
+          "cardName": "Kaito, Bane of Nightmares",
+          "quantity": 1
+        },
+        {
+          "cardName": "Ponder",
+          "quantity": 4
+        },
+        {
+          "cardName": "Murktide Regent",
+          "quantity": 2
+        },
+        {
+          "cardName": "Orcish Bowmasters",
+          "quantity": 4
+        },
+        {
+          "cardName": "Polluted Delta",
+          "quantity": 4
+        },
+        {
+          "cardName": "Misty Rainforest",
+          "quantity": 2
+        },
+        {
+          "cardName": "Kaito, Bane of Nightmares",
+          "quantity": 1
+        },
+        {
+          "cardName": "Swamp",
+          "quantity": 1
+        },
+        {
+          "cardName": "Force of Will",
+          "quantity": 4
+        },
+        {
+          "cardName": "Flooded Strand",
+          "quantity": 2
+        },
+        {
+          "cardName": "Undercity Sewers",
+          "quantity": 2
+        },
+        {
+          "cardName": "Underground Sea",
+          "quantity": 3
+        },
+        {
+          "cardName": "Brainstorm",
+          "quantity": 4
+        },
+        {
+          "cardName": "Baleful Strix",
+          "quantity": 2
+        },
+        {
+          "cardName": "Verdant Catacombs",
+          "quantity": 1
+        },
+        {
+          "cardName": "Wasteland",
+          "quantity": 4
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Engineered Explosives",
+          "quantity": 1
+        },
+        {
+          "cardName": "Consign to Memory",
+          "quantity": 3
+        },
+        {
+          "cardName": "Force of Negation",
+          "quantity": 2
+        },
+        {
+          "cardName": "Barrowgoyf",
+          "quantity": 1
+        },
+        {
+          "cardName": "Sheoldred's Edict",
+          "quantity": 2
+        },
+        {
+          "cardName": "Barrowgoyf",
+          "quantity": 1
+        },
+        {
+          "cardName": "Toxic Deluge",
+          "quantity": 1
+        },
+        {
+          "cardName": "Surgical Extraction",
+          "quantity": 2
+        },
+        {
+          "cardName": "Toxic Deluge",
+          "quantity": 1
+        },
+        {
+          "cardName": "Kaito, Bane of Nightmares",
+          "quantity": 1
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58436436": {
+      "playerId": "736655",
+      "mainboard": [
+        {
+          "cardName": "Urza's Workshop",
+          "quantity": 4
+        },
+        {
+          "cardName": "Karn, the Great Creator",
+          "quantity": 4
+        },
+        {
+          "cardName": "Mystic Forge",
+          "quantity": 2
+        },
+        {
+          "cardName": "Candelabra of Tawnos",
+          "quantity": 1
+        },
+        {
+          "cardName": "Glaring Fleshraker",
+          "quantity": 4
+        },
+        {
+          "cardName": "Kozilek's Command",
+          "quantity": 4
+        },
+        {
+          "cardName": "Mox Opal",
+          "quantity": 1
+        },
+        {
+          "cardName": "Manifold Key",
+          "quantity": 3
+        },
+        {
+          "cardName": "Lotus Petal",
+          "quantity": 4
+        },
+        {
+          "cardName": "Urza's Saga",
+          "quantity": 4
+        },
+        {
+          "cardName": "Urza's Tower",
+          "quantity": 4
+        },
+        {
+          "cardName": "The One Ring",
+          "quantity": 4
+        },
+        {
+          "cardName": "Voltaic Key",
+          "quantity": 2
+        },
+        {
+          "cardName": "Tormod's Crypt",
+          "quantity": 1
+        },
+        {
+          "cardName": "Grim Monolith",
+          "quantity": 4
+        },
+        {
+          "cardName": "Ancient Tomb",
+          "quantity": 4
+        },
+        {
+          "cardName": "Tezzeret, Cruel Captain",
+          "quantity": 3
+        },
+        {
+          "cardName": "Pithing Needle",
+          "quantity": 1
+        },
+        {
+          "cardName": "Expedition Map",
+          "quantity": 1
+        },
+        {
+          "cardName": "Portable Hole",
+          "quantity": 1
+        },
+        {
+          "cardName": "Planar Nexus",
+          "quantity": 4
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Faerie Macabre",
+          "quantity": 2
+        },
+        {
+          "cardName": "Mycosynth Lattice",
+          "quantity": 1
+        },
+        {
+          "cardName": "Mystic Forge",
+          "quantity": 1
+        },
+        {
+          "cardName": "Ensnaring Bridge",
+          "quantity": 1
+        },
+        {
+          "cardName": "Paradox Engine",
+          "quantity": 1
+        },
+        {
+          "cardName": "Liquimetal Coating",
+          "quantity": 1
+        },
+        {
+          "cardName": "Disruptor Flute",
+          "quantity": 3
+        },
+        {
+          "cardName": "Tormod's Crypt",
+          "quantity": 1
+        },
+        {
+          "cardName": "Dismember",
+          "quantity": 2
+        },
+        {
+          "cardName": "Portable Hole",
+          "quantity": 1
+        },
+        {
+          "cardName": "Walking Ballista",
+          "quantity": 1
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58436455": {
+      "playerId": "771726",
+      "mainboard": [
+        {
+          "cardName": "Mother of Runes",
+          "quantity": 3
+        },
+        {
+          "cardName": "Eiganjo, Seat of the Empire",
+          "quantity": 1
+        },
+        {
+          "cardName": "Canoptek Scarab Swarm",
+          "quantity": 1
+        },
+        {
+          "cardName": "Flagstones of Trokair",
+          "quantity": 4
+        },
+        {
+          "cardName": "Flickerwisp",
+          "quantity": 1
+        },
+        {
+          "cardName": "Ghost Quarter",
+          "quantity": 4
+        },
+        {
+          "cardName": "Eiganjo Castle",
+          "quantity": 1
+        },
+        {
+          "cardName": "Karakas",
+          "quantity": 4
+        },
+        {
+          "cardName": "Lion Sash",
+          "quantity": 1
+        },
+        {
+          "cardName": "Loran of the Third Path",
+          "quantity": 1
+        },
+        {
+          "cardName": "Meteor Sword",
+          "quantity": 1
+        },
+        {
+          "cardName": "Phelia, Exuberant Shepherd",
+          "quantity": 3
+        },
+        {
+          "cardName": "Solitude",
+          "quantity": 4
+        },
+        {
+          "cardName": "Aether Vial",
+          "quantity": 4
+        },
+        {
+          "cardName": "Pre-War Formalwear",
+          "quantity": 1
+        },
+        {
+          "cardName": "Recruiter of the Guard",
+          "quantity": 4
+        },
+        {
+          "cardName": "Plains",
+          "quantity": 10
+        },
+        {
+          "cardName": "Shadowy Backstreet",
+          "quantity": 2
+        },
+        {
+          "cardName": "Skyclave Apparition",
+          "quantity": 3
+        },
+        {
+          "cardName": "Stoneforge Mystic",
+          "quantity": 4
+        },
+        {
+          "cardName": "Swords to Plowshares",
+          "quantity": 4
+        },
+        {
+          "cardName": "Wasteland",
+          "quantity": 4
+        },
+        {
+          "cardName": "Thalia, Guardian of Thraben",
+          "quantity": 4
+        },
+        {
+          "cardName": "White Orchid Phantom",
+          "quantity": 4
+        },
+        {
+          "cardName": "Witch Enchanter",
+          "quantity": 3
+        },
+        {
+          "cardName": "Batterskull",
+          "quantity": 1
+        },
+        {
+          "cardName": "Kirol, Attentive First-Year",
+          "quantity": 3
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Cataclysm",
+          "quantity": 2
+        },
+        {
+          "cardName": "Containment Priest",
+          "quantity": 1
+        },
+        {
+          "cardName": "Deafening Silence",
+          "quantity": 3
+        },
+        {
+          "cardName": "Faerie Macabre",
+          "quantity": 1
+        },
+        {
+          "cardName": "Grafdigger's Cage",
+          "quantity": 1
+        },
+        {
+          "cardName": "Surgical Extraction",
+          "quantity": 1
+        },
+        {
+          "cardName": "Wrath of the Skies",
+          "quantity": 2
+        },
+        {
+          "cardName": "Yorion, Sky Nomad",
+          "quantity": 1
+        },
+        {
+          "cardName": "Mindbreak Trap",
+          "quantity": 1
+        },
+        {
+          "cardName": "Disruptor Flute",
+          "quantity": 2
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58436461": {
+      "playerId": "927132",
+      "mainboard": [
+        {
+          "cardName": "White Orchid Phantom",
+          "quantity": 3
+        },
+        {
+          "cardName": "Plains",
+          "quantity": 5
+        },
+        {
+          "cardName": "Swamp",
+          "quantity": 1
+        },
+        {
+          "cardName": "Orcish Bowmasters",
+          "quantity": 3
+        },
+        {
+          "cardName": "Witch Enchanter",
+          "quantity": 2
+        },
+        {
+          "cardName": "Skyclave Apparition",
+          "quantity": 3
+        },
+        {
+          "cardName": "Stoneforge Mystic",
+          "quantity": 4
+        },
+        {
+          "cardName": "Solitude",
+          "quantity": 4
+        },
+        {
+          "cardName": "Meteor Sword",
+          "quantity": 1
+        },
+        {
+          "cardName": "Pre-War Formalwear",
+          "quantity": 2
+        },
+        {
+          "cardName": "Marsh Flats",
+          "quantity": 4
+        },
+        {
+          "cardName": "Karakas",
+          "quantity": 4
+        },
+        {
+          "cardName": "Arid Mesa",
+          "quantity": 3
+        },
+        {
+          "cardName": "Prismatic Vista",
+          "quantity": 3
+        },
+        {
+          "cardName": "Lion Sash",
+          "quantity": 1
+        },
+        {
+          "cardName": "Shadowy Backstreet",
+          "quantity": 1
+        },
+        {
+          "cardName": "Wasteland",
+          "quantity": 4
+        },
+        {
+          "cardName": "Scrubland",
+          "quantity": 2
+        },
+        {
+          "cardName": "Savannah",
+          "quantity": 1
+        },
+        {
+          "cardName": "Thoughtseize",
+          "quantity": 4
+        },
+        {
+          "cardName": "Swords to Plowshares",
+          "quantity": 4
+        },
+        {
+          "cardName": "Aether Vial",
+          "quantity": 4
+        },
+        {
+          "cardName": "Recruiter of the Guard",
+          "quantity": 4
+        },
+        {
+          "cardName": "Overlord of the Balemurk",
+          "quantity": 4
+        },
+        {
+          "cardName": "Phelia, Exuberant Shepherd",
+          "quantity": 4
+        },
+        {
+          "cardName": "Flickerwisp",
+          "quantity": 1
+        },
+        {
+          "cardName": "Windswept Heath",
+          "quantity": 1
+        },
+        {
+          "cardName": "Lush Portico",
+          "quantity": 1
+        },
+        {
+          "cardName": "Verdant Catacombs",
+          "quantity": 1
+        },
+        {
+          "cardName": "Canoptek Scarab Swarm",
+          "quantity": 1
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Deafening Silence",
+          "quantity": 4
+        },
+        {
+          "cardName": "Yorion, Sky Nomad",
+          "quantity": 1
+        },
+        {
+          "cardName": "Path to Exile",
+          "quantity": 2
+        },
+        {
+          "cardName": "Disruptor Flute",
+          "quantity": 2
+        },
+        {
+          "cardName": "Gaddock Teeg",
+          "quantity": 2
+        },
+        {
+          "cardName": "Containment Priest",
+          "quantity": 1
+        },
+        {
+          "cardName": "Faerie Macabre",
+          "quantity": 1
+        },
+        {
+          "cardName": "Wrath of the Skies",
+          "quantity": 2
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58436266": {
+      "playerId": "971109",
+      "mainboard": [
+        {
+          "cardName": "Island",
+          "quantity": 1
+        },
+        {
+          "cardName": "Volcanic Island",
+          "quantity": 1
+        },
+        {
+          "cardName": "Underground Sea",
+          "quantity": 1
+        },
+        {
+          "cardName": "Polluted Delta",
+          "quantity": 4
+        },
+        {
+          "cardName": "Assassin's Trophy",
+          "quantity": 2
+        },
+        {
+          "cardName": "Brainstorm",
+          "quantity": 4
+        },
+        {
+          "cardName": "Tropical Island",
+          "quantity": 2
+        },
+        {
+          "cardName": "Dack Fayden",
+          "quantity": 3
+        },
+        {
+          "cardName": "Bayou",
+          "quantity": 1
+        },
+        {
+          "cardName": "Force of Will",
+          "quantity": 4
+        },
+        {
+          "cardName": "Orcish Bowmasters",
+          "quantity": 4
+        },
+        {
+          "cardName": "Misty Rainforest",
+          "quantity": 1
+        },
+        {
+          "cardName": "Uro, Titan of Nature's Wrath",
+          "quantity": 3
+        },
+        {
+          "cardName": "Misty Rainforest",
+          "quantity": 3
+        },
+        {
+          "cardName": "Cephalid Coliseum",
+          "quantity": 1
+        },
+        {
+          "cardName": "Life from the Loam",
+          "quantity": 1
+        },
+        {
+          "cardName": "Taiga",
+          "quantity": 1
+        },
+        {
+          "cardName": "Otawara, Soaring City",
+          "quantity": 1
+        },
+        {
+          "cardName": "Fatal Push",
+          "quantity": 2
+        },
+        {
+          "cardName": "Forest",
+          "quantity": 1
+        },
+        {
+          "cardName": "Assassin's Trophy",
+          "quantity": 1
+        },
+        {
+          "cardName": "Ponder",
+          "quantity": 2
+        },
+        {
+          "cardName": "Swamp",
+          "quantity": 1
+        },
+        {
+          "cardName": "Drown in the Loch",
+          "quantity": 2
+        },
+        {
+          "cardName": "Tamiyo, Inquisitive Student",
+          "quantity": 3
+        },
+        {
+          "cardName": "Cling to Dust",
+          "quantity": 1
+        },
+        {
+          "cardName": "Force of Negation",
+          "quantity": 1
+        },
+        {
+          "cardName": "Undercity Sewers",
+          "quantity": 1
+        },
+        {
+          "cardName": "Dress Down",
+          "quantity": 2
+        },
+        {
+          "cardName": "Lórien Revealed",
+          "quantity": 1
+        },
+        {
+          "cardName": "Badlands",
+          "quantity": 1
+        },
+        {
+          "cardName": "Assassin's Trophy",
+          "quantity": 1
+        },
+        {
+          "cardName": "Redirect Lightning",
+          "quantity": 2
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Pernicious Deed",
+          "quantity": 2
+        },
+        {
+          "cardName": "Pyroblast",
+          "quantity": 2
+        },
+        {
+          "cardName": "Barrowgoyf",
+          "quantity": 3
+        },
+        {
+          "cardName": "Carpet of Flowers",
+          "quantity": 3
+        },
+        {
+          "cardName": "Hydroblast",
+          "quantity": 2
+        },
+        {
+          "cardName": "Consign to Memory",
+          "quantity": 1
+        },
+        {
+          "cardName": "Surgical Extraction",
+          "quantity": 2
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58436492": {
+      "playerId": "1196775",
+      "mainboard": [
+        {
+          "cardName": "Badgermole Cub",
+          "quantity": 3
+        },
+        {
+          "cardName": "Windswept Heath",
+          "quantity": 4
+        },
+        {
+          "cardName": "Thespian's Stage",
+          "quantity": 2
+        },
+        {
+          "cardName": "Talon Gates of Madara",
+          "quantity": 1
+        },
+        {
+          "cardName": "Mox Diamond",
+          "quantity": 3
+        },
+        {
+          "cardName": "Elvish Reclaimer",
+          "quantity": 4
+        },
+        {
+          "cardName": "Knight of the Reliquary",
+          "quantity": 4
+        },
+        {
+          "cardName": "Sylvan Library",
+          "quantity": 3
+        },
+        {
+          "cardName": "Karakas",
+          "quantity": 1
+        },
+        {
+          "cardName": "Ba Sing Se",
+          "quantity": 1
+        },
+        {
+          "cardName": "Green Sun's Zenith",
+          "quantity": 4
+        },
+        {
+          "cardName": "Plains",
+          "quantity": 1
+        },
+        {
+          "cardName": "Flagstones of Trokair",
+          "quantity": 2
+        },
+        {
+          "cardName": "Dark Depths",
+          "quantity": 2
+        },
+        {
+          "cardName": "Echoing Deeps",
+          "quantity": 1
+        },
+        {
+          "cardName": "Savannah",
+          "quantity": 2
+        },
+        {
+          "cardName": "Scythecat Cub",
+          "quantity": 3
+        },
+        {
+          "cardName": "Sejiri Steppe",
+          "quantity": 1
+        },
+        {
+          "cardName": "Dryad Arbor",
+          "quantity": 1
+        },
+        {
+          "cardName": "Sylvan Safekeeper",
+          "quantity": 1
+        },
+        {
+          "cardName": "Crop Rotation",
+          "quantity": 3
+        },
+        {
+          "cardName": "Wasteland",
+          "quantity": 4
+        },
+        {
+          "cardName": "Bojuka Bog",
+          "quantity": 1
+        },
+        {
+          "cardName": "Yavimaya, Cradle of Growth",
+          "quantity": 2
+        },
+        {
+          "cardName": "Forest",
+          "quantity": 1
+        },
+        {
+          "cardName": "Lush Portico",
+          "quantity": 1
+        },
+        {
+          "cardName": "Swords to Plowshares",
+          "quantity": 4
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Collector Ouphe",
+          "quantity": 1
+        },
+        {
+          "cardName": "Disruptor Flute",
+          "quantity": 2
+        },
+        {
+          "cardName": "Endurance",
+          "quantity": 2
+        },
+        {
+          "cardName": "Force of Vigor",
+          "quantity": 2
+        },
+        {
+          "cardName": "Gaddock Teeg",
+          "quantity": 1
+        },
+        {
+          "cardName": "Icetill Explorer",
+          "quantity": 1
+        },
+        {
+          "cardName": "Legolas's Quick Reflexes",
+          "quantity": 1
+        },
+        {
+          "cardName": "Prismatic Ending",
+          "quantity": 1
+        },
+        {
+          "cardName": "Seeds of Innocence",
+          "quantity": 1
+        },
+        {
+          "cardName": "The Tabernacle at Pendrell Vale",
+          "quantity": 1
+        },
+        {
+          "cardName": "Deafening Silence",
+          "quantity": 2
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58436392": {
+      "playerId": "1203557",
+      "mainboard": [
+        {
+          "cardName": "Wasteland",
+          "quantity": 4
+        },
+        {
+          "cardName": "Swamp",
+          "quantity": 1
+        },
+        {
+          "cardName": "Murktide Regent",
+          "quantity": 3
+        },
+        {
+          "cardName": "Island",
+          "quantity": 1
+        },
+        {
+          "cardName": "Undercity Sewers",
+          "quantity": 1
+        },
+        {
+          "cardName": "Thoughtseize",
+          "quantity": 4
+        },
+        {
+          "cardName": "Fatal Push",
+          "quantity": 3
+        },
+        {
+          "cardName": "Ponder",
+          "quantity": 4
+        },
+        {
+          "cardName": "Feed the Cycle",
+          "quantity": 1
+        },
+        {
+          "cardName": "Snuff Out",
+          "quantity": 1
+        },
+        {
+          "cardName": "Brainstorm",
+          "quantity": 4
+        },
+        {
+          "cardName": "Force of Will",
+          "quantity": 4
+        },
+        {
+          "cardName": "Kaito, Bane of Nightmares",
+          "quantity": 2
+        },
+        {
+          "cardName": "Scalding Tarn",
+          "quantity": 1
+        },
+        {
+          "cardName": "Daze",
+          "quantity": 3
+        },
+        {
+          "cardName": "Underground Sea",
+          "quantity": 4
+        },
+        {
+          "cardName": "Polluted Delta",
+          "quantity": 4
+        },
+        {
+          "cardName": "Tamiyo, Inquisitive Student",
+          "quantity": 4
+        },
+        {
+          "cardName": "Brazen Borrower",
+          "quantity": 1
+        },
+        {
+          "cardName": "Orcish Bowmasters",
+          "quantity": 4
+        },
+        {
+          "cardName": "Marsh Flats",
+          "quantity": 1
+        },
+        {
+          "cardName": "Flooded Strand",
+          "quantity": 1
+        },
+        {
+          "cardName": "Misty Rainforest",
+          "quantity": 1
+        },
+        {
+          "cardName": "Nethergoyf",
+          "quantity": 3
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Barrowgoyf",
+          "quantity": 2
+        },
+        {
+          "cardName": "Snuff Out",
+          "quantity": 1
+        },
+        {
+          "cardName": "Force of Negation",
+          "quantity": 2
+        },
+        {
+          "cardName": "Hydroblast",
+          "quantity": 1
+        },
+        {
+          "cardName": "Consign to Memory",
+          "quantity": 2
+        },
+        {
+          "cardName": "Feed the Cycle",
+          "quantity": 1
+        },
+        {
+          "cardName": "Toxic Deluge",
+          "quantity": 1
+        },
+        {
+          "cardName": "Grafdigger's Cage",
+          "quantity": 1
+        },
+        {
+          "cardName": "Barrowgoyf",
+          "quantity": 1
+        },
+        {
+          "cardName": "Null Rod",
+          "quantity": 1
+        },
+        {
+          "cardName": "Surgical Extraction",
+          "quantity": 2
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58436423": {
+      "playerId": "1752148",
+      "mainboard": [
+        {
+          "cardName": "Flooded Strand",
+          "quantity": 4
+        },
+        {
+          "cardName": "Tundra",
+          "quantity": 2
+        },
+        {
+          "cardName": "Volcanic Island",
+          "quantity": 2
+        },
+        {
+          "cardName": "Scalding Tarn",
+          "quantity": 4
+        },
+        {
+          "cardName": "Plains",
+          "quantity": 1
+        },
+        {
+          "cardName": "Mystic Sanctuary",
+          "quantity": 1
+        },
+        {
+          "cardName": "Force of Will",
+          "quantity": 4
+        },
+        {
+          "cardName": "Karakas",
+          "quantity": 1
+        },
+        {
+          "cardName": "Force of Negation",
+          "quantity": 1
+        },
+        {
+          "cardName": "Brainstorm",
+          "quantity": 4
+        },
+        {
+          "cardName": "Swords to Plowshares",
+          "quantity": 4
+        },
+        {
+          "cardName": "Ponder",
+          "quantity": 4
+        },
+        {
+          "cardName": "Lórien Revealed",
+          "quantity": 1
+        },
+        {
+          "cardName": "Prismatic Ending",
+          "quantity": 2
+        },
+        {
+          "cardName": "Arid Mesa",
+          "quantity": 1
+        },
+        {
+          "cardName": "Snapcaster Mage",
+          "quantity": 2
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 1
+        },
+        {
+          "cardName": "Island",
+          "quantity": 2
+        },
+        {
+          "cardName": "Tamiyo, Inquisitive Student",
+          "quantity": 4
+        },
+        {
+          "cardName": "Forth Eorlingas!",
+          "quantity": 2
+        },
+        {
+          "cardName": "Flame of Anor",
+          "quantity": 4
+        },
+        {
+          "cardName": "Spell Snare",
+          "quantity": 2
+        },
+        {
+          "cardName": "Tishana's Tidebinder",
+          "quantity": 2
+        },
+        {
+          "cardName": "Meticulous Archive",
+          "quantity": 1
+        },
+        {
+          "cardName": "Terminus",
+          "quantity": 2
+        },
+        {
+          "cardName": "Vivi Ornitier",
+          "quantity": 1
+        },
+        {
+          "cardName": "Spell Pierce",
+          "quantity": 1
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Surgical Extraction",
+          "quantity": 1
+        },
+        {
+          "cardName": "Containment Priest",
+          "quantity": 1
+        },
+        {
+          "cardName": "Pyroblast",
+          "quantity": 3
+        },
+        {
+          "cardName": "Hydroblast",
+          "quantity": 1
+        },
+        {
+          "cardName": "Consign to Memory",
+          "quantity": 3
+        },
+        {
+          "cardName": "Lavinia, Azorius Renegade",
+          "quantity": 1
+        },
+        {
+          "cardName": "Wrath of the Skies",
+          "quantity": 2
+        },
+        {
+          "cardName": "Disruptor Flute",
+          "quantity": 1
+        },
+        {
+          "cardName": "Triumph of Saint Katherine",
+          "quantity": 1
+        },
+        {
+          "cardName": "Magus of the Moon",
+          "quantity": 1
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58436438": {
+      "playerId": "1755522",
+      "mainboard": [
+        {
+          "cardName": "Swords to Plowshares",
+          "quantity": 4
+        },
+        {
+          "cardName": "Endurance",
+          "quantity": 2
+        },
+        {
+          "cardName": "Wistfulness",
+          "quantity": 3
+        },
+        {
+          "cardName": "Force of Negation",
+          "quantity": 2
+        },
+        {
+          "cardName": "Snow-Covered Plains",
+          "quantity": 1
+        },
+        {
+          "cardName": "Misty Rainforest",
+          "quantity": 4
+        },
+        {
+          "cardName": "Snow-Covered Island",
+          "quantity": 1
+        },
+        {
+          "cardName": "Prismatic Ending",
+          "quantity": 3
+        },
+        {
+          "cardName": "Supreme Verdict",
+          "quantity": 1
+        },
+        {
+          "cardName": "Quantum Riddler",
+          "quantity": 2
+        },
+        {
+          "cardName": "Tamiyo, Inquisitive Student",
+          "quantity": 4
+        },
+        {
+          "cardName": "Savannah",
+          "quantity": 1
+        },
+        {
+          "cardName": "Hedge Maze",
+          "quantity": 1
+        },
+        {
+          "cardName": "Meticulous Archive",
+          "quantity": 1
+        },
+        {
+          "cardName": "Snow-Covered Forest",
+          "quantity": 1
+        },
+        {
+          "cardName": "Ponder",
+          "quantity": 4
+        },
+        {
+          "cardName": "Force of Will",
+          "quantity": 4
+        },
+        {
+          "cardName": "Karakas",
+          "quantity": 1
+        },
+        {
+          "cardName": "Brainstorm",
+          "quantity": 4
+        },
+        {
+          "cardName": "Tropical Island",
+          "quantity": 3
+        },
+        {
+          "cardName": "Tundra",
+          "quantity": 1
+        },
+        {
+          "cardName": "Up the Beanstalk",
+          "quantity": 4
+        },
+        {
+          "cardName": "Uro, Titan of Nature's Wrath",
+          "quantity": 3
+        },
+        {
+          "cardName": "Windswept Heath",
+          "quantity": 1
+        },
+        {
+          "cardName": "Flooded Strand",
+          "quantity": 4
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Supreme Verdict",
+          "quantity": 1
+        },
+        {
+          "cardName": "Carpet of Flowers",
+          "quantity": 3
+        },
+        {
+          "cardName": "Consign to Memory",
+          "quantity": 2
+        },
+        {
+          "cardName": "Celestial Purge",
+          "quantity": 2
+        },
+        {
+          "cardName": "Null Rod",
+          "quantity": 1
+        },
+        {
+          "cardName": "Deafening Silence",
+          "quantity": 2
+        },
+        {
+          "cardName": "Force of Negation",
+          "quantity": 2
+        },
+        {
+          "cardName": "Containment Priest",
+          "quantity": 2
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58436505": {
+      "playerId": "1757638",
+      "mainboard": [
+        {
+          "cardName": "Phelia, Exuberant Shepherd",
+          "quantity": 2
+        },
+        {
+          "cardName": "Up the Beanstalk",
+          "quantity": 4
+        },
+        {
+          "cardName": "Quantum Riddler",
+          "quantity": 4
+        },
+        {
+          "cardName": "Brainstorm",
+          "quantity": 4
+        },
+        {
+          "cardName": "Ponder",
+          "quantity": 4
+        },
+        {
+          "cardName": "Leyline Binding",
+          "quantity": 4
+        },
+        {
+          "cardName": "Swords to Plowshares",
+          "quantity": 4
+        },
+        {
+          "cardName": "Force of Negation",
+          "quantity": 1
+        },
+        {
+          "cardName": "Tamiyo, Inquisitive Student",
+          "quantity": 4
+        },
+        {
+          "cardName": "Lórien Revealed",
+          "quantity": 1
+        },
+        {
+          "cardName": "Xander's Lounge",
+          "quantity": 1
+        },
+        {
+          "cardName": "Meticulous Archive",
+          "quantity": 1
+        },
+        {
+          "cardName": "Tundra",
+          "quantity": 2
+        },
+        {
+          "cardName": "Tropical Island",
+          "quantity": 2
+        },
+        {
+          "cardName": "Savannah",
+          "quantity": 1
+        },
+        {
+          "cardName": "Island",
+          "quantity": 1
+        },
+        {
+          "cardName": "Plains",
+          "quantity": 1
+        },
+        {
+          "cardName": "Karakas",
+          "quantity": 1
+        },
+        {
+          "cardName": "Flooded Strand",
+          "quantity": 4
+        },
+        {
+          "cardName": "Misty Rainforest",
+          "quantity": 4
+        },
+        {
+          "cardName": "Force of Will",
+          "quantity": 4
+        },
+        {
+          "cardName": "Tropical Island",
+          "quantity": 1
+        },
+        {
+          "cardName": "Volcanic Island",
+          "quantity": 1
+        },
+        {
+          "cardName": "Murktide Regent",
+          "quantity": 1
+        },
+        {
+          "cardName": "Windswept Heath",
+          "quantity": 1
+        },
+        {
+          "cardName": "Prismatic Ending",
+          "quantity": 1
+        },
+        {
+          "cardName": "Uro, Titan of Nature's Wrath",
+          "quantity": 1
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Consign to Memory",
+          "quantity": 2
+        },
+        {
+          "cardName": "Carpet of Flowers",
+          "quantity": 2
+        },
+        {
+          "cardName": "Grafdigger's Cage",
+          "quantity": 2
+        },
+        {
+          "cardName": "Terminus",
+          "quantity": 2
+        },
+        {
+          "cardName": "Gut Shot",
+          "quantity": 2
+        },
+        {
+          "cardName": "Narset, Parter of Veils",
+          "quantity": 1
+        },
+        {
+          "cardName": "Meddling Mage",
+          "quantity": 2
+        },
+        {
+          "cardName": "Wrath of the Skies",
+          "quantity": 1
+        },
+        {
+          "cardName": "Spell Pierce",
+          "quantity": 1
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58436485": {
+      "playerId": "1857598",
+      "mainboard": [
+        {
+          "cardName": "Great Furnace",
+          "quantity": 2
+        },
+        {
+          "cardName": "Pithing Needle",
+          "quantity": 1
+        },
+        {
+          "cardName": "Chaos Defiler",
+          "quantity": 1
+        },
+        {
+          "cardName": "Phyrexian Dragon Engine",
+          "quantity": 1
+        },
+        {
+          "cardName": "Fable of the Mirror-Breaker",
+          "quantity": 4
+        },
+        {
+          "cardName": "Urza's Saga",
+          "quantity": 4
+        },
+        {
+          "cardName": "Simian Spirit Guide",
+          "quantity": 2
+        },
+        {
+          "cardName": "Goblin Engineer",
+          "quantity": 4
+        },
+        {
+          "cardName": "Karn, the Great Creator",
+          "quantity": 3
+        },
+        {
+          "cardName": "Ancient Tomb",
+          "quantity": 4
+        },
+        {
+          "cardName": "Goblin Welder",
+          "quantity": 4
+        },
+        {
+          "cardName": "Lotus Petal",
+          "quantity": 2
+        },
+        {
+          "cardName": "Pyroblast",
+          "quantity": 4
+        },
+        {
+          "cardName": "Painter's Servant",
+          "quantity": 4
+        },
+        {
+          "cardName": "Red Elemental Blast",
+          "quantity": 2
+        },
+        {
+          "cardName": "Soul-Guide Lantern",
+          "quantity": 1
+        },
+        {
+          "cardName": "Grindstone",
+          "quantity": 2
+        },
+        {
+          "cardName": "Arena of Glory",
+          "quantity": 1
+        },
+        {
+          "cardName": "Ensnaring Bridge",
+          "quantity": 3
+        },
+        {
+          "cardName": "City of Traitors",
+          "quantity": 2
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 9
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Temple Trap",
+          "quantity": 1
+        },
+        {
+          "cardName": "Chainsaw",
+          "quantity": 1
+        },
+        {
+          "cardName": "Disruptor Flute",
+          "quantity": 3
+        },
+        {
+          "cardName": "Void Mirror",
+          "quantity": 1
+        },
+        {
+          "cardName": "Fury",
+          "quantity": 2
+        },
+        {
+          "cardName": "Damping Sphere",
+          "quantity": 1
+        },
+        {
+          "cardName": "Ensnaring Bridge",
+          "quantity": 1
+        },
+        {
+          "cardName": "Mycosynth Lattice",
+          "quantity": 1
+        },
+        {
+          "cardName": "Faerie Macabre",
+          "quantity": 2
+        },
+        {
+          "cardName": "Liquimetal Coating",
+          "quantity": 1
+        },
+        {
+          "cardName": "Tormod's Crypt",
+          "quantity": 1
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58436421": {
+      "playerId": "2338318",
+      "mainboard": [
+        {
+          "cardName": "Agadeem's Awakening",
+          "quantity": 4
+        },
+        {
+          "cardName": "Balustrade Spy",
+          "quantity": 4
+        },
+        {
+          "cardName": "Boggart Trawler",
+          "quantity": 4
+        },
+        {
+          "cardName": "Narcomoeba",
+          "quantity": 2
+        },
+        {
+          "cardName": "Cabal Therapy",
+          "quantity": 2
+        },
+        {
+          "cardName": "Dark Ritual",
+          "quantity": 4
+        },
+        {
+          "cardName": "Dread Return",
+          "quantity": 1
+        },
+        {
+          "cardName": "Elvish Spirit Guide",
+          "quantity": 4
+        },
+        {
+          "cardName": "Fell the Profane",
+          "quantity": 4
+        },
+        {
+          "cardName": "Chancellor of the Annex",
+          "quantity": 2
+        },
+        {
+          "cardName": "Pact of Negation",
+          "quantity": 4
+        },
+        {
+          "cardName": "Cabal Ritual",
+          "quantity": 4
+        },
+        {
+          "cardName": "Thassa's Oracle",
+          "quantity": 1
+        },
+        {
+          "cardName": "Undercity Informer",
+          "quantity": 4
+        },
+        {
+          "cardName": "Simian Spirit Guide",
+          "quantity": 4
+        },
+        {
+          "cardName": "Lotus Petal",
+          "quantity": 4
+        },
+        {
+          "cardName": "Memory's Journey",
+          "quantity": 1
+        },
+        {
+          "cardName": "Jack-o'-Lantern",
+          "quantity": 1
+        },
+        {
+          "cardName": "Bridge from Below",
+          "quantity": 1
+        },
+        {
+          "cardName": "Poxwalkers",
+          "quantity": 3
+        },
+        {
+          "cardName": "Chrome Mox",
+          "quantity": 2
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Goblin Charbelcher",
+          "quantity": 4
+        },
+        {
+          "cardName": "Chancellor of the Annex",
+          "quantity": 2
+        },
+        {
+          "cardName": "Rotting Regisaur",
+          "quantity": 4
+        },
+        {
+          "cardName": "Thoughtseize",
+          "quantity": 2
+        },
+        {
+          "cardName": "Mindbreak Trap",
+          "quantity": 3
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58436464": {
+      "playerId": "2391802",
+      "mainboard": [
+        {
+          "cardName": "Mountain",
+          "quantity": 1
+        },
+        {
+          "cardName": "Burning Wish",
+          "quantity": 4
+        },
+        {
+          "cardName": "Simian Spirit Guide",
+          "quantity": 4
+        },
+        {
+          "cardName": "Ancient Tomb",
+          "quantity": 4
+        },
+        {
+          "cardName": "Lion's Eye Diamond",
+          "quantity": 4
+        },
+        {
+          "cardName": "Lotus Petal",
+          "quantity": 4
+        },
+        {
+          "cardName": "Rite of Flame",
+          "quantity": 4
+        },
+        {
+          "cardName": "Birgi, God of Storytelling",
+          "quantity": 2
+        },
+        {
+          "cardName": "Echo of Eons",
+          "quantity": 3
+        },
+        {
+          "cardName": "Defense Grid",
+          "quantity": 4
+        },
+        {
+          "cardName": "Volcanic Island",
+          "quantity": 1
+        },
+        {
+          "cardName": "Gamble",
+          "quantity": 4
+        },
+        {
+          "cardName": "Seething Song",
+          "quantity": 3
+        },
+        {
+          "cardName": "Chrome Mox",
+          "quantity": 4
+        },
+        {
+          "cardName": "Shatterskull Smashing",
+          "quantity": 2
+        },
+        {
+          "cardName": "Wish",
+          "quantity": 1
+        },
+        {
+          "cardName": "City of Traitors",
+          "quantity": 2
+        },
+        {
+          "cardName": "Runehorn Hellkite",
+          "quantity": 1
+        },
+        {
+          "cardName": "Reforge the Soul",
+          "quantity": 4
+        },
+        {
+          "cardName": "Jeska's Will",
+          "quantity": 2
+        },
+        {
+          "cardName": "Hexing Squelcher",
+          "quantity": 2
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Shattering Spree",
+          "quantity": 1
+        },
+        {
+          "cardName": "Empty the Warrens",
+          "quantity": 1
+        },
+        {
+          "cardName": "Peer into the Abyss",
+          "quantity": 1
+        },
+        {
+          "cardName": "Grapeshot",
+          "quantity": 1
+        },
+        {
+          "cardName": "Tendrils of Agony",
+          "quantity": 1
+        },
+        {
+          "cardName": "Echo of Eons",
+          "quantity": 1
+        },
+        {
+          "cardName": "Will of the Jeskai",
+          "quantity": 1
+        },
+        {
+          "cardName": "Alchemist's Gambit",
+          "quantity": 1
+        },
+        {
+          "cardName": "Mind's Desire",
+          "quantity": 1
+        },
+        {
+          "cardName": "Galvanic Relay",
+          "quantity": 1
+        },
+        {
+          "cardName": "Jeska's Will",
+          "quantity": 1
+        },
+        {
+          "cardName": "Leyline of the Void",
+          "quantity": 3
+        },
+        {
+          "cardName": "Boomerang Basics",
+          "quantity": 1
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58436459": {
+      "playerId": "2453652",
+      "mainboard": [
+        {
+          "cardName": "Murktide Regent",
+          "quantity": 3
+        },
+        {
+          "cardName": "Wasteland",
+          "quantity": 4
+        },
+        {
+          "cardName": "Brazen Borrower",
+          "quantity": 1
+        },
+        {
+          "cardName": "Underground Sea",
+          "quantity": 4
+        },
+        {
+          "cardName": "Scalding Tarn",
+          "quantity": 3
+        },
+        {
+          "cardName": "Ponder",
+          "quantity": 4
+        },
+        {
+          "cardName": "Polluted Delta",
+          "quantity": 4
+        },
+        {
+          "cardName": "Kaito, Bane of Nightmares",
+          "quantity": 2
+        },
+        {
+          "cardName": "Orcish Bowmasters",
+          "quantity": 4
+        },
+        {
+          "cardName": "Mishra's Bauble",
+          "quantity": 2
+        },
+        {
+          "cardName": "Nethergoyf",
+          "quantity": 3
+        },
+        {
+          "cardName": "Island",
+          "quantity": 1
+        },
+        {
+          "cardName": "Force of Will",
+          "quantity": 4
+        },
+        {
+          "cardName": "Swamp",
+          "quantity": 1
+        },
+        {
+          "cardName": "Fatal Push",
+          "quantity": 4
+        },
+        {
+          "cardName": "Tamiyo, Inquisitive Student",
+          "quantity": 4
+        },
+        {
+          "cardName": "Thoughtseize",
+          "quantity": 3
+        },
+        {
+          "cardName": "Undercity Sewers",
+          "quantity": 1
+        },
+        {
+          "cardName": "Daze",
+          "quantity": 3
+        },
+        {
+          "cardName": "Verdant Catacombs",
+          "quantity": 1
+        },
+        {
+          "cardName": "Brainstorm",
+          "quantity": 4
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Consign to Memory",
+          "quantity": 2
+        },
+        {
+          "cardName": "Sheoldred's Edict",
+          "quantity": 2
+        },
+        {
+          "cardName": "Force of Negation",
+          "quantity": 2
+        },
+        {
+          "cardName": "Grafdigger's Cage",
+          "quantity": 1
+        },
+        {
+          "cardName": "Hydroblast",
+          "quantity": 2
+        },
+        {
+          "cardName": "Surgical Extraction",
+          "quantity": 2
+        },
+        {
+          "cardName": "Thoughtseize",
+          "quantity": 1
+        },
+        {
+          "cardName": "Barrowgoyf",
+          "quantity": 2
+        },
+        {
+          "cardName": "Toxic Deluge",
+          "quantity": 1
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58436463": {
+      "playerId": "2729770",
+      "mainboard": [
+        {
+          "cardName": "Swamp",
+          "quantity": 1
+        },
+        {
+          "cardName": "Mishra's Bauble",
+          "quantity": 4
+        },
+        {
+          "cardName": "Swamp",
+          "quantity": 2
+        },
+        {
+          "cardName": "Nethergoyf",
+          "quantity": 4
+        },
+        {
+          "cardName": "Thoughtseize",
+          "quantity": 3
+        },
+        {
+          "cardName": "Swamp",
+          "quantity": 4
+        },
+        {
+          "cardName": "Bitter Triumph",
+          "quantity": 1
+        },
+        {
+          "cardName": "Snuff Out",
+          "quantity": 2
+        },
+        {
+          "cardName": "Polluted Delta",
+          "quantity": 4
+        },
+        {
+          "cardName": "Bloodstained Mire",
+          "quantity": 2
+        },
+        {
+          "cardName": "Wasteland",
+          "quantity": 3
+        },
+        {
+          "cardName": "Urza's Saga",
+          "quantity": 4
+        },
+        {
+          "cardName": "Barrowgoyf",
+          "quantity": 2
+        },
+        {
+          "cardName": "Orcish Bowmasters",
+          "quantity": 3
+        },
+        {
+          "cardName": "Lavaspur Boots",
+          "quantity": 1
+        },
+        {
+          "cardName": "Shadowspear",
+          "quantity": 1
+        },
+        {
+          "cardName": "Nihil Spellbomb",
+          "quantity": 1
+        },
+        {
+          "cardName": "Dauthi Voidwalker",
+          "quantity": 3
+        },
+        {
+          "cardName": "Moonshadow",
+          "quantity": 4
+        },
+        {
+          "cardName": "Fatal Push",
+          "quantity": 3
+        },
+        {
+          "cardName": "Street Wraith",
+          "quantity": 4
+        },
+        {
+          "cardName": "Death's Shadow",
+          "quantity": 4
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Surgical Extraction",
+          "quantity": 2
+        },
+        {
+          "cardName": "Pithing Needle",
+          "quantity": 1
+        },
+        {
+          "cardName": "Null Rod",
+          "quantity": 3
+        },
+        {
+          "cardName": "Mindbreak Trap",
+          "quantity": 3
+        },
+        {
+          "cardName": "Toxic Deluge",
+          "quantity": 2
+        },
+        {
+          "cardName": "Tourach, Dread Cantor",
+          "quantity": 1
+        },
+        {
+          "cardName": "Grafdigger's Cage",
+          "quantity": 2
+        },
+        {
+          "cardName": "Orcish Bowmasters",
+          "quantity": 1
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58436415": {
+      "playerId": "2800236",
+      "mainboard": [
+        {
+          "cardName": "Badlands",
+          "quantity": 1
+        },
+        {
+          "cardName": "Thoughtseize",
+          "quantity": 1
+        },
+        {
+          "cardName": "Brazen Borrower",
+          "quantity": 1
+        },
+        {
+          "cardName": "Cori-Steel Cutter",
+          "quantity": 2
+        },
+        {
+          "cardName": "Ponder",
+          "quantity": 4
+        },
+        {
+          "cardName": "Polluted Delta",
+          "quantity": 4
+        },
+        {
+          "cardName": "Orcish Bowmasters",
+          "quantity": 2
+        },
+        {
+          "cardName": "Kaito, Bane of Nightmares",
+          "quantity": 1
+        },
+        {
+          "cardName": "Nethergoyf",
+          "quantity": 1
+        },
+        {
+          "cardName": "Mishra's Bauble",
+          "quantity": 3
+        },
+        {
+          "cardName": "Molten Collapse",
+          "quantity": 1
+        },
+        {
+          "cardName": "Murktide Regent",
+          "quantity": 2
+        },
+        {
+          "cardName": "Nethergoyf",
+          "quantity": 1
+        },
+        {
+          "cardName": "Lightning Bolt",
+          "quantity": 4
+        },
+        {
+          "cardName": "Force of Will",
+          "quantity": 4
+        },
+        {
+          "cardName": "Dragon's Rage Channeler",
+          "quantity": 4
+        },
+        {
+          "cardName": "Scalding Tarn",
+          "quantity": 4
+        },
+        {
+          "cardName": "Daze",
+          "quantity": 3
+        },
+        {
+          "cardName": "Undercity Sewers",
+          "quantity": 1
+        },
+        {
+          "cardName": "Underground Sea",
+          "quantity": 2
+        },
+        {
+          "cardName": "Volcanic Island",
+          "quantity": 3
+        },
+        {
+          "cardName": "Brainstorm",
+          "quantity": 4
+        },
+        {
+          "cardName": "Thoughtseize",
+          "quantity": 1
+        },
+        {
+          "cardName": "Wasteland",
+          "quantity": 4
+        },
+        {
+          "cardName": "Hexing Squelcher",
+          "quantity": 2
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Consign to Memory",
+          "quantity": 2
+        },
+        {
+          "cardName": "Price of Progress",
+          "quantity": 1
+        },
+        {
+          "cardName": "Force of Negation",
+          "quantity": 1
+        },
+        {
+          "cardName": "Meltdown",
+          "quantity": 1
+        },
+        {
+          "cardName": "Molten Collapse",
+          "quantity": 1
+        },
+        {
+          "cardName": "Grafdigger's Cage",
+          "quantity": 1
+        },
+        {
+          "cardName": "Fatal Push",
+          "quantity": 1
+        },
+        {
+          "cardName": "Pyroblast",
+          "quantity": 2
+        },
+        {
+          "cardName": "Pyroclasm",
+          "quantity": 1
+        },
+        {
+          "cardName": "Barrowgoyf",
+          "quantity": 1
+        },
+        {
+          "cardName": "Surgical Extraction",
+          "quantity": 1
+        },
+        {
+          "cardName": "Pyroblast",
+          "quantity": 1
+        },
+        {
+          "cardName": "Hydroblast",
+          "quantity": 1
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58436498": {
+      "playerId": "2847686",
+      "mainboard": [
+        {
+          "cardName": "Kappa Cannoneer",
+          "quantity": 3
+        },
+        {
+          "cardName": "Pithing Needle",
+          "quantity": 1
+        },
+        {
+          "cardName": "Lotus Petal",
+          "quantity": 4
+        },
+        {
+          "cardName": "Urza's Bauble",
+          "quantity": 4
+        },
+        {
+          "cardName": "Mox Opal",
+          "quantity": 4
+        },
+        {
+          "cardName": "Shadowspear",
+          "quantity": 1
+        },
+        {
+          "cardName": "Soul-Guide Lantern",
+          "quantity": 1
+        },
+        {
+          "cardName": "Urza's Saga",
+          "quantity": 4
+        },
+        {
+          "cardName": "Patchwork Automaton",
+          "quantity": 4
+        },
+        {
+          "cardName": "Syr Ginger, the Meal Ender",
+          "quantity": 2
+        },
+        {
+          "cardName": "Sink into Stupor",
+          "quantity": 2
+        },
+        {
+          "cardName": "Pinnacle Emissary",
+          "quantity": 4
+        },
+        {
+          "cardName": "Ancient Tomb",
+          "quantity": 4
+        },
+        {
+          "cardName": "Force of Will",
+          "quantity": 4
+        },
+        {
+          "cardName": "Aether Spellbomb",
+          "quantity": 1
+        },
+        {
+          "cardName": "Island",
+          "quantity": 1
+        },
+        {
+          "cardName": "Mishra's Bauble",
+          "quantity": 4
+        },
+        {
+          "cardName": "Emry, Lurker of the Loch",
+          "quantity": 3
+        },
+        {
+          "cardName": "Lavaspur Boots",
+          "quantity": 1
+        },
+        {
+          "cardName": "Seat of the Synod",
+          "quantity": 4
+        },
+        {
+          "cardName": "Memory Guardian",
+          "quantity": 4
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Tormod's Crypt",
+          "quantity": 2
+        },
+        {
+          "cardName": "Dismember",
+          "quantity": 2
+        },
+        {
+          "cardName": "Amphibian Downpour",
+          "quantity": 2
+        },
+        {
+          "cardName": "Metallic Rebuke",
+          "quantity": 2
+        },
+        {
+          "cardName": "Force of Negation",
+          "quantity": 2
+        },
+        {
+          "cardName": "Haywire Mite",
+          "quantity": 1
+        },
+        {
+          "cardName": "Flusterstorm",
+          "quantity": 2
+        },
+        {
+          "cardName": "Disruptor Flute",
+          "quantity": 2
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58436502": {
+      "playerId": "2865556",
+      "mainboard": [
+        {
+          "cardName": "Badgermole Cub",
+          "quantity": 4
+        },
+        {
+          "cardName": "Bayou",
+          "quantity": 2
+        },
+        {
+          "cardName": "Collector Ouphe",
+          "quantity": 1
+        },
+        {
+          "cardName": "Misty Rainforest",
+          "quantity": 4
+        },
+        {
+          "cardName": "Endurance",
+          "quantity": 2
+        },
+        {
+          "cardName": "Fiend Artisan",
+          "quantity": 1
+        },
+        {
+          "cardName": "Green Sun's Zenith",
+          "quantity": 4
+        },
+        {
+          "cardName": "Gaea's Cradle",
+          "quantity": 4
+        },
+        {
+          "cardName": "Forest",
+          "quantity": 2
+        },
+        {
+          "cardName": "Grist, the Hunger Tide",
+          "quantity": 1
+        },
+        {
+          "cardName": "Dryad Arbor",
+          "quantity": 2
+        },
+        {
+          "cardName": "Natural Order",
+          "quantity": 3
+        },
+        {
+          "cardName": "Once Upon a Time",
+          "quantity": 3
+        },
+        {
+          "cardName": "Wasteland",
+          "quantity": 2
+        },
+        {
+          "cardName": "Springheart Nantuko",
+          "quantity": 2
+        },
+        {
+          "cardName": "Sylvan Safekeeper",
+          "quantity": 1
+        },
+        {
+          "cardName": "Craterhoof Behemoth",
+          "quantity": 1
+        },
+        {
+          "cardName": "Bojuka Bog",
+          "quantity": 1
+        },
+        {
+          "cardName": "Atraxa, Grand Unifier",
+          "quantity": 1
+        },
+        {
+          "cardName": "Wight of the Reliquary",
+          "quantity": 4
+        },
+        {
+          "cardName": "Windswept Heath",
+          "quantity": 1
+        },
+        {
+          "cardName": "Talon Gates of Madara",
+          "quantity": 1
+        },
+        {
+          "cardName": "Underground Mortuary",
+          "quantity": 1
+        },
+        {
+          "cardName": "Verdant Catacombs",
+          "quantity": 2
+        },
+        {
+          "cardName": "Allosaurus Shepherd",
+          "quantity": 1
+        },
+        {
+          "cardName": "Quirion Ranger",
+          "quantity": 1
+        },
+        {
+          "cardName": "Ignoble Hierarch",
+          "quantity": 2
+        },
+        {
+          "cardName": "Ignoble Hierarch",
+          "quantity": 2
+        },
+        {
+          "cardName": "Noble Hierarch",
+          "quantity": 1
+        },
+        {
+          "cardName": "Noble Hierarch",
+          "quantity": 2
+        },
+        {
+          "cardName": "Noble Hierarch",
+          "quantity": 1
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Thoughtseize",
+          "quantity": 4
+        },
+        {
+          "cardName": "Endurance",
+          "quantity": 2
+        },
+        {
+          "cardName": "Force of Vigor",
+          "quantity": 2
+        },
+        {
+          "cardName": "Abrupt Decay",
+          "quantity": 2
+        },
+        {
+          "cardName": "Gaddock Teeg",
+          "quantity": 1
+        },
+        {
+          "cardName": "Icetill Explorer",
+          "quantity": 1
+        },
+        {
+          "cardName": "Disruptor Flute",
+          "quantity": 3
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58436483": {
+      "playerId": "2873256",
+      "mainboard": [
+        {
+          "cardName": "Arid Mesa",
+          "quantity": 4
+        },
+        {
+          "cardName": "Amped Raptor",
+          "quantity": 4
+        },
+        {
+          "cardName": "Cabal Therapy",
+          "quantity": 3
+        },
+        {
+          "cardName": "Badlands",
+          "quantity": 1
+        },
+        {
+          "cardName": "Ajani, Nacatl Pariah",
+          "quantity": 4
+        },
+        {
+          "cardName": "Elegant Parlor",
+          "quantity": 1
+        },
+        {
+          "cardName": "Goblin Bombardment",
+          "quantity": 2
+        },
+        {
+          "cardName": "Guide of Souls",
+          "quantity": 4
+        },
+        {
+          "cardName": "Marsh Flats",
+          "quantity": 4
+        },
+        {
+          "cardName": "Ocelot Pride",
+          "quantity": 4
+        },
+        {
+          "cardName": "Orcish Bowmasters",
+          "quantity": 4
+        },
+        {
+          "cardName": "Swords to Plowshares",
+          "quantity": 4
+        },
+        {
+          "cardName": "Plateau",
+          "quantity": 2
+        },
+        {
+          "cardName": "Plains",
+          "quantity": 1
+        },
+        {
+          "cardName": "Voice of Victory",
+          "quantity": 4
+        },
+        {
+          "cardName": "Scrubland",
+          "quantity": 2
+        },
+        {
+          "cardName": "Shadowy Backstreet",
+          "quantity": 1
+        },
+        {
+          "cardName": "Silent Clearing",
+          "quantity": 1
+        },
+        {
+          "cardName": "Wasteland",
+          "quantity": 4
+        },
+        {
+          "cardName": "Karakas",
+          "quantity": 2
+        },
+        {
+          "cardName": "Thoughtseize",
+          "quantity": 4
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Containment Priest",
+          "quantity": 1
+        },
+        {
+          "cardName": "Deafening Silence",
+          "quantity": 2
+        },
+        {
+          "cardName": "Prismatic Ending",
+          "quantity": 2
+        },
+        {
+          "cardName": "Clarion Conqueror",
+          "quantity": 3
+        },
+        {
+          "cardName": "Red Elemental Blast",
+          "quantity": 1
+        },
+        {
+          "cardName": "Leyline of the Void",
+          "quantity": 4
+        },
+        {
+          "cardName": "Pyroblast",
+          "quantity": 2
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58436437": {
+      "playerId": "2906954",
+      "mainboard": [
+        {
+          "cardName": "Island",
+          "quantity": 2
+        },
+        {
+          "cardName": "Swamp",
+          "quantity": 1
+        },
+        {
+          "cardName": "Emrakul, the Aeons Torn",
+          "quantity": 1
+        },
+        {
+          "cardName": "Show and Tell",
+          "quantity": 4
+        },
+        {
+          "cardName": "Ponder",
+          "quantity": 4
+        },
+        {
+          "cardName": "Marsh Flats",
+          "quantity": 1
+        },
+        {
+          "cardName": "Scalding Tarn",
+          "quantity": 1
+        },
+        {
+          "cardName": "Thoughtseize",
+          "quantity": 4
+        },
+        {
+          "cardName": "Ancient Tomb",
+          "quantity": 4
+        },
+        {
+          "cardName": "Underground Sea",
+          "quantity": 3
+        },
+        {
+          "cardName": "Polluted Delta",
+          "quantity": 4
+        },
+        {
+          "cardName": "Force of Will",
+          "quantity": 4
+        },
+        {
+          "cardName": "Fatal Push",
+          "quantity": 4
+        },
+        {
+          "cardName": "Brainstorm",
+          "quantity": 4
+        },
+        {
+          "cardName": "Omniscience",
+          "quantity": 4
+        },
+        {
+          "cardName": "Misty Rainforest",
+          "quantity": 1
+        },
+        {
+          "cardName": "Atraxa, Grand Unifier",
+          "quantity": 4
+        },
+        {
+          "cardName": "Lórien Revealed",
+          "quantity": 1
+        },
+        {
+          "cardName": "Undercity Sewers",
+          "quantity": 1
+        },
+        {
+          "cardName": "Tamiyo, Inquisitive Student",
+          "quantity": 4
+        },
+        {
+          "cardName": "Stock Up",
+          "quantity": 4
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Force of Negation",
+          "quantity": 2
+        },
+        {
+          "cardName": "Brazen Borrower",
+          "quantity": 2
+        },
+        {
+          "cardName": "Murktide Regent",
+          "quantity": 2
+        },
+        {
+          "cardName": "Orcish Bowmasters",
+          "quantity": 2
+        },
+        {
+          "cardName": "Consign to Memory",
+          "quantity": 3
+        },
+        {
+          "cardName": "Barrowgoyf",
+          "quantity": 4
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58436422": {
+      "playerId": "2935059",
+      "mainboard": [
+        {
+          "cardName": "Swamp",
+          "quantity": 1
+        },
+        {
+          "cardName": "Polluted Delta",
+          "quantity": 1
+        },
+        {
+          "cardName": "Polluted Delta",
+          "quantity": 3
+        },
+        {
+          "cardName": "Undercity Sewers",
+          "quantity": 1
+        },
+        {
+          "cardName": "Underground Sea",
+          "quantity": 4
+        },
+        {
+          "cardName": "Island",
+          "quantity": 1
+        },
+        {
+          "cardName": "Ponder",
+          "quantity": 4
+        },
+        {
+          "cardName": "Brainstorm",
+          "quantity": 4
+        },
+        {
+          "cardName": "Tamiyo, Inquisitive Student",
+          "quantity": 3
+        },
+        {
+          "cardName": "Fatal Push",
+          "quantity": 4
+        },
+        {
+          "cardName": "Thoughtseize",
+          "quantity": 4
+        },
+        {
+          "cardName": "Daze",
+          "quantity": 3
+        },
+        {
+          "cardName": "Orcish Bowmasters",
+          "quantity": 4
+        },
+        {
+          "cardName": "Feed the Cycle",
+          "quantity": 1
+        },
+        {
+          "cardName": "Snuff Out",
+          "quantity": 1
+        },
+        {
+          "cardName": "Brazen Borrower",
+          "quantity": 1
+        },
+        {
+          "cardName": "Force of Will",
+          "quantity": 4
+        },
+        {
+          "cardName": "Murktide Regent",
+          "quantity": 2
+        },
+        {
+          "cardName": "Flooded Strand",
+          "quantity": 1
+        },
+        {
+          "cardName": "Misty Rainforest",
+          "quantity": 1
+        },
+        {
+          "cardName": "Scalding Tarn",
+          "quantity": 1
+        },
+        {
+          "cardName": "Bloodstained Mire",
+          "quantity": 2
+        },
+        {
+          "cardName": "Wasteland",
+          "quantity": 4
+        },
+        {
+          "cardName": "Kaito, Bane of Nightmares",
+          "quantity": 2
+        },
+        {
+          "cardName": "Tamiyo, Inquisitive Student",
+          "quantity": 1
+        },
+        {
+          "cardName": "Baleful Strix",
+          "quantity": 2
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Consign to Memory",
+          "quantity": 2
+        },
+        {
+          "cardName": "Dauthi Voidwalker",
+          "quantity": 2
+        },
+        {
+          "cardName": "Force of Negation",
+          "quantity": 2
+        },
+        {
+          "cardName": "Narset, Parter of Veils",
+          "quantity": 2
+        },
+        {
+          "cardName": "Grafdigger's Cage",
+          "quantity": 1
+        },
+        {
+          "cardName": "Engineered Explosives",
+          "quantity": 1
+        },
+        {
+          "cardName": "Sheoldred's Edict",
+          "quantity": 1
+        },
+        {
+          "cardName": "Toxic Deluge",
+          "quantity": 1
+        },
+        {
+          "cardName": "Brazen Borrower",
+          "quantity": 1
+        },
+        {
+          "cardName": "Barrowgoyf",
+          "quantity": 2
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58436494": {
+      "playerId": "2952084",
+      "mainboard": [
+        {
+          "cardName": "Misty Rainforest",
+          "quantity": 2
+        },
+        {
+          "cardName": "Brainstorm",
+          "quantity": 4
+        },
+        {
+          "cardName": "Ponder",
+          "quantity": 4
+        },
+        {
+          "cardName": "Bloodstained Mire",
+          "quantity": 1
+        },
+        {
+          "cardName": "Flooded Strand",
+          "quantity": 1
+        },
+        {
+          "cardName": "Brazen Borrower",
+          "quantity": 1
+        },
+        {
+          "cardName": "Polluted Delta",
+          "quantity": 4
+        },
+        {
+          "cardName": "Orcish Bowmasters",
+          "quantity": 4
+        },
+        {
+          "cardName": "Wasteland",
+          "quantity": 4
+        },
+        {
+          "cardName": "Underground Sea",
+          "quantity": 4
+        },
+        {
+          "cardName": "Murktide Regent",
+          "quantity": 3
+        },
+        {
+          "cardName": "Daze",
+          "quantity": 3
+        },
+        {
+          "cardName": "Force of Will",
+          "quantity": 4
+        },
+        {
+          "cardName": "Thoughtseize",
+          "quantity": 4
+        },
+        {
+          "cardName": "Swamp",
+          "quantity": 1
+        },
+        {
+          "cardName": "Fatal Push",
+          "quantity": 4
+        },
+        {
+          "cardName": "Undercity Sewers",
+          "quantity": 1
+        },
+        {
+          "cardName": "Kaito, Bane of Nightmares",
+          "quantity": 2
+        },
+        {
+          "cardName": "Tamiyo, Inquisitive Student",
+          "quantity": 4
+        },
+        {
+          "cardName": "Snuff Out",
+          "quantity": 1
+        },
+        {
+          "cardName": "Island",
+          "quantity": 1
+        },
+        {
+          "cardName": "Barrowgoyf",
+          "quantity": 2
+        },
+        {
+          "cardName": "Verdant Catacombs",
+          "quantity": 1
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Force of Negation",
+          "quantity": 2
+        },
+        {
+          "cardName": "Feed the Cycle",
+          "quantity": 1
+        },
+        {
+          "cardName": "Hydroblast",
+          "quantity": 2
+        },
+        {
+          "cardName": "Engineered Explosives",
+          "quantity": 1
+        },
+        {
+          "cardName": "Snuff Out",
+          "quantity": 1
+        },
+        {
+          "cardName": "Barrowgoyf",
+          "quantity": 1
+        },
+        {
+          "cardName": "Consign to Memory",
+          "quantity": 3
+        },
+        {
+          "cardName": "Toxic Deluge",
+          "quantity": 1
+        },
+        {
+          "cardName": "Grafdigger's Cage",
+          "quantity": 1
+        },
+        {
+          "cardName": "Dauthi Voidwalker",
+          "quantity": 2
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58436393": {
+      "playerId": "2957500",
+      "mainboard": [
+        {
+          "cardName": "Cavern of Souls",
+          "quantity": 4
+        },
+        {
+          "cardName": "Chalice of the Void",
+          "quantity": 4
+        },
+        {
+          "cardName": "Eldrazi Temple",
+          "quantity": 4
+        },
+        {
+          "cardName": "City of Traitors",
+          "quantity": 1
+        },
+        {
+          "cardName": "Eldrazi Linebreaker",
+          "quantity": 4
+        },
+        {
+          "cardName": "Eye of Ugin",
+          "quantity": 3
+        },
+        {
+          "cardName": "Glaring Fleshraker",
+          "quantity": 4
+        },
+        {
+          "cardName": "It That Heralds the End",
+          "quantity": 4
+        },
+        {
+          "cardName": "Kozilek's Command",
+          "quantity": 4
+        },
+        {
+          "cardName": "Lotus Petal",
+          "quantity": 4
+        },
+        {
+          "cardName": "Reality Smasher",
+          "quantity": 3
+        },
+        {
+          "cardName": "Snow-Covered Wastes",
+          "quantity": 1
+        },
+        {
+          "cardName": "Thought-Knot Seer",
+          "quantity": 4
+        },
+        {
+          "cardName": "Wasteland",
+          "quantity": 4
+        },
+        {
+          "cardName": "Secluded Courtyard",
+          "quantity": 4
+        },
+        {
+          "cardName": "Wastescape Battlemage",
+          "quantity": 4
+        },
+        {
+          "cardName": "Ancient Tomb",
+          "quantity": 4
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Dismember",
+          "quantity": 3
+        },
+        {
+          "cardName": "Mindbreak Trap",
+          "quantity": 2
+        },
+        {
+          "cardName": "Null Rod",
+          "quantity": 2
+        },
+        {
+          "cardName": "Unlicensed Hearse",
+          "quantity": 2
+        },
+        {
+          "cardName": "Disruptor Flute",
+          "quantity": 3
+        },
+        {
+          "cardName": "Faerie Macabre",
+          "quantity": 3
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58436495": {
+      "playerId": "3012305",
+      "mainboard": [
+        {
+          "cardName": "Stoneforge Mystic",
+          "quantity": 4
+        },
+        {
+          "cardName": "Guide of Souls",
+          "quantity": 4
+        },
+        {
+          "cardName": "Swords to Plowshares",
+          "quantity": 4
+        },
+        {
+          "cardName": "Recruiter of the Guard",
+          "quantity": 4
+        },
+        {
+          "cardName": "Plateau",
+          "quantity": 3
+        },
+        {
+          "cardName": "Aether Vial",
+          "quantity": 4
+        },
+        {
+          "cardName": "Solitude",
+          "quantity": 4
+        },
+        {
+          "cardName": "Skyclave Apparition",
+          "quantity": 1
+        },
+        {
+          "cardName": "Wasteland",
+          "quantity": 4
+        },
+        {
+          "cardName": "Lion Sash",
+          "quantity": 1
+        },
+        {
+          "cardName": "Plains",
+          "quantity": 5
+        },
+        {
+          "cardName": "Karakas",
+          "quantity": 4
+        },
+        {
+          "cardName": "Curious Farm Animals",
+          "quantity": 1
+        },
+        {
+          "cardName": "Windswept Heath",
+          "quantity": 2
+        },
+        {
+          "cardName": "Marsh Flats",
+          "quantity": 2
+        },
+        {
+          "cardName": "Prismatic Vista",
+          "quantity": 4
+        },
+        {
+          "cardName": "Chainsaw",
+          "quantity": 1
+        },
+        {
+          "cardName": "Starfield Shepherd",
+          "quantity": 4
+        },
+        {
+          "cardName": "Arid Mesa",
+          "quantity": 4
+        },
+        {
+          "cardName": "Elegant Parlor",
+          "quantity": 2
+        },
+        {
+          "cardName": "Witch Enchanter",
+          "quantity": 1
+        },
+        {
+          "cardName": "Pre-War Formalwear",
+          "quantity": 2
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 1
+        },
+        {
+          "cardName": "Broadside Bombardiers",
+          "quantity": 4
+        },
+        {
+          "cardName": "Ajani, Nacatl Pariah",
+          "quantity": 4
+        },
+        {
+          "cardName": "Flickerwisp",
+          "quantity": 1
+        },
+        {
+          "cardName": "Phelia, Exuberant Shepherd",
+          "quantity": 4
+        },
+        {
+          "cardName": "Nurturing Pixie",
+          "quantity": 1
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Magus of the Moon",
+          "quantity": 1
+        },
+        {
+          "cardName": "Yorion, Sky Nomad",
+          "quantity": 1
+        },
+        {
+          "cardName": "Pyroblast",
+          "quantity": 4
+        },
+        {
+          "cardName": "Containment Priest",
+          "quantity": 1
+        },
+        {
+          "cardName": "Deafening Silence",
+          "quantity": 4
+        },
+        {
+          "cardName": "Faerie Macabre",
+          "quantity": 1
+        },
+        {
+          "cardName": "Mindbreak Trap",
+          "quantity": 3
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58436501": {
+      "playerId": "3035942",
+      "mainboard": [
+        {
+          "cardName": "Thoughtseize",
+          "quantity": 4
+        },
+        {
+          "cardName": "Ponder",
+          "quantity": 4
+        },
+        {
+          "cardName": "Hymn to Tourach",
+          "quantity": 1
+        },
+        {
+          "cardName": "Murktide Regent",
+          "quantity": 2
+        },
+        {
+          "cardName": "Wasteland",
+          "quantity": 4
+        },
+        {
+          "cardName": "Orcish Bowmasters",
+          "quantity": 4
+        },
+        {
+          "cardName": "Polluted Delta",
+          "quantity": 4
+        },
+        {
+          "cardName": "Flooded Strand",
+          "quantity": 4
+        },
+        {
+          "cardName": "Force of Will",
+          "quantity": 4
+        },
+        {
+          "cardName": "Sheoldred's Edict",
+          "quantity": 1
+        },
+        {
+          "cardName": "Fatal Push",
+          "quantity": 4
+        },
+        {
+          "cardName": "Brainstorm",
+          "quantity": 4
+        },
+        {
+          "cardName": "Undercity Sewers",
+          "quantity": 1
+        },
+        {
+          "cardName": "Underground Sea",
+          "quantity": 4
+        },
+        {
+          "cardName": "Brazen Borrower",
+          "quantity": 1
+        },
+        {
+          "cardName": "Swamp",
+          "quantity": 1
+        },
+        {
+          "cardName": "Island",
+          "quantity": 1
+        },
+        {
+          "cardName": "Kaito, Bane of Nightmares",
+          "quantity": 2
+        },
+        {
+          "cardName": "Tamiyo, Inquisitive Student",
+          "quantity": 3
+        },
+        {
+          "cardName": "Daze",
+          "quantity": 3
+        },
+        {
+          "cardName": "Barrowgoyf",
+          "quantity": 1
+        },
+        {
+          "cardName": "Nethergoyf",
+          "quantity": 3
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Force of Negation",
+          "quantity": 2
+        },
+        {
+          "cardName": "Null Rod",
+          "quantity": 1
+        },
+        {
+          "cardName": "Harbinger of the Seas",
+          "quantity": 1
+        },
+        {
+          "cardName": "Consign to Memory",
+          "quantity": 3
+        },
+        {
+          "cardName": "Nihil Spellbomb",
+          "quantity": 3
+        },
+        {
+          "cardName": "Engineered Explosives",
+          "quantity": 1
+        },
+        {
+          "cardName": "Barrowgoyf",
+          "quantity": 2
+        },
+        {
+          "cardName": "Opposition Agent",
+          "quantity": 1
+        },
+        {
+          "cardName": "Dismember",
+          "quantity": 1
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58436457": {
+      "playerId": "3221299",
+      "mainboard": [
+        {
+          "cardName": "Brainstorm",
+          "quantity": 4
+        },
+        {
+          "cardName": "Flooded Strand",
+          "quantity": 2
+        },
+        {
+          "cardName": "Phelia, Exuberant Shepherd",
+          "quantity": 4
+        },
+        {
+          "cardName": "Swords to Plowshares",
+          "quantity": 4
+        },
+        {
+          "cardName": "Teferi, Time Raveler",
+          "quantity": 2
+        },
+        {
+          "cardName": "Murktide Regent",
+          "quantity": 1
+        },
+        {
+          "cardName": "Tundra",
+          "quantity": 2
+        },
+        {
+          "cardName": "Prismatic Ending",
+          "quantity": 1
+        },
+        {
+          "cardName": "Quantum Riddler",
+          "quantity": 3
+        },
+        {
+          "cardName": "Polluted Delta",
+          "quantity": 2
+        },
+        {
+          "cardName": "Karakas",
+          "quantity": 1
+        },
+        {
+          "cardName": "Wasteland",
+          "quantity": 4
+        },
+        {
+          "cardName": "Tamiyo, Inquisitive Student",
+          "quantity": 3
+        },
+        {
+          "cardName": "Consign to Memory",
+          "quantity": 2
+        },
+        {
+          "cardName": "Island",
+          "quantity": 3
+        },
+        {
+          "cardName": "Daze",
+          "quantity": 3
+        },
+        {
+          "cardName": "Plains",
+          "quantity": 1
+        },
+        {
+          "cardName": "Force of Negation",
+          "quantity": 1
+        },
+        {
+          "cardName": "Meticulous Archive",
+          "quantity": 1
+        },
+        {
+          "cardName": "Mystic Sanctuary",
+          "quantity": 1
+        },
+        {
+          "cardName": "Scalding Tarn",
+          "quantity": 1
+        },
+        {
+          "cardName": "Stifle",
+          "quantity": 2
+        },
+        {
+          "cardName": "Stifle",
+          "quantity": 1
+        },
+        {
+          "cardName": "Force of Will",
+          "quantity": 4
+        },
+        {
+          "cardName": "Flooded Strand",
+          "quantity": 2
+        },
+        {
+          "cardName": "Ponder",
+          "quantity": 4
+        },
+        {
+          "cardName": "Lavinia, Azorius Renegade",
+          "quantity": 1
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Flusterstorm",
+          "quantity": 1
+        },
+        {
+          "cardName": "Surgical Extraction",
+          "quantity": 1
+        },
+        {
+          "cardName": "Stony Silence",
+          "quantity": 1
+        },
+        {
+          "cardName": "Lavinia, Azorius Renegade",
+          "quantity": 1
+        },
+        {
+          "cardName": "Force of Negation",
+          "quantity": 1
+        },
+        {
+          "cardName": "Prismatic Ending",
+          "quantity": 1
+        },
+        {
+          "cardName": "Hydroblast",
+          "quantity": 2
+        },
+        {
+          "cardName": "Deafening Silence",
+          "quantity": 1
+        },
+        {
+          "cardName": "Grafdigger's Cage",
+          "quantity": 2
+        },
+        {
+          "cardName": "Celestial Purge",
+          "quantity": 1
+        },
+        {
+          "cardName": "Wrath of the Skies",
+          "quantity": 2
+        },
+        {
+          "cardName": "Triumph of Saint Katherine",
+          "quantity": 1
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58436482": {
+      "playerId": "3310009",
+      "mainboard": [
+        {
+          "cardName": "Mountain",
+          "quantity": 2
+        },
+        {
+          "cardName": "Shatterskull Smashing",
+          "quantity": 2
+        },
+        {
+          "cardName": "Chrome Mox",
+          "quantity": 4
+        },
+        {
+          "cardName": "Ancient Tomb",
+          "quantity": 4
+        },
+        {
+          "cardName": "Sundering Eruption",
+          "quantity": 4
+        },
+        {
+          "cardName": "Chalice of the Void",
+          "quantity": 4
+        },
+        {
+          "cardName": "Fable of the Mirror-Breaker",
+          "quantity": 2
+        },
+        {
+          "cardName": "The One Ring",
+          "quantity": 4
+        },
+        {
+          "cardName": "Blood Moon",
+          "quantity": 4
+        },
+        {
+          "cardName": "Fury",
+          "quantity": 4
+        },
+        {
+          "cardName": "Simian Spirit Guide",
+          "quantity": 4
+        },
+        {
+          "cardName": "Magus of the Moon",
+          "quantity": 4
+        },
+        {
+          "cardName": "Soul-Guide Lantern",
+          "quantity": 1
+        },
+        {
+          "cardName": "Urza's Saga",
+          "quantity": 4
+        },
+        {
+          "cardName": "Lavaspur Boots",
+          "quantity": 1
+        },
+        {
+          "cardName": "City of Traitors",
+          "quantity": 4
+        },
+        {
+          "cardName": "Broadside Bombardiers",
+          "quantity": 4
+        },
+        {
+          "cardName": "Hexing Squelcher",
+          "quantity": 4
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Dead/Gone",
+          "quantity": 3
+        },
+        {
+          "cardName": "Null Rod",
+          "quantity": 3
+        },
+        {
+          "cardName": "Fiery Confluence",
+          "quantity": 2
+        },
+        {
+          "cardName": "Leyline of the Void",
+          "quantity": 4
+        },
+        {
+          "cardName": "Void Mirror",
+          "quantity": 3
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58436440": {
+      "playerId": "3499698",
+      "mainboard": [
+        {
+          "cardName": "Island",
+          "quantity": 1
+        },
+        {
+          "cardName": "Brainstorm",
+          "quantity": 4
+        },
+        {
+          "cardName": "Lightning Bolt",
+          "quantity": 4
+        },
+        {
+          "cardName": "Scalding Tarn",
+          "quantity": 3
+        },
+        {
+          "cardName": "Misty Rainforest",
+          "quantity": 2
+        },
+        {
+          "cardName": "Preordain",
+          "quantity": 1
+        },
+        {
+          "cardName": "Dragon's Rage Channeler",
+          "quantity": 4
+        },
+        {
+          "cardName": "Flooded Strand",
+          "quantity": 2
+        },
+        {
+          "cardName": "Ponder",
+          "quantity": 4
+        },
+        {
+          "cardName": "Wasteland",
+          "quantity": 4
+        },
+        {
+          "cardName": "Daze",
+          "quantity": 4
+        },
+        {
+          "cardName": "Force of Negation",
+          "quantity": 1
+        },
+        {
+          "cardName": "Cori-Steel Cutter",
+          "quantity": 3
+        },
+        {
+          "cardName": "Brazen Borrower",
+          "quantity": 1
+        },
+        {
+          "cardName": "Murktide Regent",
+          "quantity": 2
+        },
+        {
+          "cardName": "Unholy Heat",
+          "quantity": 1
+        },
+        {
+          "cardName": "Thundering Falls",
+          "quantity": 1
+        },
+        {
+          "cardName": "Force of Will",
+          "quantity": 4
+        },
+        {
+          "cardName": "Delver of Secrets",
+          "quantity": 4
+        },
+        {
+          "cardName": "Mishra's Bauble",
+          "quantity": 4
+        },
+        {
+          "cardName": "Volcanic Island",
+          "quantity": 4
+        },
+        {
+          "cardName": "Polluted Delta",
+          "quantity": 2
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Pyroblast",
+          "quantity": 3
+        },
+        {
+          "cardName": "Grafdigger's Cage",
+          "quantity": 1
+        },
+        {
+          "cardName": "Price of Progress",
+          "quantity": 2
+        },
+        {
+          "cardName": "Abrade",
+          "quantity": 1
+        },
+        {
+          "cardName": "Meltdown",
+          "quantity": 1
+        },
+        {
+          "cardName": "Force of Negation",
+          "quantity": 1
+        },
+        {
+          "cardName": "Consign to Memory",
+          "quantity": 2
+        },
+        {
+          "cardName": "Surgical Extraction",
+          "quantity": 1
+        },
+        {
+          "cardName": "Unholy Heat",
+          "quantity": 1
+        },
+        {
+          "cardName": "Rough/Tumble",
+          "quantity": 2
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58436416": {
+      "playerId": "3514641",
+      "mainboard": [
+        {
+          "cardName": "Wasteland",
+          "quantity": 4
+        },
+        {
+          "cardName": "Verdant Catacombs",
+          "quantity": 2
+        },
+        {
+          "cardName": "Bayou",
+          "quantity": 1
+        },
+        {
+          "cardName": "Underground Sea",
+          "quantity": 2
+        },
+        {
+          "cardName": "Thoughtseize",
+          "quantity": 4
+        },
+        {
+          "cardName": "Force of Negation",
+          "quantity": 4
+        },
+        {
+          "cardName": "Swamp",
+          "quantity": 1
+        },
+        {
+          "cardName": "Ponder",
+          "quantity": 4
+        },
+        {
+          "cardName": "Hedge Maze",
+          "quantity": 1
+        },
+        {
+          "cardName": "Polluted Delta",
+          "quantity": 4
+        },
+        {
+          "cardName": "Orcish Bowmasters",
+          "quantity": 2
+        },
+        {
+          "cardName": "Lórien Revealed",
+          "quantity": 2
+        },
+        {
+          "cardName": "Misty Rainforest",
+          "quantity": 2
+        },
+        {
+          "cardName": "Murderous Cut",
+          "quantity": 2
+        },
+        {
+          "cardName": "Mystic Sanctuary",
+          "quantity": 1
+        },
+        {
+          "cardName": "Life from the Loam",
+          "quantity": 1
+        },
+        {
+          "cardName": "Island",
+          "quantity": 2
+        },
+        {
+          "cardName": "Forest",
+          "quantity": 1
+        },
+        {
+          "cardName": "Quantum Riddler",
+          "quantity": 4
+        },
+        {
+          "cardName": "Sheoldred's Edict",
+          "quantity": 2
+        },
+        {
+          "cardName": "Force of Will",
+          "quantity": 4
+        },
+        {
+          "cardName": "Talon Gates of Madara",
+          "quantity": 4
+        },
+        {
+          "cardName": "Fatal Push",
+          "quantity": 4
+        },
+        {
+          "cardName": "Tropical Island",
+          "quantity": 1
+        },
+        {
+          "cardName": "Undercity Sewers",
+          "quantity": 1
+        },
+        {
+          "cardName": "Underground Mortuary",
+          "quantity": 1
+        },
+        {
+          "cardName": "Brainstorm",
+          "quantity": 4
+        },
+        {
+          "cardName": "Up the Beanstalk",
+          "quantity": 4
+        },
+        {
+          "cardName": "Uro, Titan of Nature's Wrath",
+          "quantity": 4
+        },
+        {
+          "cardName": "Barrowgoyf",
+          "quantity": 4
+        },
+        {
+          "cardName": "Abrupt Decay",
+          "quantity": 2
+        },
+        {
+          "cardName": "Witherbloom Command",
+          "quantity": 2
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Force of Vigor",
+          "quantity": 1
+        },
+        {
+          "cardName": "Consign to Memory",
+          "quantity": 3
+        },
+        {
+          "cardName": "Culling Ritual",
+          "quantity": 1
+        },
+        {
+          "cardName": "Faerie Macabre",
+          "quantity": 1
+        },
+        {
+          "cardName": "Endurance",
+          "quantity": 1
+        },
+        {
+          "cardName": "Feed the Cycle",
+          "quantity": 1
+        },
+        {
+          "cardName": "Flusterstorm",
+          "quantity": 2
+        },
+        {
+          "cardName": "Blue Elemental Blast",
+          "quantity": 1
+        },
+        {
+          "cardName": "Hydroblast",
+          "quantity": 1
+        },
+        {
+          "cardName": "Null Rod",
+          "quantity": 1
+        },
+        {
+          "cardName": "Sheoldred's Edict",
+          "quantity": 1
+        },
+        {
+          "cardName": "Yorion, Sky Nomad",
+          "quantity": 1
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    }
+  },
+  "rounds": {
+    "playoffs-qf": {
+      "name": "Quarterfinals",
+      "number": 900,
+      "isPlayoff": true,
+      "matches": [
+        {
+          "player1Id": "3012305",
+          "player2Id": "2873256",
+          "result": "2-1-0",
+          "winnerId": "3012305"
+        },
+        {
+          "player1Id": "2338318",
+          "player2Id": "736655",
+          "result": "2-1-0",
+          "winnerId": "2338318"
+        },
+        {
+          "player1Id": "116095",
+          "player2Id": "1757638",
+          "result": "2-1-0",
+          "winnerId": "116095"
+        },
+        {
+          "player1Id": "2729770",
+          "player2Id": "3310009",
+          "result": "2-0-0",
+          "winnerId": "2729770"
+        }
+      ]
+    },
+    "playoffs-sf": {
+      "name": "Semifinals",
+      "number": 950,
+      "isPlayoff": true,
+      "matches": [
+        {
+          "player1Id": "3012305",
+          "player2Id": "2729770",
+          "result": "2-1-0",
+          "winnerId": "3012305"
+        },
+        {
+          "player1Id": "2338318",
+          "player2Id": "116095",
+          "result": "2-1-0",
+          "winnerId": "2338318"
+        }
+      ]
+    },
+    "playoffs-f": {
+      "name": "Finals",
+      "number": 999,
+      "isPlayoff": true,
+      "matches": [
+        {
+          "player1Id": "2338318",
+          "player2Id": "3012305",
+          "result": "2-0-0",
+          "winnerId": "2338318"
+        }
+      ]
+    }
+  }
+}
