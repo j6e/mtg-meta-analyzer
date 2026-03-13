@@ -122,7 +122,7 @@ async function main() {
 	if (dryRun) console.log("(dry run — will not write files)");
 	if (formatFilter) console.log(`Format filter: ${formatFilter}`);
 
-	const client = new MtgoClient({ delayMs: 1000 });
+	const client = new MtgoClient();
 
 	// Phase 1: Discovery
 	const allEntries: MtgoListingEntry[] = [];

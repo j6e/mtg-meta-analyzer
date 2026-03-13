@@ -42,8 +42,6 @@ export function assembleMtgoTournament(
 ): TournamentData {
 	const totalRounds =
 		raw.final_rank.length > 0 ? Number(raw.final_rank[0].roundnumber) : 0;
-	const playoffRounds = raw.brackets.length;
-	const swissRounds = totalRounds - playoffRounds;
 
 	// Build lookup maps
 	const winlossMap = new Map<string, MtgoRawWinLoss>();
@@ -71,7 +69,6 @@ export function assembleMtgoTournament(
 
 		const wins = wl ? Number(wl.wins) : 0;
 		const losses = wl ? Number(wl.losses) : 0;
-		const draws = Math.max(0, swissRounds - wins - losses);
 
 		const decklistId = deck ? `mtgo-deck-${deck.decktournamentid}` : null;
 
@@ -80,7 +77,7 @@ export function assembleMtgoTournament(
 			username: standing.login_name,
 			rank: fr ? Number(fr.rank) : Number(standing.rank),
 			points: Number(standing.score),
-			matchRecord: `${wins}-${losses}-${draws}`,
+			matchRecord: `${wins}-${losses}-0`,
 			decklistIds: decklistId ? [decklistId] : [],
 			reportedArchetypes: [],
 		};

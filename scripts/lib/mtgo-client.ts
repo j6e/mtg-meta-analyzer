@@ -168,16 +168,24 @@ const HTML_HEADERS: Record<string, string> = {
 };
 
 export interface MtgoClientOptions {
-	/** Delay in ms between requests (default: 1000) */
+	/** Delay in ms between requests (default: 2000) */
 	delayMs?: number;
+	/** Per-request timeout in ms (default: 30000) */
+	timeoutMs?: number;
+	/** Max retries on transient errors (default: 3) */
+	maxRetries?: number;
 }
 
 export class MtgoClient {
 	private delayMs: number;
+	private timeoutMs: number;
+	private maxRetries: number;
 	private lastRequestTime = 0;
 
 	constructor(options: MtgoClientOptions = {}) {
-		this.delayMs = options.delayMs ?? 1000;
+		this.delayMs = options.delayMs ?? 2000;
+		this.timeoutMs = options.timeoutMs ?? 30_000;
+		this.maxRetries = options.maxRetries ?? 3;
 	}
 
 	/** Fetch and parse a monthly listing page. */
@@ -195,22 +203,64 @@ export class MtgoClient {
 
 	private async getHtml(path: string): Promise<string> {
 		const url = `${BASE_URL}${path}`;
-		await this.rateLimit();
-		const res = await fetch(url, { headers: HTML_HEADERS });
-		if (!res.ok) {
-			throw new MtgoFetchError(url, res.status, await res.text());
+
+		for (let attempt = 0; attempt <= this.maxRetries; attempt++) {
+			await this.rateLimit();
+
+			try {
+				const res = await fetch(url, {
+					headers: HTML_HEADERS,
+					signal: AbortSignal.timeout(this.timeoutMs),
+				});
+
+				if (res.ok) return res.text();
+
+				if (attempt < this.maxRetries && isTransient(res.status)) {
+					const backoff = this.delayMs * 2 ** attempt;
+					console.warn(
+						`  ${res.status} for ${path}, retrying in ${backoff}ms (attempt ${attempt + 1}/${this.maxRetries})`,
+					);
+					await sleep(backoff);
+					continue;
+				}
+
+				throw new MtgoFetchError(url, res.status, await res.text());
+			} catch (e) {
+				if (e instanceof MtgoFetchError) throw e;
+
+				if (attempt < this.maxRetries) {
+					const backoff = this.delayMs * 2 ** attempt;
+					const reason = e instanceof Error ? e.message : String(e);
+					console.warn(
+						`  ${reason} for ${path}, retrying in ${backoff}ms (attempt ${attempt + 1}/${this.maxRetries})`,
+					);
+					await sleep(backoff);
+					continue;
+				}
+
+				throw new MtgoFetchError(url, 0, e instanceof Error ? e.message : String(e));
+			}
 		}
-		return res.text();
+
+		throw new MtgoFetchError(url, 0, "exhausted retries");
 	}
 
 	private async rateLimit(): Promise<void> {
 		const now = Date.now();
 		const elapsed = now - this.lastRequestTime;
 		if (elapsed < this.delayMs) {
-			await new Promise((resolve) => setTimeout(resolve, this.delayMs - elapsed));
+			await sleep(this.delayMs - elapsed);
 		}
 		this.lastRequestTime = Date.now();
 	}
+}
+
+function isTransient(status: number): boolean {
+	return status === 429 || status >= 500;
+}
+
+function sleep(ms: number): Promise<void> {
+	return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 export class MtgoFetchError extends Error {
