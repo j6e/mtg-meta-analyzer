@@ -1,18 +1,27 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import { settings, type OtherMode } from '../stores/settings';
-	import { tournamentList, availableFormats } from '../stores/tournaments';
-	import { getInitialExcludeIds } from '../stores/url-settings';
-	import { importanceRank, IMPORTANCE_STARS, type TournamentImportance } from '../types/tournament';
+	import { onMount } from "svelte";
+	import { settings, type OtherMode } from "../stores/settings";
+	import { tournamentList, availableFormats } from "../stores/tournaments";
+	import { getInitialExcludeIds } from "../stores/url-settings";
+	import {
+		importanceRank,
+		IMPORTANCE_STARS,
+		type TournamentImportance,
+	} from "../types/tournament";
 	import {
 		savedConfigs,
 		activeConfigId,
 		setActiveConfig,
 		builtinConfigId,
 		BUILTIN_CONFIGS,
-	} from '../stores/archetype-configs';
+	} from "../stores/archetype-configs";
 
 	const allTournaments = $derived($tournamentList);
+	const selectedCount = $derived($settings.selectedTournamentIds.length);
+	const selectedMatchCount = $derived(() => {
+		const ids = new Set($settings.selectedTournamentIds);
+		return $tournamentList.filter((t) => ids.has(t.id)).reduce((s, t) => s + t.matchCount, 0);
+	});
 	const formats = $derived($availableFormats);
 
 	/** Built-in archetype configs matching the current format. */
@@ -34,7 +43,8 @@
 	/** Tournaments filtered by the currently selected format and date range. */
 	const tournaments = $derived(
 		allTournaments.filter((t) => {
-			if ($settings.format && !t.formats.includes($settings.format)) return false;
+			if ($settings.format && !t.formats.includes($settings.format))
+				return false;
 			if ($settings.dateFrom && t.date < $settings.dateFrom) return false;
 			if ($settings.dateTo && t.date > $settings.dateTo) return false;
 			return true;
@@ -53,7 +63,9 @@
 							(!s.dateFrom || t.date >= s.dateFrom) &&
 							(!s.dateTo || t.date <= s.dateTo) &&
 							!excludeIds.has(t.id) &&
-							(minRank === 0 || importanceRank(t.importance) >= minRank),
+							(minRank === 0 ||
+								importanceRank(t.importance) >= minRank) &&
+							(!s.paperOnly || t.tabletop),
 					)
 					.map((t) => t.id),
 			};
@@ -66,8 +78,13 @@
 			const builtinMatch = builtinConfigId(format);
 			const isMatchingFormat =
 				currentId === builtinMatch ||
-				$savedConfigs.some((c) => c.id === currentId && c.format === format);
-			if (!isMatchingFormat && BUILTIN_CONFIGS.some((c) => c.id === builtinMatch)) {
+				$savedConfigs.some(
+					(c) => c.id === currentId && c.format === format,
+				);
+			if (
+				!isMatchingFormat &&
+				BUILTIN_CONFIGS.some((c) => c.id === builtinMatch)
+			) {
 				setActiveConfig(builtinMatch);
 			}
 		}
@@ -90,11 +107,19 @@
 		const matchingInRange = matching
 			.filter((t) => {
 				const s = $settings;
-				return (!s.dateFrom || t.date >= s.dateFrom) && (!s.dateTo || t.date <= s.dateTo) &&
-					(minRank === 0 || importanceRank(t.importance) >= minRank);
+				return (
+					(!s.dateFrom || t.date >= s.dateFrom) &&
+					(!s.dateTo || t.date <= s.dateTo) &&
+					(minRank === 0 || importanceRank(t.importance) >= minRank) &&
+					(!s.paperOnly || t.tabletop)
+				);
 			})
 			.map((t) => t.id);
-		settings.update((s) => ({ ...s, format: value, selectedTournamentIds: matchingInRange }));
+		settings.update((s) => ({
+			...s,
+			format: value,
+			selectedTournamentIds: matchingInRange,
+		}));
 
 		// Auto-switch archetype config to match the selected format
 		if (value) {
@@ -102,28 +127,42 @@
 			const builtinMatch = builtinConfigId(value);
 			const isCurrentMatchingFormat =
 				currentId === builtinMatch ||
-				$savedConfigs.some((c) => c.id === currentId && c.format === value);
-			if (!isCurrentMatchingFormat && BUILTIN_CONFIGS.some((c) => c.id === builtinMatch)) {
+				$savedConfigs.some(
+					(c) => c.id === currentId && c.format === value,
+				);
+			if (
+				!isCurrentMatchingFormat &&
+				BUILTIN_CONFIGS.some((c) => c.id === builtinMatch)
+			) {
 				setActiveConfig(builtinMatch);
 			}
 		}
 	}
 
-	let datePreset = $state('30');
+	let datePreset = $state("30");
 
 	function toDateString(d: Date): string {
 		return d.toISOString().slice(0, 10);
 	}
 
-	function tournamentsInRange(from: string, to: string, minTier?: TournamentImportance): string[] {
+	function tournamentsInRange(
+		from: string,
+		to: string,
+		minTier?: TournamentImportance,
+		paperOnly?: boolean,
+	): string[] {
 		const tier = minTier ?? $settings.minTier;
 		const minRank = importanceRank(tier);
+		const paper = paperOnly ?? $settings.paperOnly;
 		return allTournaments
 			.filter((t) => {
-				if ($settings.format && !t.formats.includes($settings.format)) return false;
+				if ($settings.format && !t.formats.includes($settings.format))
+					return false;
 				if (from && t.date < from) return false;
 				if (to && t.date > to) return false;
-				if (minRank > 0 && importanceRank(t.importance) < minRank) return false;
+				if (minRank > 0 && importanceRank(t.importance) < minRank)
+					return false;
+				if (paper && !t.tabletop) return false;
 				return true;
 			})
 			.map((t) => t.id);
@@ -135,7 +174,9 @@
 		if (!value) return;
 		const today = new Date();
 		const from = new Date(today);
-		const days = { '7': 7, '14': 14, '30': 30, '60': 60, '120': 120 }[value];
+		const days = { "7": 7, "14": 14, "30": 30, "60": 60, "120": 120 }[
+			value
+		];
 		if (!days) return;
 		from.setDate(today.getDate() - days);
 		const dateFrom = toDateString(from);
@@ -149,7 +190,7 @@
 	}
 
 	function handleDateFromChange(e: Event) {
-		datePreset = '';
+		datePreset = "";
 		const dateFrom = (e.target as HTMLInputElement).value;
 		settings.update((s) => ({
 			...s,
@@ -159,7 +200,7 @@
 	}
 
 	function handleDateToChange(e: Event) {
-		datePreset = '';
+		datePreset = "";
 		const dateTo = (e.target as HTMLInputElement).value;
 		settings.update((s) => ({
 			...s,
@@ -169,12 +210,30 @@
 	}
 
 	function handleMinTierChange(e: Event) {
-		const minTier = (e.target as HTMLSelectElement).value as TournamentImportance;
+		const minTier = (e.target as HTMLSelectElement)
+			.value as TournamentImportance;
 		const minRank = importanceRank(minTier);
 		const ids = tournaments
-			.filter((t) => minRank === 0 || importanceRank(t.importance) >= minRank)
+			.filter(
+				(t) =>
+					(minRank === 0 || importanceRank(t.importance) >= minRank) &&
+					(!$settings.paperOnly || t.tabletop),
+			)
 			.map((t) => t.id);
 		settings.update((s) => ({ ...s, minTier, selectedTournamentIds: ids }));
+	}
+
+	function handlePaperOnlyChange(e: Event) {
+		const paperOnly = (e.target as HTMLInputElement).checked;
+		const minRank = importanceRank($settings.minTier);
+		const ids = tournaments
+			.filter(
+				(t) =>
+					(minRank === 0 || importanceRank(t.importance) >= minRank) &&
+					(!paperOnly || t.tabletop),
+			)
+			.map((t) => t.id);
+		settings.update((s) => ({ ...s, paperOnly, selectedTournamentIds: ids }));
 	}
 
 	function handleTournamentToggle(id: string, checked: boolean) {
@@ -192,7 +251,11 @@
 	function selectAllTournaments() {
 		const minRank = importanceRank($settings.minTier);
 		const ids = tournaments
-			.filter((t) => minRank === 0 || importanceRank(t.importance) >= minRank)
+			.filter(
+				(t) =>
+					(minRank === 0 || importanceRank(t.importance) >= minRank) &&
+					(!$settings.paperOnly || t.tabletop),
+			)
 			.map((t) => t.id);
 		settings.update((s) => ({ ...s, selectedTournamentIds: ids }));
 	}
@@ -244,7 +307,7 @@
 					<option value="14">Last 2 weeks</option>
 					<option value="30">Last month</option>
 					<option value="60">Last 2 months</option>
-				<option value="120">Last 4 months</option>
+					<option value="120">Last 4 months</option>
 				</select>
 			</label>
 		</div>
@@ -252,18 +315,29 @@
 		<div class="filter-row dates">
 			<label>
 				From
-				<input type="date" value={$settings.dateFrom} onchange={handleDateFromChange} />
+				<input
+					type="date"
+					value={$settings.dateFrom}
+					onchange={handleDateFromChange}
+				/>
 			</label>
 			<label>
 				To
-				<input type="date" value={$settings.dateTo} onchange={handleDateToChange} />
+				<input
+					type="date"
+					value={$settings.dateTo}
+					onchange={handleDateToChange}
+				/>
 			</label>
 		</div>
 
 		<div class="filter-row">
 			<label>
 				Minimum tier
-				<select onchange={handleMinTierChange} value={$settings.minTier}>
+				<select
+					onchange={handleMinTierChange}
+					value={$settings.minTier}
+				>
 					<option value="other">None</option>
 					<option value="competitive">★ Competitive</option>
 					<option value="premier">★★ Premier</option>
@@ -272,11 +346,24 @@
 			</label>
 		</div>
 
+		<div class="filter-row">
+			<label class="checkbox-label">
+				<input
+					type="checkbox"
+					checked={$settings.paperOnly}
+					onchange={handlePaperOnlyChange}
+				/>
+				Paper only
+			</label>
+		</div>
+
 		<div class="filter-row tournament-list">
 			<div class="tournament-header">
 				<span>Select tournaments</span>
 				{#if $settings.selectedTournamentIds.length < tournaments.length}
-					<button class="link-btn" onclick={selectAllTournaments}>Select all</button>
+					<button class="link-btn" onclick={selectAllTournaments}
+						>Select all</button
+					>
 				{/if}
 			</div>
 			<div class="tournament-checks">
@@ -284,12 +371,19 @@
 					<label class="tournament-check" title={t.cleanName}>
 						<input
 							type="checkbox"
-							checked={$settings.selectedTournamentIds.includes(t.id)}
+							checked={$settings.selectedTournamentIds.includes(
+								t.id,
+							)}
 							onchange={(e) =>
-								handleTournamentToggle(t.id, (e.target as HTMLInputElement).checked)}
+								handleTournamentToggle(
+									t.id,
+									(e.target as HTMLInputElement).checked,
+								)}
 						/>
 						{#if IMPORTANCE_STARS[t.importance]}
-							<span class="t-tier" title={t.importance}>{IMPORTANCE_STARS[t.importance]}</span>
+							<span class="t-tier" title={t.importance}
+								>{IMPORTANCE_STARS[t.importance]}</span
+							>
 						{/if}
 						<span class="t-name">{t.cleanName}</span>
 						<span class="t-date">{t.date}</span>
@@ -297,6 +391,9 @@
 				{/each}
 			</div>
 		</div>
+		<p class="selection-summary">
+			{selectedCount} tournaments, {selectedMatchCount()} recorded matches
+		</p>
 	</div>
 
 	<div class="filter-section">
@@ -307,10 +404,14 @@
 				Archetype config
 				<select onchange={handleConfigChange} value={$activeConfigId}>
 					{#each matchingBuiltinConfigs as cfg}
-						<option value={cfg.id}>Built-in: {cfg.displayName}</option>
+						<option value={cfg.id}
+							>Built-in: {cfg.displayName}</option
+						>
 					{/each}
 					{#each matchingSavedConfigs as config}
-						<option value={config.id}>{config.name} ({config.format})</option>
+						<option value={config.id}
+							>{config.name} ({config.format})</option
+						>
 					{/each}
 				</select>
 			</label>
@@ -334,8 +435,8 @@
 						type="radio"
 						name="otherMode"
 						value="topN"
-						checked={$settings.otherMode === 'topN'}
-						onchange={() => handleOtherModeChange('topN')}
+						checked={$settings.otherMode === "topN"}
+						onchange={() => handleOtherModeChange("topN")}
 					/>
 					Top N archetypes
 				</label>
@@ -344,14 +445,14 @@
 						type="radio"
 						name="otherMode"
 						value="minShare"
-						checked={$settings.otherMode === 'minShare'}
-						onchange={() => handleOtherModeChange('minShare')}
+						checked={$settings.otherMode === "minShare"}
+						onchange={() => handleOtherModeChange("minShare")}
 					/>
 					Min metagame share
 				</label>
 			</div>
 
-			{#if $settings.otherMode === 'topN'}
+			{#if $settings.otherMode === "topN"}
 				<label class="threshold-input">
 					Show top
 					<input
@@ -403,6 +504,12 @@
 		margin-bottom: 0.6rem;
 	}
 
+	.selection-summary {
+		font-size: 0.75rem;
+		color: var(--color-text-muted);
+		margin: 0.2rem 0 0;
+	}
+
 	.filter-row {
 		margin-bottom: 0.6rem;
 	}
@@ -428,8 +535,8 @@
 	}
 
 	select,
-	input[type='date'],
-	input[type='number'] {
+	input[type="date"],
+	input[type="number"] {
 		padding: 0.25rem 0.5rem;
 		border: 1px solid var(--color-border);
 		border-radius: var(--radius);
@@ -437,18 +544,23 @@
 		background: var(--color-bg);
 	}
 
-	input[type='date'] {
-		width: 100%;
+	input[type="date"] {
+		width: 80%;
 	}
 
-	input[type='number'] {
+	input[type="number"] {
 		width: 4rem;
 	}
 
 	.dates {
 		display: flex;
-		flex-direction: column;
-		gap: 0.4rem;
+		flex-direction: row;
+		gap: 0.5rem;
+	}
+
+	.dates label {
+		flex: 1;
+		min-width: 0;
 	}
 
 	.tournament-header {
