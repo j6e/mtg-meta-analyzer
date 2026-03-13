@@ -225,6 +225,6 @@ describe("parseDecklistRecords", () => {
 		};
 
 		const result = parseDecklistRecords(details);
-		expect(result.mainboard[0].cardName).toBe("Imodane's Recruiter // Train Troops");
+		expect(result.mainboard[0].cardName).toBe("Imodane's Recruiter");
 	});
 });

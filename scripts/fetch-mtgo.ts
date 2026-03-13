@@ -28,13 +28,15 @@ const TARGET_FORMATS = new Set([
 	"Pauper",
 	"Vintage",
 	"Premodern",
+	"Duel Commander",
 ]);
 
-/** Returns true for Challenge 32/64 and Showcase Challenge events. */
+/** Returns true for Challenge 32/64, Showcase Challenge, and Duel Commander Trial events. */
 function isTargetEvent(title: string): boolean {
 	const lower = title.toLowerCase();
 	if (lower.includes("league")) return false;
 	if (lower.includes("preliminary")) return false;
+	if (lower.startsWith("duel commander trial")) return true;
 	if (lower.includes("trial")) return false;
 	return (
 		lower.includes("challenge 32") ||
@@ -47,7 +49,7 @@ function isTargetEvent(title: string): boolean {
 /** Extract the MTG format name from an MTGO event title. */
 function inferFormatFromTitle(title: string): string | null {
 	const match = title.match(
-		/^(Standard|Modern|Pioneer|Legacy|Pauper|Vintage|Premodern)\b/i,
+		/^(Standard|Modern|Pioneer|Legacy|Pauper|Vintage|Premodern|Duel Commander)\b/i,
 	);
 	return match ? match[1] : null;
 }

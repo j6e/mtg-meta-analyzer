@@ -5,6 +5,7 @@ import type {
 	RoundInfo,
 	TournamentData,
 } from "../../src/lib/types/tournament";
+import { getFrontFace } from "../../src/lib/utils/card-normalizer";
 import type {
 	MtgoRawBracketRound,
 	MtgoRawDeck,
@@ -26,6 +27,7 @@ const FORMAT_CODE_MAP: Record<string, string> = {
 	CVINTAGE: "Vintage",
 	CPREMODERN: "Premodern",
 	CHULAHOOP: "Premodern", // pre-March 2026 combined event
+	CCMDRDUEL: "Duel Commander",
 };
 
 export function formatCodeToName(code: string): string {
@@ -131,7 +133,7 @@ export function assembleMtgoTournament(
 
 function parseCards(cards: MtgoRawDeck["main_deck"]): CardEntry[] {
 	return cards.map((c) => ({
-		cardName: c.card_attributes.card_name,
+		cardName: getFrontFace(c.card_attributes.card_name),
 		quantity: Number(c.qty),
 	}));
 }
