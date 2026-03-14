@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { onMount } from "svelte";
 	import { settings, type OtherMode } from "../stores/settings";
-	import { tournamentList, availableFormats } from "../stores/tournaments";
+	import { tournamentList, availableFormats, filteredTournaments } from "../stores/tournaments";
 	import { getInitialExcludeIds } from "../stores/url-settings";
+	import { hasIncompleteRounds, parseMatchRecord } from "../utils/standings";
 	import {
 		importanceRank,
 		IMPORTANCE_STARS,
@@ -18,9 +19,26 @@
 
 	const allTournaments = $derived($tournamentList);
 	const selectedCount = $derived($settings.selectedTournamentIds.length);
-	const selectedMatchCount = $derived(() => {
+	const selectedMatchCount = $derived.by(() => {
 		const ids = new Set($settings.selectedTournamentIds);
 		return $tournamentList.filter((t) => ids.has(t.id)).reduce((s, t) => s + t.matchCount, 0);
+	});
+	/** Count of extra match records from standings (W+L+D minus recorded round matches). */
+	const standingsExtraCount = $derived.by(() => {
+		if (!$settings.useStandings) return 0;
+		let total = 0;
+		for (const t of $filteredTournaments) {
+			if (!hasIncompleteRounds(t)) continue;
+			const recordedRounds = Object.keys(t.rounds).length;
+			for (const player of Object.values(t.players)) {
+				const rec = parseMatchRecord(player.matchRecord);
+				// Total matches in record minus recorded rounds (approximate; exact per-player
+				// counting happens in the calculator, but this is close enough for a summary)
+				const extra = Math.max(0, rec.w + rec.l + rec.d - recordedRounds);
+				total += extra;
+			}
+		}
+		return total;
 	});
 	const formats = $derived($availableFormats);
 
@@ -73,22 +91,19 @@
 
 		// Sync archetype config to match the active format
 		const format = $settings.format;
-		if (format) {
-			const currentId = $activeConfigId;
-			const builtinMatch = builtinConfigId(format);
-			const isMatchingFormat =
-				currentId === builtinMatch ||
-				$savedConfigs.some(
-					(c) => c.id === currentId && c.format === format,
-				);
-			if (
-				!isMatchingFormat &&
-				BUILTIN_CONFIGS.some((c) => c.id === builtinMatch)
-			) {
-				setActiveConfig(builtinMatch);
-			}
-		}
+		if (format) syncConfigToFormat(format);
 	});
+
+	function syncConfigToFormat(format: string) {
+		const currentId = $activeConfigId;
+		const builtinMatch = builtinConfigId(format);
+		const isMatchingFormat =
+			currentId === builtinMatch ||
+			$savedConfigs.some((c) => c.id === currentId && c.format === format);
+		if (!isMatchingFormat && BUILTIN_CONFIGS.some((c) => c.id === builtinMatch)) {
+			setActiveConfig(builtinMatch);
+		}
+	}
 
 	// Debounce timer for numeric inputs
 	let debounceTimer: ReturnType<typeof setTimeout> | null = null;
@@ -121,22 +136,7 @@
 			selectedTournamentIds: matchingInRange,
 		}));
 
-		// Auto-switch archetype config to match the selected format
-		if (value) {
-			const currentId = $activeConfigId;
-			const builtinMatch = builtinConfigId(value);
-			const isCurrentMatchingFormat =
-				currentId === builtinMatch ||
-				$savedConfigs.some(
-					(c) => c.id === currentId && c.format === value,
-				);
-			if (
-				!isCurrentMatchingFormat &&
-				BUILTIN_CONFIGS.some((c) => c.id === builtinMatch)
-			) {
-				setActiveConfig(builtinMatch);
-			}
-		}
+		if (value) syncConfigToFormat(value);
 	}
 
 	let datePreset = $state("30");
@@ -346,7 +346,7 @@
 			</label>
 		</div>
 
-		<div class="filter-row">
+		<div class="filter-row checkbox-row">
 			<label class="checkbox-label">
 				<input
 					type="checkbox"
@@ -354,6 +354,21 @@
 					onchange={handlePaperOnlyChange}
 				/>
 				Paper only
+			</label>
+			<label
+				class="checkbox-label"
+				title="Use player W-L-D records from standings to supplement overall statistics for tournaments without full round data (e.g., MTGO events)."
+			>
+				<input
+					type="checkbox"
+					checked={$settings.useStandings}
+					onchange={() =>
+						settings.update((s) => ({
+							...s,
+							useStandings: !s.useStandings,
+						}))}
+				/>
+				Use standings
 			</label>
 		</div>
 
@@ -392,7 +407,8 @@
 			</div>
 		</div>
 		<p class="selection-summary">
-			{selectedCount} tournaments, {selectedMatchCount()} recorded matches
+			{selectedCount} tournaments, {selectedMatchCount} recorded matches {#if standingsExtraCount > 0}
+				+ {standingsExtraCount} from standings{/if}
 		</p>
 	</div>
 
@@ -512,6 +528,11 @@
 
 	.filter-row {
 		margin-bottom: 0.6rem;
+	}
+
+	.checkbox-row {
+		display: flex;
+		gap: 1rem;
 	}
 
 	.filter-row:last-child {

@@ -5,6 +5,7 @@
 	import type { StatisticalSplitResult, AutoScanResult } from '../types/statistics';
 	import { significanceStars } from '../algorithms/statistics';
 	import { winrateColor, pct } from '../utils/format';
+	import { settings } from '../stores/settings';
 	import CardTooltip from './CardTooltip.svelte';
 
 	let {
@@ -60,6 +61,7 @@
 			...(otherMode === 'minShare' && minMetagameShare > 0
 				? { minMetagameShare: minMetagameShare / 100 }
 				: {}),
+			useStandings: $settings.useStandings,
 		};
 	}
 

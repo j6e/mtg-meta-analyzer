@@ -202,6 +202,7 @@ export const metagameData = derived(
 			topN: $settings.otherMode === "topN" ? $settings.topN : 0,
 			minMetagameShare:
 				$settings.otherMode === "minShare" ? $settings.minMetagameShare / 100 : 0,
+			useStandings: $settings.useStandings,
 		};
 
 		return buildMatchupMatrix($tournaments, $playerArchetypes, options);

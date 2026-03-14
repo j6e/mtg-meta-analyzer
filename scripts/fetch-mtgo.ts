@@ -12,6 +12,7 @@
  */
 import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
+import { parseArgValue } from "./lib/cli-utils";
 import { cleanTournamentName, inferImportance, toFormatSlug } from "./lib/importance";
 import { updateFormatIndex } from "./lib/index-utils";
 import { assembleMtgoTournament } from "./lib/mtgo-assembler";
@@ -97,16 +98,6 @@ function buildMonthRange(from?: string | null, to?: string | null): YearMonth[] 
 }
 
 // ---------------------------------------------------------------------------
-// CLI argument parsing
-// ---------------------------------------------------------------------------
-
-function parseArgValue(args: string[], flag: string): string | null {
-	const idx = args.indexOf(flag);
-	if (idx === -1 || idx + 1 >= args.length) return null;
-	return args[idx + 1];
-}
-
-// ---------------------------------------------------------------------------
 // Main
 // ---------------------------------------------------------------------------
 
@@ -169,11 +160,13 @@ async function main() {
 	);
 
 	if (dryRun) {
+		const toFetchSet = new Set(toFetch);
 		for (const entry of toFetch) {
 			console.log(`  [NEW] ${entry.date} ${entry.title} (${entry.eventId})`);
 		}
-		for (const entry of filtered.filter((e) => !toFetch.includes(e))) {
-			console.log(`  [SKIP] ${entry.date} ${entry.title} (${entry.eventId})`);
+		for (const entry of filtered) {
+			if (!toFetchSet.has(entry))
+				console.log(`  [SKIP] ${entry.date} ${entry.title} (${entry.eventId})`);
 		}
 		return;
 	}

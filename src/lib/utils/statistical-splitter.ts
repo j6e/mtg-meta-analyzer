@@ -150,6 +150,7 @@ export async function autoScanCards(
 		minMetagameShare?: number;
 		autoIncludeThreshold?: number;
 		minEffectSize?: number;
+		useStandings?: boolean;
 		onProgress?: (done: number, total: number) => void;
 	} = {},
 ): Promise<AutoScanResult[]> {
@@ -204,6 +205,7 @@ export async function autoScanCards(
 				threshold: options.threshold,
 				topN: options.topN,
 				minMetagameShare: options.minMetagameShare,
+				useStandings: options.useStandings,
 			},
 		);
 

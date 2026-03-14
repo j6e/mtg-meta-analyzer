@@ -14,6 +14,7 @@ export interface MetaSettings {
 	dateTo: string; // '' = no upper bound (ISO date string)
 	minTier: TournamentImportance; // minimum importance for auto-selection ("other" = no filter)
 	paperOnly: boolean; // if true, only tabletop tournaments are auto-selected
+	useStandings: boolean; // if true, supplement overall stats with standings W-L-D for incomplete tournaments
 	selectedTournamentIds: string[]; // empty = all tournaments
 
 	// Matrix options
@@ -37,6 +38,7 @@ export function makeDefaults(): MetaSettings {
 		dateTo: isoDate(today),
 		minTier: "other",
 		paperOnly: false,
+		useStandings: false,
 		selectedTournamentIds: [],
 		excludeMirrors: true,
 		otherMode: "minShare",

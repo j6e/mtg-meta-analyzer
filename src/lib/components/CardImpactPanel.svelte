@@ -2,6 +2,7 @@
 	import type { TournamentData } from '../types/tournament';
 	import { analyzeCardImpact, type CardImpactResult, type CardImpactError } from '../utils/card-impact';
 	import { pct } from '../utils/format';
+	import { settings } from '../stores/settings';
 	import CardTooltip from './CardTooltip.svelte';
 
 	let {
@@ -33,6 +34,7 @@
 				opponent: selectedOpponent || undefined,
 				minObservations,
 				maxFeatures,
+				useStandings: $settings.useStandings,
 			});
 		} finally {
 			calculating = false;

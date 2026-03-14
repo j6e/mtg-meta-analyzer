@@ -15,6 +15,7 @@
 import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { assembleTournament } from "./lib/assembler";
+import { parseArgValue } from "./lib/cli-utils";
 import { parseTournamentPage } from "./lib/html-parser";
 import {
 	cleanTournamentName,
@@ -465,13 +466,6 @@ function computeMatchRecords(
 		result.set(pid, `${r.w}-${r.l}-${r.d}`);
 	}
 	return result;
-}
-
-/** Parse a --flag value argument from argv. */
-function parseArgValue(args: string[], flag: string): string | null {
-	const idx = args.indexOf(flag);
-	if (idx === -1 || idx + 1 >= args.length) return null;
-	return args[idx + 1];
 }
 
 function parseTournamentId(input: string): number | null {

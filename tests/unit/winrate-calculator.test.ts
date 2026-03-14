@@ -11,7 +11,6 @@ import {
 	buildAttributionMatrix,
 	buildMatchupMatrix,
 	buildPlayerArchetypeMap,
-	computeMetagameStats,
 } from "../../src/lib/utils/winrate-calculator";
 
 // --- Helpers ---
@@ -218,7 +217,7 @@ describe("buildMatchupMatrix", () => {
 			["p4", "Control"],
 		]);
 
-		const { matrix, stats } = buildMatchupMatrix([tournament], playerArchetypes);
+		const { matrix } = buildMatchupMatrix([tournament], playerArchetypes);
 
 		expect(matrix.archetypes).toEqual(["Aggro", "Control"]);
 
@@ -532,7 +531,7 @@ describe("buildMatchupMatrix", () => {
 	});
 });
 
-describe("computeMetagameStats", () => {
+describe("buildMatchupMatrix stats", () => {
 	it("computes metagame share and winrate", () => {
 		const tournament = makeTournament({
 			players: {
@@ -556,7 +555,9 @@ describe("computeMetagameStats", () => {
 			["p4", "Control"],
 		]);
 
-		const stats = computeMetagameStats([tournament], playerArchetypes);
+		const { stats } = buildMatchupMatrix([tournament], playerArchetypes, {
+			excludeMirrors: false,
+		});
 		expect(stats).toHaveLength(2);
 
 		const aggro = stats.find((s) => s.name === "Aggro")!;
@@ -590,12 +591,14 @@ describe("computeMetagameStats", () => {
 			["p5", "Combo"],
 		]);
 
-		const stats = computeMetagameStats([tournament], playerArchetypes);
+		const { stats } = buildMatchupMatrix([tournament], playerArchetypes, {
+			excludeMirrors: false,
+		});
 		const totalShare = stats.reduce((sum, s) => sum + s.metagameShare, 0);
 		expect(totalShare).toBeCloseTo(1.0);
 	});
 
-	it("includes mirror matches in overall winrate", () => {
+	it("includes mirror matches in overall winrate when excludeMirrors is false", () => {
 		const tournament = makeTournament({
 			players: { p1: makePlayer("Alice"), p2: makePlayer("Bob") },
 			rounds: {
@@ -607,12 +610,36 @@ describe("computeMetagameStats", () => {
 			["p1", "Aggro"],
 			["p2", "Aggro"],
 		]);
-		const stats = computeMetagameStats([tournament], playerArchetypes);
 
+		const { stats } = buildMatchupMatrix([tournament], playerArchetypes, {
+			excludeMirrors: false,
+		});
 		const aggro = stats.find((s) => s.name === "Aggro")!;
-		// 1 win + 1 loss = 50% winrate (mirror)
+		// Both sides of the mirror are counted: 1 win + 1 loss = 50%
 		expect(aggro.overallWinrate).toBeCloseTo(0.5);
-		expect(aggro.totalMatches).toBe(2); // counted from both sides
+		expect(aggro.totalMatches).toBe(2);
+	});
+
+	it("excludes mirror matches from overall winrate when excludeMirrors is true", () => {
+		const tournament = makeTournament({
+			players: { p1: makePlayer("Alice"), p2: makePlayer("Bob") },
+			rounds: {
+				r1: makeRound("Round 1", 1, [makeMatch("p1", "p2", "p1")]),
+			},
+		});
+
+		const playerArchetypes = new Map([
+			["p1", "Aggro"],
+			["p2", "Aggro"],
+		]);
+
+		const { stats } = buildMatchupMatrix([tournament], playerArchetypes, {
+			excludeMirrors: true,
+		});
+		const aggro = stats.find((s) => s.name === "Aggro")!;
+		// Mirror match is excluded entirely: no wins, no losses
+		expect(aggro.totalMatches).toBe(0);
+		expect(aggro.overallWinrate).toBe(0);
 	});
 
 	it("returns sorted by player count descending", () => {
@@ -635,7 +662,9 @@ describe("computeMetagameStats", () => {
 			["p5", "Aggro"],
 		]);
 
-		const stats = computeMetagameStats([tournament], playerArchetypes);
+		const { stats } = buildMatchupMatrix([tournament], playerArchetypes, {
+			excludeMirrors: false,
+		});
 		expect(stats[0].name).toBe("Control");
 		expect(stats[1].name).toBe("Aggro");
 	});
