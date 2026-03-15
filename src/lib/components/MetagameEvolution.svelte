@@ -169,6 +169,8 @@
 		loadArchetypeImages(currentSeries.map((s) => s.name));
 
 		const labels = currentSeries[0].points.map((p) => p.label);
+		const maxShare = Math.max(...currentSeries.flatMap((s) => s.points.map((p) => p.share * 100)));
+		const yMax = Math.ceil(maxShare) + 2;
 
 		chart = new Chart(canvas, {
 			type: 'line',
@@ -204,7 +206,7 @@
 					},
 					y: {
 						min: 0,
-						max: 100,
+						max: yMax,
 						title: { display: true, text: 'Metagame Share (%)', font: { size: 13 } },
 						ticks: { callback: (v) => `${v}%`, stepSize: 10 },
 						grid: { color: '#f0f0f0' },
