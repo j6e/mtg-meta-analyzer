@@ -110,6 +110,36 @@
 		}
 	}
 
+	/** Highlights the hovered line and dims all others. */
+	let hoveredDatasetIndex = -1;
+	const hoverHighlightPlugin = {
+		id: 'hoverHighlight',
+		afterEvent(chartInstance: Chart, args: { event: { type: string } }) {
+			if (args.event.type !== 'mousemove' && args.event.type !== 'mouseout') return;
+			const newIndex =
+				args.event.type === 'mouseout'
+					? -1
+					: (chartInstance.getElementsAtEventForMode(
+							args.event as unknown as Event,
+							'nearest',
+							{ intersect: false },
+							false,
+						)[0]?.datasetIndex ?? -1);
+			if (newIndex === hoveredDatasetIndex) return;
+			hoveredDatasetIndex = newIndex;
+			chartInstance.data.datasets.forEach((ds, i) => {
+				const d = ds as unknown as Record<string, unknown>;
+				const base = d.baseColor as string;
+				const active = hoveredDatasetIndex === -1 || i === hoveredDatasetIndex;
+				d.borderWidth = active ? 2.5 : 1;
+				d.borderColor = active ? base : `${base}33`;
+				d.pointBorderColor = active ? base : `${base}33`;
+				d.pointBackgroundColor = active ? `${base}bb` : `${base}22`;
+			});
+			chartInstance.update('none');
+		},
+	};
+
 	/** Card-art plugin: draws circular card art over points where share > 0. */
 	const cardArtPlugin = {
 		id: 'evolutionCardArt',
@@ -160,6 +190,7 @@
 	};
 
 	function buildChart(currentSeries: EvolutionSeries[]) {
+		hoveredDatasetIndex = -1;
 		if (chart) {
 			chart.destroy();
 			chart = null;
@@ -182,6 +213,7 @@
 					return {
 						label: s.name,
 						archetypeName: s.name,
+					baseColor: color,
 						data: s.points.map((p) => p.share * 100),
 						pointRadius: s.points.map((p) => (p.share > 0 ? 10 : 0)),
 						pointHoverRadius: s.points.map((p) => (p.share > 0 ? 12 : 0)),
@@ -198,7 +230,7 @@
 			options: {
 				responsive: true,
 				maintainAspectRatio: false,
-				interaction: { mode: 'index', intersect: false },
+				interaction: { mode: 'nearest', intersect: false },
 				scales: {
 					x: {
 						grid: { color: '#f0f0f0' },
@@ -221,7 +253,7 @@
 					},
 				},
 			},
-			plugins: [cardArtPlugin],
+			plugins: [hoverHighlightPlugin, cardArtPlugin],
 		});
 	}
 
