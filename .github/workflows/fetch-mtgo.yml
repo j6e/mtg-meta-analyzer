@@ -1,0 +1,60 @@
+name: Fetch MTGO Tournaments
+
+on:
+  schedule:
+    - cron: '0 8 * * *' # daily at 08:00 UTC
+  workflow_dispatch:
+    inputs:
+      from:
+        description: 'Start month (YYYY-MM), defaults to past month'
+        required: false
+        type: string
+      to:
+        description: 'End month (YYYY-MM), defaults to current month'
+        required: false
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: master
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - run: bun install --frozen-lockfile
+
+      - name: Fetch MTGO tournaments
+        run: |
+          if [ -n "${{ inputs.from }}" ] || [ -n "${{ inputs.to }}" ]; then
+            ARGS=""
+            [ -n "${{ inputs.from }}" ] && ARGS="$ARGS --from ${{ inputs.from }}"
+            [ -n "${{ inputs.to }}" ] && ARGS="$ARGS --to ${{ inputs.to }}"
+            bun run scripts/fetch-mtgo.ts $ARGS
+          else
+            PREV_MONTH=$(date -u -d "1 month ago" +%Y-%m)
+            CURR_MONTH=$(date -u +%Y-%m)
+            bun run scripts/fetch-mtgo.ts --from "$PREV_MONTH" --to "$CURR_MONTH"
+          fi
+
+      - name: Commit and push
+        run: |
+          git add data/
+          if git diff --cached --quiet; then
+            echo "No new MTGO tournaments found."
+            exit 0
+          fi
+          COUNT=$(git diff --cached --name-only | grep -c '\.json$')
+          DATE=$(date -u +%Y-%m-%d)
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "data: fetch $COUNT MTGO tournaments ($DATE)"
+          git push

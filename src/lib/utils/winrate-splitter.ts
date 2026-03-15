@@ -76,6 +76,7 @@ function extractRow(
 	opponents: string[],
 	playerCount: number,
 	prebuilt?: { matrix: MatchupMatrix; stats: ArchetypeStats[] },
+	useStandings?: boolean,
 ): SplitRow {
 	// Always build an un-collapsed matrix so every archetype is individually
 	// visible. The "Other" cell is aggregated manually from the same set of
@@ -84,6 +85,7 @@ function extractRow(
 		prebuilt ??
 		buildMatchupMatrix(tournaments, playerArchetypes, {
 			excludeMirrors: true,
+			useStandings,
 		});
 
 	const idx = matrix.archetypes.indexOf(archetypeName);
@@ -163,7 +165,12 @@ export function splitByCard(
 	archetypeName: string,
 	cardName: string,
 	mode: SplitMode,
-	options?: { threshold?: number; topN?: number; minMetagameShare?: number },
+	options?: {
+		threshold?: number;
+		topN?: number;
+		minMetagameShare?: number;
+		useStandings?: boolean;
+	},
 ): SplitResult {
 	const playerCopies = countCardCopies(
 		tournaments,
@@ -176,11 +183,13 @@ export function splitByCard(
 		excludeMirrors: true,
 		topN: options?.topN,
 		minMetagameShare: options?.minMetagameShare,
+		useStandings: options?.useStandings,
 	};
 
 	// Build the un-collapsed baseline matrix once (reused for opponent determination + baseline row)
 	const baselineResult = buildMatchupMatrix(tournaments, playerArchetypes, {
 		excludeMirrors: true,
+		useStandings: options?.useStandings,
 	});
 
 	// Determine opponents from a possibly collapsed matrix (topN/minMetagameShare)
@@ -202,6 +211,7 @@ export function splitByCard(
 		opponents,
 		allPlayerIds.size,
 		baselineResult,
+		options?.useStandings,
 	);
 	baselineRow.label = "All";
 
@@ -290,6 +300,8 @@ export function splitByCard(
 			archetypeName,
 			opponents,
 			group.playerIds.size,
+			undefined,
+			options?.useStandings,
 		);
 		row.label = group.label;
 		return row;

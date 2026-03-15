@@ -1,0 +1,4153 @@
+{
+  "meta": {
+    "id": "mtgo-12828150",
+    "name": "Premodern Challenge 32 - Contraption",
+    "date": "2026-01-01",
+    "formats": [
+      "Premodern"
+    ],
+    "url": "https://www.mtgo.com/decklist/premodern-challenge-32---contraption-2026-01-0112828150",
+    "fetchedAt": "2026-03-13T12:35:34.218Z",
+    "playerCount": 67,
+    "roundCount": 10,
+    "source": "mtgo",
+    "tabletop": false
+  },
+  "players": {
+    "118154": {
+      "name": "Dr Siuss",
+      "username": "Dr Siuss",
+      "rank": 2,
+      "points": 18,
+      "matchRecord": "8-2-0",
+      "decklistIds": [
+        "mtgo-deck-58412546"
+      ],
+      "reportedArchetypes": []
+    },
+    "194753": {
+      "name": "CarlosZ",
+      "username": "CarlosZ",
+      "rank": 25,
+      "points": 12,
+      "matchRecord": "4-3-0",
+      "decklistIds": [
+        "mtgo-deck-58412545"
+      ],
+      "reportedArchetypes": []
+    },
+    "242336": {
+      "name": "desolutionist",
+      "username": "desolutionist",
+      "rank": 10,
+      "points": 15,
+      "matchRecord": "5-2-0",
+      "decklistIds": [
+        "mtgo-deck-58412516"
+      ],
+      "reportedArchetypes": []
+    },
+    "300212": {
+      "name": "bocci",
+      "username": "bocci",
+      "rank": 32,
+      "points": 9,
+      "matchRecord": "3-4-0",
+      "decklistIds": [
+        "mtgo-deck-58412513"
+      ],
+      "reportedArchetypes": []
+    },
+    "305751": {
+      "name": "Frenzy277",
+      "username": "Frenzy277",
+      "rank": 19,
+      "points": 12,
+      "matchRecord": "4-3-0",
+      "decklistIds": [
+        "mtgo-deck-58412557"
+      ],
+      "reportedArchetypes": []
+    },
+    "326784": {
+      "name": "Oderus Urungus",
+      "username": "Oderus Urungus",
+      "rank": 6,
+      "points": 18,
+      "matchRecord": "6-2-0",
+      "decklistIds": [
+        "mtgo-deck-58412553"
+      ],
+      "reportedArchetypes": []
+    },
+    "510634": {
+      "name": "Benni_R",
+      "username": "Benni_R",
+      "rank": 15,
+      "points": 15,
+      "matchRecord": "5-2-0",
+      "decklistIds": [
+        "mtgo-deck-58412531"
+      ],
+      "reportedArchetypes": []
+    },
+    "520170": {
+      "name": "SteB",
+      "username": "SteB",
+      "rank": 27,
+      "points": 12,
+      "matchRecord": "4-3-0",
+      "decklistIds": [
+        "mtgo-deck-58412525"
+      ],
+      "reportedArchetypes": []
+    },
+    "645849": {
+      "name": "Cherlon",
+      "username": "Cherlon",
+      "rank": 20,
+      "points": 12,
+      "matchRecord": "4-3-0",
+      "decklistIds": [
+        "mtgo-deck-58412568"
+      ],
+      "reportedArchetypes": []
+    },
+    "647537": {
+      "name": "wildspeaker",
+      "username": "wildspeaker",
+      "rank": 30,
+      "points": 12,
+      "matchRecord": "4-3-0",
+      "decklistIds": [
+        "mtgo-deck-58412560"
+      ],
+      "reportedArchetypes": []
+    },
+    "1009240": {
+      "name": "HolyShamgar",
+      "username": "HolyShamgar",
+      "rank": 5,
+      "points": 18,
+      "matchRecord": "6-2-0",
+      "decklistIds": [
+        "mtgo-deck-58412556"
+      ],
+      "reportedArchetypes": []
+    },
+    "1023136": {
+      "name": "rudyPL",
+      "username": "rudyPL",
+      "rank": 23,
+      "points": 12,
+      "matchRecord": "4-3-0",
+      "decklistIds": [
+        "mtgo-deck-58412416"
+      ],
+      "reportedArchetypes": []
+    },
+    "1096200": {
+      "name": "Ark4n",
+      "username": "Ark4n",
+      "rank": 8,
+      "points": 15,
+      "matchRecord": "5-3-0",
+      "decklistIds": [
+        "mtgo-deck-58412500"
+      ],
+      "reportedArchetypes": []
+    },
+    "1163110": {
+      "name": "Antarctica",
+      "username": "Antarctica",
+      "rank": 21,
+      "points": 12,
+      "matchRecord": "4-3-0",
+      "decklistIds": [
+        "mtgo-deck-58412455"
+      ],
+      "reportedArchetypes": []
+    },
+    "1471145": {
+      "name": "moon11",
+      "username": "moon11",
+      "rank": 28,
+      "points": 12,
+      "matchRecord": "3-3-0",
+      "decklistIds": [
+        "mtgo-deck-58412552"
+      ],
+      "reportedArchetypes": []
+    },
+    "1615064": {
+      "name": "Jadisouzaft",
+      "username": "Jadisouzaft",
+      "rank": 14,
+      "points": 15,
+      "matchRecord": "5-2-0",
+      "decklistIds": [
+        "mtgo-deck-58412566"
+      ],
+      "reportedArchetypes": []
+    },
+    "1638114": {
+      "name": "Furnace_Scamp",
+      "username": "Furnace_Scamp",
+      "rank": 18,
+      "points": 12,
+      "matchRecord": "4-3-0",
+      "decklistIds": [
+        "mtgo-deck-58412505"
+      ],
+      "reportedArchetypes": []
+    },
+    "1794149": {
+      "name": "LionhearT505",
+      "username": "LionhearT505",
+      "rank": 1,
+      "points": 18,
+      "matchRecord": "9-1-0",
+      "decklistIds": [
+        "mtgo-deck-58412569"
+      ],
+      "reportedArchetypes": []
+    },
+    "1818769": {
+      "name": "JamesDaBoosh",
+      "username": "JamesDaBoosh",
+      "rank": 31,
+      "points": 9,
+      "matchRecord": "2-4-0",
+      "decklistIds": [
+        "mtgo-deck-58412551"
+      ],
+      "reportedArchetypes": []
+    },
+    "1951244": {
+      "name": "Taclegod3",
+      "username": "Taclegod3",
+      "rank": 3,
+      "points": 18,
+      "matchRecord": "7-2-0",
+      "decklistIds": [
+        "mtgo-deck-58412499"
+      ],
+      "reportedArchetypes": []
+    },
+    "1993261": {
+      "name": "lillopoto",
+      "username": "lillopoto",
+      "rank": 11,
+      "points": 15,
+      "matchRecord": "5-2-0",
+      "decklistIds": [
+        "mtgo-deck-58412533"
+      ],
+      "reportedArchetypes": []
+    },
+    "2043884": {
+      "name": "Aetavrenz",
+      "username": "Aetavrenz",
+      "rank": 12,
+      "points": 15,
+      "matchRecord": "5-2-0",
+      "decklistIds": [
+        "mtgo-deck-58412430"
+      ],
+      "reportedArchetypes": []
+    },
+    "2248211": {
+      "name": "fried-liver-attack",
+      "username": "fried-liver-attack",
+      "rank": 9,
+      "points": 15,
+      "matchRecord": "5-2-0",
+      "decklistIds": [
+        "mtgo-deck-58412519"
+      ],
+      "reportedArchetypes": []
+    },
+    "2266575": {
+      "name": "Iwouldliketorespond",
+      "username": "Iwouldliketorespond",
+      "rank": 26,
+      "points": 12,
+      "matchRecord": "4-3-0",
+      "decklistIds": [
+        "mtgo-deck-58412497"
+      ],
+      "reportedArchetypes": []
+    },
+    "2509881": {
+      "name": "Ankylosaur",
+      "username": "Ankylosaur",
+      "rank": 24,
+      "points": 12,
+      "matchRecord": "4-3-0",
+      "decklistIds": [
+        "mtgo-deck-58412522"
+      ],
+      "reportedArchetypes": []
+    },
+    "2563273": {
+      "name": "almostomniscient",
+      "username": "almostomniscient",
+      "rank": 7,
+      "points": 15,
+      "matchRecord": "5-3-0",
+      "decklistIds": [
+        "mtgo-deck-58412383"
+      ],
+      "reportedArchetypes": []
+    },
+    "2746109": {
+      "name": "BigZ6",
+      "username": "BigZ6",
+      "rank": 22,
+      "points": 12,
+      "matchRecord": "4-3-0",
+      "decklistIds": [
+        "mtgo-deck-58412544"
+      ],
+      "reportedArchetypes": []
+    },
+    "2767231": {
+      "name": "duckduckmongoose",
+      "username": "duckduckmongoose",
+      "rank": 29,
+      "points": 12,
+      "matchRecord": "4-3-0",
+      "decklistIds": [
+        "mtgo-deck-58412564"
+      ],
+      "reportedArchetypes": []
+    },
+    "3082384": {
+      "name": "DookieTrouserMD",
+      "username": "DookieTrouserMD",
+      "rank": 17,
+      "points": 12,
+      "matchRecord": "4-3-0",
+      "decklistIds": [
+        "mtgo-deck-58412518"
+      ],
+      "reportedArchetypes": []
+    },
+    "3373315": {
+      "name": "Spellyp",
+      "username": "Spellyp",
+      "rank": 16,
+      "points": 12,
+      "matchRecord": "4-3-0",
+      "decklistIds": [
+        "mtgo-deck-58412501"
+      ],
+      "reportedArchetypes": []
+    },
+    "3380185": {
+      "name": "tbundz",
+      "username": "tbundz",
+      "rank": 4,
+      "points": 15,
+      "matchRecord": "6-3-0",
+      "decklistIds": [
+        "mtgo-deck-58412526"
+      ],
+      "reportedArchetypes": []
+    },
+    "3382268": {
+      "name": "gruvious",
+      "username": "gruvious",
+      "rank": 13,
+      "points": 15,
+      "matchRecord": "5-2-0",
+      "decklistIds": [
+        "mtgo-deck-58412565"
+      ],
+      "reportedArchetypes": []
+    }
+  },
+  "decklists": {
+    "mtgo-deck-58412546": {
+      "playerId": "118154",
+      "mainboard": [
+        {
+          "cardName": "Ancient Tomb",
+          "quantity": 4
+        },
+        {
+          "cardName": "Plains",
+          "quantity": 4
+        },
+        {
+          "cardName": "Skycloud Expanse",
+          "quantity": 3
+        },
+        {
+          "cardName": "Flooded Strand",
+          "quantity": 4
+        },
+        {
+          "cardName": "Adarkar Wastes",
+          "quantity": 4
+        },
+        {
+          "cardName": "Swords to Plowshares",
+          "quantity": 3
+        },
+        {
+          "cardName": "Seal of Cleansing",
+          "quantity": 3
+        },
+        {
+          "cardName": "Island",
+          "quantity": 5
+        },
+        {
+          "cardName": "Attunement",
+          "quantity": 4
+        },
+        {
+          "cardName": "Parallax Wave",
+          "quantity": 3
+        },
+        {
+          "cardName": "Parallax Tide",
+          "quantity": 4
+        },
+        {
+          "cardName": "Opalescence",
+          "quantity": 4
+        },
+        {
+          "cardName": "Replenish",
+          "quantity": 4
+        },
+        {
+          "cardName": "Mana Leak",
+          "quantity": 3
+        },
+        {
+          "cardName": "Tsabo's Web",
+          "quantity": 1
+        },
+        {
+          "cardName": "Frantic Search",
+          "quantity": 3
+        },
+        {
+          "cardName": "Fact or Fiction",
+          "quantity": 2
+        },
+        {
+          "cardName": "Plains",
+          "quantity": 1
+        },
+        {
+          "cardName": "Intuition",
+          "quantity": 1
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Orim's Chant",
+          "quantity": 1
+        },
+        {
+          "cardName": "Fact or Fiction",
+          "quantity": 1
+        },
+        {
+          "cardName": "Tsabo's Web",
+          "quantity": 2
+        },
+        {
+          "cardName": "Abeyance",
+          "quantity": 3
+        },
+        {
+          "cardName": "Hydroblast",
+          "quantity": 1
+        },
+        {
+          "cardName": "Meddling Mage",
+          "quantity": 4
+        },
+        {
+          "cardName": "Sphere of Law",
+          "quantity": 1
+        },
+        {
+          "cardName": "Swords to Plowshares",
+          "quantity": 1
+        },
+        {
+          "cardName": "Wrath of God",
+          "quantity": 1
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58412545": {
+      "playerId": "194753",
+      "mainboard": [
+        {
+          "cardName": "Mother of Runes",
+          "quantity": 3
+        },
+        {
+          "cardName": "Mother of Runes",
+          "quantity": 1
+        },
+        {
+          "cardName": "Ramosian Sergeant",
+          "quantity": 4
+        },
+        {
+          "cardName": "Savannah Lions",
+          "quantity": 4
+        },
+        {
+          "cardName": "Rishadan Port",
+          "quantity": 2
+        },
+        {
+          "cardName": "Swords to Plowshares",
+          "quantity": 4
+        },
+        {
+          "cardName": "Cursed Scroll",
+          "quantity": 1
+        },
+        {
+          "cardName": "Seal of Cleansing",
+          "quantity": 3
+        },
+        {
+          "cardName": "Glorious Anthem",
+          "quantity": 1
+        },
+        {
+          "cardName": "Plains",
+          "quantity": 16
+        },
+        {
+          "cardName": "Silver Knight",
+          "quantity": 2
+        },
+        {
+          "cardName": "Silver Knight",
+          "quantity": 2
+        },
+        {
+          "cardName": "Whipcorder",
+          "quantity": 4
+        },
+        {
+          "cardName": "Soltari Priest",
+          "quantity": 3
+        },
+        {
+          "cardName": "Wasteland",
+          "quantity": 2
+        },
+        {
+          "cardName": "Rishadan Port",
+          "quantity": 2
+        },
+        {
+          "cardName": "Armageddon",
+          "quantity": 1
+        },
+        {
+          "cardName": "Parallax Wave",
+          "quantity": 1
+        },
+        {
+          "cardName": "Enlightened Tutor",
+          "quantity": 3
+        },
+        {
+          "cardName": "Worship",
+          "quantity": 1
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Seal of Cleansing",
+          "quantity": 1
+        },
+        {
+          "cardName": "Disenchant",
+          "quantity": 2
+        },
+        {
+          "cardName": "Tormod's Crypt",
+          "quantity": 3
+        },
+        {
+          "cardName": "Worship",
+          "quantity": 1
+        },
+        {
+          "cardName": "Circle of Protection: Red",
+          "quantity": 1
+        },
+        {
+          "cardName": "Aura of Silence",
+          "quantity": 1
+        },
+        {
+          "cardName": "Last Breath",
+          "quantity": 1
+        },
+        {
+          "cardName": "Cursed Totem",
+          "quantity": 1
+        },
+        {
+          "cardName": "Cataclysm",
+          "quantity": 3
+        },
+        {
+          "cardName": "Null Rod",
+          "quantity": 1
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58412516": {
+      "playerId": "242336",
+      "mainboard": [
+        {
+          "cardName": "Cunning Wish",
+          "quantity": 3
+        },
+        {
+          "cardName": "Parallax Tide",
+          "quantity": 4
+        },
+        {
+          "cardName": "Gush",
+          "quantity": 4
+        },
+        {
+          "cardName": "Chain of Vapor",
+          "quantity": 3
+        },
+        {
+          "cardName": "Underground River",
+          "quantity": 3
+        },
+        {
+          "cardName": "Foil",
+          "quantity": 3
+        },
+        {
+          "cardName": "Counterspell",
+          "quantity": 4
+        },
+        {
+          "cardName": "Island",
+          "quantity": 11
+        },
+        {
+          "cardName": "Flash of Insight",
+          "quantity": 1
+        },
+        {
+          "cardName": "Powder Keg",
+          "quantity": 3
+        },
+        {
+          "cardName": "Impulse",
+          "quantity": 3
+        },
+        {
+          "cardName": "Polluted Delta",
+          "quantity": 4
+        },
+        {
+          "cardName": "Duress",
+          "quantity": 3
+        },
+        {
+          "cardName": "Psychatog",
+          "quantity": 2
+        },
+        {
+          "cardName": "Swamp",
+          "quantity": 1
+        },
+        {
+          "cardName": "Accumulated Knowledge",
+          "quantity": 4
+        },
+        {
+          "cardName": "Mishra's Factory",
+          "quantity": 4
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Hibernation",
+          "quantity": 2
+        },
+        {
+          "cardName": "Fact or Fiction",
+          "quantity": 1
+        },
+        {
+          "cardName": "Blue Elemental Blast",
+          "quantity": 4
+        },
+        {
+          "cardName": "Smother",
+          "quantity": 1
+        },
+        {
+          "cardName": "Powder Keg",
+          "quantity": 1
+        },
+        {
+          "cardName": "Annul",
+          "quantity": 1
+        },
+        {
+          "cardName": "Stifle",
+          "quantity": 1
+        },
+        {
+          "cardName": "Tsabo's Decree",
+          "quantity": 1
+        },
+        {
+          "cardName": "Chain of Vapor",
+          "quantity": 1
+        },
+        {
+          "cardName": "Psychatog",
+          "quantity": 1
+        },
+        {
+          "cardName": "Ensnare",
+          "quantity": 1
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58412513": {
+      "playerId": "300212",
+      "mainboard": [
+        {
+          "cardName": "Parallax Wave",
+          "quantity": 3
+        },
+        {
+          "cardName": "Parallax Tide",
+          "quantity": 4
+        },
+        {
+          "cardName": "Replenish",
+          "quantity": 4
+        },
+        {
+          "cardName": "Attunement",
+          "quantity": 4
+        },
+        {
+          "cardName": "Flooded Strand",
+          "quantity": 4
+        },
+        {
+          "cardName": "Skycloud Expanse",
+          "quantity": 4
+        },
+        {
+          "cardName": "Ancient Tomb",
+          "quantity": 4
+        },
+        {
+          "cardName": "Island",
+          "quantity": 5
+        },
+        {
+          "cardName": "Plains",
+          "quantity": 4
+        },
+        {
+          "cardName": "Seal of Cleansing",
+          "quantity": 3
+        },
+        {
+          "cardName": "Swords to Plowshares",
+          "quantity": 4
+        },
+        {
+          "cardName": "Opalescence",
+          "quantity": 4
+        },
+        {
+          "cardName": "Adarkar Wastes",
+          "quantity": 4
+        },
+        {
+          "cardName": "Tsabo's Web",
+          "quantity": 1
+        },
+        {
+          "cardName": "Intuition",
+          "quantity": 2
+        },
+        {
+          "cardName": "Frantic Search",
+          "quantity": 3
+        },
+        {
+          "cardName": "Mana Leak",
+          "quantity": 3
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Orim's Chant",
+          "quantity": 2
+        },
+        {
+          "cardName": "Exalted Angel",
+          "quantity": 3
+        },
+        {
+          "cardName": "Parallax Wave",
+          "quantity": 1
+        },
+        {
+          "cardName": "Tsabo's Web",
+          "quantity": 2
+        },
+        {
+          "cardName": "Sphere of Law",
+          "quantity": 2
+        },
+        {
+          "cardName": "Blue Elemental Blast",
+          "quantity": 3
+        },
+        {
+          "cardName": "Annul",
+          "quantity": 2
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58412557": {
+      "playerId": "305751",
+      "mainboard": [
+        {
+          "cardName": "Lightning Bolt",
+          "quantity": 3
+        },
+        {
+          "cardName": "Lightning Bolt",
+          "quantity": 1
+        },
+        {
+          "cardName": "Jackal Pup",
+          "quantity": 4
+        },
+        {
+          "cardName": "Incinerate",
+          "quantity": 2
+        },
+        {
+          "cardName": "Incinerate",
+          "quantity": 2
+        },
+        {
+          "cardName": "Grim Lavamancer",
+          "quantity": 2
+        },
+        {
+          "cardName": "Grim Lavamancer",
+          "quantity": 2
+        },
+        {
+          "cardName": "Fireblast",
+          "quantity": 2
+        },
+        {
+          "cardName": "Fireblast",
+          "quantity": 2
+        },
+        {
+          "cardName": "Cursed Scroll",
+          "quantity": 2
+        },
+        {
+          "cardName": "Bloodstained Mire",
+          "quantity": 4
+        },
+        {
+          "cardName": "Barbarian Ring",
+          "quantity": 2
+        },
+        {
+          "cardName": "Seal of Fire",
+          "quantity": 3
+        },
+        {
+          "cardName": "Ball Lightning",
+          "quantity": 2
+        },
+        {
+          "cardName": "Ball Lightning",
+          "quantity": 2
+        },
+        {
+          "cardName": "Mogg Fanatic",
+          "quantity": 1
+        },
+        {
+          "cardName": "Mogg Fanatic",
+          "quantity": 3
+        },
+        {
+          "cardName": "Lava Dart",
+          "quantity": 1
+        },
+        {
+          "cardName": "Seal of Fire",
+          "quantity": 1
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 4
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 2
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 2
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 2
+        },
+        {
+          "cardName": "Sulfuric Vortex",
+          "quantity": 3
+        },
+        {
+          "cardName": "Wooded Foothills",
+          "quantity": 4
+        },
+        {
+          "cardName": "Goblin Patrol",
+          "quantity": 1
+        },
+        {
+          "cardName": "Price of Progress",
+          "quantity": 1
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Mogg Salvage",
+          "quantity": 1
+        },
+        {
+          "cardName": "Lava Dart",
+          "quantity": 1
+        },
+        {
+          "cardName": "Overload",
+          "quantity": 2
+        },
+        {
+          "cardName": "Pyroblast",
+          "quantity": 3
+        },
+        {
+          "cardName": "Anarchy",
+          "quantity": 2
+        },
+        {
+          "cardName": "Pyrokinesis",
+          "quantity": 1
+        },
+        {
+          "cardName": "Mogg Salvage",
+          "quantity": 2
+        },
+        {
+          "cardName": "Price of Progress",
+          "quantity": 1
+        },
+        {
+          "cardName": "Lava Dart",
+          "quantity": 1
+        },
+        {
+          "cardName": "Red Elemental Blast",
+          "quantity": 1
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58412553": {
+      "playerId": "326784",
+      "mainboard": [
+        {
+          "cardName": "Putrid Imp",
+          "quantity": 4
+        },
+        {
+          "cardName": "Akroma, Angel of Wrath",
+          "quantity": 4
+        },
+        {
+          "cardName": "Rorix Bladewing",
+          "quantity": 2
+        },
+        {
+          "cardName": "Verdant Force",
+          "quantity": 1
+        },
+        {
+          "cardName": "Lotus Petal",
+          "quantity": 4
+        },
+        {
+          "cardName": "Dark Ritual",
+          "quantity": 4
+        },
+        {
+          "cardName": "Reanimate",
+          "quantity": 4
+        },
+        {
+          "cardName": "Cabal Therapy",
+          "quantity": 4
+        },
+        {
+          "cardName": "Careful Study",
+          "quantity": 4
+        },
+        {
+          "cardName": "Animate Dead",
+          "quantity": 3
+        },
+        {
+          "cardName": "Life/Death",
+          "quantity": 1
+        },
+        {
+          "cardName": "Verdant Force",
+          "quantity": 1
+        },
+        {
+          "cardName": "City of Brass",
+          "quantity": 4
+        },
+        {
+          "cardName": "Gemstone Mine",
+          "quantity": 4
+        },
+        {
+          "cardName": "Underground River",
+          "quantity": 4
+        },
+        {
+          "cardName": "Undiscovered Paradise",
+          "quantity": 2
+        },
+        {
+          "cardName": "Exhume",
+          "quantity": 4
+        },
+        {
+          "cardName": "Duress",
+          "quantity": 2
+        },
+        {
+          "cardName": "Phantom Nishoba",
+          "quantity": 4
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Duress",
+          "quantity": 1
+        },
+        {
+          "cardName": "Iridescent Angel",
+          "quantity": 2
+        },
+        {
+          "cardName": "Multani, Maro-Sorcerer",
+          "quantity": 4
+        },
+        {
+          "cardName": "Crumble",
+          "quantity": 1
+        },
+        {
+          "cardName": "Oath of Druids",
+          "quantity": 4
+        },
+        {
+          "cardName": "Naturalize",
+          "quantity": 3
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58412531": {
+      "playerId": "510634",
+      "mainboard": [
+        {
+          "cardName": "Humility",
+          "quantity": 1
+        },
+        {
+          "cardName": "Impulse",
+          "quantity": 2
+        },
+        {
+          "cardName": "Adarkar Wastes",
+          "quantity": 4
+        },
+        {
+          "cardName": "Coastal Tower",
+          "quantity": 2
+        },
+        {
+          "cardName": "Plains",
+          "quantity": 3
+        },
+        {
+          "cardName": "Faerie Conclave",
+          "quantity": 2
+        },
+        {
+          "cardName": "Decree of Justice",
+          "quantity": 3
+        },
+        {
+          "cardName": "Dust Bowl",
+          "quantity": 1
+        },
+        {
+          "cardName": "Counterspell",
+          "quantity": 4
+        },
+        {
+          "cardName": "Parallax Tide",
+          "quantity": 3
+        },
+        {
+          "cardName": "Swords to Plowshares",
+          "quantity": 4
+        },
+        {
+          "cardName": "Fact or Fiction",
+          "quantity": 3
+        },
+        {
+          "cardName": "Mana Leak",
+          "quantity": 3
+        },
+        {
+          "cardName": "Standstill",
+          "quantity": 3
+        },
+        {
+          "cardName": "Chain of Vapor",
+          "quantity": 3
+        },
+        {
+          "cardName": "Skycloud Expanse",
+          "quantity": 1
+        },
+        {
+          "cardName": "Seal of Cleansing",
+          "quantity": 2
+        },
+        {
+          "cardName": "Flooded Strand",
+          "quantity": 4
+        },
+        {
+          "cardName": "Wrath of God",
+          "quantity": 2
+        },
+        {
+          "cardName": "Mishra's Factory",
+          "quantity": 4
+        },
+        {
+          "cardName": "Stifle",
+          "quantity": 1
+        },
+        {
+          "cardName": "Island",
+          "quantity": 5
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Wrath of God",
+          "quantity": 1
+        },
+        {
+          "cardName": "Exalted Angel",
+          "quantity": 2
+        },
+        {
+          "cardName": "Annul",
+          "quantity": 3
+        },
+        {
+          "cardName": "Blue Elemental Blast",
+          "quantity": 3
+        },
+        {
+          "cardName": "Circle of Protection: Red",
+          "quantity": 2
+        },
+        {
+          "cardName": "Meddling Mage",
+          "quantity": 4
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58412525": {
+      "playerId": "520170",
+      "mainboard": [
+        {
+          "cardName": "Anger",
+          "quantity": 1
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 1
+        },
+        {
+          "cardName": "Multani's Acolyte",
+          "quantity": 1
+        },
+        {
+          "cardName": "Goblin Bombardment",
+          "quantity": 1
+        },
+        {
+          "cardName": "Masticore",
+          "quantity": 1
+        },
+        {
+          "cardName": "Nantuko Vigilante",
+          "quantity": 2
+        },
+        {
+          "cardName": "Genesis",
+          "quantity": 1
+        },
+        {
+          "cardName": "Wirewood Symbiote",
+          "quantity": 1
+        },
+        {
+          "cardName": "Orcish Settlers",
+          "quantity": 1
+        },
+        {
+          "cardName": "Rishadan Port",
+          "quantity": 4
+        },
+        {
+          "cardName": "Llanowar Elves",
+          "quantity": 3
+        },
+        {
+          "cardName": "Forest",
+          "quantity": 6
+        },
+        {
+          "cardName": "Fyndhorn Elves",
+          "quantity": 3
+        },
+        {
+          "cardName": "Krosan Tusker",
+          "quantity": 1
+        },
+        {
+          "cardName": "Wooded Foothills",
+          "quantity": 4
+        },
+        {
+          "cardName": "Gaea's Cradle",
+          "quantity": 4
+        },
+        {
+          "cardName": "Wall of Blossoms",
+          "quantity": 2
+        },
+        {
+          "cardName": "Priest of Titania",
+          "quantity": 1
+        },
+        {
+          "cardName": "Quirion Ranger",
+          "quantity": 1
+        },
+        {
+          "cardName": "Skyshroud Poacher",
+          "quantity": 1
+        },
+        {
+          "cardName": "Deranged Hermit",
+          "quantity": 3
+        },
+        {
+          "cardName": "Karplusan Forest",
+          "quantity": 3
+        },
+        {
+          "cardName": "Birds of Paradise",
+          "quantity": 4
+        },
+        {
+          "cardName": "Sylvan Library",
+          "quantity": 2
+        },
+        {
+          "cardName": "Thornscape Battlemage",
+          "quantity": 2
+        },
+        {
+          "cardName": "Survival of the Fittest",
+          "quantity": 4
+        },
+        {
+          "cardName": "Squee, Goblin Nabob",
+          "quantity": 1
+        },
+        {
+          "cardName": "Kaysa",
+          "quantity": 1
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Naturalize",
+          "quantity": 2
+        },
+        {
+          "cardName": "Caller of the Claw",
+          "quantity": 1
+        },
+        {
+          "cardName": "Nantuko Vigilante",
+          "quantity": 1
+        },
+        {
+          "cardName": "Tranquil Domain",
+          "quantity": 2
+        },
+        {
+          "cardName": "Winter Orb",
+          "quantity": 3
+        },
+        {
+          "cardName": "Tormod's Crypt",
+          "quantity": 2
+        },
+        {
+          "cardName": "Pyroclasm",
+          "quantity": 2
+        },
+        {
+          "cardName": "Tangle Wire",
+          "quantity": 2
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58412568": {
+      "playerId": "645849",
+      "mainboard": [
+        {
+          "cardName": "Stone Rain",
+          "quantity": 4
+        },
+        {
+          "cardName": "Raze",
+          "quantity": 4
+        },
+        {
+          "cardName": "Tremble",
+          "quantity": 4
+        },
+        {
+          "cardName": "Argothian Wurm",
+          "quantity": 4
+        },
+        {
+          "cardName": "Birds of Paradise",
+          "quantity": 2
+        },
+        {
+          "cardName": "Birds of Paradise",
+          "quantity": 1
+        },
+        {
+          "cardName": "Birds of Paradise",
+          "quantity": 1
+        },
+        {
+          "cardName": "Mossfire Valley",
+          "quantity": 3
+        },
+        {
+          "cardName": "Tectonic Break",
+          "quantity": 2
+        },
+        {
+          "cardName": "Karplusan Forest",
+          "quantity": 4
+        },
+        {
+          "cardName": "Wooded Foothills",
+          "quantity": 4
+        },
+        {
+          "cardName": "Forest",
+          "quantity": 4
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 1
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 3
+        },
+        {
+          "cardName": "Rishadan Port",
+          "quantity": 2
+        },
+        {
+          "cardName": "Terravore",
+          "quantity": 4
+        },
+        {
+          "cardName": "Llanowar Elves",
+          "quantity": 2
+        },
+        {
+          "cardName": "Llanowar Elves",
+          "quantity": 2
+        },
+        {
+          "cardName": "Wasteland",
+          "quantity": 3
+        },
+        {
+          "cardName": "Nimble Mongoose",
+          "quantity": 4
+        },
+        {
+          "cardName": "Sylvan Library",
+          "quantity": 2
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Zuran Orb",
+          "quantity": 3
+        },
+        {
+          "cardName": "Tormod's Crypt",
+          "quantity": 2
+        },
+        {
+          "cardName": "Pyroblast",
+          "quantity": 2
+        },
+        {
+          "cardName": "Overload",
+          "quantity": 2
+        },
+        {
+          "cardName": "Hidden Gibbons",
+          "quantity": 3
+        },
+        {
+          "cardName": "Naturalize",
+          "quantity": 1
+        },
+        {
+          "cardName": "Naturalize",
+          "quantity": 2
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58412560": {
+      "playerId": "647537",
+      "mainboard": [
+        {
+          "cardName": "Grim Lavamancer",
+          "quantity": 4
+        },
+        {
+          "cardName": "Bloodstained Mire",
+          "quantity": 4
+        },
+        {
+          "cardName": "Ball Lightning",
+          "quantity": 4
+        },
+        {
+          "cardName": "Fireblast",
+          "quantity": 4
+        },
+        {
+          "cardName": "Barbarian Ring",
+          "quantity": 2
+        },
+        {
+          "cardName": "Jackal Pup",
+          "quantity": 4
+        },
+        {
+          "cardName": "Mogg Fanatic",
+          "quantity": 4
+        },
+        {
+          "cardName": "Sulfuric Vortex",
+          "quantity": 4
+        },
+        {
+          "cardName": "Incinerate",
+          "quantity": 4
+        },
+        {
+          "cardName": "Flame Rift",
+          "quantity": 4
+        },
+        {
+          "cardName": "Seal of Fire",
+          "quantity": 4
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 5
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 5
+        },
+        {
+          "cardName": "Lightning Bolt",
+          "quantity": 4
+        },
+        {
+          "cardName": "Wooded Foothills",
+          "quantity": 4
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Price of Progress",
+          "quantity": 3
+        },
+        {
+          "cardName": "Overload",
+          "quantity": 2
+        },
+        {
+          "cardName": "Tormod's Crypt",
+          "quantity": 3
+        },
+        {
+          "cardName": "Mogg Salvage",
+          "quantity": 4
+        },
+        {
+          "cardName": "Pyroblast",
+          "quantity": 3
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58412556": {
+      "playerId": "1009240",
+      "mainboard": [
+        {
+          "cardName": "Argothian Enchantress",
+          "quantity": 4
+        },
+        {
+          "cardName": "Brushland",
+          "quantity": 4
+        },
+        {
+          "cardName": "Enchantress's Presence",
+          "quantity": 4
+        },
+        {
+          "cardName": "Exploration",
+          "quantity": 4
+        },
+        {
+          "cardName": "Sylvan Library",
+          "quantity": 1
+        },
+        {
+          "cardName": "Mirri's Guile",
+          "quantity": 4
+        },
+        {
+          "cardName": "Opalescence",
+          "quantity": 3
+        },
+        {
+          "cardName": "Parallax Wave",
+          "quantity": 3
+        },
+        {
+          "cardName": "Plains",
+          "quantity": 3
+        },
+        {
+          "cardName": "Replenish",
+          "quantity": 1
+        },
+        {
+          "cardName": "Seal of Cleansing",
+          "quantity": 3
+        },
+        {
+          "cardName": "Serra's Sanctum",
+          "quantity": 4
+        },
+        {
+          "cardName": "Solitary Confinement",
+          "quantity": 1
+        },
+        {
+          "cardName": "Sterling Grove",
+          "quantity": 3
+        },
+        {
+          "cardName": "Swords to Plowshares",
+          "quantity": 3
+        },
+        {
+          "cardName": "Forest",
+          "quantity": 6
+        },
+        {
+          "cardName": "Wild Growth",
+          "quantity": 4
+        },
+        {
+          "cardName": "Windswept Heath",
+          "quantity": 4
+        },
+        {
+          "cardName": "Wooded Foothills",
+          "quantity": 1
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Aura of Silence",
+          "quantity": 2
+        },
+        {
+          "cardName": "Carpet of Flowers",
+          "quantity": 1
+        },
+        {
+          "cardName": "Choke",
+          "quantity": 2
+        },
+        {
+          "cardName": "Replenish",
+          "quantity": 1
+        },
+        {
+          "cardName": "Sacred Ground",
+          "quantity": 2
+        },
+        {
+          "cardName": "Swords to Plowshares",
+          "quantity": 1
+        },
+        {
+          "cardName": "Xantid Swarm",
+          "quantity": 3
+        },
+        {
+          "cardName": "Solitary Confinement",
+          "quantity": 1
+        },
+        {
+          "cardName": "Gaea's Blessing",
+          "quantity": 2
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58412416": {
+      "playerId": "1023136",
+      "mainboard": [
+        {
+          "cardName": "Nimble Mongoose",
+          "quantity": 4
+        },
+        {
+          "cardName": "Rith's Grove",
+          "quantity": 2
+        },
+        {
+          "cardName": "Treetop Village",
+          "quantity": 2
+        },
+        {
+          "cardName": "Terravore",
+          "quantity": 4
+        },
+        {
+          "cardName": "Gemstone Mine",
+          "quantity": 2
+        },
+        {
+          "cardName": "Sylvan Library",
+          "quantity": 3
+        },
+        {
+          "cardName": "Naturalize",
+          "quantity": 2
+        },
+        {
+          "cardName": "Swords to Plowshares",
+          "quantity": 4
+        },
+        {
+          "cardName": "Armageddon",
+          "quantity": 4
+        },
+        {
+          "cardName": "Tranquil Thicket",
+          "quantity": 2
+        },
+        {
+          "cardName": "Forest",
+          "quantity": 3
+        },
+        {
+          "cardName": "Plains",
+          "quantity": 3
+        },
+        {
+          "cardName": "Rishadan Port",
+          "quantity": 2
+        },
+        {
+          "cardName": "Wasteland",
+          "quantity": 4
+        },
+        {
+          "cardName": "Windswept Heath",
+          "quantity": 4
+        },
+        {
+          "cardName": "Mox Diamond",
+          "quantity": 4
+        },
+        {
+          "cardName": "Secluded Steppe",
+          "quantity": 2
+        },
+        {
+          "cardName": "Weathered Wayfarer",
+          "quantity": 3
+        },
+        {
+          "cardName": "Werebear",
+          "quantity": 3
+        },
+        {
+          "cardName": "Call of the Herd",
+          "quantity": 3
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Seal of Cleansing",
+          "quantity": 2
+        },
+        {
+          "cardName": "Pyroclasm",
+          "quantity": 2
+        },
+        {
+          "cardName": "Tormod's Crypt",
+          "quantity": 1
+        },
+        {
+          "cardName": "Ray of Revelation",
+          "quantity": 1
+        },
+        {
+          "cardName": "Reprisal",
+          "quantity": 1
+        },
+        {
+          "cardName": "Zuran Orb",
+          "quantity": 3
+        },
+        {
+          "cardName": "Simoon",
+          "quantity": 2
+        },
+        {
+          "cardName": "Pyroblast",
+          "quantity": 3
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58412500": {
+      "playerId": "1096200",
+      "mainboard": [
+        {
+          "cardName": "Naturalize",
+          "quantity": 1
+        },
+        {
+          "cardName": "Siege-Gang Commander",
+          "quantity": 2
+        },
+        {
+          "cardName": "Goblin Ringleader",
+          "quantity": 4
+        },
+        {
+          "cardName": "Goblin Warchief",
+          "quantity": 4
+        },
+        {
+          "cardName": "Goblin King",
+          "quantity": 1
+        },
+        {
+          "cardName": "Goblin Sharpshooter",
+          "quantity": 1
+        },
+        {
+          "cardName": "Goblin Matron",
+          "quantity": 4
+        },
+        {
+          "cardName": "Gempalm Incinerator",
+          "quantity": 4
+        },
+        {
+          "cardName": "Goblin Tinkerer",
+          "quantity": 1
+        },
+        {
+          "cardName": "Goblin Piledriver",
+          "quantity": 4
+        },
+        {
+          "cardName": "Skirk Prospector",
+          "quantity": 1
+        },
+        {
+          "cardName": "Mogg Fanatic",
+          "quantity": 4
+        },
+        {
+          "cardName": "Goblin Lackey",
+          "quantity": 4
+        },
+        {
+          "cardName": "Wooded Foothills",
+          "quantity": 4
+        },
+        {
+          "cardName": "Wasteland",
+          "quantity": 4
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 5
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 5
+        },
+        {
+          "cardName": "Karplusan Forest",
+          "quantity": 4
+        },
+        {
+          "cardName": "Forest",
+          "quantity": 1
+        },
+        {
+          "cardName": "Ancient Tomb",
+          "quantity": 2
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Naturalize",
+          "quantity": 3
+        },
+        {
+          "cardName": "Tranquil Domain",
+          "quantity": 2
+        },
+        {
+          "cardName": "Red Elemental Blast",
+          "quantity": 2
+        },
+        {
+          "cardName": "Tormod's Crypt",
+          "quantity": 2
+        },
+        {
+          "cardName": "Pyroblast",
+          "quantity": 2
+        },
+        {
+          "cardName": "Pyrokinesis",
+          "quantity": 4
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58412455": {
+      "playerId": "1163110",
+      "mainboard": [
+        {
+          "cardName": "Mountain",
+          "quantity": 1
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 1
+        },
+        {
+          "cardName": "Goblin Lackey",
+          "quantity": 4
+        },
+        {
+          "cardName": "Goblin Matron",
+          "quantity": 1
+        },
+        {
+          "cardName": "Mogg Fanatic",
+          "quantity": 4
+        },
+        {
+          "cardName": "Goblin Ringleader",
+          "quantity": 4
+        },
+        {
+          "cardName": "Goblin Piledriver",
+          "quantity": 4
+        },
+        {
+          "cardName": "Goblin Tinkerer",
+          "quantity": 1
+        },
+        {
+          "cardName": "Goblin Warchief",
+          "quantity": 4
+        },
+        {
+          "cardName": "Gempalm Incinerator",
+          "quantity": 4
+        },
+        {
+          "cardName": "Naturalize",
+          "quantity": 2
+        },
+        {
+          "cardName": "Siege-Gang Commander",
+          "quantity": 3
+        },
+        {
+          "cardName": "Wooded Foothills",
+          "quantity": 1
+        },
+        {
+          "cardName": "Forest",
+          "quantity": 1
+        },
+        {
+          "cardName": "Wooded Foothills",
+          "quantity": 1
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 1
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 1
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 4
+        },
+        {
+          "cardName": "Skirk Prospector",
+          "quantity": 1
+        },
+        {
+          "cardName": "Wooded Foothills",
+          "quantity": 2
+        },
+        {
+          "cardName": "Naturalize",
+          "quantity": 1
+        },
+        {
+          "cardName": "Goblin Matron",
+          "quantity": 3
+        },
+        {
+          "cardName": "Wasteland",
+          "quantity": 3
+        },
+        {
+          "cardName": "Karplusan Forest",
+          "quantity": 4
+        },
+        {
+          "cardName": "Rishadan Port",
+          "quantity": 4
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Tormod's Crypt",
+          "quantity": 2
+        },
+        {
+          "cardName": "Tranquil Domain",
+          "quantity": 2
+        },
+        {
+          "cardName": "Pyrokinesis",
+          "quantity": 3
+        },
+        {
+          "cardName": "Goblin King",
+          "quantity": 1
+        },
+        {
+          "cardName": "Naturalize",
+          "quantity": 1
+        },
+        {
+          "cardName": "Goblin Sharpshooter",
+          "quantity": 1
+        },
+        {
+          "cardName": "Caller of the Claw",
+          "quantity": 1
+        },
+        {
+          "cardName": "Pyroblast",
+          "quantity": 4
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58412552": {
+      "playerId": "1471145",
+      "mainboard": [
+        {
+          "cardName": "Seal of Fire",
+          "quantity": 4
+        },
+        {
+          "cardName": "Bloodstained Mire",
+          "quantity": 2
+        },
+        {
+          "cardName": "Sulfuric Vortex",
+          "quantity": 2
+        },
+        {
+          "cardName": "Barbarian Ring",
+          "quantity": 2
+        },
+        {
+          "cardName": "Flame Rift",
+          "quantity": 4
+        },
+        {
+          "cardName": "Jackal Pup",
+          "quantity": 4
+        },
+        {
+          "cardName": "Price of Progress",
+          "quantity": 1
+        },
+        {
+          "cardName": "Lightning Bolt",
+          "quantity": 4
+        },
+        {
+          "cardName": "Ball Lightning",
+          "quantity": 4
+        },
+        {
+          "cardName": "Fireblast",
+          "quantity": 4
+        },
+        {
+          "cardName": "Mogg Fanatic",
+          "quantity": 4
+        },
+        {
+          "cardName": "Incinerate",
+          "quantity": 4
+        },
+        {
+          "cardName": "Cursed Scroll",
+          "quantity": 1
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 1
+        },
+        {
+          "cardName": "Bloodstained Mire",
+          "quantity": 2
+        },
+        {
+          "cardName": "Grim Lavamancer",
+          "quantity": 1
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 3
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 6
+        },
+        {
+          "cardName": "Wooded Foothills",
+          "quantity": 4
+        },
+        {
+          "cardName": "Grim Lavamancer",
+          "quantity": 3
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Overload",
+          "quantity": 3
+        },
+        {
+          "cardName": "Pyroblast",
+          "quantity": 2
+        },
+        {
+          "cardName": "Tormod's Crypt",
+          "quantity": 3
+        },
+        {
+          "cardName": "Mogg Salvage",
+          "quantity": 2
+        },
+        {
+          "cardName": "Flaring Pain",
+          "quantity": 1
+        },
+        {
+          "cardName": "Price of Progress",
+          "quantity": 2
+        },
+        {
+          "cardName": "Red Elemental Blast",
+          "quantity": 2
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58412566": {
+      "playerId": "1615064",
+      "mainboard": [
+        {
+          "cardName": "Argothian Enchantress",
+          "quantity": 4
+        },
+        {
+          "cardName": "Replenish",
+          "quantity": 1
+        },
+        {
+          "cardName": "Parallax Wave",
+          "quantity": 3
+        },
+        {
+          "cardName": "Aura of Silence",
+          "quantity": 1
+        },
+        {
+          "cardName": "Mirri's Guile",
+          "quantity": 4
+        },
+        {
+          "cardName": "Brushland",
+          "quantity": 4
+        },
+        {
+          "cardName": "Sterling Grove",
+          "quantity": 3
+        },
+        {
+          "cardName": "Seal of Cleansing",
+          "quantity": 2
+        },
+        {
+          "cardName": "Opalescence",
+          "quantity": 3
+        },
+        {
+          "cardName": "Exploration",
+          "quantity": 4
+        },
+        {
+          "cardName": "Serra's Sanctum",
+          "quantity": 4
+        },
+        {
+          "cardName": "Enchantress's Presence",
+          "quantity": 4
+        },
+        {
+          "cardName": "Solitary Confinement",
+          "quantity": 2
+        },
+        {
+          "cardName": "Wild Growth",
+          "quantity": 4
+        },
+        {
+          "cardName": "Forest",
+          "quantity": 5
+        },
+        {
+          "cardName": "Plains",
+          "quantity": 3
+        },
+        {
+          "cardName": "Sylvan Library",
+          "quantity": 1
+        },
+        {
+          "cardName": "Windswept Heath",
+          "quantity": 4
+        },
+        {
+          "cardName": "Wooded Foothills",
+          "quantity": 2
+        },
+        {
+          "cardName": "Swords to Plowshares",
+          "quantity": 2
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Sacred Ground",
+          "quantity": 1
+        },
+        {
+          "cardName": "Aura of Silence",
+          "quantity": 1
+        },
+        {
+          "cardName": "Sheltering Prayers",
+          "quantity": 2
+        },
+        {
+          "cardName": "Carpet of Flowers",
+          "quantity": 3
+        },
+        {
+          "cardName": "Xantid Swarm",
+          "quantity": 3
+        },
+        {
+          "cardName": "Solitary Confinement",
+          "quantity": 1
+        },
+        {
+          "cardName": "Krosan Reclamation",
+          "quantity": 1
+        },
+        {
+          "cardName": "Karmic Justice",
+          "quantity": 1
+        },
+        {
+          "cardName": "Swords to Plowshares",
+          "quantity": 2
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58412505": {
+      "playerId": "1638114",
+      "mainboard": [
+        {
+          "cardName": "Swamp",
+          "quantity": 2
+        },
+        {
+          "cardName": "Portent",
+          "quantity": 4
+        },
+        {
+          "cardName": "Polluted Delta",
+          "quantity": 4
+        },
+        {
+          "cardName": "Smother",
+          "quantity": 3
+        },
+        {
+          "cardName": "Opt",
+          "quantity": 3
+        },
+        {
+          "cardName": "Gush",
+          "quantity": 4
+        },
+        {
+          "cardName": "Accumulated Knowledge",
+          "quantity": 4
+        },
+        {
+          "cardName": "Powder Keg",
+          "quantity": 2
+        },
+        {
+          "cardName": "Psychatog",
+          "quantity": 4
+        },
+        {
+          "cardName": "Island",
+          "quantity": 10
+        },
+        {
+          "cardName": "Counterspell",
+          "quantity": 4
+        },
+        {
+          "cardName": "Impulse",
+          "quantity": 4
+        },
+        {
+          "cardName": "Underground River",
+          "quantity": 4
+        },
+        {
+          "cardName": "Circular Logic",
+          "quantity": 2
+        },
+        {
+          "cardName": "Foil",
+          "quantity": 2
+        },
+        {
+          "cardName": "Duress",
+          "quantity": 4
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Annul",
+          "quantity": 4
+        },
+        {
+          "cardName": "Hydroblast",
+          "quantity": 2
+        },
+        {
+          "cardName": "Engineered Plague",
+          "quantity": 4
+        },
+        {
+          "cardName": "Tsabo's Web",
+          "quantity": 1
+        },
+        {
+          "cardName": "Zombie Infestation",
+          "quantity": 1
+        },
+        {
+          "cardName": "Blue Elemental Blast",
+          "quantity": 2
+        },
+        {
+          "cardName": "Diabolic Edict",
+          "quantity": 1
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58412569": {
+      "playerId": "1794149",
+      "mainboard": [
+        {
+          "cardName": "Stifle",
+          "quantity": 4
+        },
+        {
+          "cardName": "Snow-Covered Island",
+          "quantity": 16
+        },
+        {
+          "cardName": "Opt",
+          "quantity": 2
+        },
+        {
+          "cardName": "Flash of Insight",
+          "quantity": 2
+        },
+        {
+          "cardName": "Impulse",
+          "quantity": 4
+        },
+        {
+          "cardName": "Gush",
+          "quantity": 4
+        },
+        {
+          "cardName": "Foil",
+          "quantity": 4
+        },
+        {
+          "cardName": "Portent",
+          "quantity": 4
+        },
+        {
+          "cardName": "Daze",
+          "quantity": 2
+        },
+        {
+          "cardName": "Phyrexian Dreadnought",
+          "quantity": 4
+        },
+        {
+          "cardName": "Chain of Vapor",
+          "quantity": 2
+        },
+        {
+          "cardName": "Mishra's Factory",
+          "quantity": 2
+        },
+        {
+          "cardName": "Counterspell",
+          "quantity": 4
+        },
+        {
+          "cardName": "Vision Charm",
+          "quantity": 4
+        },
+        {
+          "cardName": "Misdirection",
+          "quantity": 1
+        },
+        {
+          "cardName": "Parallax Tide",
+          "quantity": 1
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Parallax Tide",
+          "quantity": 2
+        },
+        {
+          "cardName": "Annul",
+          "quantity": 3
+        },
+        {
+          "cardName": "Powder Keg",
+          "quantity": 2
+        },
+        {
+          "cardName": "Chain of Vapor",
+          "quantity": 1
+        },
+        {
+          "cardName": "Hydroblast",
+          "quantity": 4
+        },
+        {
+          "cardName": "Essence Flare",
+          "quantity": 2
+        },
+        {
+          "cardName": "Misdirection",
+          "quantity": 1
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58412551": {
+      "playerId": "1818769",
+      "mainboard": [
+        {
+          "cardName": "Grim Lavamancer",
+          "quantity": 4
+        },
+        {
+          "cardName": "Jackal Pup",
+          "quantity": 4
+        },
+        {
+          "cardName": "Mogg Fanatic",
+          "quantity": 4
+        },
+        {
+          "cardName": "Quirion Dryad",
+          "quantity": 4
+        },
+        {
+          "cardName": "Lava Dart",
+          "quantity": 4
+        },
+        {
+          "cardName": "Lightning Bolt",
+          "quantity": 4
+        },
+        {
+          "cardName": "Hull Breach",
+          "quantity": 2
+        },
+        {
+          "cardName": "Incinerate",
+          "quantity": 4
+        },
+        {
+          "cardName": "Call of the Herd",
+          "quantity": 4
+        },
+        {
+          "cardName": "Sylvan Library",
+          "quantity": 2
+        },
+        {
+          "cardName": "Bloodstained Mire",
+          "quantity": 2
+        },
+        {
+          "cardName": "Karplusan Forest",
+          "quantity": 4
+        },
+        {
+          "cardName": "Treetop Village",
+          "quantity": 4
+        },
+        {
+          "cardName": "Wooded Foothills",
+          "quantity": 4
+        },
+        {
+          "cardName": "Forest",
+          "quantity": 2
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 8
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Tormod's Crypt",
+          "quantity": 2
+        },
+        {
+          "cardName": "Overload",
+          "quantity": 2
+        },
+        {
+          "cardName": "Pyroblast",
+          "quantity": 4
+        },
+        {
+          "cardName": "Simoon",
+          "quantity": 2
+        },
+        {
+          "cardName": "Tempting Wurm",
+          "quantity": 2
+        },
+        {
+          "cardName": "Tranquil Domain",
+          "quantity": 3
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58412499": {
+      "playerId": "1951244",
+      "mainboard": [
+        {
+          "cardName": "Island",
+          "quantity": 16
+        },
+        {
+          "cardName": "Portent",
+          "quantity": 4
+        },
+        {
+          "cardName": "Daze",
+          "quantity": 3
+        },
+        {
+          "cardName": "Flash of Insight",
+          "quantity": 2
+        },
+        {
+          "cardName": "Foil",
+          "quantity": 4
+        },
+        {
+          "cardName": "Impulse",
+          "quantity": 4
+        },
+        {
+          "cardName": "Gush",
+          "quantity": 4
+        },
+        {
+          "cardName": "Opt",
+          "quantity": 2
+        },
+        {
+          "cardName": "Stifle",
+          "quantity": 4
+        },
+        {
+          "cardName": "Vision Charm",
+          "quantity": 4
+        },
+        {
+          "cardName": "Counterspell",
+          "quantity": 4
+        },
+        {
+          "cardName": "Chain of Vapor",
+          "quantity": 2
+        },
+        {
+          "cardName": "Phyrexian Dreadnought",
+          "quantity": 4
+        },
+        {
+          "cardName": "Mishra's Factory",
+          "quantity": 2
+        },
+        {
+          "cardName": "Powder Keg",
+          "quantity": 1
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Annul",
+          "quantity": 2
+        },
+        {
+          "cardName": "Parallax Tide",
+          "quantity": 3
+        },
+        {
+          "cardName": "Blue Elemental Blast",
+          "quantity": 3
+        },
+        {
+          "cardName": "Essence Flare",
+          "quantity": 1
+        },
+        {
+          "cardName": "Powder Keg",
+          "quantity": 2
+        },
+        {
+          "cardName": "Brain Freeze",
+          "quantity": 2
+        },
+        {
+          "cardName": "Phyrexian Furnace",
+          "quantity": 2
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58412533": {
+      "playerId": "1993261",
+      "mainboard": [
+        {
+          "cardName": "Grim Lavamancer",
+          "quantity": 4
+        },
+        {
+          "cardName": "Mogg Fanatic",
+          "quantity": 4
+        },
+        {
+          "cardName": "Lightning Bolt",
+          "quantity": 4
+        },
+        {
+          "cardName": "Hull Breach",
+          "quantity": 2
+        },
+        {
+          "cardName": "Quirion Dryad",
+          "quantity": 4
+        },
+        {
+          "cardName": "Incinerate",
+          "quantity": 4
+        },
+        {
+          "cardName": "Sylvan Library",
+          "quantity": 2
+        },
+        {
+          "cardName": "Lava Dart",
+          "quantity": 4
+        },
+        {
+          "cardName": "Forest",
+          "quantity": 2
+        },
+        {
+          "cardName": "Bloodstained Mire",
+          "quantity": 2
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 8
+        },
+        {
+          "cardName": "Treetop Village",
+          "quantity": 4
+        },
+        {
+          "cardName": "Call of the Herd",
+          "quantity": 4
+        },
+        {
+          "cardName": "Wooded Foothills",
+          "quantity": 4
+        },
+        {
+          "cardName": "Jackal Pup",
+          "quantity": 4
+        },
+        {
+          "cardName": "Karplusan Forest",
+          "quantity": 4
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Overload",
+          "quantity": 2
+        },
+        {
+          "cardName": "Tormod's Crypt",
+          "quantity": 2
+        },
+        {
+          "cardName": "Tranquil Domain",
+          "quantity": 3
+        },
+        {
+          "cardName": "Simoon",
+          "quantity": 2
+        },
+        {
+          "cardName": "Pyroblast",
+          "quantity": 4
+        },
+        {
+          "cardName": "Tempting Wurm",
+          "quantity": 2
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58412430": {
+      "playerId": "2043884",
+      "mainboard": [
+        {
+          "cardName": "Duress",
+          "quantity": 4
+        },
+        {
+          "cardName": "Withered Wretch",
+          "quantity": 1
+        },
+        {
+          "cardName": "Dark Ritual",
+          "quantity": 4
+        },
+        {
+          "cardName": "Diabolic Edict",
+          "quantity": 3
+        },
+        {
+          "cardName": "Swamp",
+          "quantity": 1
+        },
+        {
+          "cardName": "Spawning Pool",
+          "quantity": 1
+        },
+        {
+          "cardName": "Cabal Therapy",
+          "quantity": 3
+        },
+        {
+          "cardName": "Cursed Scroll",
+          "quantity": 2
+        },
+        {
+          "cardName": "Swamp",
+          "quantity": 1
+        },
+        {
+          "cardName": "Mishra's Factory",
+          "quantity": 4
+        },
+        {
+          "cardName": "Swamp",
+          "quantity": 1
+        },
+        {
+          "cardName": "Swamp",
+          "quantity": 2
+        },
+        {
+          "cardName": "Swamp",
+          "quantity": 2
+        },
+        {
+          "cardName": "Swamp",
+          "quantity": 1
+        },
+        {
+          "cardName": "Swamp",
+          "quantity": 2
+        },
+        {
+          "cardName": "Swamp",
+          "quantity": 2
+        },
+        {
+          "cardName": "Swamp",
+          "quantity": 1
+        },
+        {
+          "cardName": "Swamp",
+          "quantity": 2
+        },
+        {
+          "cardName": "Swamp",
+          "quantity": 1
+        },
+        {
+          "cardName": "Ravenous Rats",
+          "quantity": 4
+        },
+        {
+          "cardName": "Smother",
+          "quantity": 3
+        },
+        {
+          "cardName": "Masticore",
+          "quantity": 2
+        },
+        {
+          "cardName": "Withered Wretch",
+          "quantity": 3
+        },
+        {
+          "cardName": "Wasteland",
+          "quantity": 3
+        },
+        {
+          "cardName": "Hypnotic Specter",
+          "quantity": 4
+        },
+        {
+          "cardName": "Phyrexian Arena",
+          "quantity": 2
+        },
+        {
+          "cardName": "Drain Life",
+          "quantity": 1
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Vicious Hunger",
+          "quantity": 4
+        },
+        {
+          "cardName": "Tormod's Crypt",
+          "quantity": 2
+        },
+        {
+          "cardName": "Engineered Plague",
+          "quantity": 4
+        },
+        {
+          "cardName": "Drain Life",
+          "quantity": 2
+        },
+        {
+          "cardName": "Haunting Echoes",
+          "quantity": 2
+        },
+        {
+          "cardName": "Cabal Therapy",
+          "quantity": 1
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58412519": {
+      "playerId": "2248211",
+      "mainboard": [
+        {
+          "cardName": "Call of the Herd",
+          "quantity": 4
+        },
+        {
+          "cardName": "Firebolt",
+          "quantity": 4
+        },
+        {
+          "cardName": "Fireblast",
+          "quantity": 1
+        },
+        {
+          "cardName": "Grim Lavamancer",
+          "quantity": 4
+        },
+        {
+          "cardName": "Incinerate",
+          "quantity": 2
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 5
+        },
+        {
+          "cardName": "Karplusan Forest",
+          "quantity": 4
+        },
+        {
+          "cardName": "Lightning Bolt",
+          "quantity": 4
+        },
+        {
+          "cardName": "Mogg Fanatic",
+          "quantity": 4
+        },
+        {
+          "cardName": "Rancor",
+          "quantity": 2
+        },
+        {
+          "cardName": "Naturalize",
+          "quantity": 3
+        },
+        {
+          "cardName": "Wild Mongrel",
+          "quantity": 4
+        },
+        {
+          "cardName": "Treetop Village",
+          "quantity": 3
+        },
+        {
+          "cardName": "Wasteland",
+          "quantity": 2
+        },
+        {
+          "cardName": "Wooded Foothills",
+          "quantity": 4
+        },
+        {
+          "cardName": "Forest",
+          "quantity": 3
+        },
+        {
+          "cardName": "Bloodstained Mire",
+          "quantity": 3
+        },
+        {
+          "cardName": "Jackal Pup",
+          "quantity": 4
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Crumble",
+          "quantity": 1
+        },
+        {
+          "cardName": "Earthquake",
+          "quantity": 1
+        },
+        {
+          "cardName": "Hidden Gibbons",
+          "quantity": 3
+        },
+        {
+          "cardName": "Naturalize",
+          "quantity": 1
+        },
+        {
+          "cardName": "Red Elemental Blast",
+          "quantity": 2
+        },
+        {
+          "cardName": "Simoon",
+          "quantity": 2
+        },
+        {
+          "cardName": "Tormod's Crypt",
+          "quantity": 2
+        },
+        {
+          "cardName": "Tranquil Domain",
+          "quantity": 1
+        },
+        {
+          "cardName": "Pyroblast",
+          "quantity": 2
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58412497": {
+      "playerId": "2266575",
+      "mainboard": [
+        {
+          "cardName": "Island",
+          "quantity": 18
+        },
+        {
+          "cardName": "Cunning Wish",
+          "quantity": 2
+        },
+        {
+          "cardName": "Sapphire Medallion",
+          "quantity": 4
+        },
+        {
+          "cardName": "Helm of Awakening",
+          "quantity": 4
+        },
+        {
+          "cardName": "Cloud of Faeries",
+          "quantity": 4
+        },
+        {
+          "cardName": "Snap",
+          "quantity": 3
+        },
+        {
+          "cardName": "Frantic Search",
+          "quantity": 4
+        },
+        {
+          "cardName": "Brain Freeze",
+          "quantity": 3
+        },
+        {
+          "cardName": "Meditate",
+          "quantity": 4
+        },
+        {
+          "cardName": "Merchant Scroll",
+          "quantity": 4
+        },
+        {
+          "cardName": "Accumulated Knowledge",
+          "quantity": 4
+        },
+        {
+          "cardName": "Words of Wisdom",
+          "quantity": 3
+        },
+        {
+          "cardName": "Teferi's Isle",
+          "quantity": 2
+        },
+        {
+          "cardName": "Arcane Denial",
+          "quantity": 1
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Misdirection",
+          "quantity": 1
+        },
+        {
+          "cardName": "Hydroblast",
+          "quantity": 4
+        },
+        {
+          "cardName": "Chain of Vapor",
+          "quantity": 1
+        },
+        {
+          "cardName": "Annul",
+          "quantity": 2
+        },
+        {
+          "cardName": "Arcane Denial",
+          "quantity": 3
+        },
+        {
+          "cardName": "Fact or Fiction",
+          "quantity": 1
+        },
+        {
+          "cardName": "Turnabout",
+          "quantity": 1
+        },
+        {
+          "cardName": "Brain Freeze",
+          "quantity": 1
+        },
+        {
+          "cardName": "Tormod's Crypt",
+          "quantity": 1
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58412522": {
+      "playerId": "2509881",
+      "mainboard": [
+        {
+          "cardName": "Gempalm Incinerator",
+          "quantity": 4
+        },
+        {
+          "cardName": "Goblin Lackey",
+          "quantity": 4
+        },
+        {
+          "cardName": "Ruby Medallion",
+          "quantity": 2
+        },
+        {
+          "cardName": "Goblin Piledriver",
+          "quantity": 4
+        },
+        {
+          "cardName": "Goblin Ringleader",
+          "quantity": 4
+        },
+        {
+          "cardName": "Goblin Sharpshooter",
+          "quantity": 1
+        },
+        {
+          "cardName": "Goblin Warchief",
+          "quantity": 4
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 19
+        },
+        {
+          "cardName": "Mogg Fanatic",
+          "quantity": 4
+        },
+        {
+          "cardName": "Lightning Bolt",
+          "quantity": 2
+        },
+        {
+          "cardName": "Goblin Matron",
+          "quantity": 4
+        },
+        {
+          "cardName": "Siege-Gang Commander",
+          "quantity": 4
+        },
+        {
+          "cardName": "Wasteland",
+          "quantity": 4
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Overload",
+          "quantity": 3
+        },
+        {
+          "cardName": "Tormod's Crypt",
+          "quantity": 3
+        },
+        {
+          "cardName": "Pyrokinesis",
+          "quantity": 4
+        },
+        {
+          "cardName": "Red Elemental Blast",
+          "quantity": 2
+        },
+        {
+          "cardName": "Pyroblast",
+          "quantity": 3
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58412383": {
+      "playerId": "2563273",
+      "mainboard": [
+        {
+          "cardName": "Cabal Therapy",
+          "quantity": 4
+        },
+        {
+          "cardName": "Swamp",
+          "quantity": 7
+        },
+        {
+          "cardName": "Deranged Hermit",
+          "quantity": 3
+        },
+        {
+          "cardName": "Smother",
+          "quantity": 2
+        },
+        {
+          "cardName": "Recurring Nightmare",
+          "quantity": 2
+        },
+        {
+          "cardName": "Pernicious Deed",
+          "quantity": 4
+        },
+        {
+          "cardName": "Ravenous Baloth",
+          "quantity": 4
+        },
+        {
+          "cardName": "Llanowar Wastes",
+          "quantity": 4
+        },
+        {
+          "cardName": "Forest",
+          "quantity": 7
+        },
+        {
+          "cardName": "Vendetta",
+          "quantity": 2
+        },
+        {
+          "cardName": "Duress",
+          "quantity": 4
+        },
+        {
+          "cardName": "City of Brass",
+          "quantity": 2
+        },
+        {
+          "cardName": "Yavimaya Elder",
+          "quantity": 2
+        },
+        {
+          "cardName": "Treetop Village",
+          "quantity": 4
+        },
+        {
+          "cardName": "Wall of Blossoms",
+          "quantity": 4
+        },
+        {
+          "cardName": "Wall of Roots",
+          "quantity": 4
+        },
+        {
+          "cardName": "Yavimaya Elder",
+          "quantity": 1
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Tormod's Crypt",
+          "quantity": 3
+        },
+        {
+          "cardName": "Sylvan Library",
+          "quantity": 3
+        },
+        {
+          "cardName": "Naturalize",
+          "quantity": 2
+        },
+        {
+          "cardName": "Engineered Plague",
+          "quantity": 3
+        },
+        {
+          "cardName": "Chainer's Edict",
+          "quantity": 2
+        },
+        {
+          "cardName": "Tranquil Domain",
+          "quantity": 2
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58412544": {
+      "playerId": "2746109",
+      "mainboard": [
+        {
+          "cardName": "Accumulated Knowledge",
+          "quantity": 4
+        },
+        {
+          "cardName": "Chain of Vapor",
+          "quantity": 1
+        },
+        {
+          "cardName": "Counterspell",
+          "quantity": 4
+        },
+        {
+          "cardName": "Daze",
+          "quantity": 2
+        },
+        {
+          "cardName": "Flash of Insight",
+          "quantity": 2
+        },
+        {
+          "cardName": "Foil",
+          "quantity": 4
+        },
+        {
+          "cardName": "Gush",
+          "quantity": 3
+        },
+        {
+          "cardName": "Impulse",
+          "quantity": 3
+        },
+        {
+          "cardName": "Island",
+          "quantity": 3
+        },
+        {
+          "cardName": "Mishra's Factory",
+          "quantity": 2
+        },
+        {
+          "cardName": "Stifle",
+          "quantity": 4
+        },
+        {
+          "cardName": "Phyrexian Dreadnought",
+          "quantity": 4
+        },
+        {
+          "cardName": "Portent",
+          "quantity": 4
+        },
+        {
+          "cardName": "Powder Keg",
+          "quantity": 1
+        },
+        {
+          "cardName": "Thwart",
+          "quantity": 1
+        },
+        {
+          "cardName": "Vision Charm",
+          "quantity": 4
+        },
+        {
+          "cardName": "Island",
+          "quantity": 2
+        },
+        {
+          "cardName": "Island",
+          "quantity": 11
+        },
+        {
+          "cardName": "Opt",
+          "quantity": 1
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Annul",
+          "quantity": 2
+        },
+        {
+          "cardName": "Brain Freeze",
+          "quantity": 1
+        },
+        {
+          "cardName": "Essence Flare",
+          "quantity": 3
+        },
+        {
+          "cardName": "Hydroblast",
+          "quantity": 3
+        },
+        {
+          "cardName": "Parallax Tide",
+          "quantity": 3
+        },
+        {
+          "cardName": "Powder Keg",
+          "quantity": 1
+        },
+        {
+          "cardName": "Chain of Vapor",
+          "quantity": 2
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58412564": {
+      "playerId": "2767231",
+      "mainboard": [
+        {
+          "cardName": "Seal of Cleansing",
+          "quantity": 2
+        },
+        {
+          "cardName": "Swords to Plowshares",
+          "quantity": 4
+        },
+        {
+          "cardName": "Mana Leak",
+          "quantity": 3
+        },
+        {
+          "cardName": "Counterspell",
+          "quantity": 4
+        },
+        {
+          "cardName": "Mishra's Factory",
+          "quantity": 4
+        },
+        {
+          "cardName": "Flooded Strand",
+          "quantity": 4
+        },
+        {
+          "cardName": "Adarkar Wastes",
+          "quantity": 4
+        },
+        {
+          "cardName": "Impulse",
+          "quantity": 3
+        },
+        {
+          "cardName": "Wrath of God",
+          "quantity": 2
+        },
+        {
+          "cardName": "Decree of Justice",
+          "quantity": 2
+        },
+        {
+          "cardName": "Humility",
+          "quantity": 1
+        },
+        {
+          "cardName": "Dust Bowl",
+          "quantity": 2
+        },
+        {
+          "cardName": "Faerie Conclave",
+          "quantity": 1
+        },
+        {
+          "cardName": "Plains",
+          "quantity": 4
+        },
+        {
+          "cardName": "Island",
+          "quantity": 5
+        },
+        {
+          "cardName": "Coastal Tower",
+          "quantity": 2
+        },
+        {
+          "cardName": "Fact or Fiction",
+          "quantity": 3
+        },
+        {
+          "cardName": "Standstill",
+          "quantity": 3
+        },
+        {
+          "cardName": "Parallax Tide",
+          "quantity": 3
+        },
+        {
+          "cardName": "Chain of Vapor",
+          "quantity": 2
+        },
+        {
+          "cardName": "Stifle",
+          "quantity": 1
+        },
+        {
+          "cardName": "Annul",
+          "quantity": 1
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Circle of Protection: Red",
+          "quantity": 1
+        },
+        {
+          "cardName": "Blue Elemental Blast",
+          "quantity": 2
+        },
+        {
+          "cardName": "Exalted Angel",
+          "quantity": 2
+        },
+        {
+          "cardName": "Annul",
+          "quantity": 3
+        },
+        {
+          "cardName": "Hydroblast",
+          "quantity": 1
+        },
+        {
+          "cardName": "Meddling Mage",
+          "quantity": 3
+        },
+        {
+          "cardName": "Phyrexian Furnace",
+          "quantity": 2
+        },
+        {
+          "cardName": "Wrath of God",
+          "quantity": 1
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58412518": {
+      "playerId": "3082384",
+      "mainboard": [
+        {
+          "cardName": "Barbarian Ring",
+          "quantity": 2
+        },
+        {
+          "cardName": "Bloodstained Mire",
+          "quantity": 4
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 10
+        },
+        {
+          "cardName": "Wooded Foothills",
+          "quantity": 4
+        },
+        {
+          "cardName": "Grim Lavamancer",
+          "quantity": 4
+        },
+        {
+          "cardName": "Jackal Pup",
+          "quantity": 4
+        },
+        {
+          "cardName": "Lightning Bolt",
+          "quantity": 4
+        },
+        {
+          "cardName": "Mogg Fanatic",
+          "quantity": 4
+        },
+        {
+          "cardName": "Seal of Fire",
+          "quantity": 4
+        },
+        {
+          "cardName": "Incinerate",
+          "quantity": 4
+        },
+        {
+          "cardName": "Ball Lightning",
+          "quantity": 4
+        },
+        {
+          "cardName": "Sulfuric Vortex",
+          "quantity": 4
+        },
+        {
+          "cardName": "Fireblast",
+          "quantity": 4
+        },
+        {
+          "cardName": "Flame Rift",
+          "quantity": 4
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Tormod's Crypt",
+          "quantity": 3
+        },
+        {
+          "cardName": "Pyroblast",
+          "quantity": 3
+        },
+        {
+          "cardName": "Overload",
+          "quantity": 2
+        },
+        {
+          "cardName": "Price of Progress",
+          "quantity": 3
+        },
+        {
+          "cardName": "Mogg Salvage",
+          "quantity": 4
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58412501": {
+      "playerId": "3373315",
+      "mainboard": [
+        {
+          "cardName": "Forest",
+          "quantity": 1
+        },
+        {
+          "cardName": "Siege-Gang Commander",
+          "quantity": 3
+        },
+        {
+          "cardName": "Goblin Sharpshooter",
+          "quantity": 1
+        },
+        {
+          "cardName": "Rishadan Port",
+          "quantity": 3
+        },
+        {
+          "cardName": "Mogg Fanatic",
+          "quantity": 4
+        },
+        {
+          "cardName": "Wasteland",
+          "quantity": 3
+        },
+        {
+          "cardName": "Wooded Foothills",
+          "quantity": 4
+        },
+        {
+          "cardName": "Goblin Ringleader",
+          "quantity": 4
+        },
+        {
+          "cardName": "Goblin Piledriver",
+          "quantity": 4
+        },
+        {
+          "cardName": "Naturalize",
+          "quantity": 2
+        },
+        {
+          "cardName": "Goblin Warchief",
+          "quantity": 4
+        },
+        {
+          "cardName": "Goblin Tinkerer",
+          "quantity": 1
+        },
+        {
+          "cardName": "Gempalm Incinerator",
+          "quantity": 4
+        },
+        {
+          "cardName": "Karplusan Forest",
+          "quantity": 4
+        },
+        {
+          "cardName": "Skirk Prospector",
+          "quantity": 1
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 8
+        },
+        {
+          "cardName": "Goblin King",
+          "quantity": 1
+        },
+        {
+          "cardName": "Goblin Lackey",
+          "quantity": 4
+        },
+        {
+          "cardName": "Goblin Matron",
+          "quantity": 4
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Tranquil Domain",
+          "quantity": 2
+        },
+        {
+          "cardName": "Anarchy",
+          "quantity": 1
+        },
+        {
+          "cardName": "Pyrokinesis",
+          "quantity": 4
+        },
+        {
+          "cardName": "Tormod's Crypt",
+          "quantity": 3
+        },
+        {
+          "cardName": "Red Elemental Blast",
+          "quantity": 3
+        },
+        {
+          "cardName": "Naturalize",
+          "quantity": 2
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58412526": {
+      "playerId": "3380185",
+      "mainboard": [
+        {
+          "cardName": "Terravore",
+          "quantity": 4
+        },
+        {
+          "cardName": "Plains",
+          "quantity": 1
+        },
+        {
+          "cardName": "Plains",
+          "quantity": 1
+        },
+        {
+          "cardName": "Thermokarst",
+          "quantity": 3
+        },
+        {
+          "cardName": "Winter's Grasp",
+          "quantity": 3
+        },
+        {
+          "cardName": "Brushland",
+          "quantity": 4
+        },
+        {
+          "cardName": "Sylvan Library",
+          "quantity": 3
+        },
+        {
+          "cardName": "Seal of Cleansing",
+          "quantity": 1
+        },
+        {
+          "cardName": "Oath of Druids",
+          "quantity": 2
+        },
+        {
+          "cardName": "Oath of Druids",
+          "quantity": 2
+        },
+        {
+          "cardName": "Swords to Plowshares",
+          "quantity": 3
+        },
+        {
+          "cardName": "Mishra's Factory",
+          "quantity": 4
+        },
+        {
+          "cardName": "Enlightened Tutor",
+          "quantity": 1
+        },
+        {
+          "cardName": "Sphere of Resistance",
+          "quantity": 4
+        },
+        {
+          "cardName": "Treetop Village",
+          "quantity": 3
+        },
+        {
+          "cardName": "Mox Diamond",
+          "quantity": 4
+        },
+        {
+          "cardName": "Windswept Heath",
+          "quantity": 4
+        },
+        {
+          "cardName": "Rishadan Port",
+          "quantity": 4
+        },
+        {
+          "cardName": "Wasteland",
+          "quantity": 4
+        },
+        {
+          "cardName": "Cataclysm",
+          "quantity": 1
+        },
+        {
+          "cardName": "Forest",
+          "quantity": 3
+        },
+        {
+          "cardName": "Funeral Pyre",
+          "quantity": 1
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Phyrexian Furnace",
+          "quantity": 1
+        },
+        {
+          "cardName": "Circle of Protection: Red",
+          "quantity": 1
+        },
+        {
+          "cardName": "Call of the Herd",
+          "quantity": 2
+        },
+        {
+          "cardName": "Cursed Totem",
+          "quantity": 1
+        },
+        {
+          "cardName": "Hail Storm",
+          "quantity": 3
+        },
+        {
+          "cardName": "Krosan Reclamation",
+          "quantity": 1
+        },
+        {
+          "cardName": "Naturalize",
+          "quantity": 1
+        },
+        {
+          "cardName": "Aura of Silence",
+          "quantity": 1
+        },
+        {
+          "cardName": "Zuran Orb",
+          "quantity": 1
+        },
+        {
+          "cardName": "Ray of Revelation",
+          "quantity": 1
+        },
+        {
+          "cardName": "Swords to Plowshares",
+          "quantity": 1
+        },
+        {
+          "cardName": "Funeral Pyre",
+          "quantity": 1
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58412565": {
+      "playerId": "3382268",
+      "mainboard": [
+        {
+          "cardName": "Wooded Foothills",
+          "quantity": 4
+        },
+        {
+          "cardName": "Wasteland",
+          "quantity": 3
+        },
+        {
+          "cardName": "Siege-Gang Commander",
+          "quantity": 2
+        },
+        {
+          "cardName": "Rishadan Port",
+          "quantity": 4
+        },
+        {
+          "cardName": "Goblin Piledriver",
+          "quantity": 4
+        },
+        {
+          "cardName": "Naturalize",
+          "quantity": 3
+        },
+        {
+          "cardName": "Mogg Fanatic",
+          "quantity": 4
+        },
+        {
+          "cardName": "Karplusan Forest",
+          "quantity": 4
+        },
+        {
+          "cardName": "Goblin Warchief",
+          "quantity": 4
+        },
+        {
+          "cardName": "Goblin Tinkerer",
+          "quantity": 2
+        },
+        {
+          "cardName": "Goblin Ringleader",
+          "quantity": 4
+        },
+        {
+          "cardName": "Goblin Matron",
+          "quantity": 4
+        },
+        {
+          "cardName": "Goblin Lackey",
+          "quantity": 4
+        },
+        {
+          "cardName": "Gempalm Incinerator",
+          "quantity": 3
+        },
+        {
+          "cardName": "Forest",
+          "quantity": 1
+        },
+        {
+          "cardName": "Goblin Goon",
+          "quantity": 2
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 8
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Tormod's Crypt",
+          "quantity": 3
+        },
+        {
+          "cardName": "Red Elemental Blast",
+          "quantity": 2
+        },
+        {
+          "cardName": "Pyrokinesis",
+          "quantity": 4
+        },
+        {
+          "cardName": "Pyroblast",
+          "quantity": 2
+        },
+        {
+          "cardName": "Tranquil Domain",
+          "quantity": 2
+        },
+        {
+          "cardName": "Goblin Sharpshooter",
+          "quantity": 1
+        },
+        {
+          "cardName": "Naturalize",
+          "quantity": 1
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    }
+  },
+  "rounds": {
+    "playoffs-qf": {
+      "name": "Quarterfinals",
+      "number": 900,
+      "isPlayoff": true,
+      "matches": [
+        {
+          "player1Id": "118154",
+          "player2Id": "2563273",
+          "result": "2-0-0",
+          "winnerId": "118154"
+        },
+        {
+          "player1Id": "1794149",
+          "player2Id": "326784",
+          "result": "2-0-0",
+          "winnerId": "1794149"
+        },
+        {
+          "player1Id": "1951244",
+          "player2Id": "1096200",
+          "result": "2-0-0",
+          "winnerId": "1951244"
+        },
+        {
+          "player1Id": "3380185",
+          "player2Id": "1009240",
+          "result": "2-1-0",
+          "winnerId": "3380185"
+        }
+      ]
+    },
+    "playoffs-sf": {
+      "name": "Semifinals",
+      "number": 950,
+      "isPlayoff": true,
+      "matches": [
+        {
+          "player1Id": "1794149",
+          "player2Id": "3380185",
+          "result": "2-1-0",
+          "winnerId": "1794149"
+        },
+        {
+          "player1Id": "118154",
+          "player2Id": "1951244",
+          "result": "2-1-0",
+          "winnerId": "118154"
+        }
+      ]
+    },
+    "playoffs-f": {
+      "name": "Finals",
+      "number": 999,
+      "isPlayoff": true,
+      "matches": [
+        {
+          "player1Id": "1794149",
+          "player2Id": "118154",
+          "result": "2-1-0",
+          "winnerId": "1794149"
+        }
+      ]
+    }
+  }
+}

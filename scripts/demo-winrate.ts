@@ -11,7 +11,6 @@ import type { TournamentData } from "../src/lib/types/tournament";
 import {
 	buildMatchupMatrix,
 	buildPlayerArchetypeMap,
-	computeMetagameStats,
 } from "../src/lib/utils/winrate-calculator";
 
 const data: TournamentData = JSON.parse(
@@ -37,7 +36,9 @@ const playerArchetypes = buildPlayerArchetypeMap(data, classResults);
 
 // Step 3: Metagame stats
 console.log("=== Metagame Breakdown ===");
-const stats = computeMetagameStats([data], playerArchetypes);
+const { stats } = buildMatchupMatrix([data], playerArchetypes, {
+	excludeMirrors: false,
+});
 console.log(
 	`${"Archetype".padEnd(25)} ${"Players".padStart(8)} ${"Share".padStart(7)} ${"Matches".padStart(8)} ${"Winrate".padStart(8)}`,
 );

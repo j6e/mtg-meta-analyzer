@@ -10,6 +10,11 @@ import {
 } from "../algorithms/logistic-regression";
 import type { DecklistInfo } from "../types/decklist";
 import type { TournamentData } from "../types/tournament";
+import {
+	countPlayerRoundResults,
+	hasIncompleteRounds,
+	parseMatchRecord,
+} from "./standings";
 
 // ── Types ──
 
@@ -83,6 +88,7 @@ export function extractTrainingData(
 	playerArchetypes: Map<string, string>,
 	archetypeName: string,
 	opponent?: string,
+	useStandings?: boolean,
 ): TrainingObservation[] {
 	const observations: TrainingObservation[] = [];
 
@@ -137,6 +143,35 @@ export function extractTrainingData(
 		}
 	}
 
+	// Add observations from standings remainder for "all opponents" mode
+	if (useStandings && !opponent) {
+		for (const t of tournaments) {
+			if (!hasIncompleteRounds(t)) continue;
+
+			for (const [playerId, player] of Object.entries(t.players)) {
+				if (playerArchetypes.get(playerId) !== archetypeName) continue;
+				const dlId = player.decklistIds[0];
+				const dl = dlId ? t.decklists[dlId] : undefined;
+				if (!dl) continue;
+
+				const total = parseMatchRecord(player.matchRecord);
+				const recorded = countPlayerRoundResults(t, playerId);
+				const extraW = Math.max(0, total.w - recorded.w);
+				const extraL = Math.max(0, total.l - recorded.l);
+
+				if (extraW + extraL === 0) continue;
+
+				const deck = getDecklistCards(dl);
+				for (let i = 0; i < extraW; i++) {
+					observations.push({ cardCounts: deck, outcome: 1 });
+				}
+				for (let i = 0; i < extraL; i++) {
+					observations.push({ cardCounts: deck, outcome: 0 });
+				}
+			}
+		}
+	}
+
 	return observations;
 }
 
@@ -156,7 +191,7 @@ export function selectFlexFeatures(
 	// Collect all card names and their counts across observations
 	const cardData = new Map<string, number[]>();
 	for (const obs of observations) {
-		for (const [card, _qty] of obs.cardCounts) {
+		for (const card of obs.cardCounts.keys()) {
 			if (!cardData.has(card)) cardData.set(card, []);
 		}
 	}
@@ -234,6 +269,7 @@ export function analyzeCardImpact(
 		opponent?: string;
 		minObservations?: number;
 		maxFeatures?: number;
+		useStandings?: boolean;
 	} = {},
 ): CardImpactResult | CardImpactError {
 	const minObs = options.minObservations ?? 30;
@@ -243,6 +279,7 @@ export function analyzeCardImpact(
 		playerArchetypes,
 		archetypeName,
 		options.opponent,
+		options.useStandings,
 	);
 
 	if (observations.length < minObs) {

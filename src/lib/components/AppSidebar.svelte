@@ -1,11 +1,11 @@
 <script lang="ts">
-	import FilterPanel from './FilterPanel.svelte';
+	import FilterPanel from "./FilterPanel.svelte";
 
-	const STORAGE_KEY = 'sidebar-collapsed';
+	const STORAGE_KEY = "sidebar-collapsed";
 
 	function getInitialCollapsed(): boolean {
 		const stored = localStorage.getItem(STORAGE_KEY);
-		if (stored !== null) return stored === 'true';
+		if (stored !== null) return stored === "true";
 		return window.innerWidth < 768;
 	}
 
@@ -21,11 +21,11 @@
 	<button
 		class="toggle-btn"
 		onclick={toggle}
-		title={collapsed ? 'Expand filters' : 'Collapse filters'}
-		aria-label={collapsed ? 'Expand filters' : 'Collapse filters'}
+		title={collapsed ? "Expand filters" : "Collapse filters"}
+		aria-label={collapsed ? "Expand filters" : "Collapse filters"}
 		aria-expanded={!collapsed}
 	>
-		{collapsed ? '›' : '‹'}
+		{collapsed ? "›" : "‹"}
 	</button>
 	<div class="sidebar-content" class:hidden={collapsed}>
 		<FilterPanel />
@@ -34,7 +34,7 @@
 
 <style>
 	aside {
-		width: 310px;
+		width: 350px;
 		flex-shrink: 0;
 		border-right: 1px solid var(--color-border);
 		background: var(--color-surface);
@@ -64,7 +64,9 @@
 		align-items: center;
 		justify-content: center;
 		line-height: 1;
-		transition: color 0.15s, background 0.15s;
+		transition:
+			color 0.15s,
+			background 0.15s;
 	}
 
 	.toggle-btn:hover {
