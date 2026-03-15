@@ -40,7 +40,7 @@ jobs:
             echo "changed=false" >> "$GITHUB_OUTPUT"
           else
             echo "changed=true" >> "$GITHUB_OUTPUT"
-            FILENAME=$(git diff --cached --name-only)
+            FILENAME=$(git diff --cached --name-only | grep -v 'index\.json' | head -1)
             ID=$(basename "$FILENAME" .json)
             echo "tournament_id=$ID" >> "$GITHUB_OUTPUT"
             echo "filename=$FILENAME" >> "$GITHUB_OUTPUT"
