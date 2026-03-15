@@ -44,7 +44,7 @@ All periods from the anchor back to (and including) the period containing the ea
 - Label (cross-month): `Jan 28–Feb 3`
 - Label (cross-year): `Dec 29–Jan 4`
 
-**2 weeks (`'2w'`)**: 14-day chunks using pure date arithmetic. The most recent period ends on the **Sunday of the anchor's ISO week** and starts 13 days before that (Monday of the preceding ISO week). Each prior period's end date = previous period's start date − 1 day; start date = end date − 13 days. No ISO week numbering involved — pure 14-day subtraction from the anchor's week boundary. This means year boundaries are handled naturally with no special cases.
+**2 weeks (`'2w'`)**: 14-day chunks using pure date arithmetic. The most recent period ends on the **Sunday of the anchor's ISO week** (always the full-week boundary — even if the anchor date falls mid-week) and starts 13 days before that (Monday of the preceding ISO week). Each prior period's end date = previous period's start date − 1 day; start date = end date − 13 days. No ISO week numbering involved — pure 14-day subtraction from the anchor's week boundary. This means year boundaries are handled naturally with no special cases.
 - Label format follows the same cross-month/cross-year rules as `'1w'`.
 
 **1 month (`'1m'`)**: Full calendar months (always Jan 1–31, Feb 1–28, etc.). The anchor's calendar month is the most recent period — its end date is always the last day of that month, not the anchor date itself.
@@ -169,7 +169,7 @@ Add a third `<section>` after the Matchup Matrix, inside the `{#if $metagameData
 </section>
 ```
 
-`matrixOpts` is a new `$derived` local variable constructed from `$settings`. `$settings.otherMode` is an existing field (`'topN' | 'minShare'`) in the `MetaSettings` store — it controls which collapsing mode is active by zeroing out the other. This matches the pattern already used to build options for `buildMatchupMatrix` in the `metagameData` store. `useStandings` is included in `matrixOpts` for type completeness but is **not forwarded to the utility** — evolution share computation is always entry-count based, not standings-based.
+`matrixOpts` is a new `$derived` local variable constructed from `$settings`. All five fields accessed (`excludeMirrors`, `otherMode`, `topN`, `minMetagameShare`, `useStandings`) are confirmed fields on the existing `MetaSettings` store in `src/lib/stores/settings.ts`. `otherMode: 'topN' | 'minShare'` controls which collapsing mode is active by zeroing out the other. This matches the pattern already used to build options for `buildMatchupMatrix` in the `metagameData` store. `useStandings` is included in `matrixOpts` for type completeness but is **not forwarded to the utility** — evolution share computation is always entry-count based, not standings-based.
 
 ```ts
 const matrixOpts = $derived<MatrixOptions>({
@@ -185,7 +185,7 @@ const matrixOpts = $derived<MatrixOptions>({
 Unit tests in `metagame-evolution.test.ts`:
 
 1. **ISO week boundary**: a Wednesday date returns the Monday of that ISO week as `startDate`
-2. **2w anchor**: anchor date in ISO week 12 → most recent period = Monday of week 11 through Sunday of week 12; prior period = Monday of week 9 through Sunday of week 10
+2. **2w anchor**: anchor date is Wednesday of ISO week 12 → most recent period = Monday of week 11 through Sunday of week 12 (full 14-day window, end = Sunday of anchor's week); prior period = Monday of week 9 through Sunday of week 10
 3. **2w year boundary**: anchor in ISO week 1 of a year → most recent period = last week of previous year through Sunday of week 1
 4. **Calendar month**: anchor in March 2026 → most recent period = Mar 1–31; prior = Feb 1–28
 5. **Cross-month label**: ISO week spanning Jan 28–Feb 3 → label `Jan 28–Feb 3`
