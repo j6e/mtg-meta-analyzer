@@ -46,7 +46,7 @@ beforeEach(() => {
 			getImageData: () => ({ data: new Uint8ClampedArray(4) }),
 			putImageData: () => {},
 		};
-	}) as any;
+	}) as unknown as typeof HTMLCanvasElement.prototype.getContext;
 });
 
 const sampleStats: ArchetypeStats[] = [

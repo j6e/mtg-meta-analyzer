@@ -14,8 +14,8 @@ export async function exportElementAsImage(
 
 	if (captureStyles) {
 		for (const [prop, value] of Object.entries(captureStyles)) {
-			saved.set(prop, (element.style as any)[prop] ?? "");
-			(element.style as any)[prop] = value;
+			saved.set(prop, (element.style as unknown as Record<string, string>)[prop] ?? "");
+			(element.style as unknown as Record<string, string>)[prop] = value;
 		}
 	}
 
@@ -27,7 +27,7 @@ export async function exportElementAsImage(
 		link.click();
 	} finally {
 		for (const [prop, value] of saved) {
-			(element.style as any)[prop] = value;
+			(element.style as unknown as Record<string, string>)[prop] = value;
 		}
 	}
 }

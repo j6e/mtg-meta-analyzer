@@ -306,7 +306,7 @@ async function main() {
 		);
 	}
 
-	const csv = lines.join("\n") + "\n";
+	const csv = `${lines.join("\n")}\n`;
 
 	if (opts.out) {
 		writeFileSync(opts.out, csv);
