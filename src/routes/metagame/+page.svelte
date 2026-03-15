@@ -1,14 +1,24 @@
 <script lang="ts">
 	import MatchupMatrix from '$lib/components/MatchupMatrix.svelte';
+	import MetagameEvolution from '$lib/components/MetagameEvolution.svelte';
 	import MetagameScatter from '$lib/components/MetagameScatter.svelte';
 	import {
-		metagameData,
-		filteredTournaments,
+		archetypeCardMap,
 		archetypeStats,
+		filteredTournaments,
+		metagameData,
+		playerArchetypes,
 	} from '$lib/stores/tournaments';
 	import { settings } from '$lib/stores/settings';
+	import type { MatrixOptions } from '$lib/utils/winrate-calculator';
 
 	const noTournamentsSelected = $derived($settings.selectedTournamentIds.length === 0);
+	const matrixOpts = $derived<MatrixOptions>({
+		excludeMirrors: $settings.excludeMirrors,
+		topN: $settings.otherMode === 'topN' ? $settings.topN : 0,
+		minMetagameShare: $settings.otherMode === 'minShare' ? $settings.minMetagameShare / 100 : 0,
+		useStandings: $settings.useStandings,
+	});
 	const playerCount = $derived(
 		$filteredTournaments.reduce((sum, t) => sum + Object.keys(t.players).length, 0),
 	);
@@ -44,6 +54,16 @@
 	<section>
 		<h2>Matchup Matrix <span class="info-icon" title="Win rates = wins / (wins + losses + draws). Draws count against both sides, so opposing win rates may not sum to 100%. Byes and intentional draws (0-0-3) are excluded.">?</span></h2>
 		<MatchupMatrix matrix={$metagameData.matrix} stats={$metagameData.stats} />
+	</section>
+
+	<section>
+		<h2>Metagame Share Evolution</h2>
+		<MetagameEvolution
+			tournaments={$filteredTournaments}
+			playerArchetypes={$playerArchetypes}
+			matrixOptions={matrixOpts}
+			archetypeCardMap={$archetypeCardMap}
+		/>
 	</section>
 {:else if noTournamentsSelected}
 	<p class="no-data warning">No tournaments selected. Select at least one tournament to run the analysis.</p>
