@@ -165,7 +165,7 @@
 	function buildChart() {
 		if (chart) chart.destroy();
 
-		const filtered = stats.filter((s) => s.name !== 'Unknown' && s.totalMatches > 0);
+		const filtered = stats.filter((s) => s.name !== 'Unknown' && s.name !== 'Other' && s.totalMatches > 0);
 		if (filtered.length === 0) return;
 
 		// Start loading images for all visible archetypes

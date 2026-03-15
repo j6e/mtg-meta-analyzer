@@ -14,6 +14,7 @@ export async function exportElementAsImage(
 
 	if (captureStyles) {
 		for (const [prop, value] of Object.entries(captureStyles)) {
+			if (typeof value !== "string") continue;
 			saved.set(prop, (element.style as unknown as Record<string, string>)[prop] ?? "");
 			(element.style as unknown as Record<string, string>)[prop] = value;
 		}
