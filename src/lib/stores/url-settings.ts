@@ -141,6 +141,8 @@ export function searchParamsToSettings(params: URLSearchParams): MetaSettings {
 		otherMode,
 		topN,
 		minMetagameShare,
+		paperOnly: defaults.paperOnly,
+		useStandings: defaults.useStandings,
 	};
 }
 
