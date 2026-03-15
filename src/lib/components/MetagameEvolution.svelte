@@ -39,7 +39,7 @@
 		computeMetagameEvolution(tournaments, playerArchetypes, periodSize, {
 			topN: matrixOptions.topN,
 			minMetagameShare: matrixOptions.minMetagameShare,
-		}),
+		}).filter((s) => s.name !== 'Other'),
 	);
 
 	let canvas: HTMLCanvasElement;
