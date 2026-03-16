@@ -134,6 +134,18 @@ export function generatePeriods(
 	}
 
 	periods.reverse(); // oldest first
+
+	// Clip the first period's start to the actual earliest date
+	if (periods.length > 0 && periods[0].startDate < earliestDate) {
+		const clippedStart = parseDate(earliestDate);
+		const end = parseDate(periods[0].endDate);
+		periods[0] = {
+			label: formatDateRange(clippedStart, end),
+			startDate: earliestDate,
+			endDate: periods[0].endDate,
+		};
+	}
+
 	return periods;
 }
 
