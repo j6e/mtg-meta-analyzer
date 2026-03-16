@@ -89,11 +89,11 @@ describe("formatDateRange", () => {
 });
 
 describe("generatePeriods — 1w", () => {
-	it("generates one week period for single-date range", () => {
-		// 2026-03-11 (Wed) → ISO week Mon 2026-03-09 to Sun 2026-03-15
+	it("generates one week period for single-date range, clipped to earliest", () => {
+		// 2026-03-11 (Wed) → ISO week Mon 2026-03-09 to Sun 2026-03-15, clipped start to Mar 11
 		const periods = generatePeriods("2026-03-11", "2026-03-11", "1w");
 		expect(periods).toHaveLength(1);
-		expect(periods[0].startDate).toBe("2026-03-09");
+		expect(periods[0].startDate).toBe("2026-03-11");
 		expect(periods[0].endDate).toBe("2026-03-15");
 	});
 
@@ -117,43 +117,45 @@ describe("generatePeriods — 1w", () => {
 });
 
 describe("generatePeriods — 2w", () => {
-	it("anchor Wednesday in week 12: most recent = Mon wk11 – Sun wk12", () => {
+	it("anchor Wednesday in week 12: most recent = Mon wk11 – Sun wk12, clipped to earliest", () => {
 		// 2026-03-18 is a Wednesday in ISO week 12 of 2026
 		// isoWeekSunday(Mar 18) = Mar 22 (Sunday of wk12)
-		// 14 days back → start = Mar 9 (Mon of wk11)
+		// 14 days back → start = Mar 9, clipped to Mar 18 (earliestDate)
 		const periods = generatePeriods("2026-03-18", "2026-03-18", "2w");
 		expect(periods).toHaveLength(1);
-		expect(periods[0].startDate).toBe("2026-03-09");
+		expect(periods[0].startDate).toBe("2026-03-18");
 		expect(periods[0].endDate).toBe("2026-03-22");
 	});
 
 	it("generates consecutive 14-day chunks stepping backwards", () => {
 		const periods = generatePeriods("2026-03-18", "2026-02-10", "2w");
 		expect(periods.length).toBeGreaterThanOrEqual(3);
-		// Each period should be exactly 14 days
-		for (const p of periods) {
+		// All periods except the first should be exactly 14 days (first may be clipped)
+		for (const p of periods.slice(1)) {
 			const start = new Date(`${p.startDate}T00:00:00Z`);
 			const end = new Date(`${p.endDate}T00:00:00Z`);
 			const diffDays = (end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24);
 			expect(diffDays).toBe(13); // inclusive: Sun - Mon = 13 days difference
 		}
+		// First period is clipped to earliestDate
+		expect(periods[0].startDate).toBe("2026-02-10");
 	});
 
-	it("handles year boundary: anchor in first ISO week", () => {
+	it("handles year boundary: anchor in first ISO week, clipped to earliest", () => {
 		// 2026-01-05 is a Monday in ISO week 2 of 2026
-		// isoWeekSunday = 2026-01-11; start = 2025-12-29
+		// isoWeekSunday = 2026-01-11; start = 2025-12-29, clipped to 2026-01-05
 		const periods = generatePeriods("2026-01-05", "2026-01-05", "2w");
 		expect(periods).toHaveLength(1);
-		expect(periods[0].startDate).toBe("2025-12-29");
+		expect(periods[0].startDate).toBe("2026-01-05");
 		expect(periods[0].endDate).toBe("2026-01-11");
 	});
 });
 
 describe("generatePeriods — 1m", () => {
-	it("anchor in March: most recent = full March, prior = full February", () => {
+	it("anchor in March: most recent = full March, prior = February clipped to earliest", () => {
 		const periods = generatePeriods("2026-03-15", "2026-02-10", "1m");
 		expect(periods).toHaveLength(2);
-		expect(periods[0].startDate).toBe("2026-02-01");
+		expect(periods[0].startDate).toBe("2026-02-10"); // clipped from Feb 1
 		expect(periods[0].endDate).toBe("2026-02-28");
 		expect(periods[1].startDate).toBe("2026-03-01");
 		expect(periods[1].endDate).toBe("2026-03-31");
@@ -165,9 +167,13 @@ describe("generatePeriods — 1m", () => {
 		expect(periods[0].endDate).toBe("2026-03-31"); // full month, not Mar 5
 	});
 
-	it("label is 'March 2026'", () => {
-		const periods = generatePeriods("2026-03-15", "2026-03-15", "1m");
-		expect(periods[0].label).toBe("March 2026");
+	it("label uses month name when period is unclipped, date range when clipped", () => {
+		// Unclipped: earliest is first of month
+		const full = generatePeriods("2026-03-15", "2026-03-01", "1m");
+		expect(full[0].label).toBe("March 2026");
+		// Clipped: earliest mid-month → date range label
+		const clipped = generatePeriods("2026-03-15", "2026-03-15", "1m");
+		expect(clipped[0].label).toBe("Mar 15–31");
 	});
 });
 
@@ -205,7 +211,8 @@ describe("computeMetagameEvolution", () => {
 		const t2 = makeT("2026-02-11", { p2: "B" });
 		const archetypes = makeMap({ p1: "A", p2: "B" });
 		const result = computeMetagameEvolution([t1, t2], archetypes, "1m", {});
-		expect(result[0].points[0].label).toBe("January 2026");
+		// First period clipped to Jan 5 (earliest tournament), last is full February
+		expect(result[0].points[0].label).toBe("Jan 5–31");
 		expect(result[0].points[result[0].points.length - 1].label).toBe("February 2026");
 	});
 
@@ -246,7 +253,8 @@ describe("computeMetagameEvolution", () => {
 		expect(bSeries).toBeDefined();
 		// A is 0 in the February period; B is 0 in the January period
 		expect(aSeries.points.length).toBe(bSeries.points.length);
-		const janA = aSeries.points.find((p) => p.label === "January 2026")!;
+		// First period clipped to Jan 5 (earliest), February is full month
+		const janA = aSeries.points.find((p) => p.label === "Jan 5–31")!;
 		const febA = aSeries.points.find((p) => p.label === "February 2026")!;
 		expect(janA.share).toBeCloseTo(1);
 		expect(febA.share).toBe(0);
