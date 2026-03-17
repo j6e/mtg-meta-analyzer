@@ -200,7 +200,7 @@
 		loadArchetypeImages(currentSeries.map((s) => s.name));
 
 		const labels = currentSeries[0].points.map((p) => p.label);
-		const maxShare = Math.max(...currentSeries.flatMap((s) => s.points.map((p) => p.share * 100)));
+		const maxShare = Math.max(...currentSeries.flatMap((s) => s.points.map((p) => (p.share ?? 0) * 100)));
 		const yMax = Math.ceil(maxShare) + 2;
 
 		chart = new Chart(canvas, {
@@ -214,9 +214,10 @@
 						label: s.name,
 						archetypeName: s.name,
 					baseColor: color,
-						data: s.points.map((p) => p.share * 100),
-						pointRadius: s.points.map((p) => (p.share > 0 ? 10 : 0)),
-						pointHoverRadius: s.points.map((p) => (p.share > 0 ? 12 : 0)),
+						data: s.points.map((p) => (p.share === null ? null : p.share * 100)),
+						pointRadius: s.points.map((p) => (p.share ? 10 : 0)),
+						pointHoverRadius: s.points.map((p) => (p.share ? 12 : 0)),
+						spanGaps: true,
 						pointBackgroundColor: `${color}bb`,
 						pointBorderColor: color,
 						pointBorderWidth: 2,

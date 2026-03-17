@@ -5,7 +5,7 @@ export type PeriodSize = "1w" | "2w" | "1m";
 
 export interface EvolutionPoint {
 	label: string; // X-axis period label
-	share: number; // 0–1
+	share: number | null; // 0–1, null when period has no tournaments
 }
 
 export interface EvolutionSeries {
@@ -237,11 +237,16 @@ export function computeMetagameEvolution(
 		return shares;
 	});
 
+	// Track which periods have no tournaments at all
+	const emptyPeriods = new Set(
+		periods.map((_, i) => i).filter((i) => periodShares[i].size === 0),
+	);
+
 	return seriesNames.map((name) => ({
 		name,
 		points: periods.map((period, i) => ({
 			label: period.label,
-			share: periodShares[i].get(name) ?? 0,
+			share: emptyPeriods.has(i) ? null : (periodShares[i].get(name) ?? 0),
 		})),
 	}));
 }

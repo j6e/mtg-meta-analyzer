@@ -195,14 +195,14 @@ describe("computeMetagameEvolution", () => {
 		expect(b.points[b.points.length - 1].share).toBeCloseTo(1 / 3);
 	});
 
-	it("empty period → share 0 for all series", () => {
+	it("empty period → share null for all series", () => {
 		// Two tournaments a month apart; 1w periods will have many empty periods in between
 		const t1 = makeT("2026-01-05", { p1: "A" });
 		const t2 = makeT("2026-03-11", { p2: "A" });
 		const archetypes = makeMap({ p1: "A", p2: "A" });
 		const result = computeMetagameEvolution([t1, t2], archetypes, "1w", {});
-		// There should be at least one period with no tournaments
-		const emptyPeriods = result[0].points.filter((p) => p.share === 0);
+		// Periods with no tournaments should have null share (skipped in charts)
+		const emptyPeriods = result[0].points.filter((p) => p.share === null);
 		expect(emptyPeriods.length).toBeGreaterThan(0);
 	});
 
