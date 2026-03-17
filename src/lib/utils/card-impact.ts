@@ -10,6 +10,7 @@ import {
 } from "../algorithms/logistic-regression";
 import type { DecklistInfo } from "../types/decklist";
 import type { TournamentData } from "../types/tournament";
+import { getFrontFace } from "./card-normalizer";
 import {
 	countPlayerRoundResults,
 	hasIncompleteRounds,
@@ -68,10 +69,12 @@ const BASIC_LANDS = new Set([
 function getDecklistCards(dl: DecklistInfo): Map<string, number> {
 	const counts = new Map<string, number>();
 	for (const entry of dl.mainboard) {
-		counts.set(entry.cardName, (counts.get(entry.cardName) ?? 0) + entry.quantity);
+		const name = getFrontFace(entry.cardName);
+		counts.set(name, (counts.get(name) ?? 0) + entry.quantity);
 	}
 	for (const entry of dl.sideboard) {
-		counts.set(entry.cardName, (counts.get(entry.cardName) ?? 0) + entry.quantity);
+		const name = getFrontFace(entry.cardName);
+		counts.set(name, (counts.get(name) ?? 0) + entry.quantity);
 	}
 	return counts;
 }

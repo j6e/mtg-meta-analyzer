@@ -1,4 +1,5 @@
 import type { CardEntry } from "../types/decklist";
+import { getFrontFace } from "../utils/card-normalizer";
 
 /**
  * TF-IDF corpus built from a collection of decklists.
@@ -32,7 +33,7 @@ export function buildCorpus(decklists: CardEntry[][]): TfIdfCorpus {
 	for (const decklist of decklists) {
 		const seen = new Set<string>();
 		for (const entry of decklist) {
-			const card = entry.cardName;
+			const card = getFrontFace(entry.cardName);
 
 			if (!vocabulary.has(card)) {
 				vocabulary.set(card, vocabulary.size);
@@ -70,7 +71,7 @@ export function vectorize(decklist: CardEntry[], corpus: TfIdfCorpus): SparseVec
 	const vector: SparseVector = [];
 
 	for (const entry of decklist) {
-		const idx = corpus.vocabulary.get(entry.cardName);
+		const idx = corpus.vocabulary.get(getFrontFace(entry.cardName));
 		if (idx === undefined) continue;
 
 		const tf = entry.quantity / totalCards;
