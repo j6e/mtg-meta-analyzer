@@ -10,7 +10,6 @@
 		PointElement,
 		Tooltip,
 	} from 'chart.js';
-	import type { MatrixOptions } from '../utils/winrate-calculator';
 	import type { TournamentData } from '../types/tournament';
 	import {
 		computeMetagameEvolution,
@@ -18,6 +17,7 @@
 		type PeriodSize,
 	} from '../utils/metagame-evolution';
 	import { getScryfallImageUrl } from '../utils/card-normalizer';
+	import { settings } from '../stores/settings';
 
 	Chart.register(CategoryScale, Legend, LineController, LineElement, LinearScale, PointElement, Tooltip);
 
@@ -29,17 +29,23 @@
 	}: {
 		tournaments: TournamentData[];
 		playerArchetypes: Map<string, string>;
-		matrixOptions: MatrixOptions;
+		matrixOptions: { topN?: number; minMetagameShare?: number };
 		archetypeCardMap: Map<string, string>;
 	} = $props();
 
 	let periodSize = $state<PeriodSize>('2w');
 
-	const series = $derived(
+	const evolutionResult = $derived(
 		computeMetagameEvolution(tournaments, playerArchetypes, periodSize, {
 			topN: matrixOptions.topN,
 			minMetagameShare: matrixOptions.minMetagameShare,
-		}).filter((s) => s.name !== 'Other'),
+			winnersMode: $settings.winnersMode,
+			winnersCutoff: $settings.winnersCutoff,
+		}),
+	);
+
+	const series = $derived(
+		evolutionResult.series.filter((s) => s.name !== 'Other'),
 	);
 
 	let canvas: HTMLCanvasElement;
@@ -262,8 +268,8 @@
 	onDestroy(() => chart?.destroy());
 
 	$effect(() => {
-		void series.length; // track dependency
-		if (canvas) buildChart(series);
+		const s = series;
+		if (canvas) buildChart(s);
 	});
 </script>
 
@@ -277,9 +283,40 @@
 			onclick={() => (periodSize = value as PeriodSize)}
 		>{label}</button>
 	{/each}
+
+	<span class="separator"></span>
+
+	<span class="label">View:</span>
+	<button
+		type="button"
+		class="period-btn"
+		class:active={!$settings.winnersMode}
+		onclick={() => ($settings.winnersMode = false)}
+	>Field</button>
+	<button
+		type="button"
+		class="period-btn"
+		class:active={$settings.winnersMode}
+		onclick={() => ($settings.winnersMode = true)}
+	>Winners</button>
+
+	{#if $settings.winnersMode}
+		<select
+			class="cutoff-select"
+			value={$settings.winnersCutoff}
+			onchange={(e) => ($settings.winnersCutoff = Number(e.currentTarget.value))}
+		>
+			{#each [0.10, 0.15, 0.20, 0.25, 0.30, 0.35, 0.40, 0.45, 0.50] as pct}
+				<option value={pct}>{Math.round(pct * 100)}%</option>
+			{/each}
+		</select>
+	{/if}
 </div>
 
 <div class="chart-container">
+	{#if $settings.winnersMode}
+		<span class="chart-subtitle">Top {Math.round($settings.winnersCutoff * 100)}%</span>
+	{/if}
 	<canvas bind:this={canvas} data-testid="evolution-canvas"></canvas>
 </div>
 
@@ -301,6 +338,11 @@
 			{s.name}
 		</span>
 	{/each}
+	{#if evolutionResult.incompleteData && $settings.winnersMode}
+		<span class="legend-warning">
+			⚠ Some tournaments have incomplete data for this cutoff
+		</span>
+	{/if}
 </div>
 
 <style>
@@ -374,5 +416,35 @@
 		border-radius: 50%;
 		object-fit: cover;
 		border: 1px solid var(--color-border);
+	}
+
+	.separator {
+		width: 1px;
+		height: 1.2rem;
+		background: var(--color-border);
+		margin: 0 0.4rem;
+	}
+
+	.cutoff-select {
+		padding: 0.15rem 0.4rem;
+		border-radius: 9999px;
+		border: 1px solid var(--color-border);
+		background: var(--color-surface);
+		font-size: 0.8rem;
+		color: var(--color-text);
+		cursor: pointer;
+	}
+
+	.chart-subtitle {
+		display: block;
+		font-size: 0.8rem;
+		color: var(--color-text-muted);
+		margin-bottom: 0.5rem;
+	}
+
+	.legend-warning {
+		font-size: 0.75rem;
+		color: var(--color-warning, #b45309);
+		font-style: italic;
 	}
 </style>
