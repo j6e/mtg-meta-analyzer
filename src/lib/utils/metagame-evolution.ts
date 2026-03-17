@@ -1,16 +1,27 @@
 import type { TournamentData } from "../types/tournament";
-import type { MatrixOptions } from "./winrate-calculator";
 
 export type PeriodSize = "1w" | "2w" | "1m";
 
 export interface EvolutionPoint {
 	label: string; // X-axis period label
-	share: number; // 0–1
+	share: number | null; // 0–1, null when period has no tournaments
 }
 
 export interface EvolutionSeries {
 	name: string;
 	points: EvolutionPoint[]; // ordered oldest-to-newest
+}
+
+export interface EvolutionOptions {
+	topN?: number;
+	minMetagameShare?: number;
+	winnersMode?: boolean;
+	winnersCutoff?: number; // 0.10–0.50
+}
+
+export interface EvolutionResult {
+	series: EvolutionSeries[];
+	incompleteData: boolean;
 }
 
 // --- Internal helpers ---
@@ -152,22 +163,45 @@ export function generatePeriods(
 /**
  * Compute per-archetype metagame share evolution across calendar periods.
  *
- * - Returns [] if tournaments is empty.
+ * - Returns `{ series: [], incompleteData: false }` if tournaments is empty.
  * - topN > 0 keeps the top-N archetypes by total global player-entry count.
  * - minMetagameShare > 0 keeps archetypes with global share >= threshold.
  * - Caller should zero out whichever collapsing mode is inactive.
  * - "Unknown" is always excluded. "Other" appears only if archetypes are collapsed.
  * - Each EvolutionSeries has one point per period, ordered oldest-to-newest.
  *   Periods with no tournaments produce share: 0 for all series.
+ * - When `winnersMode` is true, only players within the top `winnersCutoff`
+ *   percentile of each tournament contribute to per-period shares.
+ *   `incompleteData` is true if any tournament's cutoff rank exceeds its
+ *   available player data.
  */
 export function computeMetagameEvolution(
 	tournaments: TournamentData[],
 	playerArchetypes: Map<string, string>,
 	periodSize: PeriodSize,
-	options: Pick<MatrixOptions, "topN" | "minMetagameShare">,
-): EvolutionSeries[] {
-	if (tournaments.length === 0) return [];
-	const { topN = 0, minMetagameShare = 0 } = options;
+	options: EvolutionOptions = {},
+): EvolutionResult {
+	if (tournaments.length === 0) return { series: [], incompleteData: false };
+	const {
+		topN = 0,
+		minMetagameShare = 0,
+		winnersMode = false,
+		winnersCutoff = 0.25,
+	} = options;
+
+	let incompleteData = false;
+
+	function shouldIncludePlayer(
+		player: { rank: number },
+		tournament: TournamentData,
+	): boolean {
+		if (!winnersMode) return true;
+		const cutoffRank = Math.ceil(tournament.meta.playerCount * winnersCutoff);
+		if (cutoffRank > Object.keys(tournament.players).length) {
+			incompleteData = true;
+		}
+		return player.rank <= cutoffRank;
+	}
 
 	// Date range
 	const dates = tournaments.map((t) => t.meta.date).sort();
@@ -223,7 +257,8 @@ export function computeMetagameEvolution(
 			(t) => t.meta.date >= period.startDate && t.meta.date <= period.endDate,
 		);
 		for (const t of periodTournaments) {
-			for (const playerId of Object.keys(t.players)) {
+			for (const [playerId, player] of Object.entries(t.players)) {
+				if (!shouldIncludePlayer(player, t)) continue;
 				const rawArch = playerArchetypes.get(playerId);
 				if (!rawArch || rawArch === "Unknown") continue;
 				const displayArch = otherSet.has(rawArch) ? "Other" : rawArch;
@@ -237,11 +272,19 @@ export function computeMetagameEvolution(
 		return shares;
 	});
 
-	return seriesNames.map((name) => ({
-		name,
-		points: periods.map((period, i) => ({
-			label: period.label,
-			share: periodShares[i].get(name) ?? 0,
+	// Track which periods have no tournaments at all
+	const emptyPeriods = new Set(
+		periods.map((_, i) => i).filter((i) => periodShares[i].size === 0),
+	);
+
+	return {
+		series: seriesNames.map((name) => ({
+			name,
+			points: periods.map((period, i) => ({
+				label: period.label,
+				share: emptyPeriods.has(i) ? null : (periodShares[i].get(name) ?? 0),
+			})),
 		})),
-	}));
+		incompleteData,
+	};
 }

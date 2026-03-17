@@ -9,7 +9,12 @@ import {
 
 // --- Helpers ---
 
-function makeT(date: string, players: Record<string, string>): TournamentData {
+function makeT(
+	date: string,
+	players: Record<string, string>,
+	opts?: { playerCount?: number; ranks?: Record<string, number> },
+): TournamentData {
+	const ids = Object.keys(players);
 	return {
 		meta: {
 			id: `t-${date}`,
@@ -18,18 +23,18 @@ function makeT(date: string, players: Record<string, string>): TournamentData {
 			formats: ["Standard"],
 			url: "",
 			fetchedAt: "",
-			playerCount: Object.keys(players).length,
+			playerCount: opts?.playerCount ?? ids.length,
 			roundCount: 1,
 			source: "melee",
 			tabletop: true,
 		},
 		players: Object.fromEntries(
-			Object.keys(players).map((id) => [
+			ids.map((id, i) => [
 				id,
 				{
 					name: id,
 					username: id,
-					rank: 1,
+					rank: opts?.ranks?.[id] ?? i + 1,
 					points: 0,
 					matchRecord: "0-0-0",
 					decklistIds: [],
@@ -179,15 +184,16 @@ describe("generatePeriods — 1m", () => {
 
 describe("computeMetagameEvolution", () => {
 	it("returns [] for empty tournaments", () => {
-		expect(computeMetagameEvolution([], new Map(), "1w", {})).toEqual([]);
+		const { series } = computeMetagameEvolution([], new Map(), "1w", {});
+		expect(series).toEqual([]);
 	});
 
 	it("basic share computation: single period, two archetypes", () => {
 		const t = makeT("2026-03-11", { p1: "A", p2: "A", p3: "B" });
 		const archetypes = makeMap({ p1: "A", p2: "A", p3: "B" });
-		const result = computeMetagameEvolution([t], archetypes, "1w", {});
-		const a = result.find((s) => s.name === "A")!;
-		const b = result.find((s) => s.name === "B")!;
+		const { series } = computeMetagameEvolution([t], archetypes, "1w", {});
+		const a = series.find((s) => s.name === "A")!;
+		const b = series.find((s) => s.name === "B")!;
 		expect(a).toBeDefined();
 		expect(b).toBeDefined();
 		// A: 2/3, B: 1/3
@@ -195,14 +201,14 @@ describe("computeMetagameEvolution", () => {
 		expect(b.points[b.points.length - 1].share).toBeCloseTo(1 / 3);
 	});
 
-	it("empty period → share 0 for all series", () => {
+	it("empty period → share null for all series", () => {
 		// Two tournaments a month apart; 1w periods will have many empty periods in between
 		const t1 = makeT("2026-01-05", { p1: "A" });
 		const t2 = makeT("2026-03-11", { p2: "A" });
 		const archetypes = makeMap({ p1: "A", p2: "A" });
-		const result = computeMetagameEvolution([t1, t2], archetypes, "1w", {});
-		// There should be at least one period with no tournaments
-		const emptyPeriods = result[0].points.filter((p) => p.share === 0);
+		const { series } = computeMetagameEvolution([t1, t2], archetypes, "1w", {});
+		// Periods with no tournaments should have null share (skipped in charts)
+		const emptyPeriods = series[0].points.filter((p) => p.share === null);
 		expect(emptyPeriods.length).toBeGreaterThan(0);
 	});
 
@@ -210,17 +216,17 @@ describe("computeMetagameEvolution", () => {
 		const t1 = makeT("2026-01-05", { p1: "A" });
 		const t2 = makeT("2026-02-11", { p2: "B" });
 		const archetypes = makeMap({ p1: "A", p2: "B" });
-		const result = computeMetagameEvolution([t1, t2], archetypes, "1m", {});
+		const { series } = computeMetagameEvolution([t1, t2], archetypes, "1m", {});
 		// First period clipped to Jan 5 (earliest tournament), last is full February
-		expect(result[0].points[0].label).toBe("Jan 5–31");
-		expect(result[0].points[result[0].points.length - 1].label).toBe("February 2026");
+		expect(series[0].points[0].label).toBe("Jan 5–31");
+		expect(series[0].points[series[0].points.length - 1].label).toBe("February 2026");
 	});
 
 	it("topN collapsing: top 1 of 2 archetypes → Other appears", () => {
 		const t = makeT("2026-03-11", { p1: "A", p2: "A", p3: "B" });
 		const archetypes = makeMap({ p1: "A", p2: "A", p3: "B" });
-		const result = computeMetagameEvolution([t], archetypes, "1w", { topN: 1 });
-		const names = result.map((s) => s.name);
+		const { series } = computeMetagameEvolution([t], archetypes, "1w", { topN: 1 });
+		const names = series.map((s) => s.name);
 		expect(names).toContain("A");
 		expect(names).toContain("Other");
 		expect(names).not.toContain("B");
@@ -233,10 +239,10 @@ describe("computeMetagameEvolution", () => {
 		players.b0 = "B";
 		const t = makeT("2026-03-11", players);
 		const archetypes = makeMap(players);
-		const result = computeMetagameEvolution([t], archetypes, "1w", {
+		const { series } = computeMetagameEvolution([t], archetypes, "1w", {
 			minMetagameShare: 0.15,
 		});
-		const names = result.map((s) => s.name);
+		const names = series.map((s) => s.name);
 		expect(names).toContain("A");
 		expect(names).toContain("Other");
 		expect(names).not.toContain("B");
@@ -246,9 +252,9 @@ describe("computeMetagameEvolution", () => {
 		const t1 = makeT("2026-01-05", { p1: "A" });
 		const t2 = makeT("2026-02-05", { p2: "B" });
 		const archetypes = makeMap({ p1: "A", p2: "B" });
-		const result = computeMetagameEvolution([t1, t2], archetypes, "1m", {});
-		const aSeries = result.find((s) => s.name === "A")!;
-		const bSeries = result.find((s) => s.name === "B")!;
+		const { series } = computeMetagameEvolution([t1, t2], archetypes, "1m", {});
+		const aSeries = series.find((s) => s.name === "A")!;
+		const bSeries = series.find((s) => s.name === "B")!;
 		expect(aSeries).toBeDefined();
 		expect(bSeries).toBeDefined();
 		// A is 0 in the February period; B is 0 in the January period
@@ -267,18 +273,196 @@ describe("computeMetagameEvolution", () => {
 			["p1", "A"],
 			["p2", "Unknown"],
 		]);
-		const result = computeMetagameEvolution([t], archetypes, "1w", {});
-		const a = result.find((s) => s.name === "A")!;
+		const { series } = computeMetagameEvolution([t], archetypes, "1w", {});
+		const a = series.find((s) => s.name === "A")!;
 		expect(a.points[0].share).toBeCloseTo(1); // only A counts
-		expect(result.find((s) => s.name === "Unknown")).toBeUndefined();
+		expect(series.find((s) => s.name === "Unknown")).toBeUndefined();
 	});
 
 	it("date range bounds: no periods outside earliest–latest", () => {
 		const t1 = makeT("2026-03-09", { p1: "A" }); // Monday of some week
 		const t2 = makeT("2026-03-15", { p2: "B" }); // Sunday of same week
 		const archetypes = makeMap({ p1: "A", p2: "B" });
-		const result = computeMetagameEvolution([t1, t2], archetypes, "1w", {});
+		const { series } = computeMetagameEvolution([t1, t2], archetypes, "1w", {});
 		// Both dates are in same ISO week → should be exactly 1 period
-		expect(result[0].points).toHaveLength(1);
+		expect(series[0].points).toHaveLength(1);
+	});
+});
+
+describe("computeMetagameEvolution — winners mode", () => {
+	it("basic filtering: top 25% of 20 players → only top 5 contribute", () => {
+		// 20 players, ranks 1-20. Top 10 play A, bottom 10 play B.
+		const players: Record<string, string> = {};
+		const ranks: Record<string, number> = {};
+		for (let i = 1; i <= 20; i++) {
+			players[`p${i}`] = i <= 10 ? "A" : "B";
+			ranks[`p${i}`] = i;
+		}
+		const t = makeT("2026-03-11", players, { ranks });
+		const archetypes = makeMap(players);
+		const { series } = computeMetagameEvolution([t], archetypes, "1w", {
+			winnersMode: true,
+			winnersCutoff: 0.25,
+		});
+		// Top 5 (rank 1-5) are all A → A=100%, B=0%
+		const a = series.find((s) => s.name === "A")!;
+		const b = series.find((s) => s.name === "B")!;
+		expect(a.points[0].share).toBeCloseTo(1);
+		expect(b.points[0].share).toBe(0);
+	});
+
+	it("cross-tournament normalization: each tournament contributes its own top X%", () => {
+		// Small tournament: 8 players, top 25% = top 2
+		const small: Record<string, string> = {};
+		const smallRanks: Record<string, number> = {};
+		for (let i = 1; i <= 8; i++) {
+			small[`s${i}`] = i <= 2 ? "A" : "B";
+			smallRanks[`s${i}`] = i;
+		}
+		// Large tournament: 200 players, top 25% = top 50
+		const large: Record<string, string> = {};
+		const largeRanks: Record<string, number> = {};
+		for (let i = 1; i <= 200; i++) {
+			large[`l${i}`] = i <= 50 ? "B" : "A";
+			largeRanks[`l${i}`] = i;
+		}
+		const t1 = makeT("2026-03-11", small, { ranks: smallRanks });
+		const t2 = makeT("2026-03-12", large, { ranks: largeRanks });
+		const archetypes = new Map([...makeMap(small), ...makeMap(large)]);
+		const { series } = computeMetagameEvolution([t1, t2], archetypes, "1w", {
+			winnersMode: true,
+			winnersCutoff: 0.25,
+		});
+		// Winners: small top 2 = 2A, large top 50 = 50B → A=2/52, B=50/52
+		const a = series.find((s) => s.name === "A")!;
+		const b = series.find((s) => s.name === "B")!;
+		expect(a.points[0].share).toBeCloseTo(2 / 52);
+		expect(b.points[0].share).toBeCloseTo(50 / 52);
+	});
+
+	it("rounding: 7 players at 25% → ceil(7*0.25)=2 qualify", () => {
+		const players: Record<string, string> = {};
+		const ranks: Record<string, number> = {};
+		for (let i = 1; i <= 7; i++) {
+			players[`p${i}`] = i <= 2 ? "A" : "B";
+			ranks[`p${i}`] = i;
+		}
+		const t = makeT("2026-03-11", players, { ranks });
+		const archetypes = makeMap(players);
+		const { series } = computeMetagameEvolution([t], archetypes, "1w", {
+			winnersMode: true,
+			winnersCutoff: 0.25,
+		});
+		const a = series.find((s) => s.name === "A")!;
+		expect(a.points[0].share).toBeCloseTo(1); // both qualifying are A
+	});
+
+	it("default behavior: winnersMode false → all players count", () => {
+		const players: Record<string, string> = {};
+		const ranks: Record<string, number> = {};
+		for (let i = 1; i <= 10; i++) {
+			players[`p${i}`] = i <= 5 ? "A" : "B";
+			ranks[`p${i}`] = i;
+		}
+		const t = makeT("2026-03-11", players, { ranks });
+		const archetypes = makeMap(players);
+		const { series } = computeMetagameEvolution([t], archetypes, "1w", {
+			winnersMode: false,
+		});
+		const a = series.find((s) => s.name === "A")!;
+		expect(a.points[0].share).toBeCloseTo(0.5); // 5/10
+	});
+
+	it("homogeneous field: all same archetype → 100% in both modes", () => {
+		const players: Record<string, string> = {};
+		const ranks: Record<string, number> = {};
+		for (let i = 1; i <= 10; i++) {
+			players[`p${i}`] = "A";
+			ranks[`p${i}`] = i;
+		}
+		const t = makeT("2026-03-11", players, { ranks });
+		const archetypes = makeMap(players);
+		const { series: fieldSeries } = computeMetagameEvolution([t], archetypes, "1w", {});
+		const { series: winnersSeries } = computeMetagameEvolution([t], archetypes, "1w", {
+			winnersMode: true,
+			winnersCutoff: 0.25,
+		});
+		expect(fieldSeries.find((s) => s.name === "A")!.points[0].share).toBeCloseTo(1);
+		expect(winnersSeries.find((s) => s.name === "A")!.points[0].share).toBeCloseTo(1);
+	});
+
+	it("incomplete data: cutoff exceeds available players → flag set", () => {
+		// playerCount=78 but only 32 players in data. At 50%: ceil(78*0.5)=39 > 32
+		const players: Record<string, string> = {};
+		const ranks: Record<string, number> = {};
+		for (let i = 1; i <= 32; i++) {
+			players[`p${i}`] = "A";
+			ranks[`p${i}`] = i;
+		}
+		const t = makeT("2026-03-11", players, { playerCount: 78, ranks });
+		const archetypes = makeMap(players);
+		const { incompleteData } = computeMetagameEvolution([t], archetypes, "1w", {
+			winnersMode: true,
+			winnersCutoff: 0.5,
+		});
+		expect(incompleteData).toBe(true);
+	});
+
+	it("incomplete data: cutoff within available players → flag not set", () => {
+		// playerCount=78, 32 players in data. At 25%: ceil(78*0.25)=20 <= 32
+		const players: Record<string, string> = {};
+		const ranks: Record<string, number> = {};
+		for (let i = 1; i <= 32; i++) {
+			players[`p${i}`] = "A";
+			ranks[`p${i}`] = i;
+		}
+		const t = makeT("2026-03-11", players, { playerCount: 78, ranks });
+		const archetypes = makeMap(players);
+		const { incompleteData } = computeMetagameEvolution([t], archetypes, "1w", {
+			winnersMode: true,
+			winnersCutoff: 0.25,
+		});
+		expect(incompleteData).toBe(false);
+	});
+
+	it("tied ranks at boundary: both players with cutoff rank are included", () => {
+		// 4 players, ranks 1, 2, 2, 4. Cutoff 50% → ceil(4*0.5)=2. Rank<=2 → 3 players.
+		const players: Record<string, string> = { p1: "A", p2: "A", p3: "B", p4: "B" };
+		const ranks: Record<string, number> = { p1: 1, p2: 2, p3: 2, p4: 4 };
+		const t = makeT("2026-03-11", players, { ranks });
+		const archetypes = makeMap(players);
+		const { series } = computeMetagameEvolution([t], archetypes, "1w", {
+			winnersMode: true,
+			winnersCutoff: 0.5,
+		});
+		// 3 players qualify (rank 1, 2, 2): 2 A + 1 B
+		const a = series.find((s) => s.name === "A")!;
+		const b = series.find((s) => s.name === "B")!;
+		expect(a.points[0].share).toBeCloseTo(2 / 3);
+		expect(b.points[0].share).toBeCloseTo(1 / 3);
+	});
+
+	it("global archetype set uses full field, not filtered winners", () => {
+		// 10 players: 6 play A (ranks 1-6), 4 play B (ranks 7-10)
+		// topN=1 from full field → A qualifies, B → Other
+		// winners top 50% = ranks 1-5, all A → A=100%, Other=0%
+		const players: Record<string, string> = {};
+		const ranks: Record<string, number> = {};
+		for (let i = 1; i <= 10; i++) {
+			players[`p${i}`] = i <= 6 ? "A" : "B";
+			ranks[`p${i}`] = i;
+		}
+		const t = makeT("2026-03-11", players, { ranks });
+		const archetypes = makeMap(players);
+		const { series } = computeMetagameEvolution([t], archetypes, "1w", {
+			topN: 1,
+			winnersMode: true,
+			winnersCutoff: 0.5,
+		});
+		const names = series.map((s) => s.name);
+		// A is top-1 from full field, B collapsed to Other
+		expect(names).toContain("A");
+		expect(names).toContain("Other");
+		expect(names).not.toContain("B");
 	});
 });

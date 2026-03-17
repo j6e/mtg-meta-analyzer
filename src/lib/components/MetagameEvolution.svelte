@@ -10,7 +10,6 @@
 		PointElement,
 		Tooltip,
 	} from 'chart.js';
-	import type { MatrixOptions } from '../utils/winrate-calculator';
 	import type { TournamentData } from '../types/tournament';
 	import {
 		computeMetagameEvolution,
@@ -18,6 +17,7 @@
 		type PeriodSize,
 	} from '../utils/metagame-evolution';
 	import { getScryfallImageUrl } from '../utils/card-normalizer';
+	import { settings } from '../stores/settings';
 
 	Chart.register(CategoryScale, Legend, LineController, LineElement, LinearScale, PointElement, Tooltip);
 
@@ -29,17 +29,24 @@
 	}: {
 		tournaments: TournamentData[];
 		playerArchetypes: Map<string, string>;
-		matrixOptions: MatrixOptions;
+		matrixOptions: { topN?: number; minMetagameShare?: number };
 		archetypeCardMap: Map<string, string>;
 	} = $props();
 
 	let periodSize = $state<PeriodSize>('2w');
+	let hiddenSeries = $state(new Set<string>());
 
-	const series = $derived(
+	const evolutionResult = $derived(
 		computeMetagameEvolution(tournaments, playerArchetypes, periodSize, {
 			topN: matrixOptions.topN,
 			minMetagameShare: matrixOptions.minMetagameShare,
-		}).filter((s) => s.name !== 'Other'),
+			winnersMode: $settings.winnersMode,
+			winnersCutoff: $settings.winnersCutoff,
+		}),
+	);
+
+	const series = $derived(
+		evolutionResult.series.filter((s) => s.name !== 'Other'),
 	);
 
 	let canvas: HTMLCanvasElement;
@@ -189,6 +196,13 @@
 		},
 	};
 
+	function toggleSeries(name: string) {
+		const next = new Set(hiddenSeries);
+		if (next.has(name)) next.delete(name);
+		else next.add(name);
+		hiddenSeries = next;
+	}
+
 	function buildChart(currentSeries: EvolutionSeries[]) {
 		hoveredDatasetIndex = -1;
 		if (chart) {
@@ -199,8 +213,11 @@
 
 		loadArchetypeImages(currentSeries.map((s) => s.name));
 
+		const visibleSeries = currentSeries.filter((s) => !hiddenSeries.has(s.name));
 		const labels = currentSeries[0].points.map((p) => p.label);
-		const maxShare = Math.max(...currentSeries.flatMap((s) => s.points.map((p) => p.share * 100)));
+		const maxShare = visibleSeries.length > 0
+			? Math.max(...visibleSeries.flatMap((s) => s.points.map((p) => (p.share ?? 0) * 100)))
+			: 10;
 		const yMax = Math.ceil(maxShare) + 2;
 
 		chart = new Chart(canvas, {
@@ -210,18 +227,20 @@
 				datasets: currentSeries.map((s, i) => {
 					const isOther = s.name === 'Other';
 					const color = isOther ? OTHER_COLOR : COLORS[i % COLORS.length];
+					const hidden = hiddenSeries.has(s.name);
 					return {
 						label: s.name,
 						archetypeName: s.name,
-					baseColor: color,
-						data: s.points.map((p) => p.share * 100),
-						pointRadius: s.points.map((p) => (p.share > 0 ? 10 : 0)),
-						pointHoverRadius: s.points.map((p) => (p.share > 0 ? 12 : 0)),
+						baseColor: color,
+						data: hidden ? s.points.map(() => null) : s.points.map((p) => (p.share === null ? null : p.share * 100)),
+						pointRadius: hidden ? 0 : s.points.map((p) => (p.share ? 10 : 0)),
+						pointHoverRadius: hidden ? 0 : s.points.map((p) => (p.share ? 12 : 0)),
+						spanGaps: true,
 						pointBackgroundColor: `${color}bb`,
 						pointBorderColor: color,
 						pointBorderWidth: 2,
 						borderColor: color,
-						borderWidth: 2,
+						borderWidth: hidden ? 0 : 2,
 						backgroundColor: 'transparent',
 						tension: 0.3,
 					};
@@ -261,8 +280,9 @@
 	onDestroy(() => chart?.destroy());
 
 	$effect(() => {
-		void series.length; // track dependency
-		if (canvas) buildChart(series);
+		const s = series;
+		void hiddenSeries;
+		if (canvas) buildChart(s);
 	});
 </script>
 
@@ -276,15 +296,53 @@
 			onclick={() => (periodSize = value as PeriodSize)}
 		>{label}</button>
 	{/each}
+
+	<span class="separator"></span>
+
+	<span class="label" title="Field shows all players. Winners shows only the top finishers.">View:</span>
+	<button
+		type="button"
+		class="period-btn"
+		class:active={!$settings.winnersMode}
+		onclick={() => ($settings.winnersMode = false)}
+		title="Metagame share across all tournament participants"
+	>Field</button>
+	<button
+		type="button"
+		class="period-btn"
+		class:active={$settings.winnersMode}
+		onclick={() => ($settings.winnersMode = true)}
+		title="Metagame share among top finishers only"
+	>Winners</button>
+
+	{#if $settings.winnersMode}
+		<select
+			class="cutoff-select"
+			value={$settings.winnersCutoff}
+			onchange={(e) => ($settings.winnersCutoff = Number(e.currentTarget.value))}
+		>
+			{#each [0.10, 0.15, 0.20, 0.25, 0.30, 0.35, 0.40, 0.45, 0.50] as pct}
+				<option value={pct}>{Math.round(pct * 100)}%</option>
+			{/each}
+		</select>
+	{/if}
 </div>
 
 <div class="chart-container">
+	{#if $settings.winnersMode}
+		<span class="chart-subtitle">Top {Math.round($settings.winnersCutoff * 100)}%</span>
+	{/if}
 	<canvas bind:this={canvas} data-testid="evolution-canvas"></canvas>
 </div>
 
 <div class="legend">
 	{#each series as s, i}
-		<span class="legend-item">
+		<button
+			type="button"
+			class="legend-item"
+			class:legend-hidden={hiddenSeries.has(s.name)}
+			onclick={() => toggleSeries(s.name)}
+		>
 			{#if archetypeCardMap.has(s.name)}
 				<img
 					class="legend-art"
@@ -298,8 +356,13 @@
 				></span>
 			{/if}
 			{s.name}
-		</span>
+		</button>
 	{/each}
+	{#if evolutionResult.incompleteData && $settings.winnersMode}
+		<span class="legend-warning">
+			⚠ Some tournaments have incomplete data for this cutoff
+		</span>
+	{/if}
 </div>
 
 <style>
@@ -358,6 +421,24 @@
 		display: flex;
 		align-items: center;
 		gap: 0.3rem;
+		cursor: pointer;
+		background: none;
+		border: none;
+		padding: 0.1rem 0.3rem;
+		border-radius: 4px;
+		font: inherit;
+		font-size: 0.8rem;
+		color: inherit;
+		transition: opacity 0.15s;
+	}
+
+	.legend-item:hover {
+		background: var(--color-hover, rgba(0, 0, 0, 0.05));
+	}
+
+	.legend-hidden {
+		opacity: 0.4;
+		filter: grayscale(1);
 	}
 
 	.dot {
@@ -373,5 +454,35 @@
 		border-radius: 50%;
 		object-fit: cover;
 		border: 1px solid var(--color-border);
+	}
+
+	.separator {
+		width: 1px;
+		height: 1.2rem;
+		background: var(--color-border);
+		margin: 0 0.4rem;
+	}
+
+	.cutoff-select {
+		padding: 0.15rem 0.4rem;
+		border-radius: 9999px;
+		border: 1px solid var(--color-border);
+		background: var(--color-surface);
+		font-size: 0.8rem;
+		color: var(--color-text);
+		cursor: pointer;
+	}
+
+	.chart-subtitle {
+		display: block;
+		font-size: 0.8rem;
+		color: var(--color-text-muted);
+		margin-bottom: 0.5rem;
+	}
+
+	.legend-warning {
+		font-size: 0.75rem;
+		color: var(--color-warning, #b45309);
+		font-style: italic;
 	}
 </style>
