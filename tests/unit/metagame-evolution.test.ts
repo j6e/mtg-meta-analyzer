@@ -9,7 +9,12 @@ import {
 
 // --- Helpers ---
 
-function makeT(date: string, players: Record<string, string>): TournamentData {
+function makeT(
+	date: string,
+	players: Record<string, string>,
+	opts?: { playerCount?: number; ranks?: Record<string, number> },
+): TournamentData {
+	const ids = Object.keys(players);
 	return {
 		meta: {
 			id: `t-${date}`,
@@ -18,18 +23,18 @@ function makeT(date: string, players: Record<string, string>): TournamentData {
 			formats: ["Standard"],
 			url: "",
 			fetchedAt: "",
-			playerCount: Object.keys(players).length,
+			playerCount: opts?.playerCount ?? ids.length,
 			roundCount: 1,
 			source: "melee",
 			tabletop: true,
 		},
 		players: Object.fromEntries(
-			Object.keys(players).map((id) => [
+			ids.map((id, i) => [
 				id,
 				{
 					name: id,
 					username: id,
-					rank: 1,
+					rank: opts?.ranks?.[id] ?? i + 1,
 					points: 0,
 					matchRecord: "0-0-0",
 					decklistIds: [],
@@ -179,15 +184,16 @@ describe("generatePeriods — 1m", () => {
 
 describe("computeMetagameEvolution", () => {
 	it("returns [] for empty tournaments", () => {
-		expect(computeMetagameEvolution([], new Map(), "1w", {})).toEqual([]);
+		const { series } = computeMetagameEvolution([], new Map(), "1w", {});
+		expect(series).toEqual([]);
 	});
 
 	it("basic share computation: single period, two archetypes", () => {
 		const t = makeT("2026-03-11", { p1: "A", p2: "A", p3: "B" });
 		const archetypes = makeMap({ p1: "A", p2: "A", p3: "B" });
-		const result = computeMetagameEvolution([t], archetypes, "1w", {});
-		const a = result.find((s) => s.name === "A")!;
-		const b = result.find((s) => s.name === "B")!;
+		const { series } = computeMetagameEvolution([t], archetypes, "1w", {});
+		const a = series.find((s) => s.name === "A")!;
+		const b = series.find((s) => s.name === "B")!;
 		expect(a).toBeDefined();
 		expect(b).toBeDefined();
 		// A: 2/3, B: 1/3
@@ -200,9 +206,9 @@ describe("computeMetagameEvolution", () => {
 		const t1 = makeT("2026-01-05", { p1: "A" });
 		const t2 = makeT("2026-03-11", { p2: "A" });
 		const archetypes = makeMap({ p1: "A", p2: "A" });
-		const result = computeMetagameEvolution([t1, t2], archetypes, "1w", {});
+		const { series } = computeMetagameEvolution([t1, t2], archetypes, "1w", {});
 		// Periods with no tournaments should have null share (skipped in charts)
-		const emptyPeriods = result[0].points.filter((p) => p.share === null);
+		const emptyPeriods = series[0].points.filter((p) => p.share === null);
 		expect(emptyPeriods.length).toBeGreaterThan(0);
 	});
 
@@ -210,17 +216,17 @@ describe("computeMetagameEvolution", () => {
 		const t1 = makeT("2026-01-05", { p1: "A" });
 		const t2 = makeT("2026-02-11", { p2: "B" });
 		const archetypes = makeMap({ p1: "A", p2: "B" });
-		const result = computeMetagameEvolution([t1, t2], archetypes, "1m", {});
+		const { series } = computeMetagameEvolution([t1, t2], archetypes, "1m", {});
 		// First period clipped to Jan 5 (earliest tournament), last is full February
-		expect(result[0].points[0].label).toBe("Jan 5–31");
-		expect(result[0].points[result[0].points.length - 1].label).toBe("February 2026");
+		expect(series[0].points[0].label).toBe("Jan 5–31");
+		expect(series[0].points[series[0].points.length - 1].label).toBe("February 2026");
 	});
 
 	it("topN collapsing: top 1 of 2 archetypes → Other appears", () => {
 		const t = makeT("2026-03-11", { p1: "A", p2: "A", p3: "B" });
 		const archetypes = makeMap({ p1: "A", p2: "A", p3: "B" });
-		const result = computeMetagameEvolution([t], archetypes, "1w", { topN: 1 });
-		const names = result.map((s) => s.name);
+		const { series } = computeMetagameEvolution([t], archetypes, "1w", { topN: 1 });
+		const names = series.map((s) => s.name);
 		expect(names).toContain("A");
 		expect(names).toContain("Other");
 		expect(names).not.toContain("B");
@@ -233,10 +239,10 @@ describe("computeMetagameEvolution", () => {
 		players.b0 = "B";
 		const t = makeT("2026-03-11", players);
 		const archetypes = makeMap(players);
-		const result = computeMetagameEvolution([t], archetypes, "1w", {
+		const { series } = computeMetagameEvolution([t], archetypes, "1w", {
 			minMetagameShare: 0.15,
 		});
-		const names = result.map((s) => s.name);
+		const names = series.map((s) => s.name);
 		expect(names).toContain("A");
 		expect(names).toContain("Other");
 		expect(names).not.toContain("B");
@@ -246,9 +252,9 @@ describe("computeMetagameEvolution", () => {
 		const t1 = makeT("2026-01-05", { p1: "A" });
 		const t2 = makeT("2026-02-05", { p2: "B" });
 		const archetypes = makeMap({ p1: "A", p2: "B" });
-		const result = computeMetagameEvolution([t1, t2], archetypes, "1m", {});
-		const aSeries = result.find((s) => s.name === "A")!;
-		const bSeries = result.find((s) => s.name === "B")!;
+		const { series } = computeMetagameEvolution([t1, t2], archetypes, "1m", {});
+		const aSeries = series.find((s) => s.name === "A")!;
+		const bSeries = series.find((s) => s.name === "B")!;
 		expect(aSeries).toBeDefined();
 		expect(bSeries).toBeDefined();
 		// A is 0 in the February period; B is 0 in the January period
@@ -267,18 +273,18 @@ describe("computeMetagameEvolution", () => {
 			["p1", "A"],
 			["p2", "Unknown"],
 		]);
-		const result = computeMetagameEvolution([t], archetypes, "1w", {});
-		const a = result.find((s) => s.name === "A")!;
+		const { series } = computeMetagameEvolution([t], archetypes, "1w", {});
+		const a = series.find((s) => s.name === "A")!;
 		expect(a.points[0].share).toBeCloseTo(1); // only A counts
-		expect(result.find((s) => s.name === "Unknown")).toBeUndefined();
+		expect(series.find((s) => s.name === "Unknown")).toBeUndefined();
 	});
 
 	it("date range bounds: no periods outside earliest–latest", () => {
 		const t1 = makeT("2026-03-09", { p1: "A" }); // Monday of some week
 		const t2 = makeT("2026-03-15", { p2: "B" }); // Sunday of same week
 		const archetypes = makeMap({ p1: "A", p2: "B" });
-		const result = computeMetagameEvolution([t1, t2], archetypes, "1w", {});
+		const { series } = computeMetagameEvolution([t1, t2], archetypes, "1w", {});
 		// Both dates are in same ISO week → should be exactly 1 period
-		expect(result[0].points).toHaveLength(1);
+		expect(series[0].points).toHaveLength(1);
 	});
 });
