@@ -46,8 +46,9 @@ Inside `computeMetagameEvolution()`, when `winnersMode` is `true`:
 
 ```
 For each tournament t in period:
-  cutoffRank = ceil(t.meta.playerCount * winnersCutoff)
-  For each player in t.players:
+  availablePlayers = Object.keys(t.players).length
+  cutoffRank = ceil(availablePlayers * winnersCutoff)
+  For each [playerId, player] in Object.entries(t.players):
     if player.rank <= cutoffRank:
       count toward archetype shares
     else:
@@ -56,7 +57,13 @@ For each tournament t in period:
 
 When `winnersMode` is `false` (default), all players count — identical to current behavior.
 
-Key detail: the cutoff uses `t.meta.playerCount` (the actual number of entrants), not the number of players with decklists, to ensure the percentile is accurate even when some decklists are missing.
+Key detail: the cutoff uses the count of players actually present in `t.players`, NOT `t.meta.playerCount`. This is because MTGO tournaments typically only include top-32 decklists even when the tournament had 60-90+ entrants. Using `playerCount` as denominator would include 62% of available data when intending to filter to 25%. Using the actual available player count ensures the percentile is meaningful within the data we have.
+
+Note: both the global archetype count loop and the per-period loop currently iterate with `Object.keys(t.players)`. Both must be changed to `Object.entries(t.players)` to access `player.rank` for filtering.
+
+### Global archetype ranking in winners mode
+
+When `winnersMode` is `true`, the global archetype counts (used for `topN` / `minMetagameShare` collapsing into "Other") are also computed from winners-only data. This ensures the "top N archetypes" reflect what winners are actually playing, not the full field. An archetype popular in the field but absent from top tables should not consume a top-N slot in winners mode.
 
 ## UI
 
@@ -80,7 +87,9 @@ Two new fields in the settings store (`src/lib/stores/settings.ts`):
 - `winnersMode: boolean` — default `false`
 - `winnersCutoff: number` — default `0.25`
 
-These persist across page navigation like existing settings.
+These persist across SPA page navigation (same as existing settings; not persisted across page reloads).
+
+Default values must be added to `makeDefaults()` in `settings.ts`: `winnersMode: false`, `winnersCutoff: 0.25`.
 
 ## Files Modified
 
@@ -88,7 +97,7 @@ These persist across page navigation like existing settings.
 |------|--------|
 | `src/lib/utils/metagame-evolution.ts` | New `EvolutionOptions` type; add rank-based filtering to `computeMetagameEvolution()` |
 | `src/lib/stores/settings.ts` | Add `winnersMode` and `winnersCutoff` fields |
-| `src/lib/components/MetagameEvolution.svelte` | Add Field/Winners toggle, cutoff dropdown, subtitle indicator |
+| `src/lib/components/MetagameEvolution.svelte` | Add Field/Winners toggle, cutoff dropdown, subtitle indicator. Read `winnersMode`/`winnersCutoff` from settings store and pass into `computeMetagameEvolution()` (same pattern as existing `topN`/`minMetagameShare`). |
 | `tests/unit/metagame-evolution.test.ts` | Test cases for winners mode |
 
 ## Files NOT Modified
@@ -105,3 +114,5 @@ Unit tests with synthetic tournament data:
 3. **Rounding**: Tournament with 7 players at 25% cutoff → `ceil(7 * 0.25) = 2` players qualify.
 4. **Default behavior**: With `winnersMode: false`, output is identical to current implementation.
 5. **Homogeneous field**: All players play the same archetype → 100% share in both modes.
+6. **Partial data (MTGO)**: Tournament with `playerCount: 78` but only 32 players in data (all ranked 1–32). Cutoff at 25% → top `ceil(32 * 0.25) = 8` players qualify.
+7. **Tied ranks at boundary**: Two players share the cutoff rank — both are included (rank <= cutoffRank).
