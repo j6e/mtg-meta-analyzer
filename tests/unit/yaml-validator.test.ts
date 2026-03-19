@@ -120,4 +120,68 @@ archetypes:
 		const result = validateArchetypeYaml("just a string");
 		expect(result.ok).toBe(false);
 	});
+
+	// --- anyOf tests ---
+
+	it("validates anyOf groups in signature cards", () => {
+		const yaml = `
+archetypes:
+  - name: Mardu Pride
+    signatureCards:
+      - name: Ocelot Pride
+        minCopies: 3
+      - anyOf:
+          - name: Orcish Bowmasters
+            minCopies: 1
+          - name: Scrubland
+            minCopies: 1
+`;
+		const result = validateArchetypeYaml(yaml);
+		expect(result.ok).toBe(true);
+		expect(result.errors).toHaveLength(0);
+	});
+
+	it("returns error for empty anyOf group", () => {
+		const yaml = `
+archetypes:
+  - name: Bad
+    signatureCards:
+      - anyOf: []
+`;
+		const result = validateArchetypeYaml(yaml);
+		expect(result.ok).toBe(false);
+		expect(result.errors.some((e) => e.includes("anyOf: must not be empty"))).toBe(
+			true,
+		);
+	});
+
+	it("validates cards inside anyOf groups", () => {
+		const yaml = `
+archetypes:
+  - name: Bad
+    signatureCards:
+      - anyOf:
+          - minCopies: 1
+`;
+		const result = validateArchetypeYaml(yaml);
+		expect(result.ok).toBe(false);
+		expect(result.errors.some((e) => e.includes('missing or invalid "name"'))).toBe(
+			true,
+		);
+	});
+
+	it("warns on anyOf cards missing minCopies/exactCopies", () => {
+		const yaml = `
+archetypes:
+  - name: Test
+    signatureCards:
+      - anyOf:
+          - name: Some Card
+`;
+		const result = validateArchetypeYaml(yaml);
+		expect(result.ok).toBe(true);
+		expect(result.warnings.some((w) => w.includes("no minCopies or exactCopies"))).toBe(
+			true,
+		);
+	});
 });

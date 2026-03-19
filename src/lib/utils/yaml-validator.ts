@@ -7,6 +7,31 @@ export interface ValidationResult {
 	warnings: string[];
 }
 
+function validateSignatureCard(
+	card: Record<string, unknown>,
+	prefix: string,
+	errors: string[],
+	warnings: string[],
+): void {
+	if (!card || typeof card !== "object") {
+		errors.push(`${prefix}: must be an object`);
+		return;
+	}
+
+	if (!card.name || typeof card.name !== "string") {
+		errors.push(`${prefix}: missing or invalid "name"`);
+	}
+
+	const hasMin = card.minCopies !== undefined;
+	const hasExact = card.exactCopies !== undefined;
+
+	if (!hasMin && !hasExact) {
+		warnings.push(
+			`${prefix} (${card.name ?? "?"}): no minCopies or exactCopies (defaults to minCopies: 1)`,
+		);
+	}
+}
+
 /**
  * Validate archetype YAML content with structured error/warning output.
  */
@@ -89,26 +114,29 @@ export function validateArchetypeYaml(yamlContent: string): ValidationResult {
 		}
 
 		for (let j = 0; j < arch.signatureCards.length; j++) {
-			const card = arch.signatureCards[j] as Record<string, unknown>;
-			const cardPrefix = `${prefix}.signatureCards[${j}]`;
+			const entry = arch.signatureCards[j] as Record<string, unknown>;
+			const entryPrefix = `${prefix}.signatureCards[${j}]`;
 
-			if (!card || typeof card !== "object") {
-				errors.push(`${cardPrefix}: must be an object`);
+			if (!entry || typeof entry !== "object") {
+				errors.push(`${entryPrefix}: must be an object`);
 				continue;
 			}
 
-			if (!card.name || typeof card.name !== "string") {
-				errors.push(`${cardPrefix}: missing or invalid "name"`);
+			if (Array.isArray(entry.anyOf)) {
+				// Validate anyOf group
+				if (entry.anyOf.length === 0) {
+					errors.push(`${entryPrefix}.anyOf: must not be empty`);
+					continue;
+				}
+				for (let k = 0; k < entry.anyOf.length; k++) {
+					const card = entry.anyOf[k] as Record<string, unknown>;
+					const cardPrefix = `${entryPrefix}.anyOf[${k}]`;
+					validateSignatureCard(card, cardPrefix, errors, warnings);
+				}
+				continue;
 			}
 
-			const hasMin = card.minCopies !== undefined;
-			const hasExact = card.exactCopies !== undefined;
-
-			if (!hasMin && !hasExact) {
-				warnings.push(
-					`${cardPrefix} (${card.name ?? "?"}): no minCopies or exactCopies (defaults to minCopies: 1)`,
-				);
-			}
+			validateSignatureCard(entry, entryPrefix, errors, warnings);
 		}
 	}
 
