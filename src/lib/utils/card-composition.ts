@@ -1,4 +1,5 @@
 import type { CardEntry, DecklistInfo } from "../types/decklist";
+import { getFrontFace } from "./card-normalizer";
 
 export interface CardCompositionRow {
 	cardName: string;
@@ -50,10 +51,8 @@ function collectQuantities(sections: CardEntry[][]): Map<string, number[]> {
 		// Build per-deck quantity for this section
 		const deckCards = new Map<string, number>();
 		for (const entry of section) {
-			deckCards.set(
-				entry.cardName,
-				(deckCards.get(entry.cardName) ?? 0) + entry.quantity,
-			);
+			const name = getFrontFace(entry.cardName);
+			deckCards.set(name, (deckCards.get(name) ?? 0) + entry.quantity);
 		}
 		for (const [name, qty] of deckCards) {
 			let arr = cards.get(name);

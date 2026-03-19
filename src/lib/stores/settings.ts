@@ -22,6 +22,10 @@ export interface MetaSettings {
 	otherMode: OtherMode;
 	topN: number; // 0 = show all (only used when otherMode = 'topN')
 	minMetagameShare: number; // 0-100 as percentage (only used when otherMode = 'minShare')
+
+	// Winners mode
+	winnersMode: boolean;
+	winnersCutoff: number; // 0.10–0.50
 }
 
 export function isoDate(date: Date): string {
@@ -44,6 +48,8 @@ export function makeDefaults(): MetaSettings {
 		otherMode: "minShare",
 		topN: 0,
 		minMetagameShare: 2,
+		winnersMode: false,
+		winnersCutoff: 0.25,
 	};
 }
 
