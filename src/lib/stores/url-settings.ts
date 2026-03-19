@@ -143,6 +143,8 @@ export function searchParamsToSettings(params: URLSearchParams): MetaSettings {
 		minMetagameShare,
 		paperOnly: defaults.paperOnly,
 		useStandings: defaults.useStandings,
+		winnersMode: defaults.winnersMode,
+		winnersCutoff: defaults.winnersCutoff,
 	};
 }
 
