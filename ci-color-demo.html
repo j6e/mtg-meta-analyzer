@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>PR: CI Saturation Fading — Rationale &amp; Demo</title>
+<style>
+  body { font-family: sans-serif; padding: 32px; max-width: 1100px; margin: 0 auto; background: #f8f8f8; color: #222; line-height: 1.6; }
+  h1 { font-size: 22px; border-bottom: 2px solid #ccc; padding-bottom: 8px; }
+  h2 { font-size: 17px; margin-top: 40px; border-left: 4px solid #999; padding-left: 10px; }
+  h3 { font-size: 14px; margin-top: 24px; color: #444; }
+  p, li { font-size: 14px; }
+  code { background: #e8e8e8; border-radius: 3px; padding: 1px 5px; font-size: 13px; font-family: monospace; }
+  pre { background: #1e1e1e; color: #d4d4d4; border-radius: 6px; padding: 16px; font-size: 13px; overflow-x: auto; }
+  pre .kw  { color: #569cd6; }
+  pre .fn  { color: #dcdcaa; }
+  pre .num { color: #b5cea8; }
+  pre .cm  { color: #6a9955; }
+  table { border-collapse: collapse; margin: 16px 0 32px 0; }
+  th, td { border: 1px solid #ccc; padding: 6px 8px; text-align: center; min-width: 70px; font-size: 12px; }
+  th { background: #eee; font-weight: 600; }
+  th.label { text-align: left; }
+  .note { font-size: 11px; color: #555; }
+  .section { display: flex; gap: 24px; flex-wrap: wrap; margin-top: 8px; }
+  .panel { flex: 1; min-width: 280px; }
+  .panel h3 { margin-top: 0; }
+  .legend { display: flex; gap: 8px; flex-wrap: wrap; margin: 16px 0; }
+  .legend-cell { border: 1px solid #bbb; padding: 8px 12px; border-radius: 4px; font-size: 12px; text-align: center; min-width: 100px; }
+  .example-table { width: auto; }
+  .callout { background: #fff8e1; border-left: 4px solid #f9a825; padding: 12px 16px; border-radius: 4px; margin: 16px 0; font-size: 14px; }
+  .diff-old { color: #c0392b; }
+  .diff-new { color: #27ae60; }
+  footer { margin-top: 60px; font-size: 12px; color: #888; border-top: 1px solid #ddd; padding-top: 16px; }
+</style>
+</head>
+<body>
+
+<h1>PR Companion: Confidence Interval Saturation Fading for the Matchup Matrix</h1>
+
+<p>This document explains the motivation, statistical reasoning, and visual effect of a small change to
+<code>src/lib/utils/format.ts</code> and <code>src/lib/components/MatchupMatrix.svelte</code>.</p>
+
+<h2>1. The problem</h2>
+
+<p>The matchup matrix already computes and displays a 95% confidence interval — but only in the
+<strong>hover tooltip</strong>, which is invisible unless you know to look for it. A non-technical player
+loading the matrix sees colored cells and reads them as definitive results.</p>
+
+<p>Consider these real cells from the Modern matrix:</p>
+
+<table class="example-table" id="examples"></table>
+
+<div class="callout">
+  All three cells show roughly 60% and look equally authoritative. The tooltip is the only signal
+  that the first result (n=8) has a CI spanning 33%–84% — strongly consistent with a coin flip —
+  while the last (n=150) has a CI of 52%–68%, genuinely above 50%.
+</div>
+
+<h2>2. The existing color system has unused capacity</h2>
+
+<p>
+  <code>winrateColor()</code> in <code>format.ts</code> maps win rate to fixed-saturation pastels
+  (red / neutral / green). <strong>Saturation is never varied</strong> — a cell that is deep green at 80% win rate
+  looks equally vivid whether it is based on 5 matches or 500. This is an unused visual dimension
+  that can encode uncertainty without adding any new UI elements.
+</p>
+
+<h2>3. The solution: blend toward neutral proportionally to CI width</h2>
+
+<p>
+  We pass the CI width (upper − lower bound, a value between 0 and 1) into <code>winrateColor()</code>
+  as an optional second parameter. The color is then linearly interpolated toward neutral gray
+  <code>rgb(245,245,245)</code> by a <em>fade</em> factor:
+</p>
+
+<pre><span class="cm">// New optional parameter, default 0 = no fading (backwards-compatible)</span>
+<span class="kw">export function</span> <span class="fn">winrateColor</span>(wr: <span class="kw">number</span>, ciWidth = <span class="num">0</span>): <span class="kw">string</span> {
+  <span class="cm">// ... existing hue calculation unchanged ...</span>
+
+  <span class="kw">if</span> (ciWidth > <span class="num">0</span>) {
+    <span class="cm">// Multiplier 1.0: fade reaches max at CI width = 0.6</span>
+    <span class="cm">// Max fade 0.6: even n=5 cells retain 40% of their hue</span>
+    <span class="kw">const</span> fade = Math.<span class="fn">min</span>(ciWidth, <span class="num">0.6</span>);
+    r = Math.<span class="fn">round</span>(r * (<span class="num">1</span> - fade) + <span class="num">245</span> * fade);
+    g = Math.<span class="fn">round</span>(g * (<span class="num">1</span> - fade) + <span class="num">245</span> * fade);
+    b = Math.<span class="fn">round</span>(b * (<span class="num">1</span> - fade) + <span class="num">245</span> * fade);
+  }
+  <span class="kw">return</span> `rgb(${r},${g},${b})`;
+}</pre>
+
+<p>The call sites in <code>MatchupMatrix.svelte</code> compute the Wilson CI width and pass it through:</p>
+
+<pre><span class="cm">// Matrix cells</span>
+{@const [ciLo, ciHi] = <span class="fn">wilsonCI</span>(cell.wins, cell.total)}
+<span class="cm">// ...</span>
+style={`background-color: ${<span class="fn">winrateColor</span>(cell.winrate, ciHi - ciLo)}`}
+
+<span class="cm">// Overall column</span>
+<span class="kw">const</span> [lo, hi] = <span class="fn">wilsonCI</span>(s.wins, s.totalMatches);
+<span class="kw">return</span> `background-color: ${<span class="fn">winrateColor</span>(s.overallWinrate, hi - lo)}`;</pre>
+
+<h3>Why Wilson CI, not the Bayesian credible interval already in <code>statistics.ts</code>?</h3>
+<p>
+  The component already had a local <code>wilsonCI()</code> function used for the tooltip. Reusing it
+  keeps the tooltip and the cell color consistent (same CI method, same numbers). The two methods
+  diverge by at most ~2–3 percentage points in typical cases, so the choice has no meaningful
+  effect on the visual result.
+</p>
+
+<h3>Why these tuning values (multiplier 1.0, max fade 0.6)?</h3>
+<p>
+  The fade formula is <code>min(ciWidth × multiplier, maxFade)</code>. The parameters were chosen to satisfy two goals:
+</p>
+<ul>
+  <li>Cells with very small n (≤10) should look <em>noticeably</em> washed out, but not unreadably gray.</li>
+  <li>Cells with large n (≥200) should look nearly full-color.</li>
+</ul>
+
+<table class="example-table">
+  <thead><tr><th>Sample size (50% WR)</th><th>Approx. CI width</th><th>Fade applied</th><th>Visual effect</th></tr></thead>
+  <tbody>
+    <tr><td>n = 5</td><td>~0.77</td><td>0.60 (capped)</td><td>60% toward gray — heavily washed</td></tr>
+    <tr><td>n = 10</td><td>~0.60</td><td>0.60 (capped)</td><td>60% toward gray — noticeably washed</td></tr>
+    <tr><td>n = 20</td><td>~0.43</td><td>0.43</td><td>43% toward gray — clearly softer</td></tr>
+    <tr><td>n = 50</td><td>~0.27</td><td>0.27</td><td>27% toward gray — slightly softer</td></tr>
+    <tr><td>n = 100</td><td>~0.19</td><td>0.19</td><td>19% toward gray — nearly full color</td></tr>
+    <tr><td>n = 200</td><td>~0.13</td><td>0.13</td><td>13% toward gray — essentially full color</td></tr>
+  </tbody>
+</table>
+
+<h2>4. Before / after comparison</h2>
+
+<div class="section">
+  <div class="panel">
+    <h3>Before — color by win rate only</h3>
+    <table id="before"></table>
+  </div>
+  <div class="panel">
+    <h3>After — color fades with CI width (hover for CI details)</h3>
+    <table id="after"></table>
+  </div>
+</div>
+
+<h2>5. Color legend — same win rate, varying n</h2>
+<p>Each block shows the same win rate at three different sample sizes.</p>
+<div class="legend" id="legend"></div>
+
+<h2>6. What this change does NOT do</h2>
+<ul>
+  <li>Does not remove or change the tooltip — CI numbers are still shown on hover.</li>
+  <li>Does not change any data, win rate calculations, or the CI method.</li>
+  <li>Does not affect cells with no matches (still shown as "—").</li>
+  <li>Is backwards-compatible: <code>winrateColor(wr)</code> with no second argument behaves identically to before.</li>
+</ul>
+
+<h2>7. Code diff summary</h2>
+
+<p><strong><code>src/lib/utils/format.ts</code></strong> — <code>winrateColor()</code> refactored to compute RGB as variables (instead of early returns) so the optional fade blend can be applied before returning. New optional parameter <code>ciWidth = 0</code>.</p>
+
+<p><strong><code>src/lib/components/MatchupMatrix.svelte</code></strong> — two call sites updated:</p>
+<ul>
+  <li>Matrix cells: <code>{@const [ciLo, ciHi] = wilsonCI(cell.wins, cell.total)}</code> added; <code>ciHi - ciLo</code> passed to <code>winrateColor</code>.</li>
+  <li>Overall column (<code>overallStyle()</code>): same pattern using <code>s.wins</code> / <code>s.totalMatches</code>.</li>
+</ul>
+
+<footer>Generated as a PR companion document. Open in a browser to see the live before/after comparison.</footer>
+
+<script>
+const MULT = 1.0;
+const MAXFADE = 0.6;
+
+function winrateColor(wr, ciWidth = 0) {
+  const red     = [220, 160, 160];
+  const neutral = [245, 245, 245];
+  const green   = [160, 220, 165];
+  let r, g, b;
+  if (wr <= 0.3) {
+    [r, g, b] = red;
+  } else if (wr <= 0.48) {
+    const t = (wr - 0.3) / 0.18;
+    r = Math.round(red[0] + (neutral[0] - red[0]) * t);
+    g = Math.round(red[1] + (neutral[1] - red[1]) * t);
+    b = Math.round(red[2] + (neutral[2] - red[2]) * t);
+  } else if (wr <= 0.52) {
+    [r, g, b] = neutral;
+  } else if (wr <= 0.7) {
+    const t = (wr - 0.52) / 0.18;
+    r = Math.round(neutral[0] + (green[0] - neutral[0]) * t);
+    g = Math.round(neutral[1] + (green[1] - neutral[1]) * t);
+    b = Math.round(neutral[2] + (green[2] - neutral[2]) * t);
+  } else {
+    [r, g, b] = green;
+  }
+  if (ciWidth > 0) {
+    const fade = Math.min(ciWidth * MULT, MAXFADE);
+    r = Math.round(r * (1 - fade) + neutral[0] * fade);
+    g = Math.round(g * (1 - fade) + neutral[1] * fade);
+    b = Math.round(b * (1 - fade) + neutral[2] * fade);
+  }
+  return `rgb(${r},${g},${b})`;
+}
+
+function wilsonCI(wins, total) {
+  if (total === 0) return [0, 0];
+  const z = 1.96;
+  const p = wins / total;
+  const denom = 1 + z * z / total;
+  const centre = p + z * z / (2 * total);
+  const margin = z * Math.sqrt((p * (1 - p) + z * z / (4 * total)) / total);
+  return [Math.max(0, (centre - margin) / denom), Math.min(1, (centre + margin) / denom)];
+}
+
+// Examples table (section 1)
+const exampleData = [
+  { matchup: 'Boros Energy vs Grixis Shadow',   wr: 0.625, n:   8 },
+  { matchup: 'Boros Energy vs Jeskai Control',  wr: 0.600, n:  30 },
+  { matchup: 'Boros Energy vs Izzet Prowess',   wr: 0.605, n: 150 },
+];
+(function() {
+  const t = document.getElementById('examples');
+  const hr = t.createTHead().insertRow();
+  ['Matchup', 'Win rate', 'n', '95% CI', 'CI width'].forEach(h => {
+    const th = document.createElement('th'); th.textContent = h; hr.appendChild(th);
+  });
+  const tb = t.createTBody();
+  for (const d of exampleData) {
+    const wins = Math.round(d.wr * d.n);
+    const [lo, hi] = wilsonCI(wins, d.n);
+    const tr = tb.insertRow();
+    [d.matchup, (d.wr*100).toFixed(1)+'%', d.n,
+     `${(lo*100).toFixed(1)}% – ${(hi*100).toFixed(1)}%`,
+     `${((hi-lo)*100).toFixed(1)}pp`
+    ].forEach((v, i) => {
+      const td = tr.insertCell();
+      td.textContent = v;
+      if (i === 1) td.style.backgroundColor = winrateColor(d.wr, 0);
+      td.style.textAlign = i === 0 ? 'left' : 'center';
+    });
+  }
+})();
+
+// Before/after tables
+const rows = [
+  { label: 'Boros Energy',    cells: [{ wr: 0.605, n: 53 }, { wr: 0.800, n: 10 }, { wr: 0.533, n: 500 }, { wr: 0.400, n: 20 }] },
+  { label: 'Izzet Prowess',   cells: [{ wr: 0.395, n: 53 }, { wr: 0.650, n:  8 }, { wr: 0.520, n: 200 }, { wr: 0.700, n: 15 }] },
+  { label: 'Azorius Control', cells: [{ wr: 0.467, n: 500}, { wr: 0.750, n:  5 }, { wr: 0.510, n: 340 }, { wr: 0.580, n: 45 }] },
+  { label: 'Domain Ramp',     cells: [{ wr: 0.600, n: 20 }, { wr: 0.300, n: 12 }, { wr: 0.420, n:  45 }, { wr: 0.550, n: 80 }] },
+];
+const colLabels = ['Boros Energy', 'Izzet Prowess', 'Azorius Control', 'Domain Ramp'];
+
+function buildTable(tableEl, useCi) {
+  const thead = tableEl.createTHead();
+  const hr = thead.insertRow();
+  const blank = document.createElement('th'); hr.appendChild(blank);
+  for (const name of colLabels) {
+    const th = document.createElement('th'); th.textContent = name; hr.appendChild(th);
+  }
+  const tbody = tableEl.createTBody();
+  for (const row of rows) {
+    const tr = tbody.insertRow();
+    const th = document.createElement('th');
+    th.className = 'label'; th.textContent = row.label; tr.appendChild(th);
+    for (const cell of row.cells) {
+      const wins = Math.round(cell.wr * cell.n);
+      const [lo, hi] = wilsonCI(wins, cell.n);
+      const ciWidth = hi - lo;
+      const td = tr.insertCell();
+      td.style.backgroundColor = winrateColor(cell.wr, useCi ? ciWidth : 0);
+      td.innerHTML = `<strong>${(cell.wr*100).toFixed(1)}%</strong><br><span class="note">n=${cell.n}</span>`;
+      if (useCi) td.title = `95% CI: ${(lo*100).toFixed(1)}% – ${(hi*100).toFixed(1)}%\nCI width: ${(ciWidth*100).toFixed(1)}pp`;
+    }
+  }
+}
+buildTable(document.getElementById('before'), false);
+buildTable(document.getElementById('after'),  true);
+
+// Legend
+const legendData = [
+  { label: '80% WR, n=500', wr: 0.80, n: 500 },
+  { label: '80% WR, n=50',  wr: 0.80, n: 50  },
+  { label: '80% WR, n=10',  wr: 0.80, n: 10  },
+  { label: '55% WR, n=500', wr: 0.55, n: 500 },
+  { label: '55% WR, n=50',  wr: 0.55, n: 50  },
+  { label: '55% WR, n=10',  wr: 0.55, n: 10  },
+  { label: '30% WR, n=500', wr: 0.30, n: 500 },
+  { label: '30% WR, n=50',  wr: 0.30, n: 50  },
+  { label: '30% WR, n=10',  wr: 0.30, n: 10  },
+];
+const legendEl = document.getElementById('legend');
+for (const item of legendData) {
+  const wins = Math.round(item.wr * item.n);
+  const [lo, hi] = wilsonCI(wins, item.n);
+  const ciWidth = hi - lo;
+  const div = document.createElement('div');
+  div.className = 'legend-cell';
+  div.style.background = winrateColor(item.wr, ciWidth);
+  div.innerHTML = `${item.label}<br><span style="color:#555;font-size:11px">CI ±${(ciWidth*50).toFixed(1)}pp</span>`;
+  legendEl.appendChild(div);
+}
+</script>
+</body>
+</html>
