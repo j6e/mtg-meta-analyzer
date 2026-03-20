@@ -13,6 +13,7 @@
 	import CardTooltip from '$lib/components/CardTooltip.svelte';
 	import type { DecklistInfo } from '$lib/types/decklist';
 	import type { ClassificationResult } from '$lib/algorithms/archetype-classifier';
+	import { isAnyOfGroup } from '$lib/types/archetype';
 	import { computeCardComposition } from '$lib/utils/card-composition';
 
 	const classifiedName = $derived(page.url.searchParams.get('classified') ?? '');
@@ -142,21 +143,40 @@
 						</tr>
 					</thead>
 					<tbody>
-						{#each archetypeDef.signatureCards as card}
-							<tr>
-								<td>
-									<CardTooltip cardName={card.name}>
-										<span class="card-name">{card.name}</span>
-									</CardTooltip>
-								</td>
-								<td class="num">
-									{#if card.exactCopies !== undefined}
-										= {card.exactCopies}
-									{:else}
-										≥ {card.minCopies ?? 1}
-									{/if}
-								</td>
-							</tr>
+						{#each archetypeDef.signatureCards as entry}
+							{#if isAnyOfGroup(entry)}
+								{#each entry.anyOf as card, i}
+									<tr>
+										<td>
+											<CardTooltip cardName={card.name}>
+												<span class="card-name">{i === 0 ? '' : 'or '}{ card.name}</span>
+											</CardTooltip>
+										</td>
+										<td class="num">
+											{#if card.exactCopies !== undefined}
+												= {card.exactCopies}
+											{:else}
+												≥ {card.minCopies ?? 1}
+											{/if}
+										</td>
+									</tr>
+								{/each}
+							{:else}
+								<tr>
+									<td>
+										<CardTooltip cardName={entry.name}>
+											<span class="card-name">{entry.name}</span>
+										</CardTooltip>
+									</td>
+									<td class="num">
+										{#if entry.exactCopies !== undefined}
+											= {entry.exactCopies}
+										{:else}
+											≥ {entry.minCopies ?? 1}
+										{/if}
+									</td>
+								</tr>
+							{/if}
 						{/each}
 					</tbody>
 				</table>

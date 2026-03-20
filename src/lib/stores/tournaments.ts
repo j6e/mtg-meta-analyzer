@@ -6,7 +6,7 @@ import { derived, get, writable } from "svelte/store";
 import type { ClassificationResult } from "../algorithms/archetype-classifier";
 import { classifyAll, classifyAllPooled } from "../algorithms/archetype-classifier";
 import { loadIndexes, loadTournaments } from "../data/loader";
-import type { ArchetypeDefinition } from "../types/archetype";
+import { type ArchetypeDefinition, isAnyOfGroup } from "../types/archetype";
 import type { DecklistInfo } from "../types/decklist";
 import type { ArchetypeStats } from "../types/metagame";
 import type {
@@ -159,7 +159,12 @@ export const archetypeCardMap = derived(
 		const map = new Map<string, string>(
 			$defs
 				.filter((d) => d.signatureCards.length > 0)
-				.map((d) => [d.name, d.signatureCards[0].name]),
+				.map((d) => {
+					const first = d.signatureCards[0];
+					const name = isAnyOfGroup(first) ? first.anyOf[0]?.name : first.name;
+					return [d.name, name] as [string, string];
+				})
+				.filter((pair): pair is [string, string] => !!pair[1]),
 		);
 		// Add commander-classified archetypes (representativeCard → full card name for Scryfall)
 		for (const results of $resultsMap.values()) {

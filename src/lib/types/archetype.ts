@@ -12,7 +12,7 @@ export interface AnyOfGroup {
 export type SignatureEntry = SignatureCard | AnyOfGroup;
 
 export function isAnyOfGroup(entry: SignatureEntry): entry is AnyOfGroup {
-	return "anyOf" in entry;
+	return "anyOf" in entry && Array.isArray((entry as AnyOfGroup).anyOf);
 }
 
 export interface ArchetypeDefinition {
