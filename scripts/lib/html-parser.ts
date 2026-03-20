@@ -134,10 +134,12 @@ export function parseDecklistRecords(details: MeleeDecklistDetails): ParsedDeckl
 
 function parseDate(raw: string): string {
 	if (!raw) return "";
-	// Input format: "4/26/2024 4:00:00 PM" (US format)
-	const d = new Date(raw);
-	if (Number.isNaN(d.getTime())) return raw;
-	return d.toISOString().split("T")[0]; // "2024-04-26"
+	// Input format: "M/D/YYYY h:mm:ss AM/PM" (US local time)
+	// Parse just the date portion to avoid UTC-shift when converting via toISOString()
+	const match = raw.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+	if (!match) return raw;
+	const [, m, d, y] = match;
+	return `${y}-${m.padStart(2, "0")}-${d.padStart(2, "0")}`; // "2024-04-26"
 }
 
 function parseFormats(registration: string): string[] {
