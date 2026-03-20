@@ -28,7 +28,8 @@
 	function overallStyle(name: string): string {
 		const s = getStatForArchetype(name);
 		if (s && s.totalMatches > 0) {
-			return `background-color: ${winrateColor(s.overallWinrate)}`;
+			const [lo, hi] = wilsonCI(s.wins, s.totalMatches);
+			return `background-color: ${winrateColor(s.overallWinrate, hi - lo)}`;
 		}
 		return '';
 	}
@@ -163,6 +164,7 @@
 					</td>
 					{#each matrix.cells[i] as cell, j}
 						{@const isMirror = i === j}
+						{@const [ciLo, ciHi] = wilsonCI(cell.wins, cell.total)}
 						<td
 							class="cell"
 							class:mirror={isMirror}
@@ -170,7 +172,7 @@
 							class:highlight-col={hoveredCol === j}
 							class:highlight-cross={hoveredRow === i && hoveredCol === j}
 							style={!isMirror && cell.winrate !== null
-								? `background-color: ${winrateColor(cell.winrate)}`
+								? `background-color: ${winrateColor(cell.winrate, ciHi - ciLo)}`
 								: ''}
 							onmouseenter={(e) => startCellHover(e, cell, i, j)}
 							onmousemove={handleMouseMove}
