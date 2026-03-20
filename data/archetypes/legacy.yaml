@@ -16,6 +16,16 @@ archetypes:
         exactCopies: 0
       - name: Doomsday
         exactCopies: 0
+  - name: Mardu Pride
+    signatureCards:
+      - name: "Ocelot Pride"
+        minCopies: 3
+      - name: "Amped Raptor"
+        minCopies: 3
+      - name: "Orcish Bowmasters"
+        minCopies: 1
+      - name: "Thoughtseize"
+        minCopies: 1
   - name: Boros Energy
     signatureCards:
       - name: "Ocelot Pride"
