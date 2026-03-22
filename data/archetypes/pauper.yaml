@@ -45,7 +45,7 @@ archetypes:
         minCopies: 3
       - name: "Sneaky Snacker"
         exactCopies: 0
-  - name: Mono-Red Burn
+  - name: Mono-Red Madness
     signatureCards:
       - name: "Lightning Bolt"
         minCopies: 3
@@ -99,13 +99,15 @@ archetypes:
         minCopies: 3
   - name: Azorius Familiars
     signatureCards:
-      - name: "Snap"
-        minCopies: 3
       - name: "Sunscape Familiar"
         minCopies: 3
+      - name: "Snap"
+        minCopies: 3
       - name: "Azorius Chancery"
-        minCopies: 2
-  - name: Gruul Ramp
+        minCopies: 1
+      - name: "Archaeomancer"
+        minCopies: 1
+  - name: Gruul Monsters
     signatureCards:
       - name: "Writhing Chrysalis"
         minCopies: 3
@@ -182,4 +184,44 @@ archetypes:
       - name: "Supernatural Stamina"
         minCopies: 2
       - name: "Village Rites"
+        minCopies: 3
+  - name: Esper Affinity
+    signatureCards:
+      - name: "Glint Hawk"
+        minCopies: 2
+      - name: "Cryogen Relic"
+        minCopies: 2
+      - name: "Refurbished Familiar"
+        minCopies: 2
+  - name: Orzhov Blade
+    signatureCards:
+      - name: "Tithing Blade"
+        minCopies: 1
+      - name: "Glint Hawk"
+        minCopies: 3
+      - name: "Refurbished Familiar"
+        minCopies: 3
+      - name: "Lembas"
+        minCopies: 1
+      - name: "Kor Skyfisher"
+        minCopies: 3
+      - name: "Thoughtcast"
+        exactCopies: 0
+  - name: Izzet Control
+    signatureCards:
+      - name: "Skred"
+        minCopies: 4
+      - name: "Volatile Fjord"
+        minCopies: 4
+      - name: "Tolarian Terror"
+        minCopies: 3
+  - name: Jeskai Ephemerate
+    signatureCards:
+      - name: "Ephemerate"
+        minCopies: 1
+      - name: "Cleansing Wildfire"
+        minCopies: 3
+      - name: "Silverbluff Bridge"
+        minCopies: 3
+      - name: "Preordain"
         minCopies: 3
