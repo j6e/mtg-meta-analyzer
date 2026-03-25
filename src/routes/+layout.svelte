@@ -10,12 +10,17 @@
 
 	let { children } = $props();
 
-	const navLinks = [
+	const navLinks: { href: string; label: string; noQs?: boolean }[] = [
 		{ href: '/metagame', label: 'Metagame' },
 		{ href: '/tournaments', label: 'Tournaments' },
 		{ href: '/archetypes', label: 'Archetypes' },
 		{ href: '/archetype-cleaner', label: 'Archetype Cleaner' },
+		{ href: '/payout', label: 'Payout', noQs: true },
 	];
+
+	const metagameRoutes = ['/metagame', '/tournaments', '/archetypes', '/archetype-cleaner'];
+	const isMetagameRoute = $derived(metagameRoutes.some(r => page.url.pathname.startsWith(base + r)));
+	const showSidebar = $derived(!page.url.pathname.startsWith(base + '/payout'));
 
 	function isActive(href: string): boolean {
 		return page.url.pathname.startsWith(base + href);
@@ -40,7 +45,7 @@
 	$effect(() => {
 		// Read qs to establish reactivity
 		const q = qs;
-		if (!initialized) return;
+		if (!initialized || !isMetagameRoute) return;
 		replaceState(`${page.url.pathname}${q}`, {});
 	});
 </script>
@@ -51,13 +56,15 @@
 			<a href="{base}/{qs}" class="logo">MTG Meta Analyzer</a>
 			<div class="nav-links">
 				{#each navLinks as link}
-					<a href="{base}{link.href}{qs}" class:active={isActive(link.href)}>{link.label}</a>
+					<a href="{base}{link.href}{link.noQs ? '' : qs}" class:active={isActive(link.href)}>{link.label}</a>
 				{/each}
 			</div>
 		</nav>
 	</header>
 	<div class="body">
-		<AppSidebar />
+		{#if showSidebar}
+			<AppSidebar />
+		{/if}
 		<main>
 			<div class="content">
 				{@render children()}

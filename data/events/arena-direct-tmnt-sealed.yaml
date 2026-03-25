@@ -1,0 +1,22 @@
+name: Arena Direct - TMNT Sealed
+format: Bo1 Sealed
+entry:
+  amount: 8000
+  currency: gems
+max_wins: 7
+max_losses: 2
+rewards:
+  0-2: {}
+  3:
+    gems: 3600
+    packs: 8
+  4:
+    gems: 7200
+    packs: 16
+  5:
+    gems: 10800
+    packs: 24
+  6:
+    booster_boxes: 1
+  7:
+    booster_boxes: 2
