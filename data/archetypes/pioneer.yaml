@@ -1,0 +1,243 @@
+format: Pioneer
+date: "2026-03-26"
+archetypes:
+  - name: Mono-Red Prowess
+    signatureCards:
+      - name: "Screaming Nemesis"
+        minCopies: 4
+      - name: "Emberheart Challenger"
+        minCopies: 4
+      - name: "Kumano Faces Kakkazan"
+        minCopies: 4
+      - name: "Stormchaser's Talent"
+        exactCopies: 0
+      - name: "Greasefang, Okiba Boss"
+        exactCopies: 0
+  - name: Abzan Greasefang
+    signatureCards:
+      - name: "Greasefang, Okiba Boss"
+        minCopies: 4
+      - name: "Esika's Chariot"
+        minCopies: 4
+      - name: "Parhelion II"
+        minCopies: 4
+      - name: "Monument to Endurance"
+        exactCopies: 0
+  - name: Izzet Prowess
+    signatureCards:
+      - name: "Cori-Steel Cutter"
+        minCopies: 4
+      - name: "Stormchaser's Talent"
+        minCopies: 4
+      - name: "Emberheart Challenger"
+        minCopies: 4
+      - name: "Steam Vents"
+        minCopies: 2
+      - name: "Arclight Phoenix"
+        exactCopies: 0
+  - name: Izzet Lessons
+    signatureCards:
+      - name: "Gran-Gran"
+        minCopies: 1
+      - name: "Boomerang Basics"
+        minCopies: 1
+      - name: "Steam Vents"
+        minCopies: 2
+      - name: "Monastery Swiftspear"
+        exactCopies: 0
+  - name: Orzhov Greasefang
+    signatureCards:
+      - name: "Greasefang, Okiba Boss"
+        minCopies: 4
+      - name: "Monument to Endurance"
+        minCopies: 4
+      - name: "Parhelion II"
+        minCopies: 4
+      - name: "Seasoned Hallowblade"
+        minCopies: 4
+      - name: "Esika's Chariot"
+        exactCopies: 0
+  - name: Azorius Control
+    signatureCards:
+      - name: "Teferi, Hero of Dominaria"
+        minCopies: 2
+      - name: "Consult the Star Charts"
+        minCopies: 4
+      - name: "March of Otherworldly Light"
+        minCopies: 3
+      - name: "Greasefang, Okiba Boss"
+        exactCopies: 0
+      - name: "Lotus Field"
+        exactCopies: 0
+  - name: Selesnya Company
+    signatureCards:
+      - name: "Collected Company"
+        minCopies: 4
+      - name: "Llanowar Elves"
+        minCopies: 4
+      - name: "Skyclave Apparition"
+        minCopies: 3
+      - name: "Greasefang, Okiba Boss"
+        exactCopies: 0
+  - name: Orzhov Midrange
+    signatureCards:
+      - name: "Gifted Aetherborn"
+        minCopies: 3
+      - name: "Thoughtseize"
+        minCopies: 4
+      - name: "Fatal Push"
+        minCopies: 4
+      - name: "Greasefang, Okiba Boss"
+        exactCopies: 0
+      - name: "Monument to Endurance"
+        exactCopies: 0
+      - name: "Collected Company"
+        exactCopies: 0
+      - name: "Fable of the Mirror-Breaker"
+        exactCopies: 0
+  - name: Izzet Phoenix
+    signatureCards:
+      - name: "Arclight Phoenix"
+        minCopies: 3
+      - name: "Artist's Talent"
+        minCopies: 4
+      - name: "Stormchaser's Talent"
+        exactCopies: 0
+  - name: Jund Food
+    signatureCards:
+      - name: "Witch's Oven"
+        minCopies: 3
+      - name: "Cauldron Familiar"
+        minCopies: 3
+      - name: "Mayhem Devil"
+        minCopies: 3
+      - name: "Ygra, Eater of All"
+        minCopies: 1
+  - name: Golgari Food
+    signatureCards:
+      - name: "Witch's Oven"
+        minCopies: 4
+      - name: "Cauldron Familiar"
+        minCopies: 4
+      - name: "Deadly Dispute"
+        minCopies: 3
+      - name: "Blood Crypt"
+        exactCopies: 0
+  - name: Golgari Midrange
+    signatureCards:
+      - name: "Ouroboroid"
+        minCopies: 4
+      - name: "Sentinel of the Nameless City"
+        minCopies: 4
+      - name: "Fatal Push"
+        minCopies: 4
+      - name: "Greasefang, Okiba Boss"
+        exactCopies: 0
+  - name: Sultai Scapeshift
+    signatureCards:
+      - name: "Scapeshift"
+        minCopies: 4
+      - name: "Lumra, Bellow of the Woods"
+        minCopies: 4
+  - name: Gruul Prowess
+    signatureCards:
+      - name: "Cori-Steel Cutter"
+        minCopies: 4
+      - name: "Emberheart Challenger"
+        minCopies: 4
+      - name: "Questing Druid"
+        minCopies: 4
+      - name: "Stormchaser's Talent"
+        exactCopies: 0
+      - name: "Screaming Nemesis"
+        exactCopies: 0
+  - name: Mono-Black Midrange
+    signatureCards:
+      - name: "Sheoldred, the Apocalypse"
+        minCopies: 2
+      - name: "Thoughtseize"
+        minCopies: 4
+      - name: "Fatal Push"
+        minCopies: 4
+      - name: "Greasefang, Okiba Boss"
+        exactCopies: 0
+      - name: "Blood Crypt"
+        exactCopies: 0
+      - name: "Fable of the Mirror-Breaker"
+        exactCopies: 0
+  - name: Hidden Strings
+    signatureCards:
+      - name: "Lotus Field"
+        minCopies: 4
+      - name: "Hidden Strings"
+        minCopies: 4
+      - name: "Thassa's Oracle"
+        minCopies: 2
+  - name: UW Lotus
+    signatureCards:
+      - name: "Lotus Field"
+        minCopies: 4
+      - name: "Teferi, Hero of Dominaria"
+        minCopies: 2
+      - name: "Strict Proctor"
+        minCopies: 2
+  - name: Rakdos Midrange
+    signatureCards:
+      - name: "Fable of the Mirror-Breaker"
+        minCopies: 3
+      - name: "Bloodtithe Harvester"
+        minCopies: 3
+      - name: "Sheoldred, the Apocalypse"
+        minCopies: 1
+      - name: "Greasefang, Okiba Boss"
+        exactCopies: 0
+  - name: 5c Legends
+    signatureCards:
+      - name: "Relic of Legends"
+        minCopies: 4
+      - name: "Inti, Seneschal of the Sun"
+        minCopies: 4
+      - name: "Cecil, Dark Knight"
+        minCopies: 2
+  - name: 4C Omnath
+    signatureCards:
+      - name: "Leyline Binding"
+        minCopies: 3
+      - name: "Omnath, Locus of Creation"
+        minCopies: 1
+      - name: "Up the Beanstalk"
+        minCopies: 3
+  - name: Dimir Self-Bounce
+    signatureCards:
+      - name: "This Town Ain't Big Enough"
+        minCopies: 2
+      - name: "Hopeless Nightmare"
+        minCopies: 2
+      - name: "Stormchaser's Talent"
+        minCopies: 2
+      - name: "Seachrome Coast"
+        exactCopies: 0
+  - name: Boros Convoke
+    signatureCards:
+      - name: "Gleeful Demolition"
+        minCopies: 2
+      - name: "Warden of the Inner Sky"
+        minCopies: 2
+      - name: "Knight-Errant of Eos"
+        minCopies: 2
+  - name: Mono-Green Devotion
+    signatureCards:
+      - name: "Cavalier of Thorns"
+        minCopies: 2
+      - name: "Nykthos, Shrine to Nyx"
+        minCopies: 2
+      - name: "Elvish Mystic"
+        minCopies: 2
+  - name: Quintorius Combo
+    signatureCards:
+      - name: "Quintorius Kand"
+        minCopies: 4
+      - name: "Fires of Invention"
+        minCopies: 4
+      - name: "Deceit"
+        minCopies: 3

@@ -25,6 +25,7 @@ import { MtgoClient, MtgoFetchError, type MtgoListingEntry } from "./lib/mtgo-cl
 const TARGET_FORMATS = new Set([
 	"Standard",
 	"Modern",
+	"Pioneer",
 	"Legacy",
 	"Pauper",
 	"Vintage",
