@@ -328,6 +328,123 @@ describe("classifyBySignatureCards", () => {
 		expect(result).toBe("Aclazotz Deck");
 	});
 
+	// --- anyOf tests ---
+
+	it("anyOf matches when at least one card in the group is present", () => {
+		const defs: ArchetypeDefinition[] = [
+			{
+				name: "Mardu Energy",
+				signatureCards: [
+					{ name: "Ocelot Pride", minCopies: 3 },
+					{
+						anyOf: [
+							{ name: "Orcish Bowmasters", minCopies: 1 },
+							{ name: "Scrubland", minCopies: 1 },
+							{ name: "Badlands", minCopies: 1 },
+						],
+					},
+				],
+			},
+		];
+		// Has Scrubland but not Bowmasters
+		const mainboard = cards(["Ocelot Pride", 4], ["Scrubland", 2], ["Plains", 10]);
+		expect(classifyBySignatureCards(mainboard, null, defs)).toBe("Mardu Energy");
+	});
+
+	it("anyOf rejects when no card in the group matches", () => {
+		const defs: ArchetypeDefinition[] = [
+			{
+				name: "Mardu Energy",
+				signatureCards: [
+					{ name: "Ocelot Pride", minCopies: 3 },
+					{
+						anyOf: [
+							{ name: "Orcish Bowmasters", minCopies: 1 },
+							{ name: "Scrubland", minCopies: 1 },
+						],
+					},
+				],
+			},
+		];
+		// Has neither Bowmasters nor Scrubland
+		const mainboard = cards(["Ocelot Pride", 4], ["Plains", 16]);
+		expect(classifyBySignatureCards(mainboard, null, defs)).toBeNull();
+	});
+
+	it("anyOf respects minCopies within the group", () => {
+		const defs: ArchetypeDefinition[] = [
+			{
+				name: "Black Splash",
+				signatureCards: [
+					{
+						anyOf: [
+							{ name: "Thoughtseize", minCopies: 3 },
+							{ name: "Cabal Therapy", minCopies: 3 },
+						],
+					},
+				],
+			},
+		];
+		// Has Thoughtseize but below minCopies
+		const mainboard = cards(["Thoughtseize", 2], ["Land", 18]);
+		expect(classifyBySignatureCards(mainboard, null, defs)).toBeNull();
+
+		// Has enough Cabal Therapy
+		const mainboard2 = cards(["Cabal Therapy", 3], ["Land", 17]);
+		expect(classifyBySignatureCards(mainboard2, null, defs)).toBe("Black Splash");
+	});
+
+	it("anyOf counts as one signature entry for tiebreaking", () => {
+		const defs: ArchetypeDefinition[] = [
+			{
+				name: "Simple",
+				signatureCards: [
+					{ name: "Card A", minCopies: 1 },
+					{ name: "Card B", minCopies: 1 },
+					{ name: "Card C", minCopies: 1 },
+				],
+			},
+			{
+				name: "With AnyOf",
+				signatureCards: [
+					{ name: "Card A", minCopies: 1 },
+					{ anyOf: [{ name: "Card B", minCopies: 1 }] },
+				],
+			},
+		];
+		const mainboard = cards(["Card A", 4], ["Card B", 4], ["Card C", 4]);
+		// Simple has 3 entries, With AnyOf has 2 — Simple wins
+		expect(classifyBySignatureCards(mainboard, null, defs)).toBe("Simple");
+	});
+
+	it("anyOf works in YAML parsing", () => {
+		const yaml = `
+format: Legacy
+date: "2026-03-19"
+archetypes:
+  - name: Mardu Pride
+    signatureCards:
+      - name: Ocelot Pride
+        minCopies: 3
+      - anyOf:
+          - name: Orcish Bowmasters
+            minCopies: 1
+          - name: Scrubland
+            minCopies: 1
+          - name: Badlands
+            minCopies: 1
+`;
+		const result = parseArchetypeYaml(yaml);
+		expect(result.archetypes).toHaveLength(1);
+		expect(result.archetypes[0].signatureCards).toHaveLength(2);
+		const anyOfEntry = result.archetypes[0].signatureCards[1];
+		expect("anyOf" in anyOfEntry).toBe(true);
+		if ("anyOf" in anyOfEntry) {
+			expect(anyOfEntry.anyOf).toHaveLength(3);
+			expect(anyOfEntry.anyOf[0].name).toBe("Orcish Bowmasters");
+		}
+	});
+
 	it("mixed usedAsCommander and minCopies signature cards", () => {
 		const defs: ArchetypeDefinition[] = [
 			{

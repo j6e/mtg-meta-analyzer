@@ -1,8 +1,10 @@
 import { parse as parseYaml } from "yaml";
-import type {
-	ArchetypeDefinition,
-	ArchetypeYaml,
-	ParsedArchetypeConfig,
+import {
+	type ArchetypeDefinition,
+	type ArchetypeYaml,
+	isAnyOfGroup,
+	type ParsedArchetypeConfig,
+	type SignatureCard,
 } from "../types/archetype";
 import type { CardEntry, DecklistInfo } from "../types/decklist";
 import { getCommanderShortName, getFrontFace } from "../utils/card-normalizer";
@@ -28,6 +30,21 @@ export function parseArchetypeYaml(yamlContent: string): ParsedArchetypeConfig {
 		archetypes: data.archetypes ?? [],
 		nameEqualsCommander: data.nameEqualsCommander ?? false,
 	};
+}
+
+function matchesSingleCard(
+	sig: SignatureCard,
+	cardQuantities: Map<string, number>,
+	commanderNames: Set<string>,
+): boolean {
+	if (sig.usedAsCommander) {
+		return commanderNames.has(sig.name);
+	}
+	const qty = cardQuantities.get(sig.name) ?? 0;
+	if (sig.exactCopies !== undefined) {
+		return qty === sig.exactCopies;
+	}
+	return qty >= (sig.minCopies ?? 1);
 }
 
 /**
@@ -59,15 +76,13 @@ export function classifyBySignatureCards(
 	let bestMatchCount = 0;
 
 	for (const archetype of archetypeDefs) {
-		const allMatch = archetype.signatureCards.every((sig) => {
-			if (sig.usedAsCommander) {
-				return commanderNames.has(sig.name);
+		const allMatch = archetype.signatureCards.every((entry) => {
+			if (isAnyOfGroup(entry)) {
+				return entry.anyOf.some((sig) =>
+					matchesSingleCard(sig, cardQuantities, commanderNames),
+				);
 			}
-			const qty = cardQuantities.get(sig.name) ?? 0;
-			if (sig.exactCopies !== undefined) {
-				return qty === sig.exactCopies;
-			}
-			return qty >= (sig.minCopies ?? 1);
+			return matchesSingleCard(entry, cardQuantities, commanderNames);
 		});
 
 		if (allMatch && archetype.signatureCards.length > bestMatchCount) {
