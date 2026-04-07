@@ -65,6 +65,7 @@
 				return false;
 			if ($settings.dateFrom && t.date < $settings.dateFrom) return false;
 			if ($settings.dateTo && t.date > $settings.dateTo) return false;
+			if ($settings.paperOnly && !t.tabletop) return false;
 			return true;
 		}),
 	);

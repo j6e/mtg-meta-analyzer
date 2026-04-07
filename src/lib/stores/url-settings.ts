@@ -80,6 +80,24 @@ export function settingsToSearchParams(
 		params.set("exclude", excluded.join(","));
 	}
 
+	// Paper only — omit when default
+	if (s.paperOnly) {
+		params.set("paper", "1");
+	}
+
+	// Use standings — omit when default
+	if (s.useStandings) {
+		params.set("standings", "1");
+	}
+
+	// Winners mode — omit when default
+	if (s.winnersMode) {
+		params.set("winners", "1");
+		if (s.winnersCutoff !== defaults.winnersCutoff) {
+			params.set("cutoff", String(s.winnersCutoff));
+		}
+	}
+
 	// Display options — only include non-defaults
 	if (!s.excludeMirrors) {
 		params.set("mirrors", "0");
@@ -114,6 +132,12 @@ export function searchParamsToSettings(params: URLSearchParams): MetaSettings {
 		initialExcludeIds = new Set();
 	}
 
+	const paperOnly = params.get("paper") === "1";
+	const useStandings = params.get("standings") === "1";
+	const winnersMode = params.get("winners") === "1";
+	const cutoffRaw = Number.parseFloat(params.get("cutoff") ?? "");
+	const winnersCutoff = Number.isFinite(cutoffRaw) ? cutoffRaw : defaults.winnersCutoff;
+
 	const excludeMirrors = params.get("mirrors") !== "0";
 
 	let otherMode = defaults.otherMode;
@@ -141,10 +165,10 @@ export function searchParamsToSettings(params: URLSearchParams): MetaSettings {
 		otherMode,
 		topN,
 		minMetagameShare,
-		paperOnly: defaults.paperOnly,
-		useStandings: defaults.useStandings,
-		winnersMode: defaults.winnersMode,
-		winnersCutoff: defaults.winnersCutoff,
+		paperOnly,
+		useStandings,
+		winnersMode,
+		winnersCutoff,
 	};
 }
 
