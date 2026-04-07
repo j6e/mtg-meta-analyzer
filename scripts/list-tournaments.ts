@@ -8,18 +8,22 @@
  *   bun run scripts/list-tournaments.ts [options]
  *
  * Options:
- *   --start <YYYY-MM-DD>   Start date (default: 30 days ago)
- *   --end <YYYY-MM-DD>     End date (default: today)
- *   --format <name>        Filter by format (case-insensitive match)
- *   --min-players <n>      Minimum player/decklist count (default: 0)
- *   --out <path>           Write CSV to file instead of stdout
+ *   --start <YYYY-MM-DD>     Start date (default: 30 days ago)
+ *   --end <YYYY-MM-DD>       End date (default: today)
+ *   --format <name[,name]>   Filter by format(s), comma-separated (default: tracked formats)
+ *   --all-formats            Include all formats (not just tracked ones)
+ *   --min-players <n>        Minimum player/decklist count (default: 0)
+ *   --include-fetched        Include tournaments already fetched in data/
+ *   --out <path>             Write CSV to file instead of stdout
  *
  * Examples:
  *   bun run scripts/list-tournaments.ts
  *   bun run scripts/list-tournaments.ts --start 2025-01-01 --end 2025-03-01 --format Pauper
- *   bun run scripts/list-tournaments.ts --min-players 32 --out tournaments.csv
+ *   bun run scripts/list-tournaments.ts --format Modern,Pioneer --min-players 32
+ *   bun run scripts/list-tournaments.ts --include-fetched --out tournaments.csv
  */
-import { writeFileSync } from "node:fs";
+import { readdirSync, writeFileSync } from "node:fs";
+import { join } from "node:path";
 import { parseTournamentPage } from "./lib/html-parser";
 import { inferImportance } from "./lib/importance";
 import { MeleeClient } from "./lib/melee-client";
@@ -108,6 +112,55 @@ class Progress {
 	}
 }
 
+// --- Tracked formats (formats with data/ directories) ---
+
+const TRACKED_FORMATS = [
+	"Standard",
+	"Modern",
+	"Pioneer",
+	"Legacy",
+	"Vintage",
+	"Pauper",
+	"Duel Commander",
+	"Premodern",
+];
+
+// --- Existing tournament detection ---
+
+const DATA_DIR = join(import.meta.dirname, "..", "data");
+
+/** Scan data/ for already-fetched melee tournament IDs. */
+function getExistingMeleeIds(): Set<number> {
+	const ids = new Set<number>();
+	let dirs: string[];
+	try {
+		dirs = readdirSync(DATA_DIR);
+	} catch {
+		return ids;
+	}
+	for (const formatDir of dirs) {
+		let months: string[];
+		try {
+			months = readdirSync(join(DATA_DIR, formatDir));
+		} catch {
+			continue;
+		}
+		for (const month of months) {
+			let files: string[];
+			try {
+				files = readdirSync(join(DATA_DIR, formatDir, month));
+			} catch {
+				continue;
+			}
+			for (const file of files) {
+				const match = file.match(/^melee-(\d+)\.json$/);
+				if (match) ids.add(Number(match[1]));
+			}
+		}
+	}
+	return ids;
+}
+
 // --- Arg parsing ---
 
 function parseArgs(argv: string[]) {
@@ -115,10 +168,20 @@ function parseArgs(argv: string[]) {
 	const opts: {
 		start: string | null;
 		end: string | null;
-		format: string | null;
+		formats: string[] | null;
+		allFormats: boolean;
 		minPlayers: number;
+		includeFetched: boolean;
 		out: string | null;
-	} = { start: null, end: null, format: null, minPlayers: 0, out: null };
+	} = {
+		start: null,
+		end: null,
+		formats: null,
+		allFormats: false,
+		minPlayers: 0,
+		includeFetched: false,
+		out: null,
+	};
 
 	for (let i = 0; i < args.length; i++) {
 		switch (args[i]) {
@@ -129,10 +192,16 @@ function parseArgs(argv: string[]) {
 				opts.end = args[++i];
 				break;
 			case "--format":
-				opts.format = args[++i];
+				opts.formats = args[++i].split(",").map((f) => f.trim());
+				break;
+			case "--all-formats":
+				opts.allFormats = true;
 				break;
 			case "--min-players":
 				opts.minPlayers = Number(args[++i]);
+				break;
+			case "--include-fetched":
+				opts.includeFetched = true;
 				break;
 			case "--out":
 				opts.out = args[++i];
@@ -266,13 +335,34 @@ async function main() {
 	}
 
 	// Step 4: Apply filters
-	if (opts.format) {
-		const needle = opts.format.toLowerCase();
-		tournaments = tournaments.filter((t) => t.inferredFormat.toLowerCase() === needle);
+
+	// Format filter: explicit --format, or default to tracked formats (unless --all-formats)
+	const allowedFormats: string[] | null = opts.formats
+		? opts.formats.map((f) => f.toLowerCase())
+		: opts.allFormats
+			? null
+			: TRACKED_FORMATS.map((f) => f.toLowerCase());
+
+	if (allowedFormats) {
+		tournaments = tournaments.filter((t) =>
+			allowedFormats.includes(t.inferredFormat.toLowerCase()),
+		);
 	}
 
 	if (opts.minPlayers > 0) {
 		tournaments = tournaments.filter((t) => t.Decklists >= opts.minPlayers);
+	}
+
+	// Exclude already-fetched tournaments (unless --include-fetched)
+	let excludedCount = 0;
+	if (!opts.includeFetched) {
+		const existingIds = getExistingMeleeIds();
+		const before = tournaments.length;
+		tournaments = tournaments.filter((t) => !existingIds.has(t.ID));
+		excludedCount = before - tournaments.length;
+		if (excludedCount > 0) {
+			progress.done(`Excluded ${excludedCount} already-fetched tournaments`);
+		}
 	}
 
 	// Sort by players descending
@@ -317,8 +407,10 @@ async function main() {
 
 	// Summary
 	const filters = [
-		opts.format && `format=${opts.format}`,
+		opts.formats && `format=${opts.formats.join(",")}`,
+		!opts.formats && !opts.allFormats && "formats=tracked",
 		opts.minPlayers > 0 && `min-players=${opts.minPlayers}`,
+		!opts.includeFetched && `excluded-fetched=${excludedCount}`,
 	].filter(Boolean);
 	const filterStr = filters.length > 0 ? ` (${filters.join(", ")})` : "";
 
