@@ -49,6 +49,12 @@
 				Edit signature card definitions and review classification attribution.
 			</p>
 		</a>
+		<a href="{base}/methods" class="card">
+			<h2>Methods</h2>
+			<p>
+				Mathematical methods and operative decisions behind the analysis.
+			</p>
+		</a>
 	</div>
 
 	<section class="manifesto">
