@@ -134,7 +134,10 @@ export function parseDecklistRecords(details: MeleeDecklistDetails): ParsedDeckl
 
 function parseDate(raw: string): string {
 	if (!raw) return "";
-	// Input format: "4/26/2024 4:00:00 PM" (US format)
+	// ISO format: "2026-03-08T08:45:00.0000000Z"
+	const isoMatch = raw.match(/^(\d{4}-\d{2}-\d{2})T/);
+	if (isoMatch) return isoMatch[1];
+	// US format: "4/26/2024 4:00:00 PM"
 	// Extract date parts directly to avoid timezone shifts from Date → toISOString()
 	const match = raw.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);
 	if (!match) return raw;
