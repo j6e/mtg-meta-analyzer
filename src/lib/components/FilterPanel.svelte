@@ -358,7 +358,7 @@
 			</label>
 			<label
 				class="checkbox-label"
-				title="Use player W-L-D records from standings to supplement overall statistics for tournaments without full round data (e.g., MTGO events)."
+				title="Use player W-L-D records from standings to supplement overall statistics for tournaments without full round data (e.g., MTGO events). Overall win rates are rebalanced for top-32 survivorship bias."
 			>
 				<input
 					type="checkbox"

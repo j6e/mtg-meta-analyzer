@@ -27,65 +27,88 @@ For Pioneer March 2026: `surplus = 3380 − 2596 = 784`. These 784 wins have no
 corresponding losses in our dataset, inflating the observed average win rate from
 50% to ~56.5%.
 
-## The Correction: Linear De-bias with Confidence Shrinkage
+## The Correction
 
-A two-step process that (1) removes the systemic bias and (2) accounts for
-sample size.
+A three-step process that (1) removes the systemic bias, (2) anchors each
+archetype on its unbiased round-data performance, and (3) accounts for sample
+size via confidence shrinkage.
 
-### Step 1 — Remove systemic bias
+### Step 1 — Remove systemic bias (match-count-weighted)
 
-Compute the metagame-share-weighted average win rate across all archetypes:
+Compute the global average win rate using match-count weighting:
 
 ```
-            Σ (share_i × raw_wr_i)
-raw_avg = ─────────────────────────
-               Σ share_i
+            Σ wins_i
+raw_avg = ───────────
+            Σ total_i
 ```
 
-where `share_i = player_count_i / total_players` and
-`raw_wr_i = wins_i / (wins_i + losses_i + draws_i)`.
+This equals exactly 50% for closed-system data (paper tournaments with full
+rounds), so only the standings-contributed surplus registers as bias.
 
-The uniform bias is the gap between this average and the expected 50%:
+The uniform bias is the gap between this average and 50%:
 
 ```
 bias = raw_avg − 0.5
 ```
 
-De-bias each archetype by subtracting the bias:
+### Step 2 — Per-archetype prior from round data
+
+When both paper (round-level) and standings data are available, the round data
+provides an unbiased baseline for each archetype. We use it as a per-archetype
+prior, shrunk toward 50% based on the round-data sample size.
+
+The shrinkage function uses a squared form for aggressive suppression of
+small samples:
 
 ```
-debiased_i = raw_wr_i − bias
+              N_round²
+f(N_round) = ────────────────
+              N_round² + K_p²
 ```
 
-After this step, the weighted average of `debiased_i` is exactly 50%.
-All relative differences between archetypes are preserved — we've only
-shifted the entire distribution down.
+where `K_p = 167` (calibrated so f(500) ≈ 0.9).
 
-### Step 2 — Confidence shrinkage toward 50%
-
-The de-biased win rate still has noise, especially for low-sample archetypes.
-An archetype with 18 matches could easily show 44% or 60% by chance alone.
-
-We shrink each archetype's deviation from 50% proportionally to our confidence
-in its sample:
+The per-archetype prior is:
 
 ```
-                                         N_i
-adjusted_i = 0.5 + (debiased_i − 0.5) × ─────────
-                                         N_i + K
+prior_i = 0.5 × (1 − f(N_round_i)) + round_wr_i × f(N_round_i)
+```
+
+| Round N | f(N)  | Effect |
+|---------|-------|--------|
+| 20      | 0.01  | Prior ≈ 50% (too few matches to trust) |
+| 50      | 0.08  | Prior ≈ 50% + 8% of paper signal |
+| 100     | 0.26  | Modest paper influence |
+| 200     | 0.59  | Paper dominates |
+| 500     | 0.90  | Prior ≈ paper winrate |
+| 800     | 0.96  | Prior ≈ paper winrate |
+
+If no round data exists for an archetype (or round N = 0), the prior
+defaults to 50%.
+
+### Step 3 — Confidence shrinkage
+
+Shrink each archetype's de-biased deviation from its prior proportionally to
+our confidence in the combined sample:
+
+```
+                                                N_i
+adjusted_i = prior_i + (raw_wr_i − raw_avg) × ─────────
+                                                N_i + K
 ```
 
 where:
-- `N_i` = total matches for archetype i
+- `N_i` = total matches for archetype i (round + standings combined)
 - `K` = **median N** across all archetypes with data
 
 The factor `N_i / (N_i + K)` is the **confidence weight**:
 
 | N_i vs K | Confidence | Effect |
 |---|---|---|
-| N_i >> K | → 1.0 | Keep full deviation from 50% (strong signal) |
+| N_i >> K | → 1.0 | Keep full deviation from prior (strong signal) |
 | N_i = K  | = 0.5 | Keep half the deviation |
-| N_i << K | → 0.0 | Regress almost entirely to 50% (weak signal) |
+| N_i << K | → 0.0 | Regress almost entirely to prior (weak signal) |
 
 ### Why K = median N
 
@@ -96,74 +119,84 @@ The median is the "typical" archetype's sample size in the dataset. This means:
 
 The median derives from the data itself — no manual tuning required.
 
-### Combined formula
-
-Putting both steps together:
-
-```
-                                                        N_i
-adjusted_i = 0.5 + (raw_wr_i − raw_avg) × ─────────
-                                           N_i + K
-```
-
-Note that `raw_wr_i − raw_avg = raw_wr_i − (0.5 + bias) = debiased_i − 0.5`,
-so the two steps collapse into a single expression.
-
 ### Properties
 
-1. **Weighted average = 50%** — the systemic top-32 inflation is fully removed
-2. **Relative ordering preserved** — if deck A had higher raw WR than deck B
+1. **De-biasing uses match-count weighting** — only the actual standings surplus
+   counts as bias; no phantom bias from share-vs-count discrepancies
+2. **Per-archetype priors** — archetypes with strong paper data anchor on their
+   paper performance; archetypes with little paper data default to 50%
+3. **Aggressive small-sample suppression** — the N² form ensures noisy paper
+   estimates (N < 50) barely influence the prior
+4. **Relative ordering preserved** — if deck A had higher raw WR than deck B
    (and both have sufficient data), A will still be higher after adjustment
-3. **Small samples regress to 50%** — we don't make strong claims about
-   archetypes with few matches
-4. **Large samples barely change** — high-N archetypes keep their signal
-5. **Single parameter (K)** — derived from data, not manually tuned
+5. **Large samples barely change** — high-N archetypes keep their signal
+6. **Two parameters** — K (median, data-derived) and K_p = 167 (calibrated)
 
 ## Pseudocode
 
 ```
-function correct_winrates(archetypes):
-    # Step 1: compute bias
-    raw_avg = weighted_average(
-        values = [a.wins / a.total for a in archetypes],
-        weights = [a.metagame_share for a in archetypes]
-    )
-    bias = raw_avg - 0.5
+function correct_winrates(archetypes, round_archetypes=None):
+    K_PRIOR = 167
 
-    # Step 2: choose K
+    # Step 1: compute bias (match-count-weighted)
+    raw_avg = sum(a.wins for a in archetypes) / sum(a.total for a in archetypes)
+
+    # Step 2: choose K for confidence shrinkage
     K = median([a.total for a in archetypes if a.total > 0])
 
     # Step 3: adjust each archetype
     for a in archetypes:
-        debiased = a.wins / a.total - bias
+        # Per-archetype prior from round data
+        prior = 0.5
+        if round_archetypes and a.name in round_archetypes:
+            r = round_archetypes[a.name]
+            if r.total > 0:
+                f = r.total**2 / (r.total**2 + K_PRIOR**2)
+                prior = 0.5 * (1 - f) + (r.wins / r.total) * f
+
+        # De-bias + shrinkage
         confidence = a.total / (a.total + K)
-        a.adjusted_wr = 0.5 + (debiased - 0.5) * confidence
+        a.adjusted_wr = prior + (a.wins / a.total - raw_avg) * confidence
 
     return archetypes
 ```
 
-## Worked Example (Pioneer, March 2026)
+## Worked Example (Modern, April 2026)
 
-Input: 30 tournaments, 245 top-32 players, standings W-L-D = 3380-2596-0.
+Input: paper + MTGO tournaments, Boros Energy has 17.9% metagame share.
 
 ```
-raw_avg = 56.4%
-bias    = 56.4% − 50.0% = 6.4pp
-K       = 289  (median matches per archetype)
+raw_avg   = 51.5%   (match-count-weighted, combined data)
+bias      = 1.5pp   (standings surplus)
+K         = 900     (median matches per archetype)
+K_PRIOR   = 167
 ```
 
-| Archetype | Share | Raw WR | Debiased | Conf | Adjusted |
-|---|---|---|---|---|---|
-| Izzet Prowess | 21.6% | 56.2% | 49.8% | 83% | 49.8% |
-| Azorius Control | 6.9% | 61.7% | 55.4% | 60% | 53.2% |
-| Dimir Self-Bounce | 1.6% | 49.4% | 43.0% | 35% | 47.6% |
-| Mono-Green Devotion | 1.2% | 44.4% | 38.1% | 6% | 49.3% |
+| Archetype | Paper WR | Paper N | f(N) | Prior | Combined WR | Combined N | Conf | Adjusted |
+|---|---|---|---|---|---|---|---|---|
+| Boros Energy | 54.3% | 795 | 0.96 | 54.1% | 52.5% | 5192 | 0.85 | 54.9% |
+| Jeskai Blink | 49.3% | 363 | 0.83 | 49.4% | 51.0% | 2419 | 0.73 | 49.0% |
+| Fringe Deck | 60.0% | 20 | 0.01 | 50.1% | 55.0% | 80 | 0.08 | 50.4% |
 
-- **Izzet Prowess** (N=1462, conf=83%): barely changes — strong signal says
-  it's a ~50% deck after de-biasing.
-- **Azorius Control** (N=431, conf=60%): raw 61.7% is the highest, adjusted
-  53.2% still shows it's the best-performing deck, but tempered.
-- **Dimir Self-Bounce** (N=154, conf=35%): flat de-bias gives 43.0% which
-  seems too harsh; confidence shrinkage pulls it back toward 50% → 47.6%.
-- **Mono-Green Devotion** (N=18, conf=6%): almost fully regressed to 50% —
-  we simply don't have enough data to say anything about this deck.
+- **Boros Energy** (paper N=795, f=0.96): prior ≈ 54.1% (anchored on paper).
+  Combined data shows it slightly above average → adjusted stays near paper level.
+- **Jeskai Blink** (paper N=363, f=0.83): prior ≈ 49.4%. Combined data
+  confirms it's near-average.
+- **Fringe Deck** (paper N=20, f=0.01): prior ≈ 50%. Despite a flashy 60%
+  paper rate, too few matches to trust → regresses to 50%.
+
+## Evolution from v1
+
+The original method (v1) used a fixed 50% prior for all archetypes and
+metagame-share-weighted averaging for bias computation. This worked well for
+pure standings analysis but had two issues with mixed paper + standings data:
+
+1. **Share-weighted bias** could differ from the true match-count-weighted
+   bias, creating phantom corrections in paper data (where the true average
+   is 50% by construction).
+2. **Fixed 50% prior** ignored strong paper signals — an archetype at 54%
+   across 800 paper matches would get pulled toward 50% when standings data
+   was added, even though the paper estimate was trustworthy.
+
+The current method (v2) addresses both by using match-count-weighted averaging
+and per-archetype priors derived from round data with N²-form shrinkage.

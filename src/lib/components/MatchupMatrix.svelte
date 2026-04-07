@@ -25,11 +25,16 @@
 		return stats.find((s) => s.name === name);
 	}
 
+	/** Winrate to display in the Overall column: adjusted if available, otherwise raw. */
+	function displayWinrate(s: ArchetypeStats): number {
+		return s.adjustedWinrate ?? s.overallWinrate;
+	}
+
 	function overallStyle(name: string): string {
 		const s = getStatForArchetype(name);
 		if (s && s.totalMatches > 0) {
 			const [lo, hi] = wilsonCI(s.wins, s.totalMatches);
-			return `background-color: ${winrateColor(s.overallWinrate, hi - lo)}`;
+			return `background-color: ${winrateColor(displayWinrate(s), hi - lo)}`;
 		}
 		return '';
 	}
@@ -156,7 +161,7 @@
 					>
 						{#if getStatForArchetype(rowName)?.totalMatches}
 							{@const s = getStatForArchetype(rowName)!}
-							<span class="winrate">{pct(s.overallWinrate)}</span>
+							<span class="winrate">{pct(displayWinrate(s))}</span>
 							<span class="match-count">({s.totalMatches})</span>
 						{:else}
 							<span class="no-data">—</span>
@@ -214,7 +219,12 @@
 				<span class="tooltip-label">Draws</span><span class="tooltip-value">{s.draws}</span>
 				<span class="tooltip-label">Byes</span><span class="tooltip-value tooltip-excluded">{s.byes} excl.</span>
 				<span class="tooltip-label">IDs</span><span class="tooltip-value tooltip-excluded">{s.intentionalDraws} excl.</span>
-				<span class="tooltip-label">Winrate</span><span class="tooltip-value">{pct(s.overallWinrate)}</span>
+				{#if s.adjustedWinrate !== undefined}
+					<span class="tooltip-label">Adjusted WR</span><span class="tooltip-value">{pct(s.adjustedWinrate)}</span>
+					<span class="tooltip-label">Raw WR</span><span class="tooltip-value tooltip-excluded">{pct(s.overallWinrate)}</span>
+				{:else}
+					<span class="tooltip-label">Winrate</span><span class="tooltip-value">{pct(s.overallWinrate)}</span>
+				{/if}
 				<span class="tooltip-label">95% CI</span><span class="tooltip-value">{formatCI(lo, hi)}</span>
 			</div>
 		{:else if tooltipData.cell}

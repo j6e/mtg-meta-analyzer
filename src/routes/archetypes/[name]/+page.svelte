@@ -44,7 +44,7 @@
 	const winrateRank = $derived.by(() => {
 		const data = $metagameData;
 		if (!data || !stats) return null;
-		const sorted = [...data.stats].sort((a, b) => b.overallWinrate - a.overallWinrate);
+		const sorted = [...data.stats].sort((a, b) => (b.adjustedWinrate ?? b.overallWinrate) - (a.adjustedWinrate ?? a.overallWinrate));
 		const idx = sorted.findIndex((s) => s.name === archetypeName);
 		return idx >= 0 ? idx + 1 : null;
 	});
@@ -252,8 +252,8 @@
 		</div>
 		<div class="stat-card">
 			<span class="stat-label">Win Rate</span>
-			<span class="stat-value" class:above50={stats.overallWinrate >= 0.5} class:below50={stats.overallWinrate < 0.5}>
-				{pct(stats.overallWinrate)}
+			<span class="stat-value" class:above50={(stats.adjustedWinrate ?? stats.overallWinrate) >= 0.5} class:below50={(stats.adjustedWinrate ?? stats.overallWinrate) < 0.5}>
+				{pct(stats.adjustedWinrate ?? stats.overallWinrate)}
 				{#if rankBadge(winrateRank)}
 					<span class="rank-badge">{rankBadge(winrateRank)}</span>
 				{/if}

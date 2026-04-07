@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import type { ClassificationResult } from "../../src/lib/algorithms/archetype-classifier";
 import type { DecklistInfo } from "../../src/lib/types/decklist";
+import type { ArchetypeStats } from "../../src/lib/types/metagame";
 import type {
 	MatchResult,
 	PlayerInfo,
@@ -11,6 +12,7 @@ import {
 	buildAttributionMatrix,
 	buildMatchupMatrix,
 	buildPlayerArchetypeMap,
+	correctWinrates,
 } from "../../src/lib/utils/winrate-calculator";
 
 // --- Helpers ---
@@ -1020,5 +1022,159 @@ describe("buildAttributionMatrix", () => {
 		expect(matrix.cells[0][0]).toBe(3);
 		expect(matrix.grandTotal).toBe(3);
 		expect(matrix.maxCount).toBe(3);
+	});
+});
+
+// --- correctWinrates helpers ---
+
+function makeStats(
+	name: string,
+	opts: { share: number; wr: number; matches: number },
+): ArchetypeStats {
+	const wins = Math.round(opts.matches * opts.wr);
+	const losses = opts.matches - wins;
+	return {
+		name,
+		metagameShare: opts.share,
+		overallWinrate: opts.wr,
+		wins,
+		losses,
+		draws: 0,
+		totalMatches: opts.matches,
+		playerCount: Math.round(opts.share * 100),
+		byes: 0,
+		intentionalDraws: 0,
+	};
+}
+
+describe("correctWinrates", () => {
+	it("returns empty array for empty input", () => {
+		expect(correctWinrates([])).toEqual([]);
+	});
+
+	it("de-biases inflated average toward 50%", () => {
+		const stats = [
+			makeStats("Aggro", { share: 0.5, wr: 0.6, matches: 200 }),
+			makeStats("Control", { share: 0.5, wr: 0.6, matches: 200 }),
+		];
+		const corrected = correctWinrates(stats);
+		// Both had same raw WR and same share, so both adjust to 50%
+		expect(corrected[0].adjustedWinrate).toBeCloseTo(0.5);
+		expect(corrected[1].adjustedWinrate).toBeCloseTo(0.5);
+	});
+
+	it("preserves relative ordering between archetypes", () => {
+		const stats = [
+			makeStats("Aggro", { share: 0.3, wr: 0.65, matches: 300 }),
+			makeStats("Control", { share: 0.3, wr: 0.55, matches: 300 }),
+			makeStats("Combo", { share: 0.4, wr: 0.5, matches: 400 }),
+		];
+		const corrected = correctWinrates(stats);
+		expect(corrected[0].adjustedWinrate!).toBeGreaterThan(
+			corrected[1].adjustedWinrate!,
+		);
+		expect(corrected[1].adjustedWinrate!).toBeGreaterThan(
+			corrected[2].adjustedWinrate!,
+		);
+	});
+
+	it("shrinks low-sample archetypes more toward 50%", () => {
+		// Give different winrates so there's a deviation for shrinkage to act on
+		const stats = [
+			makeStats("Big", { share: 0.5, wr: 0.6, matches: 500 }),
+			makeStats("Medium", { share: 0.3, wr: 0.55, matches: 200 }),
+			makeStats("Small", { share: 0.2, wr: 0.6, matches: 10 }),
+		];
+		const corrected = correctWinrates(stats);
+		// Big and Small have same raw WR but Small should be pulled closer to 50%
+		const bigDev = Math.abs(corrected[0].adjustedWinrate! - 0.5);
+		const smallDev = Math.abs(corrected[2].adjustedWinrate! - 0.5);
+		expect(smallDev).toBeLessThan(bigDev);
+	});
+
+	it("does not set adjustedWinrate for zero-match archetypes", () => {
+		const stats = [
+			makeStats("Active", { share: 0.8, wr: 0.55, matches: 100 }),
+			makeStats("Empty", { share: 0.2, wr: 0, matches: 0 }),
+		];
+		const corrected = correctWinrates(stats);
+		expect(corrected[0].adjustedWinrate).toBeDefined();
+		expect(corrected[1].adjustedWinrate).toBeUndefined();
+	});
+
+	it("adjusts single archetype to exactly 50%", () => {
+		const stats = [makeStats("Solo", { share: 1.0, wr: 0.6, matches: 100 })];
+		const corrected = correctWinrates(stats);
+		expect(corrected[0].adjustedWinrate).toBeCloseTo(0.5);
+	});
+
+	it("preserves raw overallWinrate unchanged", () => {
+		const stats = [
+			makeStats("Aggro", { share: 0.5, wr: 0.6, matches: 200 }),
+			makeStats("Control", { share: 0.5, wr: 0.55, matches: 200 }),
+		];
+		const corrected = correctWinrates(stats);
+		expect(corrected[0].overallWinrate).toBe(0.6);
+		expect(corrected[1].overallWinrate).toBe(0.55);
+	});
+
+	it("uses per-archetype paper prior when roundStats provided", () => {
+		// Combined stats (inflated by standings)
+		const stats = [
+			makeStats("Aggro", { share: 0.5, wr: 0.56, matches: 5000 }),
+			makeStats("Control", { share: 0.5, wr: 0.56, matches: 5000 }),
+		];
+		// Paper-only stats: Aggro was strong, Control was average
+		const roundStats = [
+			makeStats("Aggro", { share: 0.5, wr: 0.54, matches: 800 }),
+			makeStats("Control", { share: 0.5, wr: 0.5, matches: 800 }),
+		];
+
+		const withPrior = correctWinrates(stats, roundStats);
+		const withoutPrior = correctWinrates(stats);
+
+		// With paper prior, Aggro should be higher than without (paper says 54%)
+		expect(withPrior[0].adjustedWinrate!).toBeGreaterThan(
+			withoutPrior[0].adjustedWinrate!,
+		);
+		// Aggro's prior is pulled up by strong paper performance
+		expect(withPrior[0].adjustedWinrate!).toBeGreaterThan(0.5);
+	});
+
+	it("paper prior has minimal effect for low-N round data", () => {
+		const stats = [
+			makeStats("Aggro", { share: 0.5, wr: 0.56, matches: 5000 }),
+			makeStats("Control", { share: 0.5, wr: 0.56, matches: 5000 }),
+		];
+		// Only 20 paper matches — f(20) ≈ 0.01, barely moves prior from 50%
+		const roundStats = [
+			makeStats("Aggro", { share: 0.5, wr: 0.7, matches: 20 }),
+			makeStats("Control", { share: 0.5, wr: 0.3, matches: 20 }),
+		];
+
+		const corrected = correctWinrates(stats, roundStats);
+		// Both should be very close to each other (priors barely differ from 50%)
+		const diff = Math.abs(
+			corrected[0].adjustedWinrate! - corrected[1].adjustedWinrate!,
+		);
+		expect(diff).toBeLessThan(0.01);
+	});
+
+	it("paper prior has strong effect for high-N round data", () => {
+		const stats = [
+			makeStats("Aggro", { share: 0.5, wr: 0.56, matches: 5000 }),
+			makeStats("Control", { share: 0.5, wr: 0.56, matches: 5000 }),
+		];
+		// 800 paper matches — f(800) ≈ 0.96, prior ≈ paper WR
+		const roundStats = [
+			makeStats("Aggro", { share: 0.5, wr: 0.54, matches: 800 }),
+			makeStats("Control", { share: 0.5, wr: 0.48, matches: 800 }),
+		];
+
+		const corrected = correctWinrates(stats, roundStats);
+		// Aggro should be well above Control due to different paper priors
+		expect(corrected[0].adjustedWinrate!).toBeGreaterThan(
+			corrected[1].adjustedWinrate! + 0.03,
+		);
 	});
 });

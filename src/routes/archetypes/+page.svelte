@@ -24,7 +24,7 @@ const sortedStats = $derived.by(() => {
 			case "share":
 				return dir * (a.metagameShare - b.metagameShare);
 			case "winrate":
-				return dir * (a.overallWinrate - b.overallWinrate);
+				return dir * ((a.adjustedWinrate ?? a.overallWinrate) - (b.adjustedWinrate ?? b.overallWinrate));
 			case "players":
 				return dir * (a.playerCount - b.playerCount);
 			case "matches":
@@ -126,8 +126,8 @@ function sortIndicator(key: SortKey): string {
 							{/if}
 						</td>
 						<td class="num-col">{pct(s.metagameShare)}</td>
-						<td class="num-col" class:above50={s.overallWinrate >= 0.5} class:below50={s.overallWinrate < 0.5}>
-							{pct(s.overallWinrate)}
+						<td class="num-col" class:above50={(s.adjustedWinrate ?? s.overallWinrate) >= 0.5} class:below50={(s.adjustedWinrate ?? s.overallWinrate) < 0.5}>
+							{pct(s.adjustedWinrate ?? s.overallWinrate)}
 						</td>
 						<td class="num-col">{s.playerCount}</td>
 						<td class="num-col">{s.totalMatches}</td>

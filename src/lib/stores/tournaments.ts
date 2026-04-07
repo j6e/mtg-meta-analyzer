@@ -19,6 +19,7 @@ import {
 	buildAttributionMatrix,
 	buildMatchupMatrix,
 	buildPlayerArchetypeMap,
+	correctWinrates,
 	type MatrixOptions,
 } from "../utils/winrate-calculator";
 import { activeArchetypeConfig, activeArchetypeDefs } from "./archetype-configs";
@@ -205,7 +206,14 @@ export const metagameData = derived(
 			useStandings: $settings.useStandings,
 		};
 
-		return buildMatchupMatrix($tournaments, $playerArchetypes, options);
+		const result = buildMatchupMatrix($tournaments, $playerArchetypes, options);
+		if ($settings.useStandings) {
+			return {
+				matrix: result.matrix,
+				stats: correctWinrates(result.stats, result.roundStats),
+			};
+		}
+		return result;
 	},
 );
 

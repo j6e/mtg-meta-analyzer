@@ -60,7 +60,7 @@ export function buildMatchupMatrix(
 	tournaments: TournamentData[],
 	playerArchetypes: Map<string, string>,
 	options: MatrixOptions = {},
-): { matrix: MatchupMatrix; stats: ArchetypeStats[] } {
+): { matrix: MatchupMatrix; stats: ArchetypeStats[]; roundStats?: ArchetypeStats[] } {
 	const {
 		excludeMirrors = true,
 		minMetagameShare = 0,
@@ -212,6 +212,11 @@ export function buildMatchupMatrix(
 		}
 	}
 
+	// Snapshot round-data-only stats before adding standings (used as prior for correction)
+	const roundWins = new Map(overallWins);
+	const roundLosses = new Map(overallLosses);
+	const roundDraws = new Map(overallDraws);
+
 	// Step 5b: Add standings remainder to overall stats (NOT to per-matchup cells)
 	if (useStandings) {
 		const remainder = computeStandingsRemainder(tournaments, playerArchetypes);
@@ -259,10 +264,96 @@ export function buildMatchupMatrix(
 		};
 	});
 
+	// Build round-data-only stats when standings are active (used as prior for correction)
+	const roundStats: ArchetypeStats[] | undefined = useStandings
+		? displayArchetypes.map((name) => {
+				const playerCount = displayPlayerSets.get(name)?.size ?? 0;
+				const w = roundWins.get(name) ?? 0;
+				const l = roundLosses.get(name) ?? 0;
+				const d = roundDraws.get(name) ?? 0;
+				const totalMatches = w + l + d;
+				return {
+					name,
+					metagameShare: totalPlayers > 0 ? playerCount / totalPlayers : 0,
+					overallWinrate: totalMatches > 0 ? w / totalMatches : 0,
+					wins: w,
+					losses: l,
+					draws: d,
+					totalMatches,
+					playerCount,
+					byes: overallByes.get(name) ?? 0,
+					intentionalDraws: overallIDs.get(name) ?? 0,
+				};
+			})
+		: undefined;
+
 	return {
 		matrix: { archetypes: displayArchetypes, cells },
 		stats,
+		roundStats,
 	};
+}
+
+/**
+ * Apply survivorship-bias correction to overall winrates.
+ * Only meaningful when useStandings is enabled (top-32 data inflates rates).
+ *
+ * Formula: adjusted_i = prior_i + (raw_wr_i - raw_avg) * N_i / (N_i + K)
+ *
+ * - raw_avg = total wins / total matches (match-count-weighted, equals 50% in closed systems)
+ * - K = median of total matches across archetypes with data
+ * - prior_i = per-archetype prior derived from round-data (paper) winrate, shrunk toward 50%
+ *   using f(N) = N² / (N² + K_prior²) where K_prior ≈ 167 gives f(500) ≈ 0.9
+ */
+export function correctWinrates(
+	stats: ArchetypeStats[],
+	roundStats?: ArchetypeStats[],
+): ArchetypeStats[] {
+	const withData = stats.filter((s) => s.totalMatches > 0);
+	if (withData.length === 0) return stats;
+
+	// Step 1: match-count-weighted average winrate (= total wins / total matches)
+	let totalWins = 0;
+	let totalMatches = 0;
+	for (const s of withData) {
+		totalWins += s.wins;
+		totalMatches += s.totalMatches;
+	}
+	const rawAvg = totalMatches > 0 ? totalWins / totalMatches : 0.5;
+
+	// Step 2: K = median of totalMatches (for confidence shrinkage)
+	const matchCounts = withData.map((s) => s.totalMatches).sort((a, b) => a - b);
+	const mid = Math.floor(matchCounts.length / 2);
+	const K =
+		matchCounts.length % 2 === 1
+			? matchCounts[mid]
+			: (matchCounts[mid - 1] + matchCounts[mid]) / 2;
+
+	// Step 3: build per-archetype prior from round-data stats
+	// f(N) = N² / (N² + K_prior²), calibrated so f(500) ≈ 0.9
+	const K_PRIOR = 167;
+	const roundMap = new Map<string, ArchetypeStats>();
+	if (roundStats) {
+		for (const rs of roundStats) roundMap.set(rs.name, rs);
+	}
+
+	// Step 4: apply correction
+	return stats.map((s) => {
+		if (s.totalMatches === 0) return s;
+
+		// Per-archetype prior: shrink paper WR toward 50% based on paper sample size
+		const rs = roundMap.get(s.name);
+		let prior = 0.5;
+		if (rs && rs.totalMatches > 0) {
+			const n2 = rs.totalMatches * rs.totalMatches;
+			const f = n2 / (n2 + K_PRIOR * K_PRIOR);
+			prior = 0.5 * (1 - f) + rs.overallWinrate * f;
+		}
+
+		const confidence = s.totalMatches / (s.totalMatches + K);
+		const adjusted = prior + (s.overallWinrate - rawAvg) * confidence;
+		return { ...s, adjustedWinrate: adjusted };
+	});
 }
 
 /**

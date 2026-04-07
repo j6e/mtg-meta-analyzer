@@ -175,7 +175,7 @@
 
 		const data = filtered.map((s, i) => ({
 			x: s.metagameShare * 100,
-			y: s.overallWinrate * 100,
+			y: (s.adjustedWinrate ?? s.overallWinrate) * 100,
 			r: 6 + (s.totalMatches / maxMatches) * 20,
 			label: s.name,
 			raw: s,
@@ -232,7 +232,7 @@
 								return [
 									ds.label,
 									`Share: ${(s.metagameShare * 100).toFixed(1)}%`,
-									`Win rate: ${(s.overallWinrate * 100).toFixed(1)}%`,
+									`Win rate: ${((s.adjustedWinrate ?? s.overallWinrate) * 100).toFixed(1)}%${s.adjustedWinrate !== undefined ? ` (raw: ${(s.overallWinrate * 100).toFixed(1)}%)` : ''}`,
 									`Players: ${s.playerCount}`,
 									`Matches: ${s.totalMatches}`,
 								];

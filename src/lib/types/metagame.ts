@@ -16,6 +16,7 @@ export interface ArchetypeStats {
 	name: string;
 	metagameShare: number; // 0-1
 	overallWinrate: number; // 0-1
+	adjustedWinrate?: number; // 0-1, set when useStandings correction is active
 	wins: number;
 	losses: number;
 	draws: number;
