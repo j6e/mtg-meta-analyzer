@@ -155,7 +155,7 @@ export function buildMatchupMatrix(
 			for (const match of round.matches) {
 				// Count byes per archetype (no opponent)
 				if (!match.player2Id) {
-					const raw = playerArchetypes.get(match.player1Id);
+					const raw = playerArchetypes.get(`${tournament.meta.id}:${match.player1Id}`);
 					if (raw) {
 						const arch = resolve(raw);
 						overallByes.set(arch, (overallByes.get(arch) ?? 0) + 1);
@@ -163,8 +163,8 @@ export function buildMatchupMatrix(
 					continue;
 				}
 
-				const raw1 = playerArchetypes.get(match.player1Id);
-				const raw2 = playerArchetypes.get(match.player2Id);
+				const raw1 = playerArchetypes.get(`${tournament.meta.id}:${match.player1Id}`);
+				const raw2 = playerArchetypes.get(`${tournament.meta.id}:${match.player2Id}`);
 				if (!raw1 || !raw2) continue;
 
 				const arch1 = resolve(raw1);

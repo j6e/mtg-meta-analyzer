@@ -24,7 +24,7 @@ export function collectArchetypeDecklists(
 
 	for (const t of tournaments) {
 		for (const [playerId, player] of Object.entries(t.players)) {
-			if (playerArchetypes.get(playerId) !== archetypeName) continue;
+			if (playerArchetypes.get(`${t.meta.id}:${playerId}`) !== archetypeName) continue;
 			for (const deckId of player.decklistIds) {
 				const deck = t.decklists[deckId];
 				if (deck) {

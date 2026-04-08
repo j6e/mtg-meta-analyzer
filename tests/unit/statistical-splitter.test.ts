@@ -125,12 +125,12 @@ const tournament = makeTournament({
 });
 
 const archetypes = new Map([
-	["a1", "Aggro"],
-	["a2", "Aggro"],
-	["a3", "Aggro"],
-	["a4", "Aggro"],
-	["c1", "Control"],
-	["c2", "Control"],
+	["melee-1:a1", "Aggro"],
+	["melee-1:a2", "Aggro"],
+	["melee-1:a3", "Aggro"],
+	["melee-1:a4", "Aggro"],
+	["melee-1:c1", "Control"],
+	["melee-1:c2", "Control"],
 ]);
 
 describe("computeStatistics", () => {
@@ -267,8 +267,8 @@ describe("computeStatistics cumulative mode", () => {
 		matches: cumMatches,
 	});
 	const cumArchetypes = new Map<string, string>();
-	for (let i = 0; i < 12; i++) cumArchetypes.set(`p${i}`, "Aggro");
-	cumArchetypes.set("opp", "Control");
+	for (let i = 0; i < 12; i++) cumArchetypes.set(`melee-1:p${i}`, "Aggro");
+	cumArchetypes.set("melee-1:opp", "Control");
 
 	it("cumulative mode produces one comparison per group (group vs complement)", () => {
 		const split = splitByCard(
@@ -409,8 +409,8 @@ describe("autoScanCards", () => {
 
 		const t = makeTournament({ players, decklists, matches });
 		const arch = new Map<string, string>();
-		for (let i = 0; i < 18; i++) arch.set(`a${i}`, "Aggro");
-		arch.set("c1", "Control");
+		for (let i = 0; i < 18; i++) arch.set(`melee-1:a${i}`, "Aggro");
+		arch.set("melee-1:c1", "Control");
 
 		const results = await autoScanCards([t], arch, "Aggro", ["Flex Card"], "per-copy", {
 			minGroupSize: 1,
@@ -467,8 +467,8 @@ describe("autoScanCards", () => {
 
 		const t = makeTournament({ players, decklists, matches });
 		const arch = new Map<string, string>();
-		for (let i = 0; i < 18; i++) arch.set(`a${i}`, "Aggro");
-		arch.set("c1", "Control");
+		for (let i = 0; i < 18; i++) arch.set(`melee-1:a${i}`, "Aggro");
+		arch.set("melee-1:c1", "Control");
 
 		const results = await autoScanCards(
 			[t],

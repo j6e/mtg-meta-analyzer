@@ -213,7 +213,7 @@ export function computeMetagameEvolution(
 	let globalTotal = 0;
 	for (const t of tournaments) {
 		for (const playerId of Object.keys(t.players)) {
-			const arch = playerArchetypes.get(playerId);
+			const arch = playerArchetypes.get(`${t.meta.id}:${playerId}`);
 			if (!arch || arch === "Unknown") continue;
 			globalCounts.set(arch, (globalCounts.get(arch) ?? 0) + 1);
 			globalTotal++;
@@ -259,7 +259,7 @@ export function computeMetagameEvolution(
 		for (const t of periodTournaments) {
 			for (const [playerId, player] of Object.entries(t.players)) {
 				if (!shouldIncludePlayer(player, t)) continue;
-				const rawArch = playerArchetypes.get(playerId);
+				const rawArch = playerArchetypes.get(`${t.meta.id}:${playerId}`);
 				if (!rawArch || rawArch === "Unknown") continue;
 				const displayArch = otherSet.has(rawArch) ? "Other" : rawArch;
 				counts.set(displayArch, (counts.get(displayArch) ?? 0) + 1);

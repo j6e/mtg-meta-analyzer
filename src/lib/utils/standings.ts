@@ -102,7 +102,7 @@ export function computeStandingsRemainder(
 		if (!hasIncompleteRounds(t)) continue;
 
 		for (const [playerId, player] of Object.entries(t.players)) {
-			const archetype = playerArchetypes.get(playerId);
+			const archetype = playerArchetypes.get(`${t.meta.id}:${playerId}`);
 			if (!archetype) continue;
 
 			const total = parseMatchRecord(player.matchRecord);

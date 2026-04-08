@@ -32,7 +32,7 @@ export function countCardCopies(
 
 	for (const t of tournaments) {
 		for (const [playerId, player] of Object.entries(t.players)) {
-			if (playerArchetypes.get(playerId) !== archetypeName) continue;
+			if (playerArchetypes.get(`${t.meta.id}:${playerId}`) !== archetypeName) continue;
 			const dlId = player.decklistIds[0];
 			const dl = dlId ? t.decklists[dlId] : undefined;
 			if (!dl) continue;
@@ -44,7 +44,7 @@ export function countCardCopies(
 			for (const entry of dl.sideboard) {
 				if (entry.cardName === cardName) copies += entry.quantity;
 			}
-			playerCopies.set(playerId, copies);
+			playerCopies.set(`${t.meta.id}:${playerId}`, copies);
 		}
 	}
 

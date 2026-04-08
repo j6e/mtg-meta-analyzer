@@ -57,7 +57,7 @@ for (const [tournamentId, results] of classificationResults) {
 	const tournament = tournaments.get(tournamentId)!;
 	const map = buildPlayerArchetypeMap(tournament, results);
 	for (const [playerId, arch] of map) {
-		playerArchetypes.set(playerId, arch);
+		playerArchetypes.set(`${tournamentId}:${playerId}`, arch);
 	}
 }
 

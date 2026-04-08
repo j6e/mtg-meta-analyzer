@@ -69,8 +69,8 @@ describe("collectArchetypeDecklists", () => {
 			},
 		});
 		const archetypes = new Map([
-			["p1", "Aggro"],
-			["p2", "Control"],
+			["melee-1:p1", "Aggro"],
+			["melee-1:p2", "Control"],
 		]);
 
 		const result = collectArchetypeDecklists([t], archetypes, "Aggro");
@@ -87,7 +87,7 @@ describe("collectArchetypeDecklists", () => {
 			players: { p1: makePlayer("Alice", ["d1"], 5) },
 			decklists: { d1: makeDecklist("p1") },
 		});
-		const archetypes = new Map([["p1", "Aggro"]]);
+		const archetypes = new Map([["melee-42:p1", "Aggro"]]);
 
 		const result = collectArchetypeDecklists([t], archetypes, "Aggro");
 		expect(result[0]).toMatchObject({
@@ -111,8 +111,8 @@ describe("collectArchetypeDecklists", () => {
 			decklists: { d2: makeDecklist("p2") },
 		});
 		const archetypes = new Map([
-			["p1", "Aggro"],
-			["p2", "Aggro"],
+			["melee-1:p1", "Aggro"],
+			["melee-2:p2", "Aggro"],
 		]);
 
 		const result = collectArchetypeDecklists([t1, t2], archetypes, "Aggro");
@@ -128,7 +128,7 @@ describe("collectArchetypeDecklists", () => {
 				d2: makeDecklist("p1"),
 			},
 		});
-		const archetypes = new Map([["p1", "Aggro"]]);
+		const archetypes = new Map([["melee-1:p1", "Aggro"]]);
 
 		const result = collectArchetypeDecklists([t], archetypes, "Aggro");
 		expect(result).toHaveLength(2);
@@ -140,7 +140,7 @@ describe("collectArchetypeDecklists", () => {
 			players: { p1: makePlayer("Alice", ["d1"]) },
 			decklists: { d1: makeDecklist("p1") },
 		});
-		const archetypes = new Map([["p1", "Control"]]);
+		const archetypes = new Map([["melee-1:p1", "Control"]]);
 
 		expect(collectArchetypeDecklists([t], archetypes, "Aggro")).toEqual([]);
 	});
@@ -154,7 +154,7 @@ describe("collectArchetypeDecklists", () => {
 			players: { p1: makePlayer("Alice", ["d1", "missing"]) },
 			decklists: { d1: makeDecklist("p1") },
 		});
-		const archetypes = new Map([["p1", "Aggro"]]);
+		const archetypes = new Map([["melee-1:p1", "Aggro"]]);
 
 		const result = collectArchetypeDecklists([t], archetypes, "Aggro");
 		expect(result).toHaveLength(1);
@@ -175,8 +175,8 @@ describe("collectRawDecklists", () => {
 			},
 		});
 		const archetypes = new Map([
-			["p1", "Aggro"],
-			["p2", "Aggro"],
+			["melee-1:p1", "Aggro"],
+			["melee-1:p2", "Aggro"],
 		]);
 
 		const result = collectRawDecklists([t], archetypes, "Aggro");
@@ -201,9 +201,9 @@ describe("findBestDecklist", () => {
 			},
 		});
 		const archetypes = new Map([
-			["p1", "Aggro"],
-			["p2", "Aggro"],
-			["p3", "Aggro"],
+			["melee-1:p1", "Aggro"],
+			["melee-1:p2", "Aggro"],
+			["melee-1:p3", "Aggro"],
 		]);
 
 		const enriched = collectArchetypeDecklists([t], archetypes, "Aggro");
@@ -226,8 +226,8 @@ describe("findBestDecklist", () => {
 			decklists: { d2: makeDecklist("p2") },
 		});
 		const archetypes = new Map([
-			["p1", "Aggro"],
-			["p2", "Aggro"],
+			["melee-1:p1", "Aggro"],
+			["melee-2:p2", "Aggro"],
 		]);
 
 		const enriched = collectArchetypeDecklists([t1, t2], archetypes, "Aggro");

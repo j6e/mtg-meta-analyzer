@@ -124,12 +124,12 @@ describe("splitByCard", () => {
 	});
 
 	const archetypes = new Map([
-		["a1", "Aggro"],
-		["a2", "Aggro"],
-		["a3", "Aggro"],
-		["a4", "Aggro"],
-		["c1", "Control"],
-		["c2", "Control"],
+		["melee-1:a1", "Aggro"],
+		["melee-1:a2", "Aggro"],
+		["melee-1:a3", "Aggro"],
+		["melee-1:a4", "Aggro"],
+		["melee-1:c1", "Control"],
+		["melee-1:c2", "Control"],
 	]);
 
 	it("binary split partitions players correctly", () => {

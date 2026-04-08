@@ -31,8 +31,12 @@ const classResults = classifyAll(data.decklists, archetypeDefs, {
 	nameEqualsCommander,
 });
 
-// Step 2: Build player → archetype map
-const playerArchetypes = buildPlayerArchetypeMap(data, classResults);
+// Step 2: Build player → archetype map (composite key: tournamentId:playerId)
+const rawMap = buildPlayerArchetypeMap(data, classResults);
+const playerArchetypes = new Map<string, string>();
+for (const [playerId, archetype] of rawMap) {
+	playerArchetypes.set(`${data.meta.id}:${playerId}`, archetype);
+}
 
 // Step 3: Metagame stats
 console.log("=== Metagame Breakdown ===");

@@ -190,7 +190,11 @@ describe("computeMetagameEvolution", () => {
 
 	it("basic share computation: single period, two archetypes", () => {
 		const t = makeT("2026-03-11", { p1: "A", p2: "A", p3: "B" });
-		const archetypes = makeMap({ p1: "A", p2: "A", p3: "B" });
+		const archetypes = makeMap({
+			"t-2026-03-11:p1": "A",
+			"t-2026-03-11:p2": "A",
+			"t-2026-03-11:p3": "B",
+		});
 		const { series } = computeMetagameEvolution([t], archetypes, "1w", {});
 		const a = series.find((s) => s.name === "A")!;
 		const b = series.find((s) => s.name === "B")!;
@@ -205,7 +209,7 @@ describe("computeMetagameEvolution", () => {
 		// Two tournaments a month apart; 1w periods will have many empty periods in between
 		const t1 = makeT("2026-01-05", { p1: "A" });
 		const t2 = makeT("2026-03-11", { p2: "A" });
-		const archetypes = makeMap({ p1: "A", p2: "A" });
+		const archetypes = makeMap({ "t-2026-01-05:p1": "A", "t-2026-03-11:p2": "A" });
 		const { series } = computeMetagameEvolution([t1, t2], archetypes, "1w", {});
 		// Periods with no tournaments should have null share (skipped in charts)
 		const emptyPeriods = series[0].points.filter((p) => p.share === null);
@@ -215,7 +219,7 @@ describe("computeMetagameEvolution", () => {
 	it("output ordered oldest-to-newest", () => {
 		const t1 = makeT("2026-01-05", { p1: "A" });
 		const t2 = makeT("2026-02-11", { p2: "B" });
-		const archetypes = makeMap({ p1: "A", p2: "B" });
+		const archetypes = makeMap({ "t-2026-01-05:p1": "A", "t-2026-02-11:p2": "B" });
 		const { series } = computeMetagameEvolution([t1, t2], archetypes, "1m", {});
 		// First period clipped to Jan 5 (earliest tournament), last is full February
 		expect(series[0].points[0].label).toBe("Jan 5–31");
@@ -224,7 +228,11 @@ describe("computeMetagameEvolution", () => {
 
 	it("topN collapsing: top 1 of 2 archetypes → Other appears", () => {
 		const t = makeT("2026-03-11", { p1: "A", p2: "A", p3: "B" });
-		const archetypes = makeMap({ p1: "A", p2: "A", p3: "B" });
+		const archetypes = makeMap({
+			"t-2026-03-11:p1": "A",
+			"t-2026-03-11:p2": "A",
+			"t-2026-03-11:p3": "B",
+		});
 		const { series } = computeMetagameEvolution([t], archetypes, "1w", { topN: 1 });
 		const names = series.map((s) => s.name);
 		expect(names).toContain("A");
@@ -238,7 +246,9 @@ describe("computeMetagameEvolution", () => {
 		for (let i = 0; i < 9; i++) players[`a${i}`] = "A";
 		players.b0 = "B";
 		const t = makeT("2026-03-11", players);
-		const archetypes = makeMap(players);
+		const prefixed: Record<string, string> = {};
+		for (const [k, v] of Object.entries(players)) prefixed[`t-2026-03-11:${k}`] = v;
+		const archetypes = makeMap(prefixed);
 		const { series } = computeMetagameEvolution([t], archetypes, "1w", {
 			minMetagameShare: 0.15,
 		});
@@ -251,7 +261,7 @@ describe("computeMetagameEvolution", () => {
 	it("global archetype set: archetype in one period appears in all periods with 0% elsewhere", () => {
 		const t1 = makeT("2026-01-05", { p1: "A" });
 		const t2 = makeT("2026-02-05", { p2: "B" });
-		const archetypes = makeMap({ p1: "A", p2: "B" });
+		const archetypes = makeMap({ "t-2026-01-05:p1": "A", "t-2026-02-05:p2": "B" });
 		const { series } = computeMetagameEvolution([t1, t2], archetypes, "1m", {});
 		const aSeries = series.find((s) => s.name === "A")!;
 		const bSeries = series.find((s) => s.name === "B")!;
@@ -270,8 +280,8 @@ describe("computeMetagameEvolution", () => {
 		const t = makeT("2026-03-11", { p1: "A", p2: "U" });
 		// p2 maps to Unknown in the archetype map
 		const archetypes = new Map([
-			["p1", "A"],
-			["p2", "Unknown"],
+			["t-2026-03-11:p1", "A"],
+			["t-2026-03-11:p2", "Unknown"],
 		]);
 		const { series } = computeMetagameEvolution([t], archetypes, "1w", {});
 		const a = series.find((s) => s.name === "A")!;
@@ -282,7 +292,7 @@ describe("computeMetagameEvolution", () => {
 	it("date range bounds: no periods outside earliest–latest", () => {
 		const t1 = makeT("2026-03-09", { p1: "A" }); // Monday of some week
 		const t2 = makeT("2026-03-15", { p2: "B" }); // Sunday of same week
-		const archetypes = makeMap({ p1: "A", p2: "B" });
+		const archetypes = makeMap({ "t-2026-03-09:p1": "A", "t-2026-03-15:p2": "B" });
 		const { series } = computeMetagameEvolution([t1, t2], archetypes, "1w", {});
 		// Both dates are in same ISO week → should be exactly 1 period
 		expect(series[0].points).toHaveLength(1);
@@ -299,7 +309,9 @@ describe("computeMetagameEvolution — winners mode", () => {
 			ranks[`p${i}`] = i;
 		}
 		const t = makeT("2026-03-11", players, { ranks });
-		const archetypes = makeMap(players);
+		const prefixed: Record<string, string> = {};
+		for (const [k, v] of Object.entries(players)) prefixed[`t-2026-03-11:${k}`] = v;
+		const archetypes = makeMap(prefixed);
 		const { series } = computeMetagameEvolution([t], archetypes, "1w", {
 			winnersMode: true,
 			winnersCutoff: 0.25,
@@ -328,7 +340,11 @@ describe("computeMetagameEvolution — winners mode", () => {
 		}
 		const t1 = makeT("2026-03-11", small, { ranks: smallRanks });
 		const t2 = makeT("2026-03-12", large, { ranks: largeRanks });
-		const archetypes = new Map([...makeMap(small), ...makeMap(large)]);
+		const smallPrefixed: Record<string, string> = {};
+		for (const [k, v] of Object.entries(small)) smallPrefixed[`t-2026-03-11:${k}`] = v;
+		const largePrefixed: Record<string, string> = {};
+		for (const [k, v] of Object.entries(large)) largePrefixed[`t-2026-03-12:${k}`] = v;
+		const archetypes = new Map([...makeMap(smallPrefixed), ...makeMap(largePrefixed)]);
 		const { series } = computeMetagameEvolution([t1, t2], archetypes, "1w", {
 			winnersMode: true,
 			winnersCutoff: 0.25,
@@ -348,7 +364,9 @@ describe("computeMetagameEvolution — winners mode", () => {
 			ranks[`p${i}`] = i;
 		}
 		const t = makeT("2026-03-11", players, { ranks });
-		const archetypes = makeMap(players);
+		const prefixed: Record<string, string> = {};
+		for (const [k, v] of Object.entries(players)) prefixed[`t-2026-03-11:${k}`] = v;
+		const archetypes = makeMap(prefixed);
 		const { series } = computeMetagameEvolution([t], archetypes, "1w", {
 			winnersMode: true,
 			winnersCutoff: 0.25,
@@ -365,7 +383,9 @@ describe("computeMetagameEvolution — winners mode", () => {
 			ranks[`p${i}`] = i;
 		}
 		const t = makeT("2026-03-11", players, { ranks });
-		const archetypes = makeMap(players);
+		const prefixed: Record<string, string> = {};
+		for (const [k, v] of Object.entries(players)) prefixed[`t-2026-03-11:${k}`] = v;
+		const archetypes = makeMap(prefixed);
 		const { series } = computeMetagameEvolution([t], archetypes, "1w", {
 			winnersMode: false,
 		});
@@ -381,7 +401,9 @@ describe("computeMetagameEvolution — winners mode", () => {
 			ranks[`p${i}`] = i;
 		}
 		const t = makeT("2026-03-11", players, { ranks });
-		const archetypes = makeMap(players);
+		const prefixed: Record<string, string> = {};
+		for (const [k, v] of Object.entries(players)) prefixed[`t-2026-03-11:${k}`] = v;
+		const archetypes = makeMap(prefixed);
 		const { series: fieldSeries } = computeMetagameEvolution([t], archetypes, "1w", {});
 		const { series: winnersSeries } = computeMetagameEvolution([t], archetypes, "1w", {
 			winnersMode: true,
@@ -400,7 +422,9 @@ describe("computeMetagameEvolution — winners mode", () => {
 			ranks[`p${i}`] = i;
 		}
 		const t = makeT("2026-03-11", players, { playerCount: 78, ranks });
-		const archetypes = makeMap(players);
+		const prefixed: Record<string, string> = {};
+		for (const [k, v] of Object.entries(players)) prefixed[`t-2026-03-11:${k}`] = v;
+		const archetypes = makeMap(prefixed);
 		const { incompleteData } = computeMetagameEvolution([t], archetypes, "1w", {
 			winnersMode: true,
 			winnersCutoff: 0.5,
@@ -417,7 +441,9 @@ describe("computeMetagameEvolution — winners mode", () => {
 			ranks[`p${i}`] = i;
 		}
 		const t = makeT("2026-03-11", players, { playerCount: 78, ranks });
-		const archetypes = makeMap(players);
+		const prefixed: Record<string, string> = {};
+		for (const [k, v] of Object.entries(players)) prefixed[`t-2026-03-11:${k}`] = v;
+		const archetypes = makeMap(prefixed);
 		const { incompleteData } = computeMetagameEvolution([t], archetypes, "1w", {
 			winnersMode: true,
 			winnersCutoff: 0.25,
@@ -430,7 +456,12 @@ describe("computeMetagameEvolution — winners mode", () => {
 		const players: Record<string, string> = { p1: "A", p2: "A", p3: "B", p4: "B" };
 		const ranks: Record<string, number> = { p1: 1, p2: 2, p3: 2, p4: 4 };
 		const t = makeT("2026-03-11", players, { ranks });
-		const archetypes = makeMap(players);
+		const archetypes = makeMap({
+			"t-2026-03-11:p1": "A",
+			"t-2026-03-11:p2": "A",
+			"t-2026-03-11:p3": "B",
+			"t-2026-03-11:p4": "B",
+		});
 		const { series } = computeMetagameEvolution([t], archetypes, "1w", {
 			winnersMode: true,
 			winnersCutoff: 0.5,
@@ -453,7 +484,9 @@ describe("computeMetagameEvolution — winners mode", () => {
 			ranks[`p${i}`] = i;
 		}
 		const t = makeT("2026-03-11", players, { ranks });
-		const archetypes = makeMap(players);
+		const prefixed: Record<string, string> = {};
+		for (const [k, v] of Object.entries(players)) prefixed[`t-2026-03-11:${k}`] = v;
+		const archetypes = makeMap(prefixed);
 		const { series } = computeMetagameEvolution([t], archetypes, "1w", {
 			topN: 1,
 			winnersMode: true,

@@ -17,6 +17,14 @@ import {
 
 // --- Helpers ---
 
+/** Build a playerArchetypes map with composite keys (tournamentId:playerId). */
+function makeArchetypeMap(
+	tournamentId: string,
+	entries: [string, string][],
+): Map<string, string> {
+	return new Map(entries.map(([pid, arch]) => [`${tournamentId}:${pid}`, arch]));
+}
+
 function makeTournament(overrides: {
 	id?: number;
 	players?: Record<string, PlayerInfo>;
@@ -212,7 +220,7 @@ describe("buildMatchupMatrix", () => {
 			},
 		});
 
-		const playerArchetypes = new Map([
+		const playerArchetypes = makeArchetypeMap("melee-1", [
 			["p1", "Aggro"],
 			["p2", "Control"],
 			["p3", "Aggro"],
@@ -251,7 +259,7 @@ describe("buildMatchupMatrix", () => {
 			},
 		});
 
-		const playerArchetypes = new Map([
+		const playerArchetypes = makeArchetypeMap("melee-1", [
 			["p1", "Aggro"],
 			["p2", "Aggro"],
 		]);
@@ -272,7 +280,7 @@ describe("buildMatchupMatrix", () => {
 			},
 		});
 
-		const playerArchetypes = new Map([
+		const playerArchetypes = makeArchetypeMap("melee-1", [
 			["p1", "Aggro"],
 			["p2", "Aggro"],
 		]);
@@ -299,7 +307,7 @@ describe("buildMatchupMatrix", () => {
 			},
 		});
 
-		const playerArchetypes = new Map([
+		const playerArchetypes = makeArchetypeMap("melee-1", [
 			["p1", "Aggro"],
 			["p2", "Control"],
 		]);
@@ -322,7 +330,7 @@ describe("buildMatchupMatrix", () => {
 			},
 		});
 
-		const playerArchetypes = new Map([
+		const playerArchetypes = makeArchetypeMap("melee-1", [
 			["p1", "Aggro"],
 			["p2", "Control"],
 		]);
@@ -352,7 +360,7 @@ describe("buildMatchupMatrix", () => {
 			},
 		});
 
-		const playerArchetypes = new Map([
+		const playerArchetypes = makeArchetypeMap("melee-1", [
 			["p1", "Aggro"],
 			["p2", "Aggro"],
 			["p3", "Control"],
@@ -395,7 +403,7 @@ describe("buildMatchupMatrix", () => {
 			},
 		});
 
-		const playerArchetypes = new Map([
+		const playerArchetypes = makeArchetypeMap("melee-1", [
 			["p1", "Aggro"],
 			["p2", "Aggro"],
 			["p3", "Aggro"],
@@ -438,7 +446,7 @@ describe("buildMatchupMatrix", () => {
 			},
 		});
 
-		const playerArchetypes = new Map([
+		const playerArchetypes = makeArchetypeMap("melee-1", [
 			["p1", "Aggro"],
 			["p2", "Control"],
 		]);
@@ -471,7 +479,7 @@ describe("buildMatchupMatrix", () => {
 			},
 		});
 
-		const playerArchetypes = new Map([
+		const playerArchetypes = makeArchetypeMap("melee-1", [
 			["p1", "Control"],
 			["p2", "Control"],
 			["p3", "Control"], // 3 players
@@ -492,7 +500,7 @@ describe("buildMatchupMatrix", () => {
 			},
 		});
 
-		const playerArchetypes = new Map([
+		const playerArchetypes = makeArchetypeMap("melee-1", [
 			["p1", "Aggro"],
 			["p2", "Unknown"],
 		]);
@@ -516,10 +524,14 @@ describe("buildMatchupMatrix", () => {
 		});
 
 		const playerArchetypes = new Map([
-			["p1", "Aggro"],
-			["p2", "Control"],
-			["p3", "Aggro"],
-			["p4", "Control"],
+			...makeArchetypeMap("melee-1", [
+				["p1", "Aggro"],
+				["p2", "Control"],
+			]),
+			...makeArchetypeMap("melee-1", [
+				["p3", "Aggro"],
+				["p4", "Control"],
+			]),
 		]);
 
 		const { matrix } = buildMatchupMatrix([t1, t2], playerArchetypes);
@@ -550,7 +562,7 @@ describe("buildMatchupMatrix stats", () => {
 			},
 		});
 
-		const playerArchetypes = new Map([
+		const playerArchetypes = makeArchetypeMap("melee-1", [
 			["p1", "Aggro"],
 			["p2", "Aggro"],
 			["p3", "Control"],
@@ -585,7 +597,7 @@ describe("buildMatchupMatrix stats", () => {
 			rounds: {},
 		});
 
-		const playerArchetypes = new Map([
+		const playerArchetypes = makeArchetypeMap("melee-1", [
 			["p1", "Aggro"],
 			["p2", "Aggro"],
 			["p3", "Control"],
@@ -608,7 +620,7 @@ describe("buildMatchupMatrix stats", () => {
 			},
 		});
 
-		const playerArchetypes = new Map([
+		const playerArchetypes = makeArchetypeMap("melee-1", [
 			["p1", "Aggro"],
 			["p2", "Aggro"],
 		]);
@@ -630,7 +642,7 @@ describe("buildMatchupMatrix stats", () => {
 			},
 		});
 
-		const playerArchetypes = new Map([
+		const playerArchetypes = makeArchetypeMap("melee-1", [
 			["p1", "Aggro"],
 			["p2", "Aggro"],
 		]);
@@ -656,7 +668,7 @@ describe("buildMatchupMatrix stats", () => {
 			rounds: {},
 		});
 
-		const playerArchetypes = new Map([
+		const playerArchetypes = makeArchetypeMap("melee-1", [
 			["p1", "Control"],
 			["p2", "Control"],
 			["p3", "Control"],

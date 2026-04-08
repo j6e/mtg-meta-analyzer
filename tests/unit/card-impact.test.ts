@@ -165,15 +165,15 @@ const tournament = makeTournament({
 });
 
 const archetypes = new Map([
-	["a1", "Aggro"],
-	["a2", "Aggro"],
-	["a3", "Aggro"],
-	["a4", "Aggro"],
-	["a5", "Aggro"],
-	["a6", "Aggro"],
-	["c1", "Control"],
-	["c2", "Control"],
-	["c3", "Control"],
+	["melee-1:a1", "Aggro"],
+	["melee-1:a2", "Aggro"],
+	["melee-1:a3", "Aggro"],
+	["melee-1:a4", "Aggro"],
+	["melee-1:a5", "Aggro"],
+	["melee-1:a6", "Aggro"],
+	["melee-1:c1", "Control"],
+	["melee-1:c2", "Control"],
+	["melee-1:c3", "Control"],
 ]);
 
 // ── extractTrainingData ──
@@ -218,8 +218,8 @@ describe("extractTrainingData", () => {
 			matches: [makeMatch("a1", "a2", "a1")],
 		});
 		const mirrorArch = new Map([
-			["a1", "Aggro"],
-			["a2", "Aggro"],
+			["melee-1:a1", "Aggro"],
+			["melee-1:a2", "Aggro"],
 		]);
 		const obs = extractTrainingData([mirrorTournament], mirrorArch, "Aggro");
 		expect(obs).toHaveLength(0);
@@ -408,9 +408,9 @@ describe("analyzeCardImpact", () => {
 			),
 		});
 		const uniformArch = new Map([
-			["a1", "X"],
-			["a2", "X"],
-			["c1", "Y"],
+			["melee-1:a1", "X"],
+			["melee-1:a2", "X"],
+			["melee-1:c1", "Y"],
 		]);
 		const result = analyzeCardImpact([uniformTournament], uniformArch, "X", {
 			minObservations: 1,
@@ -448,8 +448,8 @@ describe("analyzeCardImpact", () => {
 
 		const bigTournament = makeTournament({ players, decklists, matches });
 		const bigArchetypes = new Map<string, string>();
-		for (let i = 0; i < 30; i++) bigArchetypes.set(`a${i}`, "Aggro");
-		bigArchetypes.set("c1", "Control");
+		for (let i = 0; i < 30; i++) bigArchetypes.set(`melee-1:a${i}`, "Aggro");
+		bigArchetypes.set("melee-1:c1", "Control");
 
 		const result = analyzeCardImpact([bigTournament], bigArchetypes, "Aggro", {
 			minObservations: 1,
@@ -497,8 +497,8 @@ describe("analyzeCardImpact", () => {
 
 		const t = makeTournament({ players, decklists, matches });
 		const arch = new Map<string, string>();
-		for (let i = 0; i < 40; i++) arch.set(`p${i}`, "A");
-		arch.set("opp", "B");
+		for (let i = 0; i < 40; i++) arch.set(`melee-1:p${i}`, "A");
+		arch.set("melee-1:opp", "B");
 
 		const result = analyzeCardImpact([t], arch, "A", { minObservations: 1 });
 		expect("regression" in result).toBe(true);

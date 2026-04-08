@@ -99,7 +99,7 @@ export function extractTrainingData(
 		// Build per-tournament playerId → card counts lookup
 		const playerDecks = new Map<string, Map<string, number>>();
 		for (const [playerId, player] of Object.entries(t.players)) {
-			if (playerArchetypes.get(playerId) !== archetypeName) continue;
+			if (playerArchetypes.get(`${t.meta.id}:${playerId}`) !== archetypeName) continue;
 			// Use the first decklist for this player in this tournament
 			const dlId = player.decklistIds[0];
 			const dl = dlId ? t.decklists[dlId] : undefined;
@@ -115,8 +115,8 @@ export function extractTrainingData(
 				// Skip draws and IDs (no winner)
 				if (!match.winnerId) continue;
 
-				const p1Arch = playerArchetypes.get(match.player1Id);
-				const p2Arch = playerArchetypes.get(match.player2Id);
+				const p1Arch = playerArchetypes.get(`${t.meta.id}:${match.player1Id}`);
+				const p2Arch = playerArchetypes.get(`${t.meta.id}:${match.player2Id}`);
 
 				// Find which player is our archetype
 				let targetId: string | null = null;
@@ -152,7 +152,8 @@ export function extractTrainingData(
 			if (!hasIncompleteRounds(t)) continue;
 
 			for (const [playerId, player] of Object.entries(t.players)) {
-				if (playerArchetypes.get(playerId) !== archetypeName) continue;
+				if (playerArchetypes.get(`${t.meta.id}:${playerId}`) !== archetypeName)
+					continue;
 				const dlId = player.decklistIds[0];
 				const dl = dlId ? t.decklists[dlId] : undefined;
 				if (!dl) continue;

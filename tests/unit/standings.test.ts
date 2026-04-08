@@ -180,8 +180,8 @@ describe("computeStandingsRemainder", () => {
 		});
 
 		const archetypes = new Map([
-			["p1", "Deck A"],
-			["p2", "Deck B"],
+			["test-1:p1", "Deck A"],
+			["test-1:p2", "Deck B"],
 		]);
 
 		const result = computeStandingsRemainder([t], archetypes);
@@ -213,7 +213,7 @@ describe("computeStandingsRemainder", () => {
 			},
 		});
 
-		const archetypes = new Map([["p1", "Deck A"]]);
+		const archetypes = new Map([["test-1:p1", "Deck A"]]);
 		const result = computeStandingsRemainder([t], archetypes);
 
 		expect(result.extraWins.get("Deck A")).toBeUndefined();
@@ -237,7 +237,7 @@ describe("computeStandingsRemainder", () => {
 			},
 		});
 
-		const archetypes = new Map([["p1", "Deck A"]]);
+		const archetypes = new Map([["test-1:p1", "Deck A"]]);
 		const result = computeStandingsRemainder([t], archetypes);
 
 		// total 0-1-0, recorded 1-0-0 → remainder: wins clamped to 0, losses = 1
@@ -256,7 +256,7 @@ describe("computeStandingsRemainder", () => {
 		});
 
 		// Only p1 has an archetype
-		const archetypes = new Map([["p1", "Deck A"]]);
+		const archetypes = new Map([["test-1:p1", "Deck A"]]);
 		const result = computeStandingsRemainder([t], archetypes);
 
 		expect(result.extraWins.get("Deck A")).toBe(5);

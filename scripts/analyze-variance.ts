@@ -30,7 +30,7 @@ const yamlContent = readFileSync(
 const parsed = parseYaml(yamlContent) as { archetypes: ArchetypeDefinition[] };
 const archetypeDefs = parsed.archetypes;
 
-// Classify players across all tournaments
+// Classify players across all tournaments (composite key: tournamentId:playerId)
 const playerArchetypes = new Map<string, string>();
 for (const t of tournaments) {
 	const results = classifyAll(t.decklists, archetypeDefs, {
@@ -39,7 +39,7 @@ for (const t of tournaments) {
 	for (const r of results) {
 		const playerId = t.decklists[r.decklistId]?.playerId;
 		if (playerId && r.archetype !== "Unknown") {
-			playerArchetypes.set(playerId, r.archetype);
+			playerArchetypes.set(`${t.meta.id}:${playerId}`, r.archetype);
 		}
 	}
 }
@@ -80,7 +80,7 @@ for (const [archetypeName, playerCount] of sortedArchetypes.slice(0, 3)) {
 	for (const t of tournaments) {
 		for (const [_dlId, dl] of Object.entries(t.decklists)) {
 			const playerId = dl.playerId;
-			if (playerArchetypes.get(playerId) !== archetypeName) continue;
+			if (playerArchetypes.get(`${t.meta.id}:${playerId}`) !== archetypeName) continue;
 
 			const counts = new Map<string, number>();
 			for (const entry of dl.mainboard) {

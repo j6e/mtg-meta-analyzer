@@ -183,7 +183,7 @@ export const playerArchetypes = derived(
 			const results = $resultsMap.get(t.meta.id) ?? [];
 			const map = buildPlayerArchetypeMap(t, results);
 			for (const [playerId, archetype] of map) {
-				combined.set(playerId, archetype);
+				combined.set(`${t.meta.id}:${playerId}`, archetype);
 			}
 		}
 		return combined;
@@ -275,7 +275,7 @@ export const globalPlayerArchetypes = derived(
 			const results = $resultsMap.get(t.meta.id) ?? [];
 			const map = buildPlayerArchetypeMap(t, results);
 			for (const [playerId, archetype] of map) {
-				combined.set(playerId, archetype);
+				combined.set(`${t.meta.id}:${playerId}`, archetype);
 			}
 		}
 		return combined;
