@@ -184,8 +184,8 @@ export class MtgoClient {
 
 	constructor(options: MtgoClientOptions = {}) {
 		this.delayMs = options.delayMs ?? 2000;
-		this.timeoutMs = options.timeoutMs ?? 30_000;
-		this.maxRetries = options.maxRetries ?? 3;
+		this.timeoutMs = options.timeoutMs ?? 60_000;
+		this.maxRetries = options.maxRetries ?? 5;
 	}
 
 	/** Fetch and parse a monthly listing page. */
