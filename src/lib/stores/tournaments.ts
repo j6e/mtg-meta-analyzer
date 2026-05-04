@@ -4,7 +4,11 @@
  */
 import { derived, get, writable } from "svelte/store";
 import type { ClassificationResult } from "../algorithms/archetype-classifier";
-import { classifyAll, classifyAllPooled } from "../algorithms/archetype-classifier";
+import {
+	classifyAll,
+	classifyAllPooled,
+	classifyAllSelfReported,
+} from "../algorithms/archetype-classifier";
 import { loadIndexes, loadTournaments } from "../data/loader";
 import type { ArchetypeDefinition } from "../types/archetype";
 import type { DecklistInfo } from "../types/decklist";
@@ -139,13 +143,20 @@ export const decklistMap = derived(
 	},
 );
 
-/** Classification results for all filtered tournaments (pooled KNN). */
+/** Sub-store exposing only the classification source toggle, so derived stores
+ * downstream don't recompute on unrelated settings changes. */
+const useSelfReportedArchetype = derived(settings, ($s) => $s.useSelfReportedArchetype);
+
+/** Classification results for all filtered tournaments (pooled KNN, or self-reported). */
 export const classificationResults = derived(
-	[filteredTournaments, activeArchetypeConfig],
-	([$tournaments, $config]): Map<string, ClassificationResult[]> => {
+	[filteredTournaments, activeArchetypeConfig, useSelfReportedArchetype],
+	([$tournaments, $config, $useSelfReported]): Map<string, ClassificationResult[]> => {
 		const tournamentDecklists = new Map(
 			$tournaments.map((t) => [t.meta.id, t.decklists]),
 		);
+		if ($useSelfReported) {
+			return classifyAllSelfReported(tournamentDecklists);
+		}
 		return classifyAllPooled(tournamentDecklists, $config.archetypes, {
 			minConfidence: 0.4,
 			nameEqualsCommander: $config.nameEqualsCommander,
@@ -225,8 +236,13 @@ export const archetypeStats = derived(
 
 /** Player ID → archetype for the currently selected single tournament. */
 export const currentTournamentArchetypes = derived(
-	[currentTournament, classificationResults, activeArchetypeConfig],
-	([$tournament, $resultsMap, $config]): Map<string, string> => {
+	[
+		currentTournament,
+		classificationResults,
+		activeArchetypeConfig,
+		useSelfReportedArchetype,
+	],
+	([$tournament, $resultsMap, $config, $useSelfReported]): Map<string, string> => {
 		if (!$tournament) return new Map();
 		// Reuse pooled results when the tournament is in the filtered set
 		const cached = $resultsMap.get($tournament.meta.id);
@@ -234,6 +250,11 @@ export const currentTournamentArchetypes = derived(
 			return buildPlayerArchetypeMap($tournament, cached);
 		}
 		// Fallback: tournament not in filtered set (rare)
+		if ($useSelfReported) {
+			const single = new Map([[$tournament.meta.id, $tournament.decklists]]);
+			const map = classifyAllSelfReported(single);
+			return buildPlayerArchetypeMap($tournament, map.get($tournament.meta.id) ?? []);
+		}
 		const results = classifyAll($tournament.decklists, $config.archetypes, {
 			minConfidence: 0.4,
 			nameEqualsCommander: $config.nameEqualsCommander,

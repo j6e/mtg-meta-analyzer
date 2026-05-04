@@ -109,6 +109,10 @@ export function settingsToSearchParams(
 		params.set("minShare", String(s.minMetagameShare));
 	}
 
+	if (s.useSelfReportedArchetype) {
+		params.set("selfReported", "1");
+	}
+
 	return params;
 }
 
@@ -155,6 +159,8 @@ export function searchParamsToSettings(params: URLSearchParams): MetaSettings {
 		}
 	}
 
+	const useSelfReportedArchetype = params.get("selfReported") === "1";
+
 	return {
 		format,
 		dateFrom,
@@ -169,6 +175,7 @@ export function searchParamsToSettings(params: URLSearchParams): MetaSettings {
 		useStandings,
 		winnersMode,
 		winnersCutoff,
+		useSelfReportedArchetype,
 	};
 }
 

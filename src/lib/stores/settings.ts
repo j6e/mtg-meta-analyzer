@@ -23,6 +23,9 @@ export interface MetaSettings {
 	topN: number; // 0 = show all (only used when otherMode = 'topN')
 	minMetagameShare: number; // 0-100 as percentage (only used when otherMode = 'minShare')
 
+	// Classification source
+	useSelfReportedArchetype: boolean; // if true, use decklist.reportedArchetype instead of rule/KNN classifier
+
 	// Winners mode
 	winnersMode: boolean;
 	winnersCutoff: number; // 0.10–0.50
@@ -48,6 +51,7 @@ export function makeDefaults(): MetaSettings {
 		otherMode: "minShare",
 		topN: 0,
 		minMetagameShare: 2,
+		useSelfReportedArchetype: false,
 		winnersMode: false,
 		winnersCutoff: 0.25,
 	};

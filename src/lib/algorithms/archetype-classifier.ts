@@ -13,8 +13,8 @@ import { buildCorpus, vectorize } from "./tfidf";
 export interface ClassificationResult {
 	decklistId: string;
 	archetype: string;
-	method: "signature" | "centroid" | "commander" | "unknown";
-	confidence: number; // 1.0 for signature/commander, centroid similarity, 0 for unknown
+	method: "signature" | "centroid" | "commander" | "reported" | "unknown";
+	confidence: number; // 1.0 for signature/commander/reported, centroid similarity, 0 for unknown
 	nearestArchetype?: string; // nearest centroid label when below minConfidence (debug)
 	representativeCard?: string; // full card name for art lookup (commander method)
 }
@@ -229,6 +229,40 @@ export function classifyAll(
 	}
 
 	return results;
+}
+
+/**
+ * Classify decklists using their self-reported archetype field.
+ * Decklists without a self-reported archetype are labeled "Unknown".
+ * Bypasses signature cards, commander matching, and KNN entirely.
+ */
+export function classifyAllSelfReported(
+	tournamentDecklists: Map<string, Record<string, DecklistInfo>>,
+): Map<string, ClassificationResult[]> {
+	const resultMap = new Map<string, ClassificationResult[]>();
+	for (const [tournamentId, decklists] of tournamentDecklists) {
+		const results: ClassificationResult[] = [];
+		for (const [id, decklist] of Object.entries(decklists)) {
+			const reported = decklist.reportedArchetype?.trim();
+			if (reported) {
+				results.push({
+					decklistId: id,
+					archetype: reported,
+					method: "reported",
+					confidence: 1.0,
+				});
+			} else {
+				results.push({
+					decklistId: id,
+					archetype: "Unknown",
+					method: "unknown",
+					confidence: 0,
+				});
+			}
+		}
+		resultMap.set(tournamentId, results);
+	}
+	return resultMap;
 }
 
 /**

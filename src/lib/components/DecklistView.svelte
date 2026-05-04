@@ -41,6 +41,8 @@
 			{#if archetype}<span class="archetype">{archetype}</span>{/if}
 			{#if classificationResult?.method === 'signature'}
 				<span class="method-badge method-rules" title="Classified by signature cards">By rules</span>
+			{:else if classificationResult?.method === 'reported'}
+				<span class="method-badge method-reported" title="Self-reported by player">Self-reported</span>
 			{:else if classificationResult?.method === 'centroid'}
 				<span class="method-badge method-centroid" title="Classified by nearest centroid (confidence: {classificationResult.confidence.toFixed(2)})">
 					By similarity
@@ -172,6 +174,11 @@
 	.method-centroid {
 		color: #1d6fb8;
 		background: rgba(29, 111, 184, 0.08);
+	}
+
+	.method-reported {
+		color: #6a3fb0;
+		background: rgba(106, 63, 176, 0.08);
 	}
 
 	.method-unknown {

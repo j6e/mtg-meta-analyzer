@@ -129,7 +129,8 @@ describe("FilterPanel component", () => {
 		mockAvailableFormats.set(sampleFormats);
 		const { container } = render(FilterPanel);
 		const checkboxes = container.querySelectorAll('.toggle input[type="checkbox"]');
-		expect(checkboxes.length).toBe(1);
+		// Two toggles: "Exclude mirror matches" and "Use self-reported archetypes"
+		expect(checkboxes.length).toBe(2);
 	});
 
 	it('shows "Other" threshold radio buttons', () => {

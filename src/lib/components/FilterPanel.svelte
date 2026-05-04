@@ -444,6 +444,19 @@
 			</label>
 		</div>
 
+		<div class="filter-row">
+			<label
+				class="toggle"
+				title="Use the archetype each player self-reported on their decklist instead of running the rules-based classifier (signature cards / KNN). Decks without a self-reported archetype are labeled Unknown."
+			>
+				<input
+					type="checkbox"
+					bind:checked={$settings.useSelfReportedArchetype}
+				/>
+				Use self-reported archetypes
+			</label>
+		</div>
+
 		<div class="filter-row other-threshold">
 			<span class="label">"Other" threshold</span>
 			<div class="radio-group">
