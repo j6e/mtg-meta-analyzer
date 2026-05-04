@@ -19,7 +19,7 @@ const IMPORTANCE_PATTERNS: { importance: TournamentImportance; pattern: RegExp }
 	{
 		importance: "premier",
 		pattern:
-			/\bRegional Championship\b|\bSpotlight\b|\bMTGO Showcase\b|\bShowcase Challenge\b|\bPTQ\b/i,
+			/\bRegional Championship\b|\bSpotlight\b|\bMTGO Showcase\b|\bShowcase Challenge\b|\bPTQ\b|\bSuper Qualifier\b/i,
 	},
 	{
 		importance: "competitive",
