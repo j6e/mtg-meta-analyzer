@@ -1,0 +1,4805 @@
+{
+  "meta": {
+    "id": "mtgo-12842468",
+    "name": "Standard Challenge 32",
+    "date": "2026-05-15",
+    "formats": [
+      "Standard"
+    ],
+    "url": "https://www.mtgo.com/decklist/standard-challenge-32-2026-05-1512842468",
+    "fetchedAt": "2026-05-16T06:01:51.922Z",
+    "playerCount": 50,
+    "roundCount": 9,
+    "source": "mtgo",
+    "tabletop": false
+  },
+  "players": {
+    "254536": {
+      "name": "rastaf",
+      "username": "rastaf",
+      "rank": 16,
+      "points": 12,
+      "matchRecord": "3-2-0",
+      "decklistIds": [
+        "mtgo-deck-58546821"
+      ],
+      "reportedArchetypes": []
+    },
+    "845813": {
+      "name": "Arianne",
+      "username": "Arianne",
+      "rank": 32,
+      "points": 6,
+      "matchRecord": "2-4-0",
+      "decklistIds": [
+        "mtgo-deck-58546799"
+      ],
+      "reportedArchetypes": []
+    },
+    "880239": {
+      "name": "jussupinator",
+      "username": "jussupinator",
+      "rank": 25,
+      "points": 9,
+      "matchRecord": "3-3-0",
+      "decklistIds": [
+        "mtgo-deck-58546854"
+      ],
+      "reportedArchetypes": []
+    },
+    "1051293": {
+      "name": "MrTimmy",
+      "username": "MrTimmy",
+      "rank": 28,
+      "points": 6,
+      "matchRecord": "2-4-0",
+      "decklistIds": [
+        "mtgo-deck-58546795"
+      ],
+      "reportedArchetypes": []
+    },
+    "1171245": {
+      "name": "_and_one_",
+      "username": "_and_one_",
+      "rank": 1,
+      "points": 12,
+      "matchRecord": "7-2-0",
+      "decklistIds": [
+        "mtgo-deck-58546855"
+      ],
+      "reportedArchetypes": []
+    },
+    "1700365": {
+      "name": "Tetsubou",
+      "username": "Tetsubou",
+      "rank": 10,
+      "points": 12,
+      "matchRecord": "4-2-0",
+      "decklistIds": [
+        "mtgo-deck-58546842"
+      ],
+      "reportedArchetypes": []
+    },
+    "1715380": {
+      "name": "CNewman",
+      "username": "CNewman",
+      "rank": 9,
+      "points": 12,
+      "matchRecord": "4-2-0",
+      "decklistIds": [
+        "mtgo-deck-58546858"
+      ],
+      "reportedArchetypes": []
+    },
+    "1952341": {
+      "name": "ejk",
+      "username": "ejk",
+      "rank": 13,
+      "points": 12,
+      "matchRecord": "4-2-0",
+      "decklistIds": [
+        "mtgo-deck-58546860"
+      ],
+      "reportedArchetypes": []
+    },
+    "2064081": {
+      "name": "SuperCow12653",
+      "username": "SuperCow12653",
+      "rank": 19,
+      "points": 9,
+      "matchRecord": "3-3-0",
+      "decklistIds": [
+        "mtgo-deck-58546865"
+      ],
+      "reportedArchetypes": []
+    },
+    "2077747": {
+      "name": "Gerardo94",
+      "username": "Gerardo94",
+      "rank": 23,
+      "points": 9,
+      "matchRecord": "3-3-0",
+      "decklistIds": [
+        "mtgo-deck-58546822"
+      ],
+      "reportedArchetypes": []
+    },
+    "2137107": {
+      "name": "Arcbound_Papi",
+      "username": "Arcbound_Papi",
+      "rank": 31,
+      "points": 6,
+      "matchRecord": "2-4-0",
+      "decklistIds": [
+        "mtgo-deck-58546798"
+      ],
+      "reportedArchetypes": []
+    },
+    "2185747": {
+      "name": "KingHairy",
+      "username": "KingHairy",
+      "rank": 4,
+      "points": 12,
+      "matchRecord": "5-3-0",
+      "decklistIds": [
+        "mtgo-deck-58546853"
+      ],
+      "reportedArchetypes": []
+    },
+    "2204845": {
+      "name": "TuckerMTG",
+      "username": "TuckerMTG",
+      "rank": 11,
+      "points": 12,
+      "matchRecord": "4-2-0",
+      "decklistIds": [
+        "mtgo-deck-58546796"
+      ],
+      "reportedArchetypes": []
+    },
+    "2261440": {
+      "name": "quinniac",
+      "username": "quinniac",
+      "rank": 21,
+      "points": 9,
+      "matchRecord": "3-3-0",
+      "decklistIds": [
+        "mtgo-deck-58546823"
+      ],
+      "reportedArchetypes": []
+    },
+    "2267641": {
+      "name": "Gabriell86",
+      "username": "Gabriell86",
+      "rank": 20,
+      "points": 9,
+      "matchRecord": "3-3-0",
+      "decklistIds": [
+        "mtgo-deck-58546846"
+      ],
+      "reportedArchetypes": []
+    },
+    "2296869": {
+      "name": "_ZNT_",
+      "username": "_ZNT_",
+      "rank": 8,
+      "points": 15,
+      "matchRecord": "5-2-0",
+      "decklistIds": [
+        "mtgo-deck-58546849"
+      ],
+      "reportedArchetypes": []
+    },
+    "2329353": {
+      "name": "deleon91",
+      "username": "deleon91",
+      "rank": 26,
+      "points": 9,
+      "matchRecord": "3-3-0",
+      "decklistIds": [
+        "mtgo-deck-58546866"
+      ],
+      "reportedArchetypes": []
+    },
+    "2338194": {
+      "name": "Sol0monGrundy",
+      "username": "Sol0monGrundy",
+      "rank": 29,
+      "points": 6,
+      "matchRecord": "2-3-0",
+      "decklistIds": [
+        "mtgo-deck-58546841"
+      ],
+      "reportedArchetypes": []
+    },
+    "2515417": {
+      "name": "mrman12136",
+      "username": "mrman12136",
+      "rank": 12,
+      "points": 12,
+      "matchRecord": "4-2-0",
+      "decklistIds": [
+        "mtgo-deck-58546840"
+      ],
+      "reportedArchetypes": []
+    },
+    "2622213": {
+      "name": "Bosseidon",
+      "username": "Bosseidon",
+      "rank": 24,
+      "points": 9,
+      "matchRecord": "3-3-0",
+      "decklistIds": [
+        "mtgo-deck-58546851"
+      ],
+      "reportedArchetypes": []
+    },
+    "2669359": {
+      "name": "HouseOfManaMTG",
+      "username": "HouseOfManaMTG",
+      "rank": 15,
+      "points": 12,
+      "matchRecord": "4-2-0",
+      "decklistIds": [
+        "mtgo-deck-58546838"
+      ],
+      "reportedArchetypes": []
+    },
+    "2707200": {
+      "name": "Kritik",
+      "username": "Kritik",
+      "rank": 6,
+      "points": 15,
+      "matchRecord": "5-2-0",
+      "decklistIds": [
+        "mtgo-deck-58546862"
+      ],
+      "reportedArchetypes": []
+    },
+    "2926088": {
+      "name": "Univerce",
+      "username": "Univerce",
+      "rank": 17,
+      "points": 9,
+      "matchRecord": "3-3-0",
+      "decklistIds": [
+        "mtgo-deck-58546863"
+      ],
+      "reportedArchetypes": []
+    },
+    "2943684": {
+      "name": "LukeBrandes",
+      "username": "LukeBrandes",
+      "rank": 7,
+      "points": 15,
+      "matchRecord": "5-2-0",
+      "decklistIds": [
+        "mtgo-deck-58546830"
+      ],
+      "reportedArchetypes": []
+    },
+    "2972771": {
+      "name": "AvianScrolls",
+      "username": "AvianScrolls",
+      "rank": 22,
+      "points": 9,
+      "matchRecord": "3-3-0",
+      "decklistIds": [
+        "mtgo-deck-58546848"
+      ],
+      "reportedArchetypes": []
+    },
+    "3013190": {
+      "name": "Bruskk",
+      "username": "Bruskk",
+      "rank": 14,
+      "points": 12,
+      "matchRecord": "4-2-0",
+      "decklistIds": [
+        "mtgo-deck-58546829"
+      ],
+      "reportedArchetypes": []
+    },
+    "3102876": {
+      "name": "Soseloso",
+      "username": "Soseloso",
+      "rank": 2,
+      "points": 12,
+      "matchRecord": "6-3-0",
+      "decklistIds": [
+        "mtgo-deck-58546819"
+      ],
+      "reportedArchetypes": []
+    },
+    "3103007": {
+      "name": "LemonadeArchery",
+      "username": "LemonadeArchery",
+      "rank": 27,
+      "points": 9,
+      "matchRecord": "2-3-0",
+      "decklistIds": [
+        "mtgo-deck-58546859"
+      ],
+      "reportedArchetypes": []
+    },
+    "3113973": {
+      "name": "moreno13",
+      "username": "moreno13",
+      "rank": 18,
+      "points": 9,
+      "matchRecord": "3-3-0",
+      "decklistIds": [
+        "mtgo-deck-58546831"
+      ],
+      "reportedArchetypes": []
+    },
+    "3227644": {
+      "name": "mommydom_manifesto",
+      "username": "mommydom_manifesto",
+      "rank": 5,
+      "points": 18,
+      "matchRecord": "6-1-0",
+      "decklistIds": [
+        "mtgo-deck-58546835"
+      ],
+      "reportedArchetypes": []
+    },
+    "3405199": {
+      "name": "Strongmind",
+      "username": "Strongmind",
+      "rank": 3,
+      "points": 15,
+      "matchRecord": "6-2-0",
+      "decklistIds": [
+        "mtgo-deck-58546852"
+      ],
+      "reportedArchetypes": []
+    },
+    "3486712": {
+      "name": "m9565",
+      "username": "m9565",
+      "rank": 30,
+      "points": 6,
+      "matchRecord": "2-3-0",
+      "decklistIds": [
+        "mtgo-deck-58546814"
+      ],
+      "reportedArchetypes": []
+    }
+  },
+  "decklists": {
+    "mtgo-deck-58546821": {
+      "playerId": "254536",
+      "mainboard": [
+        {
+          "cardName": "Ba Sing Se",
+          "quantity": 3
+        },
+        {
+          "cardName": "Badgermole Cub",
+          "quantity": 4
+        },
+        {
+          "cardName": "Hushwood Verge",
+          "quantity": 4
+        },
+        {
+          "cardName": "Earthbender Ascension",
+          "quantity": 4
+        },
+        {
+          "cardName": "Erode",
+          "quantity": 4
+        },
+        {
+          "cardName": "Escape Tunnel",
+          "quantity": 3
+        },
+        {
+          "cardName": "Fabled Passage",
+          "quantity": 4
+        },
+        {
+          "cardName": "Forest",
+          "quantity": 3
+        },
+        {
+          "cardName": "Surrak, Elusive Hunter",
+          "quantity": 2
+        },
+        {
+          "cardName": "Icetill Explorer",
+          "quantity": 1
+        },
+        {
+          "cardName": "Forest",
+          "quantity": 1
+        },
+        {
+          "cardName": "Llanowar Elves",
+          "quantity": 2
+        },
+        {
+          "cardName": "Mightform Harmonizer",
+          "quantity": 4
+        },
+        {
+          "cardName": "Mossborn Hydra",
+          "quantity": 2
+        },
+        {
+          "cardName": "Forest",
+          "quantity": 4
+        },
+        {
+          "cardName": "Sazh's Chocobo",
+          "quantity": 4
+        },
+        {
+          "cardName": "Snakeskin Veil",
+          "quantity": 2
+        },
+        {
+          "cardName": "Temple Garden",
+          "quantity": 1
+        },
+        {
+          "cardName": "Llanowar Elves",
+          "quantity": 1
+        },
+        {
+          "cardName": "Llanowar Elves",
+          "quantity": 1
+        },
+        {
+          "cardName": "Plains",
+          "quantity": 1
+        },
+        {
+          "cardName": "Plains",
+          "quantity": 1
+        },
+        {
+          "cardName": "Dyadrine, Synthesis Amalgam",
+          "quantity": 2
+        },
+        {
+          "cardName": "Forest",
+          "quantity": 1
+        },
+        {
+          "cardName": "Keen-Eyed Curator",
+          "quantity": 1
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Kutzil, Malamet Exemplar",
+          "quantity": 1
+        },
+        {
+          "cardName": "Rest in Peace",
+          "quantity": 3
+        },
+        {
+          "cardName": "Voice of Victory",
+          "quantity": 1
+        },
+        {
+          "cardName": "Snakeskin Veil",
+          "quantity": 1
+        },
+        {
+          "cardName": "Surrak, Elusive Hunter",
+          "quantity": 1
+        },
+        {
+          "cardName": "Snakeskin Veil",
+          "quantity": 1
+        },
+        {
+          "cardName": "Mossborn Hydra",
+          "quantity": 2
+        },
+        {
+          "cardName": "Sheltered by Ghosts",
+          "quantity": 3
+        },
+        {
+          "cardName": "Seam Rip",
+          "quantity": 2
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58546799": {
+      "playerId": "845813",
+      "mainboard": [
+        {
+          "cardName": "Boomerang Basics",
+          "quantity": 4
+        },
+        {
+          "cardName": "Burst Lightning",
+          "quantity": 1
+        },
+        {
+          "cardName": "Eddymurk Crab",
+          "quantity": 4
+        },
+        {
+          "cardName": "Flow State",
+          "quantity": 4
+        },
+        {
+          "cardName": "Get Out",
+          "quantity": 1
+        },
+        {
+          "cardName": "Great Hall of the Biblioplex",
+          "quantity": 1
+        },
+        {
+          "cardName": "Impractical Joke",
+          "quantity": 1
+        },
+        {
+          "cardName": "Island",
+          "quantity": 2
+        },
+        {
+          "cardName": "Multiversal Passage",
+          "quantity": 1
+        },
+        {
+          "cardName": "Burst Lightning",
+          "quantity": 3
+        },
+        {
+          "cardName": "Prismari Charm",
+          "quantity": 1
+        },
+        {
+          "cardName": "Riverpyre Verge",
+          "quantity": 4
+        },
+        {
+          "cardName": "Roaring Furnace",
+          "quantity": 2
+        },
+        {
+          "cardName": "Sleight of Hand",
+          "quantity": 2
+        },
+        {
+          "cardName": "Slickshot Show-Off",
+          "quantity": 4
+        },
+        {
+          "cardName": "Spell Pierce",
+          "quantity": 1
+        },
+        {
+          "cardName": "Steam Vents",
+          "quantity": 4
+        },
+        {
+          "cardName": "Stock Up",
+          "quantity": 1
+        },
+        {
+          "cardName": "Stormcarved Coast",
+          "quantity": 1
+        },
+        {
+          "cardName": "Stormchaser's Talent",
+          "quantity": 4
+        },
+        {
+          "cardName": "Island",
+          "quantity": 2
+        },
+        {
+          "cardName": "Island",
+          "quantity": 2
+        },
+        {
+          "cardName": "Opt",
+          "quantity": 1
+        },
+        {
+          "cardName": "Opt",
+          "quantity": 3
+        },
+        {
+          "cardName": "Sleight of Hand",
+          "quantity": 2
+        },
+        {
+          "cardName": "Spirebluff Canal",
+          "quantity": 4
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Abrade",
+          "quantity": 1
+        },
+        {
+          "cardName": "Bounce Off",
+          "quantity": 1
+        },
+        {
+          "cardName": "Broadside Barrage",
+          "quantity": 1
+        },
+        {
+          "cardName": "Disdainful Stroke",
+          "quantity": 1
+        },
+        {
+          "cardName": "Get Out",
+          "quantity": 1
+        },
+        {
+          "cardName": "Ghost Vacuum",
+          "quantity": 1
+        },
+        {
+          "cardName": "Negate",
+          "quantity": 1
+        },
+        {
+          "cardName": "Pyroclasm",
+          "quantity": 1
+        },
+        {
+          "cardName": "Ral, Crackling Wit",
+          "quantity": 3
+        },
+        {
+          "cardName": "Slagstorm",
+          "quantity": 1
+        },
+        {
+          "cardName": "Spell Pierce",
+          "quantity": 1
+        },
+        {
+          "cardName": "Spell Snare",
+          "quantity": 1
+        },
+        {
+          "cardName": "Wan Shi Tong, Librarian",
+          "quantity": 1
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58546854": {
+      "playerId": "880239",
+      "mainboard": [
+        {
+          "cardName": "Riverpyre Verge",
+          "quantity": 4
+        },
+        {
+          "cardName": "Burst Lightning",
+          "quantity": 4
+        },
+        {
+          "cardName": "Opt",
+          "quantity": 4
+        },
+        {
+          "cardName": "Spirebluff Canal",
+          "quantity": 4
+        },
+        {
+          "cardName": "Steam Vents",
+          "quantity": 4
+        },
+        {
+          "cardName": "Slickshot Show-Off",
+          "quantity": 4
+        },
+        {
+          "cardName": "Stormchaser's Talent",
+          "quantity": 4
+        },
+        {
+          "cardName": "Island",
+          "quantity": 7
+        },
+        {
+          "cardName": "Bounce Off",
+          "quantity": 2
+        },
+        {
+          "cardName": "Sleight of Hand",
+          "quantity": 4
+        },
+        {
+          "cardName": "Secret Identity",
+          "quantity": 2
+        },
+        {
+          "cardName": "Multiversal Passage",
+          "quantity": 2
+        },
+        {
+          "cardName": "Boomerang Basics",
+          "quantity": 4
+        },
+        {
+          "cardName": "Flow State",
+          "quantity": 4
+        },
+        {
+          "cardName": "Drake Hatcher",
+          "quantity": 2
+        },
+        {
+          "cardName": "Colorstorm Stallion",
+          "quantity": 4
+        },
+        {
+          "cardName": "Impractical Joke",
+          "quantity": 1
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Annul",
+          "quantity": 1
+        },
+        {
+          "cardName": "Drake Hatcher",
+          "quantity": 1
+        },
+        {
+          "cardName": "Into the Flood Maw",
+          "quantity": 1
+        },
+        {
+          "cardName": "Slagstorm",
+          "quantity": 2
+        },
+        {
+          "cardName": "Get Out",
+          "quantity": 2
+        },
+        {
+          "cardName": "The Legend of Kuruk",
+          "quantity": 2
+        },
+        {
+          "cardName": "Flashfreeze",
+          "quantity": 1
+        },
+        {
+          "cardName": "Broadside Barrage",
+          "quantity": 1
+        },
+        {
+          "cardName": "Spell Pierce",
+          "quantity": 2
+        },
+        {
+          "cardName": "Soul-Guide Lantern",
+          "quantity": 2
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58546795": {
+      "playerId": "1051293",
+      "mainboard": [
+        {
+          "cardName": "Agna Qel'a",
+          "quantity": 1
+        },
+        {
+          "cardName": "Bounce Off",
+          "quantity": 4
+        },
+        {
+          "cardName": "Eddymurk Crab",
+          "quantity": 4
+        },
+        {
+          "cardName": "Island",
+          "quantity": 12
+        },
+        {
+          "cardName": "Get Out",
+          "quantity": 4
+        },
+        {
+          "cardName": "Belion, the Parched",
+          "quantity": 1
+        },
+        {
+          "cardName": "Cavern of Souls",
+          "quantity": 2
+        },
+        {
+          "cardName": "Great Hall of the Biblioplex",
+          "quantity": 3
+        },
+        {
+          "cardName": "Sleight of Hand",
+          "quantity": 3
+        },
+        {
+          "cardName": "Island",
+          "quantity": 2
+        },
+        {
+          "cardName": "Three Steps Ahead",
+          "quantity": 3
+        },
+        {
+          "cardName": "Boomerang Basics",
+          "quantity": 2
+        },
+        {
+          "cardName": "Eluge, the Shoreless Sea",
+          "quantity": 3
+        },
+        {
+          "cardName": "Flow State",
+          "quantity": 4
+        },
+        {
+          "cardName": "Opt",
+          "quantity": 4
+        },
+        {
+          "cardName": "Sleight of Hand",
+          "quantity": 1
+        },
+        {
+          "cardName": "Sunderflock",
+          "quantity": 4
+        },
+        {
+          "cardName": "Winternight Stories",
+          "quantity": 3
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Fresh Start",
+          "quantity": 2
+        },
+        {
+          "cardName": "Annul",
+          "quantity": 2
+        },
+        {
+          "cardName": "Loch Mare",
+          "quantity": 2
+        },
+        {
+          "cardName": "Disdainful Stroke",
+          "quantity": 1
+        },
+        {
+          "cardName": "Spell Snare",
+          "quantity": 2
+        },
+        {
+          "cardName": "Detect Intrusion",
+          "quantity": 2
+        },
+        {
+          "cardName": "Disdainful Stroke",
+          "quantity": 2
+        },
+        {
+          "cardName": "Ghost Vacuum",
+          "quantity": 2
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58546855": {
+      "playerId": "1171245",
+      "mainboard": [
+        {
+          "cardName": "Deadly Cover-Up",
+          "quantity": 1
+        },
+        {
+          "cardName": "Day of Black Sun",
+          "quantity": 2
+        },
+        {
+          "cardName": "Duress",
+          "quantity": 4
+        },
+        {
+          "cardName": "Gloomlake Verge",
+          "quantity": 4
+        },
+        {
+          "cardName": "Cavern of Souls",
+          "quantity": 2
+        },
+        {
+          "cardName": "Emeritus of Ideation",
+          "quantity": 2
+        },
+        {
+          "cardName": "Multiversal Passage",
+          "quantity": 1
+        },
+        {
+          "cardName": "Requiting Hex",
+          "quantity": 4
+        },
+        {
+          "cardName": "Kavaero, Mind-Bitten",
+          "quantity": 4
+        },
+        {
+          "cardName": "Stock Up",
+          "quantity": 2
+        },
+        {
+          "cardName": "Winternight Stories",
+          "quantity": 3
+        },
+        {
+          "cardName": "Shoot the Sheriff",
+          "quantity": 1
+        },
+        {
+          "cardName": "Restless Reef",
+          "quantity": 4
+        },
+        {
+          "cardName": "Harvester of Misery",
+          "quantity": 1
+        },
+        {
+          "cardName": "Deceit",
+          "quantity": 4
+        },
+        {
+          "cardName": "Watery Grave",
+          "quantity": 4
+        },
+        {
+          "cardName": "Strategic Betrayal",
+          "quantity": 2
+        },
+        {
+          "cardName": "Doomsday Excruciator",
+          "quantity": 2
+        },
+        {
+          "cardName": "Bitter Triumph",
+          "quantity": 3
+        },
+        {
+          "cardName": "Undercity Sewers",
+          "quantity": 2
+        },
+        {
+          "cardName": "Swamp",
+          "quantity": 8
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Flashfreeze",
+          "quantity": 2
+        },
+        {
+          "cardName": "Strategic Betrayal",
+          "quantity": 1
+        },
+        {
+          "cardName": "Harvester of Misery",
+          "quantity": 1
+        },
+        {
+          "cardName": "Annul",
+          "quantity": 2
+        },
+        {
+          "cardName": "Ancient Vendetta",
+          "quantity": 1
+        },
+        {
+          "cardName": "The End",
+          "quantity": 1
+        },
+        {
+          "cardName": "Decorum Dissertation",
+          "quantity": 1
+        },
+        {
+          "cardName": "Oildeep Gearhulk",
+          "quantity": 2
+        },
+        {
+          "cardName": "Ghost Vacuum",
+          "quantity": 2
+        },
+        {
+          "cardName": "Deathmark",
+          "quantity": 2
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58546842": {
+      "playerId": "1700365",
+      "mainboard": [
+        {
+          "cardName": "Ba Sing Se",
+          "quantity": 3
+        },
+        {
+          "cardName": "Badgermole Cub",
+          "quantity": 4
+        },
+        {
+          "cardName": "Earthbender Ascension",
+          "quantity": 4
+        },
+        {
+          "cardName": "Escape Tunnel",
+          "quantity": 3
+        },
+        {
+          "cardName": "Fabled Passage",
+          "quantity": 4
+        },
+        {
+          "cardName": "Royal Treatment",
+          "quantity": 2
+        },
+        {
+          "cardName": "Icetill Explorer",
+          "quantity": 4
+        },
+        {
+          "cardName": "Llanowar Elves",
+          "quantity": 4
+        },
+        {
+          "cardName": "Mightform Harmonizer",
+          "quantity": 4
+        },
+        {
+          "cardName": "Demolition Field",
+          "quantity": 2
+        },
+        {
+          "cardName": "Sazh's Chocobo",
+          "quantity": 4
+        },
+        {
+          "cardName": "Forest",
+          "quantity": 11
+        },
+        {
+          "cardName": "Erode",
+          "quantity": 4
+        },
+        {
+          "cardName": "Surrak, Elusive Hunter",
+          "quantity": 2
+        },
+        {
+          "cardName": "Esper Origins",
+          "quantity": 2
+        },
+        {
+          "cardName": "Plains",
+          "quantity": 1
+        },
+        {
+          "cardName": "Temple Garden",
+          "quantity": 2
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Pawpatch Formation",
+          "quantity": 1
+        },
+        {
+          "cardName": "Origin of Metalbending",
+          "quantity": 1
+        },
+        {
+          "cardName": "Soul-Guide Lantern",
+          "quantity": 1
+        },
+        {
+          "cardName": "Keen-Eyed Curator",
+          "quantity": 3
+        },
+        {
+          "cardName": "Seam Rip",
+          "quantity": 2
+        },
+        {
+          "cardName": "Sapling Nursery",
+          "quantity": 3
+        },
+        {
+          "cardName": "Mossborn Hydra",
+          "quantity": 4
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58546858": {
+      "playerId": "1715380",
+      "mainboard": [
+        {
+          "cardName": "Erode",
+          "quantity": 4
+        },
+        {
+          "cardName": "Llanowar Elves",
+          "quantity": 4
+        },
+        {
+          "cardName": "Hushwood Verge",
+          "quantity": 4
+        },
+        {
+          "cardName": "Badgermole Cub",
+          "quantity": 4
+        },
+        {
+          "cardName": "Forest",
+          "quantity": 7
+        },
+        {
+          "cardName": "Sazh's Chocobo",
+          "quantity": 4
+        },
+        {
+          "cardName": "Icetill Explorer",
+          "quantity": 2
+        },
+        {
+          "cardName": "Keen-Eyed Curator",
+          "quantity": 1
+        },
+        {
+          "cardName": "Mightform Harmonizer",
+          "quantity": 4
+        },
+        {
+          "cardName": "Fabled Passage",
+          "quantity": 4
+        },
+        {
+          "cardName": "Escape Tunnel",
+          "quantity": 3
+        },
+        {
+          "cardName": "Dyadrine, Synthesis Amalgam",
+          "quantity": 2
+        },
+        {
+          "cardName": "Ba Sing Se",
+          "quantity": 3
+        },
+        {
+          "cardName": "Plains",
+          "quantity": 2
+        },
+        {
+          "cardName": "Bushwhack",
+          "quantity": 2
+        },
+        {
+          "cardName": "Mossborn Hydra",
+          "quantity": 3
+        },
+        {
+          "cardName": "Temple Garden",
+          "quantity": 2
+        },
+        {
+          "cardName": "Earthbender Ascension",
+          "quantity": 4
+        },
+        {
+          "cardName": "Snakeskin Veil",
+          "quantity": 1
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Snakeskin Veil",
+          "quantity": 1
+        },
+        {
+          "cardName": "Sheltered by Ghosts",
+          "quantity": 3
+        },
+        {
+          "cardName": "Keen-Eyed Curator",
+          "quantity": 1
+        },
+        {
+          "cardName": "Mossborn Hydra",
+          "quantity": 1
+        },
+        {
+          "cardName": "Ba Sing Se",
+          "quantity": 1
+        },
+        {
+          "cardName": "Voice of Victory",
+          "quantity": 2
+        },
+        {
+          "cardName": "Surrak, Elusive Hunter",
+          "quantity": 3
+        },
+        {
+          "cardName": "Rest in Peace",
+          "quantity": 3
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58546860": {
+      "playerId": "1952341",
+      "mainboard": [
+        {
+          "cardName": "Blazemire Verge",
+          "quantity": 1
+        },
+        {
+          "cardName": "Blood Crypt",
+          "quantity": 4
+        },
+        {
+          "cardName": "Bloodghast",
+          "quantity": 4
+        },
+        {
+          "cardName": "Burst Lightning",
+          "quantity": 3
+        },
+        {
+          "cardName": "Desecrex, Gift of Servitude",
+          "quantity": 1
+        },
+        {
+          "cardName": "Concealed Courtyard",
+          "quantity": 4
+        },
+        {
+          "cardName": "Cool but Rude",
+          "quantity": 4
+        },
+        {
+          "cardName": "Erode",
+          "quantity": 1
+        },
+        {
+          "cardName": "Godless Shrine",
+          "quantity": 1
+        },
+        {
+          "cardName": "Hardened Academic",
+          "quantity": 4
+        },
+        {
+          "cardName": "Inspiring Vantage",
+          "quantity": 2
+        },
+        {
+          "cardName": "Inti, Seneschal of the Sun",
+          "quantity": 1
+        },
+        {
+          "cardName": "Iron-Shield Elf",
+          "quantity": 4
+        },
+        {
+          "cardName": "Marauding Mako",
+          "quantity": 4
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 1
+        },
+        {
+          "cardName": "Multiversal Passage",
+          "quantity": 1
+        },
+        {
+          "cardName": "Practiced Offense",
+          "quantity": 4
+        },
+        {
+          "cardName": "Requiting Hex",
+          "quantity": 1
+        },
+        {
+          "cardName": "Sacred Foundry",
+          "quantity": 4
+        },
+        {
+          "cardName": "Starting Town",
+          "quantity": 4
+        },
+        {
+          "cardName": "Tersa Lightshatter",
+          "quantity": 3
+        },
+        {
+          "cardName": "Moonshadow",
+          "quantity": 4
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Case of the Crimson Pulse",
+          "quantity": 2
+        },
+        {
+          "cardName": "Leyline of the Void",
+          "quantity": 4
+        },
+        {
+          "cardName": "Pyroclasm",
+          "quantity": 2
+        },
+        {
+          "cardName": "Seam Rip",
+          "quantity": 1
+        },
+        {
+          "cardName": "Shoot the Sheriff",
+          "quantity": 1
+        },
+        {
+          "cardName": "Strategic Betrayal",
+          "quantity": 2
+        },
+        {
+          "cardName": "Voice of Victory",
+          "quantity": 3
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58546865": {
+      "playerId": "2064081",
+      "mainboard": [
+        {
+          "cardName": "Boomerang Basics",
+          "quantity": 4
+        },
+        {
+          "cardName": "Spirebluff Canal",
+          "quantity": 4
+        },
+        {
+          "cardName": "Colorstorm Stallion",
+          "quantity": 2
+        },
+        {
+          "cardName": "Eddymurk Crab",
+          "quantity": 4
+        },
+        {
+          "cardName": "Flow State",
+          "quantity": 4
+        },
+        {
+          "cardName": "Get Out",
+          "quantity": 2
+        },
+        {
+          "cardName": "Impractical Joke",
+          "quantity": 2
+        },
+        {
+          "cardName": "Sleight of Hand",
+          "quantity": 2
+        },
+        {
+          "cardName": "Opt",
+          "quantity": 4
+        },
+        {
+          "cardName": "Sleight of Hand",
+          "quantity": 2
+        },
+        {
+          "cardName": "Roaring Furnace",
+          "quantity": 2
+        },
+        {
+          "cardName": "Riverpyre Verge",
+          "quantity": 4
+        },
+        {
+          "cardName": "Slickshot Show-Off",
+          "quantity": 4
+        },
+        {
+          "cardName": "Island",
+          "quantity": 5
+        },
+        {
+          "cardName": "Island",
+          "quantity": 2
+        },
+        {
+          "cardName": "Burst Lightning",
+          "quantity": 4
+        },
+        {
+          "cardName": "Stormchaser's Talent",
+          "quantity": 4
+        },
+        {
+          "cardName": "Steam Vents",
+          "quantity": 4
+        },
+        {
+          "cardName": "Stormcarved Coast",
+          "quantity": 2
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Ral, Crackling Wit",
+          "quantity": 2
+        },
+        {
+          "cardName": "Broadside Barrage",
+          "quantity": 2
+        },
+        {
+          "cardName": "Negate",
+          "quantity": 2
+        },
+        {
+          "cardName": "Flashfreeze",
+          "quantity": 2
+        },
+        {
+          "cardName": "Ghost Vacuum",
+          "quantity": 2
+        },
+        {
+          "cardName": "Disdainful Stroke",
+          "quantity": 2
+        },
+        {
+          "cardName": "Annul",
+          "quantity": 3
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58546822": {
+      "playerId": "2077747",
+      "mainboard": [
+        {
+          "cardName": "Riverpyre Verge",
+          "quantity": 4
+        },
+        {
+          "cardName": "Petrified Hamlet",
+          "quantity": 2
+        },
+        {
+          "cardName": "Great Hall of the Biblioplex",
+          "quantity": 4
+        },
+        {
+          "cardName": "Traumatic Critique",
+          "quantity": 1
+        },
+        {
+          "cardName": "Tablet of Discovery",
+          "quantity": 4
+        },
+        {
+          "cardName": "Impractical Joke",
+          "quantity": 1
+        },
+        {
+          "cardName": "Flashback",
+          "quantity": 2
+        },
+        {
+          "cardName": "Erode",
+          "quantity": 1
+        },
+        {
+          "cardName": "Sear",
+          "quantity": 1
+        },
+        {
+          "cardName": "Firebending Lesson",
+          "quantity": 2
+        },
+        {
+          "cardName": "Consult the Star Charts",
+          "quantity": 4
+        },
+        {
+          "cardName": "Thunder Magic",
+          "quantity": 2
+        },
+        {
+          "cardName": "Fire Magic",
+          "quantity": 1
+        },
+        {
+          "cardName": "Jeskai Revelation",
+          "quantity": 4
+        },
+        {
+          "cardName": "Mistrise Village",
+          "quantity": 1
+        },
+        {
+          "cardName": "Steam Vents",
+          "quantity": 3
+        },
+        {
+          "cardName": "Hallowed Fountain",
+          "quantity": 2
+        },
+        {
+          "cardName": "Emeritus of Ideation",
+          "quantity": 1
+        },
+        {
+          "cardName": "Steam Vents",
+          "quantity": 1
+        },
+        {
+          "cardName": "Abrade",
+          "quantity": 1
+        },
+        {
+          "cardName": "Island",
+          "quantity": 3
+        },
+        {
+          "cardName": "Stormcarved Coast",
+          "quantity": 1
+        },
+        {
+          "cardName": "Sundown Pass",
+          "quantity": 2
+        },
+        {
+          "cardName": "Three Steps Ahead",
+          "quantity": 2
+        },
+        {
+          "cardName": "Into the Flood Maw",
+          "quantity": 1
+        },
+        {
+          "cardName": "Stock Up",
+          "quantity": 4
+        },
+        {
+          "cardName": "Broadside Barrage",
+          "quantity": 2
+        },
+        {
+          "cardName": "Cori Mountain Monastery",
+          "quantity": 1
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 1
+        },
+        {
+          "cardName": "Pyroclasm",
+          "quantity": 1
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Spell Pierce",
+          "quantity": 2
+        },
+        {
+          "cardName": "Slagstorm",
+          "quantity": 1
+        },
+        {
+          "cardName": "Disdainful Stroke",
+          "quantity": 1
+        },
+        {
+          "cardName": "Ghost Vacuum",
+          "quantity": 1
+        },
+        {
+          "cardName": "Broadside Barrage",
+          "quantity": 1
+        },
+        {
+          "cardName": "Emeritus of Ideation",
+          "quantity": 2
+        },
+        {
+          "cardName": "Pyroclasm",
+          "quantity": 1
+        },
+        {
+          "cardName": "Petrified Hamlet",
+          "quantity": 1
+        },
+        {
+          "cardName": "Flashfreeze",
+          "quantity": 3
+        },
+        {
+          "cardName": "Colorstorm Stallion",
+          "quantity": 2
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58546798": {
+      "playerId": "2137107",
+      "mainboard": [
+        {
+          "cardName": "Drake Hatcher",
+          "quantity": 3
+        },
+        {
+          "cardName": "Balmor, Battlemage Captain",
+          "quantity": 1
+        },
+        {
+          "cardName": "Boomerang Basics",
+          "quantity": 2
+        },
+        {
+          "cardName": "Callous Sell-Sword",
+          "quantity": 4
+        },
+        {
+          "cardName": "Steam Vents",
+          "quantity": 4
+        },
+        {
+          "cardName": "Riverpyre Verge",
+          "quantity": 3
+        },
+        {
+          "cardName": "Full Bore",
+          "quantity": 4
+        },
+        {
+          "cardName": "Leyline of Resonance",
+          "quantity": 1
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 1
+        },
+        {
+          "cardName": "Multiversal Passage",
+          "quantity": 3
+        },
+        {
+          "cardName": "Sleight of Hand",
+          "quantity": 4
+        },
+        {
+          "cardName": "Secret Identity",
+          "quantity": 3
+        },
+        {
+          "cardName": "Spirebluff Canal",
+          "quantity": 4
+        },
+        {
+          "cardName": "Slickshot Show-Off",
+          "quantity": 4
+        },
+        {
+          "cardName": "Starting Town",
+          "quantity": 4
+        },
+        {
+          "cardName": "Stormchaser's Talent",
+          "quantity": 4
+        },
+        {
+          "cardName": "Wild Ride",
+          "quantity": 4
+        },
+        {
+          "cardName": "Ancestral Anger",
+          "quantity": 4
+        },
+        {
+          "cardName": "Elusive Otter",
+          "quantity": 4
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Soul-Guide Lantern",
+          "quantity": 2
+        },
+        {
+          "cardName": "Into the Flood Maw",
+          "quantity": 2
+        },
+        {
+          "cardName": "Island",
+          "quantity": 1
+        },
+        {
+          "cardName": "Leyline of the Void",
+          "quantity": 1
+        },
+        {
+          "cardName": "Quantum Riddler",
+          "quantity": 3
+        },
+        {
+          "cardName": "Spell Pierce",
+          "quantity": 3
+        },
+        {
+          "cardName": "Drake Hatcher",
+          "quantity": 1
+        },
+        {
+          "cardName": "Burst Lightning",
+          "quantity": 2
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58546853": {
+      "playerId": "2185747",
+      "mainboard": [
+        {
+          "cardName": "Island",
+          "quantity": 6
+        },
+        {
+          "cardName": "Agna Qel'a",
+          "quantity": 2
+        },
+        {
+          "cardName": "Abandon Attachments",
+          "quantity": 4
+        },
+        {
+          "cardName": "Iroh's Demonstration",
+          "quantity": 2
+        },
+        {
+          "cardName": "Firebending Lesson",
+          "quantity": 4
+        },
+        {
+          "cardName": "Combustion Technique",
+          "quantity": 4
+        },
+        {
+          "cardName": "It'll Quench Ya!",
+          "quantity": 2
+        },
+        {
+          "cardName": "Gran-Gran",
+          "quantity": 4
+        },
+        {
+          "cardName": "Boomerang Basics",
+          "quantity": 2
+        },
+        {
+          "cardName": "Accumulate Wisdom",
+          "quantity": 4
+        },
+        {
+          "cardName": "Consult the Star Charts",
+          "quantity": 2
+        },
+        {
+          "cardName": "Steam Vents",
+          "quantity": 1
+        },
+        {
+          "cardName": "Flashback",
+          "quantity": 1
+        },
+        {
+          "cardName": "Spirebluff Canal",
+          "quantity": 4
+        },
+        {
+          "cardName": "Steam Vents",
+          "quantity": 1
+        },
+        {
+          "cardName": "Steam Vents",
+          "quantity": 2
+        },
+        {
+          "cardName": "Artist's Talent",
+          "quantity": 4
+        },
+        {
+          "cardName": "Monument to Endurance",
+          "quantity": 4
+        },
+        {
+          "cardName": "Multiversal Passage",
+          "quantity": 1
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 1
+        },
+        {
+          "cardName": "Three Steps Ahead",
+          "quantity": 1
+        },
+        {
+          "cardName": "Riverpyre Verge",
+          "quantity": 4
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Ral, Crackling Wit",
+          "quantity": 2
+        },
+        {
+          "cardName": "Spell Pierce",
+          "quantity": 1
+        },
+        {
+          "cardName": "Slagstorm",
+          "quantity": 1
+        },
+        {
+          "cardName": "Slagstorm",
+          "quantity": 1
+        },
+        {
+          "cardName": "Annul",
+          "quantity": 1
+        },
+        {
+          "cardName": "It'll Quench Ya!",
+          "quantity": 1
+        },
+        {
+          "cardName": "Wan Shi Tong, Librarian",
+          "quantity": 2
+        },
+        {
+          "cardName": "Quantum Riddler",
+          "quantity": 1
+        },
+        {
+          "cardName": "Spell Pierce",
+          "quantity": 1
+        },
+        {
+          "cardName": "Spell Snare",
+          "quantity": 1
+        },
+        {
+          "cardName": "Flashfreeze",
+          "quantity": 2
+        },
+        {
+          "cardName": "Disdainful Stroke",
+          "quantity": 1
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58546796": {
+      "playerId": "2204845",
+      "mainboard": [
+        {
+          "cardName": "Island",
+          "quantity": 6
+        },
+        {
+          "cardName": "Sleight of Hand",
+          "quantity": 4
+        },
+        {
+          "cardName": "Burst Lightning",
+          "quantity": 4
+        },
+        {
+          "cardName": "Steam Vents",
+          "quantity": 4
+        },
+        {
+          "cardName": "Spell Snare",
+          "quantity": 1
+        },
+        {
+          "cardName": "Spirebluff Canal",
+          "quantity": 4
+        },
+        {
+          "cardName": "Spell Pierce",
+          "quantity": 1
+        },
+        {
+          "cardName": "Opt",
+          "quantity": 4
+        },
+        {
+          "cardName": "Hearth Elemental",
+          "quantity": 4
+        },
+        {
+          "cardName": "Eddymurk Crab",
+          "quantity": 4
+        },
+        {
+          "cardName": "Get Out",
+          "quantity": 2
+        },
+        {
+          "cardName": "Riverpyre Verge",
+          "quantity": 4
+        },
+        {
+          "cardName": "Winternight Stories",
+          "quantity": 4
+        },
+        {
+          "cardName": "Multiversal Passage",
+          "quantity": 2
+        },
+        {
+          "cardName": "Sunderflock",
+          "quantity": 4
+        },
+        {
+          "cardName": "Prismari Charm",
+          "quantity": 4
+        },
+        {
+          "cardName": "Traumatic Critique",
+          "quantity": 4
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Annul",
+          "quantity": 2
+        },
+        {
+          "cardName": "Spell Pierce",
+          "quantity": 2
+        },
+        {
+          "cardName": "Soul-Guide Lantern",
+          "quantity": 3
+        },
+        {
+          "cardName": "Get Out",
+          "quantity": 2
+        },
+        {
+          "cardName": "Broadside Barrage",
+          "quantity": 1
+        },
+        {
+          "cardName": "Impractical Joke",
+          "quantity": 1
+        },
+        {
+          "cardName": "Colorstorm Stallion",
+          "quantity": 4
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58546823": {
+      "playerId": "2261440",
+      "mainboard": [
+        {
+          "cardName": "Mountain",
+          "quantity": 10
+        },
+        {
+          "cardName": "Steam Vents",
+          "quantity": 1
+        },
+        {
+          "cardName": "Shock",
+          "quantity": 1
+        },
+        {
+          "cardName": "Hired Claw",
+          "quantity": 1
+        },
+        {
+          "cardName": "Burst Lightning",
+          "quantity": 4
+        },
+        {
+          "cardName": "Hearthborn Battler",
+          "quantity": 3
+        },
+        {
+          "cardName": "Steam Vents",
+          "quantity": 1
+        },
+        {
+          "cardName": "Rotisserie Elemental",
+          "quantity": 4
+        },
+        {
+          "cardName": "Hearthborn Battler",
+          "quantity": 1
+        },
+        {
+          "cardName": "Steam Vents",
+          "quantity": 1
+        },
+        {
+          "cardName": "Spirebluff Canal",
+          "quantity": 3
+        },
+        {
+          "cardName": "Stingerback Terror",
+          "quantity": 3
+        },
+        {
+          "cardName": "Great Hall of the Biblioplex",
+          "quantity": 2
+        },
+        {
+          "cardName": "Steam Vents",
+          "quantity": 1
+        },
+        {
+          "cardName": "Hexing Squelcher",
+          "quantity": 4
+        },
+        {
+          "cardName": "Wild Ride",
+          "quantity": 1
+        },
+        {
+          "cardName": "Vibrant Outburst",
+          "quantity": 1
+        },
+        {
+          "cardName": "Vibrant Outburst",
+          "quantity": 1
+        },
+        {
+          "cardName": "Scalding Viper",
+          "quantity": 4
+        },
+        {
+          "cardName": "Scorching Shot",
+          "quantity": 3
+        },
+        {
+          "cardName": "Tokka & Rahzar, Terrible Twos",
+          "quantity": 2
+        },
+        {
+          "cardName": "Hired Claw",
+          "quantity": 3
+        },
+        {
+          "cardName": "Impractical Joke",
+          "quantity": 1
+        },
+        {
+          "cardName": "Riverpyre Verge",
+          "quantity": 4
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Magebane Lizard",
+          "quantity": 4
+        },
+        {
+          "cardName": "Soul-Guide Lantern",
+          "quantity": 2
+        },
+        {
+          "cardName": "Sunspine Lynx",
+          "quantity": 4
+        },
+        {
+          "cardName": "Stingerback Terror",
+          "quantity": 1
+        },
+        {
+          "cardName": "Slagstorm",
+          "quantity": 1
+        },
+        {
+          "cardName": "Scorching Shot",
+          "quantity": 1
+        },
+        {
+          "cardName": "Impractical Joke",
+          "quantity": 1
+        },
+        {
+          "cardName": "Wild Ride",
+          "quantity": 1
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58546846": {
+      "playerId": "2267641",
+      "mainboard": [
+        {
+          "cardName": "Earthbender Ascension",
+          "quantity": 4
+        },
+        {
+          "cardName": "Erode",
+          "quantity": 4
+        },
+        {
+          "cardName": "Badgermole Cub",
+          "quantity": 4
+        },
+        {
+          "cardName": "Ba Sing Se",
+          "quantity": 3
+        },
+        {
+          "cardName": "Mossborn Hydra",
+          "quantity": 2
+        },
+        {
+          "cardName": "Dyadrine, Synthesis Amalgam",
+          "quantity": 2
+        },
+        {
+          "cardName": "Mightform Harmonizer",
+          "quantity": 4
+        },
+        {
+          "cardName": "Icetill Explorer",
+          "quantity": 2
+        },
+        {
+          "cardName": "Sazh's Chocobo",
+          "quantity": 4
+        },
+        {
+          "cardName": "Surrak, Elusive Hunter",
+          "quantity": 2
+        },
+        {
+          "cardName": "Snakeskin Veil",
+          "quantity": 2
+        },
+        {
+          "cardName": "Hushwood Verge",
+          "quantity": 4
+        },
+        {
+          "cardName": "Escape Tunnel",
+          "quantity": 3
+        },
+        {
+          "cardName": "Llanowar Elves",
+          "quantity": 1
+        },
+        {
+          "cardName": "Fabled Passage",
+          "quantity": 4
+        },
+        {
+          "cardName": "Temple Garden",
+          "quantity": 1
+        },
+        {
+          "cardName": "Forest",
+          "quantity": 2
+        },
+        {
+          "cardName": "Plains",
+          "quantity": 2
+        },
+        {
+          "cardName": "Llanowar Elves",
+          "quantity": 3
+        },
+        {
+          "cardName": "Forest",
+          "quantity": 1
+        },
+        {
+          "cardName": "Forest",
+          "quantity": 4
+        },
+        {
+          "cardName": "Forest",
+          "quantity": 2
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Rest in Peace",
+          "quantity": 3
+        },
+        {
+          "cardName": "Mossborn Hydra",
+          "quantity": 2
+        },
+        {
+          "cardName": "Sheltered by Ghosts",
+          "quantity": 3
+        },
+        {
+          "cardName": "Voice of Victory",
+          "quantity": 2
+        },
+        {
+          "cardName": "Surrak, Elusive Hunter",
+          "quantity": 1
+        },
+        {
+          "cardName": "Seam Rip",
+          "quantity": 2
+        },
+        {
+          "cardName": "Snakeskin Veil",
+          "quantity": 2
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58546849": {
+      "playerId": "2296869",
+      "mainboard": [
+        {
+          "cardName": "Boomerang Basics",
+          "quantity": 4
+        },
+        {
+          "cardName": "Steam Vents",
+          "quantity": 4
+        },
+        {
+          "cardName": "Colorstorm Stallion",
+          "quantity": 1
+        },
+        {
+          "cardName": "Eddymurk Crab",
+          "quantity": 4
+        },
+        {
+          "cardName": "Flow State",
+          "quantity": 4
+        },
+        {
+          "cardName": "Get Out",
+          "quantity": 1
+        },
+        {
+          "cardName": "Impractical Joke",
+          "quantity": 1
+        },
+        {
+          "cardName": "Spirebluff Canal",
+          "quantity": 4
+        },
+        {
+          "cardName": "Multiversal Passage",
+          "quantity": 1
+        },
+        {
+          "cardName": "Opt",
+          "quantity": 4
+        },
+        {
+          "cardName": "Spell Pierce",
+          "quantity": 2
+        },
+        {
+          "cardName": "Roaring Furnace",
+          "quantity": 1
+        },
+        {
+          "cardName": "Sleight of Hand",
+          "quantity": 4
+        },
+        {
+          "cardName": "Slickshot Show-Off",
+          "quantity": 4
+        },
+        {
+          "cardName": "Riverpyre Verge",
+          "quantity": 4
+        },
+        {
+          "cardName": "Island",
+          "quantity": 7
+        },
+        {
+          "cardName": "Burst Lightning",
+          "quantity": 1
+        },
+        {
+          "cardName": "Stock Up",
+          "quantity": 1
+        },
+        {
+          "cardName": "Burst Lightning",
+          "quantity": 3
+        },
+        {
+          "cardName": "Stormchaser's Talent",
+          "quantity": 4
+        },
+        {
+          "cardName": "Stormcarved Coast",
+          "quantity": 1
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Annul",
+          "quantity": 1
+        },
+        {
+          "cardName": "Broadside Barrage",
+          "quantity": 1
+        },
+        {
+          "cardName": "Colorstorm Stallion",
+          "quantity": 1
+        },
+        {
+          "cardName": "Ral, Crackling Wit",
+          "quantity": 1
+        },
+        {
+          "cardName": "Get Out",
+          "quantity": 1
+        },
+        {
+          "cardName": "Negate",
+          "quantity": 1
+        },
+        {
+          "cardName": "Into the Flood Maw",
+          "quantity": 1
+        },
+        {
+          "cardName": "Ghost Vacuum",
+          "quantity": 2
+        },
+        {
+          "cardName": "Ral, Crackling Wit",
+          "quantity": 1
+        },
+        {
+          "cardName": "Disdainful Stroke",
+          "quantity": 1
+        },
+        {
+          "cardName": "Sear",
+          "quantity": 1
+        },
+        {
+          "cardName": "Colorstorm Stallion",
+          "quantity": 1
+        },
+        {
+          "cardName": "Roaring Furnace",
+          "quantity": 1
+        },
+        {
+          "cardName": "Slagstorm",
+          "quantity": 1
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58546866": {
+      "playerId": "2329353",
+      "mainboard": [
+        {
+          "cardName": "Burst Lightning",
+          "quantity": 4
+        },
+        {
+          "cardName": "Colorstorm Stallion",
+          "quantity": 1
+        },
+        {
+          "cardName": "Hired Claw",
+          "quantity": 4
+        },
+        {
+          "cardName": "Fanatical Firebrand",
+          "quantity": 4
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 7
+        },
+        {
+          "cardName": "Rockface Village",
+          "quantity": 1
+        },
+        {
+          "cardName": "Emberheart Challenger",
+          "quantity": 4
+        },
+        {
+          "cardName": "Scalding Viper",
+          "quantity": 4
+        },
+        {
+          "cardName": "Soulstone Sanctuary",
+          "quantity": 2
+        },
+        {
+          "cardName": "Riverpyre Verge",
+          "quantity": 3
+        },
+        {
+          "cardName": "Nova Hellkite",
+          "quantity": 4
+        },
+        {
+          "cardName": "Steam Vents",
+          "quantity": 4
+        },
+        {
+          "cardName": "Spirebluff Canal",
+          "quantity": 3
+        },
+        {
+          "cardName": "Vibrant Outburst",
+          "quantity": 4
+        },
+        {
+          "cardName": "Colorstorm Stallion",
+          "quantity": 1
+        },
+        {
+          "cardName": "Riverpyre Verge",
+          "quantity": 1
+        },
+        {
+          "cardName": "Spirebluff Canal",
+          "quantity": 1
+        },
+        {
+          "cardName": "Colorstorm Stallion",
+          "quantity": 2
+        },
+        {
+          "cardName": "Channeled Dragonfire",
+          "quantity": 4
+        },
+        {
+          "cardName": "Stormcarved Coast",
+          "quantity": 1
+        },
+        {
+          "cardName": "Broadside Barrage",
+          "quantity": 1
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Broadside Barrage",
+          "quantity": 2
+        },
+        {
+          "cardName": "Spell Pierce",
+          "quantity": 3
+        },
+        {
+          "cardName": "Magebane Lizard",
+          "quantity": 4
+        },
+        {
+          "cardName": "Sunspine Lynx",
+          "quantity": 4
+        },
+        {
+          "cardName": "Ghost Vacuum",
+          "quantity": 2
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58546841": {
+      "playerId": "2338194",
+      "mainboard": [
+        {
+          "cardName": "Icetill Explorer",
+          "quantity": 4
+        },
+        {
+          "cardName": "Earthbender Ascension",
+          "quantity": 4
+        },
+        {
+          "cardName": "Cavern of Souls",
+          "quantity": 2
+        },
+        {
+          "cardName": "Fabled Passage",
+          "quantity": 4
+        },
+        {
+          "cardName": "Lumbering Worldwagon",
+          "quantity": 1
+        },
+        {
+          "cardName": "Esper Origins",
+          "quantity": 4
+        },
+        {
+          "cardName": "Ba Sing Se",
+          "quantity": 4
+        },
+        {
+          "cardName": "Badgermole Cub",
+          "quantity": 4
+        },
+        {
+          "cardName": "Meltstrider's Resolve",
+          "quantity": 4
+        },
+        {
+          "cardName": "Mightform Harmonizer",
+          "quantity": 4
+        },
+        {
+          "cardName": "Sazh's Chocobo",
+          "quantity": 4
+        },
+        {
+          "cardName": "Forest",
+          "quantity": 12
+        },
+        {
+          "cardName": "Llanowar Elves",
+          "quantity": 4
+        },
+        {
+          "cardName": "Escape Tunnel",
+          "quantity": 4
+        },
+        {
+          "cardName": "Dragon Sniper",
+          "quantity": 1
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Edge Rover",
+          "quantity": 2
+        },
+        {
+          "cardName": "Royal Treatment",
+          "quantity": 2
+        },
+        {
+          "cardName": "Soul-Guide Lantern",
+          "quantity": 3
+        },
+        {
+          "cardName": "Leatherhead, Swamp Stalker",
+          "quantity": 2
+        },
+        {
+          "cardName": "Mossborn Hydra",
+          "quantity": 4
+        },
+        {
+          "cardName": "Pawpatch Formation",
+          "quantity": 2
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58546840": {
+      "playerId": "2515417",
+      "mainboard": [
+        {
+          "cardName": "Steam Vents",
+          "quantity": 4
+        },
+        {
+          "cardName": "Broadside Barrage",
+          "quantity": 2
+        },
+        {
+          "cardName": "Consult the Star Charts",
+          "quantity": 4
+        },
+        {
+          "cardName": "Spell Pierce",
+          "quantity": 1
+        },
+        {
+          "cardName": "Firebending Lesson",
+          "quantity": 4
+        },
+        {
+          "cardName": "Flashback",
+          "quantity": 2
+        },
+        {
+          "cardName": "Riverpyre Verge",
+          "quantity": 4
+        },
+        {
+          "cardName": "Pyroclasm",
+          "quantity": 1
+        },
+        {
+          "cardName": "Impractical Joke",
+          "quantity": 1
+        },
+        {
+          "cardName": "Into the Flood Maw",
+          "quantity": 1
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 1
+        },
+        {
+          "cardName": "Jeskai Revelation",
+          "quantity": 4
+        },
+        {
+          "cardName": "Mistrise Village",
+          "quantity": 1
+        },
+        {
+          "cardName": "Island",
+          "quantity": 1
+        },
+        {
+          "cardName": "Petrified Hamlet",
+          "quantity": 2
+        },
+        {
+          "cardName": "Island",
+          "quantity": 1
+        },
+        {
+          "cardName": "Island",
+          "quantity": 1
+        },
+        {
+          "cardName": "Sear",
+          "quantity": 2
+        },
+        {
+          "cardName": "Hallowed Fountain",
+          "quantity": 2
+        },
+        {
+          "cardName": "Great Hall of the Biblioplex",
+          "quantity": 4
+        },
+        {
+          "cardName": "Stock Up",
+          "quantity": 4
+        },
+        {
+          "cardName": "Cori Mountain Monastery",
+          "quantity": 2
+        },
+        {
+          "cardName": "Abrade",
+          "quantity": 1
+        },
+        {
+          "cardName": "Tablet of Discovery",
+          "quantity": 4
+        },
+        {
+          "cardName": "Three Steps Ahead",
+          "quantity": 2
+        },
+        {
+          "cardName": "Traumatic Critique",
+          "quantity": 1
+        },
+        {
+          "cardName": "Stormcarved Coast",
+          "quantity": 1
+        },
+        {
+          "cardName": "Sundown Pass",
+          "quantity": 2
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Broadside Barrage",
+          "quantity": 1
+        },
+        {
+          "cardName": "Sphinx of the Final Word",
+          "quantity": 1
+        },
+        {
+          "cardName": "Emeritus of Ideation",
+          "quantity": 1
+        },
+        {
+          "cardName": "Erode",
+          "quantity": 1
+        },
+        {
+          "cardName": "Spell Snare",
+          "quantity": 1
+        },
+        {
+          "cardName": "Ghost Vacuum",
+          "quantity": 1
+        },
+        {
+          "cardName": "Petrified Hamlet",
+          "quantity": 1
+        },
+        {
+          "cardName": "Spell Pierce",
+          "quantity": 1
+        },
+        {
+          "cardName": "Slagstorm",
+          "quantity": 2
+        },
+        {
+          "cardName": "Flashfreeze",
+          "quantity": 3
+        },
+        {
+          "cardName": "Disdainful Stroke",
+          "quantity": 1
+        },
+        {
+          "cardName": "The Unagi of Kyoshi Island",
+          "quantity": 1
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58546851": {
+      "playerId": "2622213",
+      "mainboard": [
+        {
+          "cardName": "Slickshot Show-Off",
+          "quantity": 4
+        },
+        {
+          "cardName": "Eddymurk Crab",
+          "quantity": 4
+        },
+        {
+          "cardName": "Spell Pierce",
+          "quantity": 1
+        },
+        {
+          "cardName": "Opt",
+          "quantity": 4
+        },
+        {
+          "cardName": "Riverpyre Verge",
+          "quantity": 4
+        },
+        {
+          "cardName": "Get Out",
+          "quantity": 1
+        },
+        {
+          "cardName": "Boomerang Basics",
+          "quantity": 4
+        },
+        {
+          "cardName": "Impractical Joke",
+          "quantity": 1
+        },
+        {
+          "cardName": "Steam Vents",
+          "quantity": 4
+        },
+        {
+          "cardName": "Flow State",
+          "quantity": 4
+        },
+        {
+          "cardName": "Burst Lightning",
+          "quantity": 4
+        },
+        {
+          "cardName": "Stormchaser's Talent",
+          "quantity": 4
+        },
+        {
+          "cardName": "Roaring Furnace",
+          "quantity": 2
+        },
+        {
+          "cardName": "Island",
+          "quantity": 6
+        },
+        {
+          "cardName": "Multiversal Passage",
+          "quantity": 1
+        },
+        {
+          "cardName": "Spirebluff Canal",
+          "quantity": 4
+        },
+        {
+          "cardName": "Sleight of Hand",
+          "quantity": 4
+        },
+        {
+          "cardName": "Stormcarved Coast",
+          "quantity": 1
+        },
+        {
+          "cardName": "Prismari Charm",
+          "quantity": 2
+        },
+        {
+          "cardName": "Great Hall of the Biblioplex",
+          "quantity": 1
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Spell Pierce",
+          "quantity": 1
+        },
+        {
+          "cardName": "Abrade",
+          "quantity": 1
+        },
+        {
+          "cardName": "Slagstorm",
+          "quantity": 2
+        },
+        {
+          "cardName": "Disdainful Stroke",
+          "quantity": 2
+        },
+        {
+          "cardName": "Get Out",
+          "quantity": 1
+        },
+        {
+          "cardName": "Sear",
+          "quantity": 1
+        },
+        {
+          "cardName": "Broadside Barrage",
+          "quantity": 1
+        },
+        {
+          "cardName": "Wan Shi Tong, Librarian",
+          "quantity": 2
+        },
+        {
+          "cardName": "Bounce Off",
+          "quantity": 1
+        },
+        {
+          "cardName": "Annul",
+          "quantity": 1
+        },
+        {
+          "cardName": "Ral, Crackling Wit",
+          "quantity": 2
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58546838": {
+      "playerId": "2669359",
+      "mainboard": [
+        {
+          "cardName": "Ba Sing Se",
+          "quantity": 3
+        },
+        {
+          "cardName": "Esper Origins",
+          "quantity": 2
+        },
+        {
+          "cardName": "Surrak, Elusive Hunter",
+          "quantity": 1
+        },
+        {
+          "cardName": "Dyadrine, Synthesis Amalgam",
+          "quantity": 1
+        },
+        {
+          "cardName": "Earthbender Ascension",
+          "quantity": 1
+        },
+        {
+          "cardName": "Erode",
+          "quantity": 4
+        },
+        {
+          "cardName": "Badgermole Cub",
+          "quantity": 4
+        },
+        {
+          "cardName": "Fabled Passage",
+          "quantity": 3
+        },
+        {
+          "cardName": "Fabled Passage",
+          "quantity": 1
+        },
+        {
+          "cardName": "Icetill Explorer",
+          "quantity": 4
+        },
+        {
+          "cardName": "Keen-Eyed Curator",
+          "quantity": 1
+        },
+        {
+          "cardName": "Escape Tunnel",
+          "quantity": 3
+        },
+        {
+          "cardName": "Hushwood Verge",
+          "quantity": 4
+        },
+        {
+          "cardName": "Mightform Harmonizer",
+          "quantity": 3
+        },
+        {
+          "cardName": "Mossborn Hydra",
+          "quantity": 1
+        },
+        {
+          "cardName": "Earthbender Ascension",
+          "quantity": 3
+        },
+        {
+          "cardName": "Sazh's Chocobo",
+          "quantity": 4
+        },
+        {
+          "cardName": "Bushwhack",
+          "quantity": 1
+        },
+        {
+          "cardName": "Plains",
+          "quantity": 2
+        },
+        {
+          "cardName": "Forest",
+          "quantity": 8
+        },
+        {
+          "cardName": "Llanowar Elves",
+          "quantity": 4
+        },
+        {
+          "cardName": "Temple Garden",
+          "quantity": 2
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Kutzil, Malamet Exemplar",
+          "quantity": 1
+        },
+        {
+          "cardName": "Mossborn Hydra",
+          "quantity": 1
+        },
+        {
+          "cardName": "Rest in Peace",
+          "quantity": 1
+        },
+        {
+          "cardName": "Seam Rip",
+          "quantity": 2
+        },
+        {
+          "cardName": "Sheltered by Ghosts",
+          "quantity": 2
+        },
+        {
+          "cardName": "Snakeskin Veil",
+          "quantity": 2
+        },
+        {
+          "cardName": "Surrak, Elusive Hunter",
+          "quantity": 1
+        },
+        {
+          "cardName": "Mossborn Hydra",
+          "quantity": 1
+        },
+        {
+          "cardName": "Rest in Peace",
+          "quantity": 2
+        },
+        {
+          "cardName": "Felidar Retreat",
+          "quantity": 2
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58546862": {
+      "playerId": "2707200",
+      "mainboard": [
+        {
+          "cardName": "Broadside Barrage",
+          "quantity": 2
+        },
+        {
+          "cardName": "Consult the Star Charts",
+          "quantity": 4
+        },
+        {
+          "cardName": "Island",
+          "quantity": 2
+        },
+        {
+          "cardName": "Firebending Lesson",
+          "quantity": 4
+        },
+        {
+          "cardName": "Flashback",
+          "quantity": 2
+        },
+        {
+          "cardName": "Great Hall of the Biblioplex",
+          "quantity": 4
+        },
+        {
+          "cardName": "Hallowed Fountain",
+          "quantity": 1
+        },
+        {
+          "cardName": "Impractical Joke",
+          "quantity": 1
+        },
+        {
+          "cardName": "Into the Flood Maw",
+          "quantity": 1
+        },
+        {
+          "cardName": "Hallowed Fountain",
+          "quantity": 1
+        },
+        {
+          "cardName": "Jeskai Revelation",
+          "quantity": 4
+        },
+        {
+          "cardName": "Mistrise Village",
+          "quantity": 1
+        },
+        {
+          "cardName": "Cori Mountain Monastery",
+          "quantity": 2
+        },
+        {
+          "cardName": "Petrified Hamlet",
+          "quantity": 2
+        },
+        {
+          "cardName": "Pyroclasm",
+          "quantity": 1
+        },
+        {
+          "cardName": "Riverpyre Verge",
+          "quantity": 4
+        },
+        {
+          "cardName": "Sear",
+          "quantity": 2
+        },
+        {
+          "cardName": "Steam Vents",
+          "quantity": 1
+        },
+        {
+          "cardName": "Stock Up",
+          "quantity": 4
+        },
+        {
+          "cardName": "Stormcarved Coast",
+          "quantity": 1
+        },
+        {
+          "cardName": "Sundown Pass",
+          "quantity": 1
+        },
+        {
+          "cardName": "Tablet of Discovery",
+          "quantity": 4
+        },
+        {
+          "cardName": "Three Steps Ahead",
+          "quantity": 2
+        },
+        {
+          "cardName": "Traumatic Critique",
+          "quantity": 1
+        },
+        {
+          "cardName": "Island",
+          "quantity": 1
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 1
+        },
+        {
+          "cardName": "Steam Vents",
+          "quantity": 2
+        },
+        {
+          "cardName": "Steam Vents",
+          "quantity": 1
+        },
+        {
+          "cardName": "Sundown Pass",
+          "quantity": 1
+        },
+        {
+          "cardName": "Abrade",
+          "quantity": 1
+        },
+        {
+          "cardName": "Spell Pierce",
+          "quantity": 1
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Slagstorm",
+          "quantity": 2
+        },
+        {
+          "cardName": "Broadside Barrage",
+          "quantity": 1
+        },
+        {
+          "cardName": "Disdainful Stroke",
+          "quantity": 1
+        },
+        {
+          "cardName": "Emeritus of Ideation",
+          "quantity": 1
+        },
+        {
+          "cardName": "Erode",
+          "quantity": 1
+        },
+        {
+          "cardName": "Ghost Vacuum",
+          "quantity": 1
+        },
+        {
+          "cardName": "Flashfreeze",
+          "quantity": 3
+        },
+        {
+          "cardName": "Petrified Hamlet",
+          "quantity": 1
+        },
+        {
+          "cardName": "Sphinx of the Final Word",
+          "quantity": 1
+        },
+        {
+          "cardName": "The Unagi of Kyoshi Island",
+          "quantity": 1
+        },
+        {
+          "cardName": "Spell Snare",
+          "quantity": 1
+        },
+        {
+          "cardName": "Spell Pierce",
+          "quantity": 1
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58546863": {
+      "playerId": "2926088",
+      "mainboard": [
+        {
+          "cardName": "Spell Pierce",
+          "quantity": 2
+        },
+        {
+          "cardName": "Eddymurk Crab",
+          "quantity": 4
+        },
+        {
+          "cardName": "Get Out",
+          "quantity": 3
+        },
+        {
+          "cardName": "Great Hall of the Biblioplex",
+          "quantity": 1
+        },
+        {
+          "cardName": "Hearth Elemental",
+          "quantity": 4
+        },
+        {
+          "cardName": "Impractical Joke",
+          "quantity": 2
+        },
+        {
+          "cardName": "Sleight of Hand",
+          "quantity": 4
+        },
+        {
+          "cardName": "Prismari Charm",
+          "quantity": 4
+        },
+        {
+          "cardName": "Riverpyre Verge",
+          "quantity": 4
+        },
+        {
+          "cardName": "Spell Snare",
+          "quantity": 2
+        },
+        {
+          "cardName": "Opt",
+          "quantity": 4
+        },
+        {
+          "cardName": "Island",
+          "quantity": 5
+        },
+        {
+          "cardName": "Thundering Falls",
+          "quantity": 1
+        },
+        {
+          "cardName": "Traumatic Critique",
+          "quantity": 3
+        },
+        {
+          "cardName": "Burst Lightning",
+          "quantity": 3
+        },
+        {
+          "cardName": "Spirebluff Canal",
+          "quantity": 4
+        },
+        {
+          "cardName": "Steam Vents",
+          "quantity": 4
+        },
+        {
+          "cardName": "Stormcarved Coast",
+          "quantity": 1
+        },
+        {
+          "cardName": "Sunderflock",
+          "quantity": 4
+        },
+        {
+          "cardName": "Winternight Stories",
+          "quantity": 1
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Ral, Crackling Wit",
+          "quantity": 1
+        },
+        {
+          "cardName": "Flashfreeze",
+          "quantity": 1
+        },
+        {
+          "cardName": "Emeritus of Ideation",
+          "quantity": 2
+        },
+        {
+          "cardName": "Disdainful Stroke",
+          "quantity": 1
+        },
+        {
+          "cardName": "Annul",
+          "quantity": 2
+        },
+        {
+          "cardName": "Abrade",
+          "quantity": 1
+        },
+        {
+          "cardName": "Quantum Riddler",
+          "quantity": 1
+        },
+        {
+          "cardName": "Colorstorm Stallion",
+          "quantity": 2
+        },
+        {
+          "cardName": "Ashling, Rekindled",
+          "quantity": 3
+        },
+        {
+          "cardName": "Stock Up",
+          "quantity": 1
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58546830": {
+      "playerId": "2943684",
+      "mainboard": [
+        {
+          "cardName": "Ashling's Command",
+          "quantity": 4
+        },
+        {
+          "cardName": "Steam Vents",
+          "quantity": 4
+        },
+        {
+          "cardName": "Colorstorm Stallion",
+          "quantity": 4
+        },
+        {
+          "cardName": "Consult the Star Charts",
+          "quantity": 1
+        },
+        {
+          "cardName": "Spirebluff Canal",
+          "quantity": 3
+        },
+        {
+          "cardName": "Riverpyre Verge",
+          "quantity": 4
+        },
+        {
+          "cardName": "Fire Magic",
+          "quantity": 2
+        },
+        {
+          "cardName": "Firebending Lesson",
+          "quantity": 3
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 3
+        },
+        {
+          "cardName": "Into the Flood Maw",
+          "quantity": 1
+        },
+        {
+          "cardName": "Mistrise Village",
+          "quantity": 1
+        },
+        {
+          "cardName": "Island",
+          "quantity": 2
+        },
+        {
+          "cardName": "Molten-Core Maestro",
+          "quantity": 3
+        },
+        {
+          "cardName": "Improvisation Capstone",
+          "quantity": 1
+        },
+        {
+          "cardName": "Multiversal Passage",
+          "quantity": 1
+        },
+        {
+          "cardName": "Prismari Charm",
+          "quantity": 2
+        },
+        {
+          "cardName": "Devastating Onslaught",
+          "quantity": 1
+        },
+        {
+          "cardName": "Sanar, Unfinished Genius",
+          "quantity": 3
+        },
+        {
+          "cardName": "Sear",
+          "quantity": 1
+        },
+        {
+          "cardName": "Sorceress's Schemes",
+          "quantity": 1
+        },
+        {
+          "cardName": "Cori Mountain Monastery",
+          "quantity": 1
+        },
+        {
+          "cardName": "Burst Lightning",
+          "quantity": 1
+        },
+        {
+          "cardName": "Stock Up",
+          "quantity": 2
+        },
+        {
+          "cardName": "Stormcarved Coast",
+          "quantity": 3
+        },
+        {
+          "cardName": "Tablet of Discovery",
+          "quantity": 4
+        },
+        {
+          "cardName": "Three Steps Ahead",
+          "quantity": 2
+        },
+        {
+          "cardName": "Thundering Falls",
+          "quantity": 2
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Improvisation Capstone",
+          "quantity": 1
+        },
+        {
+          "cardName": "Annul",
+          "quantity": 1
+        },
+        {
+          "cardName": "Broadside Barrage",
+          "quantity": 1
+        },
+        {
+          "cardName": "Devastating Onslaught",
+          "quantity": 1
+        },
+        {
+          "cardName": "Spell Pierce",
+          "quantity": 2
+        },
+        {
+          "cardName": "Ghost Vacuum",
+          "quantity": 1
+        },
+        {
+          "cardName": "Aetherize",
+          "quantity": 1
+        },
+        {
+          "cardName": "Molten-Core Maestro",
+          "quantity": 1
+        },
+        {
+          "cardName": "Octopus Form",
+          "quantity": 2
+        },
+        {
+          "cardName": "Pyroclasm",
+          "quantity": 1
+        },
+        {
+          "cardName": "Sear",
+          "quantity": 1
+        },
+        {
+          "cardName": "Sorceress's Schemes",
+          "quantity": 1
+        },
+        {
+          "cardName": "Flashfreeze",
+          "quantity": 1
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58546848": {
+      "playerId": "2972771",
+      "mainboard": [
+        {
+          "cardName": "Consult the Star Charts",
+          "quantity": 4
+        },
+        {
+          "cardName": "Sear",
+          "quantity": 1
+        },
+        {
+          "cardName": "Erode",
+          "quantity": 1
+        },
+        {
+          "cardName": "Firebending Lesson",
+          "quantity": 2
+        },
+        {
+          "cardName": "Flashback",
+          "quantity": 2
+        },
+        {
+          "cardName": "Jeskai Revelation",
+          "quantity": 4
+        },
+        {
+          "cardName": "Island",
+          "quantity": 1
+        },
+        {
+          "cardName": "Great Hall of the Biblioplex",
+          "quantity": 3
+        },
+        {
+          "cardName": "Lightning Helix",
+          "quantity": 1
+        },
+        {
+          "cardName": "Ill-Timed Explosion",
+          "quantity": 1
+        },
+        {
+          "cardName": "Inevitable Defeat",
+          "quantity": 3
+        },
+        {
+          "cardName": "Lightning Helix",
+          "quantity": 1
+        },
+        {
+          "cardName": "Meticulous Archive",
+          "quantity": 1
+        },
+        {
+          "cardName": "Mistrise Village",
+          "quantity": 1
+        },
+        {
+          "cardName": "Gloomlake Verge",
+          "quantity": 2
+        },
+        {
+          "cardName": "Hallowed Fountain",
+          "quantity": 2
+        },
+        {
+          "cardName": "Sear",
+          "quantity": 1
+        },
+        {
+          "cardName": "Starting Town",
+          "quantity": 1
+        },
+        {
+          "cardName": "Godless Shrine",
+          "quantity": 1
+        },
+        {
+          "cardName": "Stock Up",
+          "quantity": 4
+        },
+        {
+          "cardName": "Day of Judgment",
+          "quantity": 1
+        },
+        {
+          "cardName": "Three Steps Ahead",
+          "quantity": 2
+        },
+        {
+          "cardName": "Tablet of Discovery",
+          "quantity": 4
+        },
+        {
+          "cardName": "Traumatic Critique",
+          "quantity": 1
+        },
+        {
+          "cardName": "Shattered Sanctum",
+          "quantity": 3
+        },
+        {
+          "cardName": "Steam Vents",
+          "quantity": 1
+        },
+        {
+          "cardName": "Steam Vents",
+          "quantity": 2
+        },
+        {
+          "cardName": "Stormcarved Coast",
+          "quantity": 1
+        },
+        {
+          "cardName": "Sundown Pass",
+          "quantity": 2
+        },
+        {
+          "cardName": "Cori Mountain Monastery",
+          "quantity": 1
+        },
+        {
+          "cardName": "Riverpyre Verge",
+          "quantity": 1
+        },
+        {
+          "cardName": "Floodfarm Verge",
+          "quantity": 1
+        },
+        {
+          "cardName": "Blood Crypt",
+          "quantity": 1
+        },
+        {
+          "cardName": "Sacred Foundry",
+          "quantity": 2
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Pest Control",
+          "quantity": 1
+        },
+        {
+          "cardName": "Emeritus of Ideation",
+          "quantity": 3
+        },
+        {
+          "cardName": "Erode",
+          "quantity": 1
+        },
+        {
+          "cardName": "High Noon",
+          "quantity": 2
+        },
+        {
+          "cardName": "Pyroclasm",
+          "quantity": 1
+        },
+        {
+          "cardName": "Disdainful Stroke",
+          "quantity": 1
+        },
+        {
+          "cardName": "Spell Pierce",
+          "quantity": 1
+        },
+        {
+          "cardName": "Mathemagics",
+          "quantity": 1
+        },
+        {
+          "cardName": "Flashfreeze",
+          "quantity": 3
+        },
+        {
+          "cardName": "Ill-Timed Explosion",
+          "quantity": 1
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58546829": {
+      "playerId": "3013190",
+      "mainboard": [
+        {
+          "cardName": "Mountain",
+          "quantity": 1
+        },
+        {
+          "cardName": "Great Hall of the Biblioplex",
+          "quantity": 4
+        },
+        {
+          "cardName": "Tablet of Discovery",
+          "quantity": 4
+        },
+        {
+          "cardName": "Flashback",
+          "quantity": 1
+        },
+        {
+          "cardName": "North Wind Avatar",
+          "quantity": 1
+        },
+        {
+          "cardName": "Abandon Attachments",
+          "quantity": 4
+        },
+        {
+          "cardName": "Iroh's Demonstration",
+          "quantity": 1
+        },
+        {
+          "cardName": "Firebending Lesson",
+          "quantity": 4
+        },
+        {
+          "cardName": "Combustion Technique",
+          "quantity": 4
+        },
+        {
+          "cardName": "It'll Quench Ya!",
+          "quantity": 2
+        },
+        {
+          "cardName": "Accumulate Wisdom",
+          "quantity": 4
+        },
+        {
+          "cardName": "Consult the Star Charts",
+          "quantity": 1
+        },
+        {
+          "cardName": "Island",
+          "quantity": 1
+        },
+        {
+          "cardName": "Island",
+          "quantity": 1
+        },
+        {
+          "cardName": "Hallowed Fountain",
+          "quantity": 1
+        },
+        {
+          "cardName": "Riverpyre Verge",
+          "quantity": 4
+        },
+        {
+          "cardName": "Sundown Pass",
+          "quantity": 1
+        },
+        {
+          "cardName": "Demolition Field",
+          "quantity": 3
+        },
+        {
+          "cardName": "Meticulous Archive",
+          "quantity": 1
+        },
+        {
+          "cardName": "Stock Up",
+          "quantity": 3
+        },
+        {
+          "cardName": "Cori Mountain Monastery",
+          "quantity": 1
+        },
+        {
+          "cardName": "Mistrise Village",
+          "quantity": 1
+        },
+        {
+          "cardName": "Swallowed by Leviathan",
+          "quantity": 2
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 1
+        },
+        {
+          "cardName": "Jeskai Revelation",
+          "quantity": 4
+        },
+        {
+          "cardName": "Island",
+          "quantity": 1
+        },
+        {
+          "cardName": "Steam Vents",
+          "quantity": 4
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Slagstorm",
+          "quantity": 2
+        },
+        {
+          "cardName": "Torpor Orb",
+          "quantity": 1
+        },
+        {
+          "cardName": "Negate",
+          "quantity": 2
+        },
+        {
+          "cardName": "Spell Snare",
+          "quantity": 1
+        },
+        {
+          "cardName": "Disdainful Stroke",
+          "quantity": 1
+        },
+        {
+          "cardName": "Return the Favor",
+          "quantity": 1
+        },
+        {
+          "cardName": "Riverchurn Monument",
+          "quantity": 1
+        },
+        {
+          "cardName": "Gran-Gran",
+          "quantity": 2
+        },
+        {
+          "cardName": "Price of Freedom",
+          "quantity": 1
+        },
+        {
+          "cardName": "Flashfreeze",
+          "quantity": 3
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58546819": {
+      "playerId": "3102876",
+      "mainboard": [
+        {
+          "cardName": "Shoot the Sheriff",
+          "quantity": 2
+        },
+        {
+          "cardName": "Bitter Triumph",
+          "quantity": 1
+        },
+        {
+          "cardName": "Witherbloom Charm",
+          "quantity": 2
+        },
+        {
+          "cardName": "Overgrown Tomb",
+          "quantity": 2
+        },
+        {
+          "cardName": "Dreamroot Cascade",
+          "quantity": 1
+        },
+        {
+          "cardName": "Swamp",
+          "quantity": 1
+        },
+        {
+          "cardName": "Exhibition Tidecaller",
+          "quantity": 3
+        },
+        {
+          "cardName": "Quandrix Charm",
+          "quantity": 1
+        },
+        {
+          "cardName": "Island",
+          "quantity": 1
+        },
+        {
+          "cardName": "Gloomlake Verge",
+          "quantity": 1
+        },
+        {
+          "cardName": "Great Hall of the Biblioplex",
+          "quantity": 4
+        },
+        {
+          "cardName": "Hedge Maze",
+          "quantity": 1
+        },
+        {
+          "cardName": "Forest",
+          "quantity": 1
+        },
+        {
+          "cardName": "Mind into Matter",
+          "quantity": 3
+        },
+        {
+          "cardName": "Deadly Cover-Up",
+          "quantity": 2
+        },
+        {
+          "cardName": "Watery Grave",
+          "quantity": 2
+        },
+        {
+          "cardName": "Petrified Hamlet",
+          "quantity": 1
+        },
+        {
+          "cardName": "Professor Dellian Fel",
+          "quantity": 2
+        },
+        {
+          "cardName": "Overgrown Tomb",
+          "quantity": 1
+        },
+        {
+          "cardName": "Rakshasa's Bargain",
+          "quantity": 4
+        },
+        {
+          "cardName": "Requiting Hex",
+          "quantity": 3
+        },
+        {
+          "cardName": "Underground Mortuary",
+          "quantity": 1
+        },
+        {
+          "cardName": "Strategic Betrayal",
+          "quantity": 2
+        },
+        {
+          "cardName": "Together as One",
+          "quantity": 3
+        },
+        {
+          "cardName": "Wastewood Verge",
+          "quantity": 2
+        },
+        {
+          "cardName": "Undercity Sewers",
+          "quantity": 1
+        },
+        {
+          "cardName": "Willowrush Verge",
+          "quantity": 1
+        },
+        {
+          "cardName": "Withering Curse",
+          "quantity": 3
+        },
+        {
+          "cardName": "Breeding Pool",
+          "quantity": 1
+        },
+        {
+          "cardName": "Deathcap Glade",
+          "quantity": 2
+        },
+        {
+          "cardName": "Ancient Cornucopia",
+          "quantity": 4
+        },
+        {
+          "cardName": "Mistrise Village",
+          "quantity": 1
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Deadly Cover-Up",
+          "quantity": 1
+        },
+        {
+          "cardName": "Duress",
+          "quantity": 3
+        },
+        {
+          "cardName": "Ghost Vacuum",
+          "quantity": 1
+        },
+        {
+          "cardName": "Bitter Triumph",
+          "quantity": 1
+        },
+        {
+          "cardName": "Requiting Hex",
+          "quantity": 1
+        },
+        {
+          "cardName": "Quandrix Charm",
+          "quantity": 1
+        },
+        {
+          "cardName": "Ghost Vacuum",
+          "quantity": 1
+        },
+        {
+          "cardName": "Duress",
+          "quantity": 1
+        },
+        {
+          "cardName": "Flashfreeze",
+          "quantity": 2
+        },
+        {
+          "cardName": "Urgent Necropsy",
+          "quantity": 2
+        },
+        {
+          "cardName": "Professor Dellian Fel",
+          "quantity": 1
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58546859": {
+      "playerId": "3103007",
+      "mainboard": [
+        {
+          "cardName": "Abandoned Air Temple",
+          "quantity": 4
+        },
+        {
+          "cardName": "Badgermole Cub",
+          "quantity": 4
+        },
+        {
+          "cardName": "Pawpatch Recruit",
+          "quantity": 3
+        },
+        {
+          "cardName": "Ouroboroid",
+          "quantity": 4
+        },
+        {
+          "cardName": "Gene Pollinator",
+          "quantity": 3
+        },
+        {
+          "cardName": "Hushwood Verge",
+          "quantity": 4
+        },
+        {
+          "cardName": "Keen-Eyed Curator",
+          "quantity": 4
+        },
+        {
+          "cardName": "Llanowar Elves",
+          "quantity": 4
+        },
+        {
+          "cardName": "Meltstrider's Resolve",
+          "quantity": 2
+        },
+        {
+          "cardName": "Nurturing Pixie",
+          "quantity": 1
+        },
+        {
+          "cardName": "Forest",
+          "quantity": 2
+        },
+        {
+          "cardName": "Forest",
+          "quantity": 2
+        },
+        {
+          "cardName": "Forest",
+          "quantity": 1
+        },
+        {
+          "cardName": "Forest",
+          "quantity": 1
+        },
+        {
+          "cardName": "Seam Rip",
+          "quantity": 3
+        },
+        {
+          "cardName": "Shardmage's Rescue",
+          "quantity": 1
+        },
+        {
+          "cardName": "Starting Town",
+          "quantity": 4
+        },
+        {
+          "cardName": "Brightglass Gearhulk",
+          "quantity": 3
+        },
+        {
+          "cardName": "Plains",
+          "quantity": 1
+        },
+        {
+          "cardName": "Plains",
+          "quantity": 1
+        },
+        {
+          "cardName": "Sage of the Skies",
+          "quantity": 4
+        },
+        {
+          "cardName": "Temple Garden",
+          "quantity": 4
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Rest in Peace",
+          "quantity": 1
+        },
+        {
+          "cardName": "Nature's Rhythm",
+          "quantity": 4
+        },
+        {
+          "cardName": "Erode",
+          "quantity": 3
+        },
+        {
+          "cardName": "Goldvein Hydra",
+          "quantity": 2
+        },
+        {
+          "cardName": "Insidious Fungus",
+          "quantity": 1
+        },
+        {
+          "cardName": "Leyline Weaver",
+          "quantity": 2
+        },
+        {
+          "cardName": "Craterhoof Behemoth",
+          "quantity": 1
+        },
+        {
+          "cardName": "Brightglass Gearhulk",
+          "quantity": 1
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58546831": {
+      "playerId": "3113973",
+      "mainboard": [
+        {
+          "cardName": "Mossborn Hydra",
+          "quantity": 1
+        },
+        {
+          "cardName": "Escape Tunnel",
+          "quantity": 4
+        },
+        {
+          "cardName": "Temple Garden",
+          "quantity": 1
+        },
+        {
+          "cardName": "Mightform Harmonizer",
+          "quantity": 4
+        },
+        {
+          "cardName": "Badgermole Cub",
+          "quantity": 4
+        },
+        {
+          "cardName": "Llanowar Elves",
+          "quantity": 4
+        },
+        {
+          "cardName": "Fabled Passage",
+          "quantity": 4
+        },
+        {
+          "cardName": "Sazh's Chocobo",
+          "quantity": 4
+        },
+        {
+          "cardName": "Ba Sing Se",
+          "quantity": 3
+        },
+        {
+          "cardName": "Forest",
+          "quantity": 7
+        },
+        {
+          "cardName": "Dyadrine, Synthesis Amalgam",
+          "quantity": 2
+        },
+        {
+          "cardName": "Bushwhack",
+          "quantity": 2
+        },
+        {
+          "cardName": "Erode",
+          "quantity": 4
+        },
+        {
+          "cardName": "Surrak, Elusive Hunter",
+          "quantity": 2
+        },
+        {
+          "cardName": "Earthbender Ascension",
+          "quantity": 4
+        },
+        {
+          "cardName": "Icetill Explorer",
+          "quantity": 2
+        },
+        {
+          "cardName": "Plains",
+          "quantity": 2
+        },
+        {
+          "cardName": "Hushwood Verge",
+          "quantity": 4
+        },
+        {
+          "cardName": "Snakeskin Veil",
+          "quantity": 1
+        },
+        {
+          "cardName": "Keen-Eyed Curator",
+          "quantity": 1
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Sheltered by Ghosts",
+          "quantity": 3
+        },
+        {
+          "cardName": "Rest in Peace",
+          "quantity": 3
+        },
+        {
+          "cardName": "Keen-Eyed Curator",
+          "quantity": 1
+        },
+        {
+          "cardName": "Snakeskin Veil",
+          "quantity": 1
+        },
+        {
+          "cardName": "Mossborn Hydra",
+          "quantity": 3
+        },
+        {
+          "cardName": "Ba Sing Se",
+          "quantity": 1
+        },
+        {
+          "cardName": "Voice of Victory",
+          "quantity": 2
+        },
+        {
+          "cardName": "Surrak, Elusive Hunter",
+          "quantity": 1
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58546835": {
+      "playerId": "3227644",
+      "mainboard": [
+        {
+          "cardName": "Island",
+          "quantity": 6
+        },
+        {
+          "cardName": "Burst Lightning",
+          "quantity": 3
+        },
+        {
+          "cardName": "Steam Vents",
+          "quantity": 4
+        },
+        {
+          "cardName": "Spell Snare",
+          "quantity": 2
+        },
+        {
+          "cardName": "Spirebluff Canal",
+          "quantity": 4
+        },
+        {
+          "cardName": "Spell Pierce",
+          "quantity": 1
+        },
+        {
+          "cardName": "Opt",
+          "quantity": 4
+        },
+        {
+          "cardName": "Sleight of Hand",
+          "quantity": 4
+        },
+        {
+          "cardName": "Hearth Elemental",
+          "quantity": 4
+        },
+        {
+          "cardName": "Eddymurk Crab",
+          "quantity": 4
+        },
+        {
+          "cardName": "Get Out",
+          "quantity": 2
+        },
+        {
+          "cardName": "Riverpyre Verge",
+          "quantity": 4
+        },
+        {
+          "cardName": "Winternight Stories",
+          "quantity": 3
+        },
+        {
+          "cardName": "Multiversal Passage",
+          "quantity": 2
+        },
+        {
+          "cardName": "Sunderflock",
+          "quantity": 4
+        },
+        {
+          "cardName": "Impractical Joke",
+          "quantity": 1
+        },
+        {
+          "cardName": "Prismari Charm",
+          "quantity": 4
+        },
+        {
+          "cardName": "Traumatic Critique",
+          "quantity": 4
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Spell Snare",
+          "quantity": 1
+        },
+        {
+          "cardName": "Annul",
+          "quantity": 1
+        },
+        {
+          "cardName": "Spell Pierce",
+          "quantity": 1
+        },
+        {
+          "cardName": "Get Out",
+          "quantity": 2
+        },
+        {
+          "cardName": "Ghost Vacuum",
+          "quantity": 2
+        },
+        {
+          "cardName": "Broadside Barrage",
+          "quantity": 1
+        },
+        {
+          "cardName": "Gigastorm Titan",
+          "quantity": 2
+        },
+        {
+          "cardName": "Sear",
+          "quantity": 1
+        },
+        {
+          "cardName": "Colorstorm Stallion",
+          "quantity": 4
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58546852": {
+      "playerId": "3405199",
+      "mainboard": [
+        {
+          "cardName": "Aang, Swift Savior",
+          "quantity": 4
+        },
+        {
+          "cardName": "Abandoned Air Temple",
+          "quantity": 2
+        },
+        {
+          "cardName": "Airbender Ascension",
+          "quantity": 1
+        },
+        {
+          "cardName": "Avatar's Wrath",
+          "quantity": 2
+        },
+        {
+          "cardName": "Aven Interrupter",
+          "quantity": 2
+        },
+        {
+          "cardName": "Beza, the Bounding Spring",
+          "quantity": 1
+        },
+        {
+          "cardName": "Floodfarm Verge",
+          "quantity": 4
+        },
+        {
+          "cardName": "Floodpits Drowner",
+          "quantity": 4
+        },
+        {
+          "cardName": "Get Lost",
+          "quantity": 1
+        },
+        {
+          "cardName": "Plains",
+          "quantity": 4
+        },
+        {
+          "cardName": "High Noon",
+          "quantity": 4
+        },
+        {
+          "cardName": "Multiversal Passage",
+          "quantity": 2
+        },
+        {
+          "cardName": "Quantum Riddler",
+          "quantity": 3
+        },
+        {
+          "cardName": "Hallowed Fountain",
+          "quantity": 4
+        },
+        {
+          "cardName": "Skycoach Conductor",
+          "quantity": 3
+        },
+        {
+          "cardName": "Spell Snare",
+          "quantity": 2
+        },
+        {
+          "cardName": "Starting Town",
+          "quantity": 4
+        },
+        {
+          "cardName": "Restless Anchorage",
+          "quantity": 1
+        },
+        {
+          "cardName": "Island",
+          "quantity": 4
+        },
+        {
+          "cardName": "Aven Interrupter",
+          "quantity": 2
+        },
+        {
+          "cardName": "Skycoach Conductor",
+          "quantity": 1
+        },
+        {
+          "cardName": "Get Lost",
+          "quantity": 1
+        },
+        {
+          "cardName": "Voice of Victory",
+          "quantity": 4
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Flashfreeze",
+          "quantity": 2
+        },
+        {
+          "cardName": "Beza, the Bounding Spring",
+          "quantity": 1
+        },
+        {
+          "cardName": "Disdainful Stroke",
+          "quantity": 2
+        },
+        {
+          "cardName": "Annul",
+          "quantity": 2
+        },
+        {
+          "cardName": "Petrified Hamlet",
+          "quantity": 1
+        },
+        {
+          "cardName": "Pyrrhic Strike",
+          "quantity": 1
+        },
+        {
+          "cardName": "Quantum Riddler",
+          "quantity": 1
+        },
+        {
+          "cardName": "Seam Rip",
+          "quantity": 2
+        },
+        {
+          "cardName": "Spectacular Tactics",
+          "quantity": 1
+        },
+        {
+          "cardName": "Ghost Vacuum",
+          "quantity": 2
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "mtgo-deck-58546814": {
+      "playerId": "3486712",
+      "mainboard": [
+        {
+          "cardName": "Sacred Foundry",
+          "quantity": 4
+        },
+        {
+          "cardName": "Dusk Rose Reliquary",
+          "quantity": 4
+        },
+        {
+          "cardName": "Food Fight",
+          "quantity": 4
+        },
+        {
+          "cardName": "Plains",
+          "quantity": 3
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 1
+        },
+        {
+          "cardName": "Melded Moxite",
+          "quantity": 4
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 1
+        },
+        {
+          "cardName": "Pinnacle Starcage",
+          "quantity": 4
+        },
+        {
+          "cardName": "Legion Extruder",
+          "quantity": 4
+        },
+        {
+          "cardName": "Inspiring Vantage",
+          "quantity": 3
+        },
+        {
+          "cardName": "Saheeli's Lattice",
+          "quantity": 4
+        },
+        {
+          "cardName": "Spring-Loaded Sawblades",
+          "quantity": 4
+        },
+        {
+          "cardName": "Sunbillow Verge",
+          "quantity": 4
+        },
+        {
+          "cardName": "Sundown Pass",
+          "quantity": 4
+        },
+        {
+          "cardName": "The Gold Saucer",
+          "quantity": 3
+        },
+        {
+          "cardName": "Cori Mountain Monastery",
+          "quantity": 1
+        },
+        {
+          "cardName": "Weapons Manufacturing",
+          "quantity": 4
+        },
+        {
+          "cardName": "United Battlefront",
+          "quantity": 4
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Day of Judgment",
+          "quantity": 3
+        },
+        {
+          "cardName": "Lightning Helix",
+          "quantity": 3
+        },
+        {
+          "cardName": "Day of Judgment",
+          "quantity": 1
+        },
+        {
+          "cardName": "Torch the Tower",
+          "quantity": 4
+        },
+        {
+          "cardName": "Rest in Peace",
+          "quantity": 4
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    }
+  },
+  "rounds": {
+    "playoffs-qf": {
+      "name": "Quarterfinals",
+      "number": 900,
+      "isPlayoff": true,
+      "matches": [
+        {
+          "player1Id": "3405199",
+          "player2Id": "2296869",
+          "result": "2-0-0",
+          "winnerId": "3405199"
+        },
+        {
+          "player1Id": "3102876",
+          "player2Id": "3227644",
+          "result": "2-1-0",
+          "winnerId": "3102876"
+        },
+        {
+          "player1Id": "2185747",
+          "player2Id": "2943684",
+          "result": "2-0-0",
+          "winnerId": "2185747"
+        },
+        {
+          "player1Id": "1171245",
+          "player2Id": "2707200",
+          "result": "2-1-0",
+          "winnerId": "1171245"
+        }
+      ]
+    },
+    "playoffs-sf": {
+      "name": "Semifinals",
+      "number": 950,
+      "isPlayoff": true,
+      "matches": [
+        {
+          "player1Id": "3102876",
+          "player2Id": "3405199",
+          "result": "2-0-0",
+          "winnerId": "3102876"
+        },
+        {
+          "player1Id": "1171245",
+          "player2Id": "2185747",
+          "result": "2-1-0",
+          "winnerId": "1171245"
+        }
+      ]
+    },
+    "playoffs-f": {
+      "name": "Finals",
+      "number": 999,
+      "isPlayoff": true,
+      "matches": [
+        {
+          "player1Id": "1171245",
+          "player2Id": "3102876",
+          "result": "2-0-0",
+          "winnerId": "1171245"
+        }
+      ]
+    }
+  }
+}
