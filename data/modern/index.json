@@ -1,20 +1,5 @@
 [
   {
-    "id": "mtgo-12843434",
-    "name": "Modern Challenge 64",
-    "cleanName": "Challenge 64",
-    "date": "2026-06-01",
-    "format": "Modern",
-    "source": "mtgo",
-    "url": "https://www.mtgo.com/decklist/modern-challenge-64-2026-06-0112843434",
-    "playerCount": 102,
-    "roundCount": 10,
-    "importance": "competitive",
-    "tabletop": false,
-    "pairings": false,
-    "path": "2026-06/mtgo-12843434.json"
-  },
-  {
     "id": "mtgo-12843430",
     "name": "Modern Challenge 32",
     "cleanName": "Challenge 32",
@@ -26,23 +11,23 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-06/mtgo-12843430.json"
   },
   {
-    "id": "mtgo-12843420",
-    "name": "Modern Challenge 32",
-    "cleanName": "Challenge 32",
-    "date": "2026-05-31",
+    "id": "mtgo-12843434",
+    "name": "Modern Challenge 64",
+    "cleanName": "Challenge 64",
+    "date": "2026-06-01",
     "format": "Modern",
     "source": "mtgo",
-    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-05-3112843420",
-    "playerCount": 64,
-    "roundCount": 9,
+    "url": "https://www.mtgo.com/decklist/modern-challenge-64-2026-06-0112843434",
+    "playerCount": 102,
+    "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
-    "path": "2026-05/mtgo-12843420.json"
+    "pairings": true,
+    "path": "2026-06/mtgo-12843434.json"
   },
   {
     "id": "mtgo-12843416",
@@ -56,23 +41,53 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-05/mtgo-12843416.json"
   },
   {
-    "id": "mtgo-12843409",
-    "name": "Modern Challenge 64",
-    "cleanName": "Challenge 64",
-    "date": "2026-05-30",
+    "id": "melee-421360",
+    "name": "$uper $unday RCQ - Modern - SCG CON Washington DC - Sunday - 10:00 am",
+    "cleanName": "$uper $unday RCQ - SCG CON Washington DC",
+    "date": "2026-05-31",
+    "format": "Modern",
+    "source": "melee",
+    "url": "https://melee.gg/Tournament/View/421360",
+    "playerCount": 199,
+    "roundCount": 6,
+    "importance": "competitive",
+    "tabletop": true,
+    "pairings": true,
+    "path": "2026-05/melee-421360.json"
+  },
+  {
+    "id": "melee-421366",
+    "name": "ReCQ - Modern - SCG CON Washington DC - Sunday - 1:00 pm",
+    "cleanName": "ReCQ - SCG CON Washington DC",
+    "date": "2026-05-31",
+    "format": "Modern",
+    "source": "melee",
+    "url": "https://melee.gg/Tournament/View/421366",
+    "playerCount": 64,
+    "roundCount": 5,
+    "importance": "competitive",
+    "tabletop": true,
+    "pairings": true,
+    "path": "2026-05/melee-421366.json"
+  },
+  {
+    "id": "mtgo-12843420",
+    "name": "Modern Challenge 32",
+    "cleanName": "Challenge 32",
+    "date": "2026-05-31",
     "format": "Modern",
     "source": "mtgo",
-    "url": "https://www.mtgo.com/decklist/modern-challenge-64-2026-05-3012843409",
-    "playerCount": 87,
-    "roundCount": 10,
+    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-05-3112843420",
+    "playerCount": 64,
+    "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
-    "path": "2026-05/mtgo-12843409.json"
+    "pairings": true,
+    "path": "2026-05/mtgo-12843420.json"
   },
   {
     "id": "mtgo-12843405",
@@ -86,7 +101,7 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-05/mtgo-12843405.json"
   },
   {
@@ -101,8 +116,83 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-05/mtgo-12843403.json"
+  },
+  {
+    "id": "melee-421362",
+    "name": "ReCQ - Modern - SCG CON Washington DC - Saturday - 12:00 pm",
+    "cleanName": "ReCQ - SCG CON Washington DC",
+    "date": "2026-05-30",
+    "format": "Modern",
+    "source": "melee",
+    "url": "https://melee.gg/Tournament/View/421362",
+    "playerCount": 90,
+    "roundCount": 5,
+    "importance": "competitive",
+    "tabletop": true,
+    "pairings": true,
+    "path": "2026-05/melee-421362.json"
+  },
+  {
+    "id": "melee-421365",
+    "name": "ReCQ - Modern - SCG CON Washington DC - Saturday - 4:00 pm",
+    "cleanName": "ReCQ - SCG CON Washington DC",
+    "date": "2026-05-30",
+    "format": "Modern",
+    "source": "melee",
+    "url": "https://melee.gg/Tournament/View/421365",
+    "playerCount": 91,
+    "roundCount": 5,
+    "importance": "competitive",
+    "tabletop": true,
+    "pairings": true,
+    "path": "2026-05/melee-421365.json"
+  },
+  {
+    "id": "melee-421364",
+    "name": "ReCQ - Modern - SCG CON Washington DC - Saturday - 2:00 pm",
+    "cleanName": "ReCQ - SCG CON Washington DC",
+    "date": "2026-05-30",
+    "format": "Modern",
+    "source": "melee",
+    "url": "https://melee.gg/Tournament/View/421364",
+    "playerCount": 98,
+    "roundCount": 5,
+    "importance": "competitive",
+    "tabletop": true,
+    "pairings": true,
+    "path": "2026-05/melee-421364.json"
+  },
+  {
+    "id": "mtgo-12843409",
+    "name": "Modern Challenge 64",
+    "cleanName": "Challenge 64",
+    "date": "2026-05-30",
+    "format": "Modern",
+    "source": "mtgo",
+    "url": "https://www.mtgo.com/decklist/modern-challenge-64-2026-05-3012843409",
+    "playerCount": 87,
+    "roundCount": 10,
+    "importance": "competitive",
+    "tabletop": false,
+    "pairings": true,
+    "path": "2026-05/mtgo-12843409.json"
+  },
+  {
+    "id": "melee-421583",
+    "name": "$1K Modern RCQ - SCG CON Washington DC - Friday - 10:00 am",
+    "cleanName": "$1K RCQ - SCG CON Washington DC",
+    "date": "2026-05-29",
+    "format": "Modern",
+    "source": "melee",
+    "url": "https://melee.gg/Tournament/View/421583",
+    "playerCount": 75,
+    "roundCount": 10,
+    "importance": "competitive",
+    "tabletop": true,
+    "pairings": true,
+    "path": "2026-05/melee-421583.json"
   },
   {
     "id": "mtgo-12843394",
@@ -116,7 +206,7 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-05/mtgo-12843394.json"
   },
   {
@@ -131,7 +221,7 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-05/mtgo-12843376.json"
   },
   {
@@ -146,7 +236,7 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-05/mtgo-12842969.json"
   },
   {
@@ -161,23 +251,8 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-05/mtgo-12842958.json"
-  },
-  {
-    "id": "mtgo-12842942",
-    "name": "Modern Challenge 64",
-    "cleanName": "Challenge 64",
-    "date": "2026-05-25",
-    "format": "Modern",
-    "source": "mtgo",
-    "url": "https://www.mtgo.com/decklist/modern-challenge-64-2026-05-2512842942",
-    "playerCount": 86,
-    "roundCount": 10,
-    "importance": "competitive",
-    "tabletop": false,
-    "pairings": false,
-    "path": "2026-05/mtgo-12842942.json"
   },
   {
     "id": "mtgo-12842938",
@@ -191,8 +266,23 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-05/mtgo-12842938.json"
+  },
+  {
+    "id": "mtgo-12842942",
+    "name": "Modern Challenge 64",
+    "cleanName": "Challenge 64",
+    "date": "2026-05-25",
+    "format": "Modern",
+    "source": "mtgo",
+    "url": "https://www.mtgo.com/decklist/modern-challenge-64-2026-05-2512842942",
+    "playerCount": 86,
+    "roundCount": 10,
+    "importance": "competitive",
+    "tabletop": false,
+    "pairings": true,
+    "path": "2026-05/mtgo-12842942.json"
   },
   {
     "id": "mtgo-12842929",
@@ -206,7 +296,7 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-05/mtgo-12842929.json"
   },
   {
@@ -221,7 +311,7 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-05/mtgo-12842925.json"
   },
   {
@@ -236,23 +326,8 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-05/mtgo-12842918.json"
-  },
-  {
-    "id": "mtgo-12842914",
-    "name": "Modern Challenge 32",
-    "cleanName": "Challenge 32",
-    "date": "2026-05-23",
-    "format": "Modern",
-    "source": "mtgo",
-    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-05-2312842914",
-    "playerCount": 41,
-    "roundCount": 9,
-    "importance": "competitive",
-    "tabletop": false,
-    "pairings": false,
-    "path": "2026-05/mtgo-12842914.json"
   },
   {
     "id": "mtgo-12842912",
@@ -266,8 +341,23 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-05/mtgo-12842912.json"
+  },
+  {
+    "id": "mtgo-12842914",
+    "name": "Modern Challenge 32",
+    "cleanName": "Challenge 32",
+    "date": "2026-05-23",
+    "format": "Modern",
+    "source": "mtgo",
+    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-05-2312842914",
+    "playerCount": 41,
+    "roundCount": 9,
+    "importance": "competitive",
+    "tabletop": false,
+    "pairings": true,
+    "path": "2026-05/mtgo-12842914.json"
   },
   {
     "id": "mtgo-12842903",
@@ -281,7 +371,7 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-05/mtgo-12842903.json"
   },
   {
@@ -296,7 +386,7 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-05/mtgo-12842886.json"
   },
   {
@@ -311,7 +401,7 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-05/mtgo-12842542.json"
   },
   {
@@ -326,23 +416,8 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-05/mtgo-12842532.json"
-  },
-  {
-    "id": "mtgo-12842517",
-    "name": "Modern Challenge 64",
-    "cleanName": "Challenge 64",
-    "date": "2026-05-18",
-    "format": "Modern",
-    "source": "mtgo",
-    "url": "https://www.mtgo.com/decklist/modern-challenge-64-2026-05-1812842517",
-    "playerCount": 74,
-    "roundCount": 10,
-    "importance": "competitive",
-    "tabletop": false,
-    "pairings": false,
-    "path": "2026-05/mtgo-12842517.json"
   },
   {
     "id": "mtgo-12842513",
@@ -356,8 +431,38 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-05/mtgo-12842513.json"
+  },
+  {
+    "id": "mtgo-12842517",
+    "name": "Modern Challenge 64",
+    "cleanName": "Challenge 64",
+    "date": "2026-05-18",
+    "format": "Modern",
+    "source": "mtgo",
+    "url": "https://www.mtgo.com/decklist/modern-challenge-64-2026-05-1812842517",
+    "playerCount": 74,
+    "roundCount": 10,
+    "importance": "competitive",
+    "tabletop": false,
+    "pairings": true,
+    "path": "2026-05/mtgo-12842517.json"
+  },
+  {
+    "id": "melee-417262",
+    "name": "$uper $unday RCQ - Modern - SCG CON Cincinnati - Sunday - 10:00 am",
+    "cleanName": "$uper $unday RCQ - SCG CON Cincinnati",
+    "date": "2026-05-17",
+    "format": "Modern",
+    "source": "melee",
+    "url": "https://melee.gg/Tournament/View/417262",
+    "playerCount": 175,
+    "roundCount": 6,
+    "importance": "competitive",
+    "tabletop": true,
+    "pairings": true,
+    "path": "2026-05/melee-417262.json"
   },
   {
     "id": "mtgo-12842503",
@@ -371,7 +476,7 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-05/mtgo-12842503.json"
   },
   {
@@ -386,38 +491,53 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-05/mtgo-12842499.json"
   },
   {
-    "id": "mtgo-12842492",
-    "name": "Modern Challenge 64",
-    "cleanName": "Challenge 64",
-    "date": "2026-05-16",
+    "id": "melee-417018",
+    "name": "ReCQ - Modern - SCG CON Cincinnati - Sunday - 1:00 pm",
+    "cleanName": "ReCQ - SCG CON Cincinnati",
+    "date": "2026-05-17",
     "format": "Modern",
-    "source": "mtgo",
-    "url": "https://www.mtgo.com/decklist/modern-challenge-64-2026-05-1612842492",
-    "playerCount": 64,
-    "roundCount": 9,
+    "source": "melee",
+    "url": "https://melee.gg/Tournament/View/417018",
+    "playerCount": 54,
+    "roundCount": 5,
     "importance": "competitive",
-    "tabletop": false,
-    "pairings": false,
-    "path": "2026-05/mtgo-12842492.json"
+    "tabletop": true,
+    "pairings": true,
+    "path": "2026-05/melee-417018.json"
   },
   {
-    "id": "mtgo-12842449",
-    "name": "Modern RC Super Qualifier",
-    "cleanName": "RC Super Qualifier",
+    "id": "melee-417014",
+    "name": "ReCQ - Modern - SCG CON Cincinnati - Saturday - 2:00 pm",
+    "cleanName": "ReCQ - SCG CON Cincinnati",
     "date": "2026-05-16",
     "format": "Modern",
-    "source": "mtgo",
-    "url": "https://www.mtgo.com/decklist/modern-rc-super-qualifier-2026-05-1612842449",
-    "playerCount": 168,
-    "roundCount": 11,
-    "importance": "premier",
-    "tabletop": false,
-    "pairings": false,
-    "path": "2026-05/mtgo-12842449.json"
+    "source": "melee",
+    "url": "https://melee.gg/Tournament/View/417014",
+    "playerCount": 61,
+    "roundCount": 5,
+    "importance": "competitive",
+    "tabletop": true,
+    "pairings": true,
+    "path": "2026-05/melee-417014.json"
+  },
+  {
+    "id": "melee-417013",
+    "name": "ReCQ - Modern - SCG CON Cincinnati - Saturday - 4:00 pm",
+    "cleanName": "ReCQ - SCG CON Cincinnati",
+    "date": "2026-05-16",
+    "format": "Modern",
+    "source": "melee",
+    "url": "https://melee.gg/Tournament/View/417013",
+    "playerCount": 78,
+    "roundCount": 5,
+    "importance": "competitive",
+    "tabletop": true,
+    "pairings": true,
+    "path": "2026-05/melee-417013.json"
   },
   {
     "id": "mtgo-12842487",
@@ -431,8 +551,38 @@
     "roundCount": 8,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-05/mtgo-12842487.json"
+  },
+  {
+    "id": "mtgo-12842449",
+    "name": "Modern RC Super Qualifier",
+    "cleanName": "RC Super Qualifier",
+    "date": "2026-05-16",
+    "format": "Modern",
+    "source": "mtgo",
+    "url": "https://www.mtgo.com/decklist/modern-rc-super-qualifier-2026-05-1612842449",
+    "playerCount": 168,
+    "roundCount": 11,
+    "importance": "premier",
+    "tabletop": false,
+    "pairings": true,
+    "path": "2026-05/mtgo-12842449.json"
+  },
+  {
+    "id": "mtgo-12842492",
+    "name": "Modern Challenge 64",
+    "cleanName": "Challenge 64",
+    "date": "2026-05-16",
+    "format": "Modern",
+    "source": "mtgo",
+    "url": "https://www.mtgo.com/decklist/modern-challenge-64-2026-05-1612842492",
+    "playerCount": 64,
+    "roundCount": 9,
+    "importance": "competitive",
+    "tabletop": false,
+    "pairings": true,
+    "path": "2026-05/mtgo-12842492.json"
   },
   {
     "id": "mtgo-12842485",
@@ -446,8 +596,23 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-05/mtgo-12842485.json"
+  },
+  {
+    "id": "melee-417012",
+    "name": "ReCQ - Modern - SCG CON Cincinnati - Saturday - 12:00 pm",
+    "cleanName": "ReCQ - SCG CON Cincinnati",
+    "date": "2026-05-16",
+    "format": "Modern",
+    "source": "melee",
+    "url": "https://melee.gg/Tournament/View/417012",
+    "playerCount": 64,
+    "roundCount": 5,
+    "importance": "competitive",
+    "tabletop": true,
+    "pairings": true,
+    "path": "2026-05/melee-417012.json"
   },
   {
     "id": "mtgo-12842476",
@@ -461,8 +626,23 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-05/mtgo-12842476.json"
+  },
+  {
+    "id": "melee-416701",
+    "name": "$1K Modern - SCG CON Cincinnati - Friday - 10:30 am",
+    "cleanName": "$1K - SCG CON Cincinnati",
+    "date": "2026-05-15",
+    "format": "Modern",
+    "source": "melee",
+    "url": "https://melee.gg/Tournament/View/416701",
+    "playerCount": 71,
+    "roundCount": 8,
+    "importance": "other",
+    "tabletop": true,
+    "pairings": true,
+    "path": "2026-05/melee-416701.json"
   },
   {
     "id": "mtgo-12842459",
@@ -476,7 +656,7 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-05/mtgo-12842459.json"
   },
   {
@@ -491,7 +671,7 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-05/mtgo-12842139.json"
   },
   {
@@ -506,7 +686,7 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-05/mtgo-12842129.json"
   },
   {
@@ -521,7 +701,7 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-05/mtgo-12842114.json"
   },
   {
@@ -536,7 +716,7 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-05/mtgo-12842110.json"
   },
   {
@@ -551,8 +731,38 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-05/mtgo-12842100.json"
+  },
+  {
+    "id": "melee-423085",
+    "name": "Майская битва за модерн",
+    "cleanName": "Майская битва за модерн",
+    "date": "2026-05-10",
+    "format": "Modern",
+    "source": "melee",
+    "url": "https://melee.gg/Tournament/View/423085",
+    "playerCount": 62,
+    "roundCount": 9,
+    "importance": "other",
+    "tabletop": true,
+    "pairings": true,
+    "path": "2026-05/melee-423085.json"
+  },
+  {
+    "id": "melee-425795",
+    "name": "[London Sun 09:30] Destination Qualifier: Modern",
+    "cleanName": "London Destination Qualifier",
+    "date": "2026-05-10",
+    "format": "Modern",
+    "source": "melee",
+    "url": "https://melee.gg/Tournament/View/425795",
+    "playerCount": 84,
+    "roundCount": 7,
+    "importance": "competitive",
+    "tabletop": true,
+    "pairings": true,
+    "path": "2026-05/melee-425795.json"
   },
   {
     "id": "mtgo-12842096",
@@ -566,7 +776,7 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-05/mtgo-12842096.json"
   },
   {
@@ -581,8 +791,23 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-05/mtgo-12842090.json"
+  },
+  {
+    "id": "mtgo-12842082",
+    "name": "Modern Challenge 32",
+    "cleanName": "Challenge 32",
+    "date": "2026-05-09",
+    "format": "Modern",
+    "source": "mtgo",
+    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-05-0912842082",
+    "playerCount": 43,
+    "roundCount": 9,
+    "importance": "competitive",
+    "tabletop": false,
+    "pairings": true,
+    "path": "2026-05/mtgo-12842082.json"
   },
   {
     "id": "mtgo-12842046",
@@ -596,7 +821,7 @@
     "roundCount": 12,
     "importance": "premier",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-05/mtgo-12842046.json"
   },
   {
@@ -611,23 +836,8 @@
     "roundCount": 8,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-05/mtgo-12842084.json"
-  },
-  {
-    "id": "mtgo-12842082",
-    "name": "Modern Challenge 32",
-    "cleanName": "Challenge 32",
-    "date": "2026-05-09",
-    "format": "Modern",
-    "source": "mtgo",
-    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-05-0912842082",
-    "playerCount": 43,
-    "roundCount": 9,
-    "importance": "competitive",
-    "tabletop": false,
-    "pairings": false,
-    "path": "2026-05/mtgo-12842082.json"
   },
   {
     "id": "mtgo-12842073",
@@ -641,7 +851,7 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-05/mtgo-12842073.json"
   },
   {
@@ -656,7 +866,7 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-05/mtgo-12841409.json"
   },
   {
@@ -671,7 +881,7 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-05/mtgo-12841399.json"
   },
   {
@@ -686,23 +896,8 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-05/mtgo-12841384.json"
-  },
-  {
-    "id": "mtgo-12841370",
-    "name": "Modern Challenge 32",
-    "cleanName": "Challenge 32",
-    "date": "2026-05-03",
-    "format": "Modern",
-    "source": "mtgo",
-    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-05-0312841370",
-    "playerCount": 36,
-    "roundCount": 9,
-    "importance": "competitive",
-    "tabletop": false,
-    "pairings": false,
-    "path": "2026-05/mtgo-12841370.json"
   },
   {
     "id": "mtgo-12841366",
@@ -716,8 +911,23 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-05/mtgo-12841366.json"
+  },
+  {
+    "id": "mtgo-12841370",
+    "name": "Modern Challenge 32",
+    "cleanName": "Challenge 32",
+    "date": "2026-05-03",
+    "format": "Modern",
+    "source": "mtgo",
+    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-05-0312841370",
+    "playerCount": 36,
+    "roundCount": 9,
+    "importance": "competitive",
+    "tabletop": false,
+    "pairings": true,
+    "path": "2026-05/mtgo-12841370.json"
   },
   {
     "id": "mtgo-12841359",
@@ -731,23 +941,8 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-05/mtgo-12841359.json"
-  },
-  {
-    "id": "mtgo-12841354",
-    "name": "Modern Challenge 32",
-    "cleanName": "Challenge 32",
-    "date": "2026-05-02",
-    "format": "Modern",
-    "source": "mtgo",
-    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-05-0212841354",
-    "playerCount": 34,
-    "roundCount": 9,
-    "importance": "competitive",
-    "tabletop": false,
-    "pairings": false,
-    "path": "2026-05/mtgo-12841354.json"
   },
   {
     "id": "mtgo-12841352",
@@ -761,8 +956,23 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-05/mtgo-12841352.json"
+  },
+  {
+    "id": "mtgo-12841354",
+    "name": "Modern Challenge 32",
+    "cleanName": "Challenge 32",
+    "date": "2026-05-02",
+    "format": "Modern",
+    "source": "mtgo",
+    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-05-0212841354",
+    "playerCount": 34,
+    "roundCount": 9,
+    "importance": "competitive",
+    "tabletop": false,
+    "pairings": true,
+    "path": "2026-05/mtgo-12841354.json"
   },
   {
     "id": "mtgo-12841343",
@@ -776,7 +986,7 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-05/mtgo-12841343.json"
   },
   {
@@ -791,7 +1001,7 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-04/mtgo-12841326.json"
   },
   {
@@ -806,7 +1016,7 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-04/mtgo-12840702.json"
   },
   {
@@ -821,23 +1031,8 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-04/mtgo-12840595.json"
-  },
-  {
-    "id": "mtgo-12840580",
-    "name": "Modern Challenge 64",
-    "cleanName": "Challenge 64",
-    "date": "2026-04-27",
-    "format": "Modern",
-    "source": "mtgo",
-    "url": "https://www.mtgo.com/decklist/modern-challenge-64-2026-04-2712840580",
-    "playerCount": 76,
-    "roundCount": 10,
-    "importance": "competitive",
-    "tabletop": false,
-    "pairings": false,
-    "path": "2026-04/mtgo-12840580.json"
   },
   {
     "id": "mtgo-12840576",
@@ -851,23 +1046,23 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-04/mtgo-12840576.json"
   },
   {
-    "id": "mtgo-12840566",
-    "name": "Modern Challenge 32",
-    "cleanName": "Challenge 32",
-    "date": "2026-04-26",
+    "id": "mtgo-12840580",
+    "name": "Modern Challenge 64",
+    "cleanName": "Challenge 64",
+    "date": "2026-04-27",
     "format": "Modern",
     "source": "mtgo",
-    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-04-2612840566",
-    "playerCount": 44,
-    "roundCount": 9,
+    "url": "https://www.mtgo.com/decklist/modern-challenge-64-2026-04-2712840580",
+    "playerCount": 76,
+    "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
-    "path": "2026-04/mtgo-12840566.json"
+    "pairings": true,
+    "path": "2026-04/mtgo-12840580.json"
   },
   {
     "id": "mtgo-12840562",
@@ -881,23 +1076,23 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-04/mtgo-12840562.json"
   },
   {
-    "id": "mtgo-12840556",
+    "id": "mtgo-12840566",
     "name": "Modern Challenge 32",
     "cleanName": "Challenge 32",
-    "date": "2026-04-25",
+    "date": "2026-04-26",
     "format": "Modern",
     "source": "mtgo",
-    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-04-2512840556",
-    "playerCount": 64,
+    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-04-2612840566",
+    "playerCount": 44,
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
-    "path": "2026-04/mtgo-12840556.json"
+    "pairings": true,
+    "path": "2026-04/mtgo-12840566.json"
   },
   {
     "id": "mtgo-12840550",
@@ -911,7 +1106,7 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-04/mtgo-12840550.json"
   },
   {
@@ -926,7 +1121,7 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-04/mtgo-12840548.json"
   },
   {
@@ -945,6 +1140,21 @@
     "path": "2026-04/melee-418086.json"
   },
   {
+    "id": "mtgo-12840556",
+    "name": "Modern Challenge 32",
+    "cleanName": "Challenge 32",
+    "date": "2026-04-25",
+    "format": "Modern",
+    "source": "mtgo",
+    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-04-2512840556",
+    "playerCount": 64,
+    "roundCount": 9,
+    "importance": "competitive",
+    "tabletop": false,
+    "pairings": true,
+    "path": "2026-04/mtgo-12840556.json"
+  },
+  {
     "id": "mtgo-12840523",
     "name": "Modern Challenge 64",
     "cleanName": "Challenge 64",
@@ -956,7 +1166,7 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-04/mtgo-12840523.json"
   },
   {
@@ -971,23 +1181,8 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-04/mtgo-12840631.json"
-  },
-  {
-    "id": "mtgo-12839714",
-    "name": "Modern Challenge 64",
-    "cleanName": "Challenge 64",
-    "date": "2026-04-20",
-    "format": "Modern",
-    "source": "mtgo",
-    "url": "https://www.mtgo.com/decklist/modern-challenge-64-2026-04-2012839714",
-    "playerCount": 90,
-    "roundCount": 10,
-    "importance": "competitive",
-    "tabletop": false,
-    "pairings": false,
-    "path": "2026-04/mtgo-12839714.json"
   },
   {
     "id": "mtgo-12839710",
@@ -1001,8 +1196,23 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-04/mtgo-12839710.json"
+  },
+  {
+    "id": "mtgo-12839714",
+    "name": "Modern Challenge 64",
+    "cleanName": "Challenge 64",
+    "date": "2026-04-20",
+    "format": "Modern",
+    "source": "mtgo",
+    "url": "https://www.mtgo.com/decklist/modern-challenge-64-2026-04-2012839714",
+    "playerCount": 90,
+    "roundCount": 10,
+    "importance": "competitive",
+    "tabletop": false,
+    "pairings": true,
+    "path": "2026-04/mtgo-12839714.json"
   },
   {
     "id": "mtgo-12839699",
@@ -1016,7 +1226,7 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-04/mtgo-12839699.json"
   },
   {
@@ -1031,7 +1241,7 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-04/mtgo-12839695.json"
   },
   {
@@ -1046,7 +1256,7 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-04/mtgo-12839688.json"
   },
   {
@@ -1061,7 +1271,7 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-04/mtgo-12839683.json"
   },
   {
@@ -1076,7 +1286,7 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-04/mtgo-12839681.json"
   },
   {
@@ -1091,7 +1301,7 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-04/mtgo-12839672.json"
   },
   {
@@ -1106,7 +1316,7 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-04/mtgo-12839654.json"
   },
   {
@@ -1121,7 +1331,7 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-04/mtgo-12839741.json"
   },
   {
@@ -1136,7 +1346,7 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-04/mtgo-12838930.json"
   },
   {
@@ -1151,7 +1361,7 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-04/mtgo-12838910.json"
   },
   {
@@ -1166,23 +1376,8 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-04/mtgo-12839206.json"
-  },
-  {
-    "id": "mtgo-12838899",
-    "name": "Modern Challenge 32",
-    "cleanName": "Challenge 32",
-    "date": "2026-04-12",
-    "format": "Modern",
-    "source": "mtgo",
-    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-04-1212838899",
-    "playerCount": 71,
-    "roundCount": 10,
-    "importance": "competitive",
-    "tabletop": false,
-    "pairings": false,
-    "path": "2026-04/mtgo-12838899.json"
   },
   {
     "id": "mtgo-12838895",
@@ -1196,23 +1391,23 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-04/mtgo-12838895.json"
   },
   {
-    "id": "mtgo-12838888",
-    "name": "Modern Challenge 64",
-    "cleanName": "Challenge 64",
-    "date": "2026-04-11",
+    "id": "mtgo-12838899",
+    "name": "Modern Challenge 32",
+    "cleanName": "Challenge 32",
+    "date": "2026-04-12",
     "format": "Modern",
     "source": "mtgo",
-    "url": "https://www.mtgo.com/decklist/modern-challenge-64-2026-04-1112838888",
-    "playerCount": 93,
+    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-04-1212838899",
+    "playerCount": 71,
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
-    "path": "2026-04/mtgo-12838888.json"
+    "pairings": true,
+    "path": "2026-04/mtgo-12838899.json"
   },
   {
     "id": "mtgo-12838883",
@@ -1226,8 +1421,23 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-04/mtgo-12838883.json"
+  },
+  {
+    "id": "mtgo-12838888",
+    "name": "Modern Challenge 64",
+    "cleanName": "Challenge 64",
+    "date": "2026-04-11",
+    "format": "Modern",
+    "source": "mtgo",
+    "url": "https://www.mtgo.com/decklist/modern-challenge-64-2026-04-1112838888",
+    "playerCount": 93,
+    "roundCount": 10,
+    "importance": "competitive",
+    "tabletop": false,
+    "pairings": true,
+    "path": "2026-04/mtgo-12838888.json"
   },
   {
     "id": "mtgo-12838881",
@@ -1241,7 +1451,7 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-04/mtgo-12838881.json"
   },
   {
@@ -1256,7 +1466,7 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-04/mtgo-12838872.json"
   },
   {
@@ -1271,7 +1481,7 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-04/mtgo-12838854.json"
   },
   {
@@ -1286,7 +1496,7 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-04/mtgo-12838179.json"
   },
   {
@@ -1301,7 +1511,7 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-04/mtgo-12838169.json"
   },
   {
@@ -1316,7 +1526,7 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-04/mtgo-12838150.json"
   },
   {
@@ -1331,23 +1541,8 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-04/mtgo-12838154.json"
-  },
-  {
-    "id": "mtgo-12838140",
-    "name": "Modern Challenge 32",
-    "cleanName": "Challenge 32",
-    "date": "2026-04-05",
-    "format": "Modern",
-    "source": "mtgo",
-    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-04-0512838140",
-    "playerCount": 59,
-    "roundCount": 9,
-    "importance": "competitive",
-    "tabletop": false,
-    "pairings": false,
-    "path": "2026-04/mtgo-12838140.json"
   },
   {
     "id": "mtgo-12838136",
@@ -1361,23 +1556,23 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-04/mtgo-12838136.json"
   },
   {
-    "id": "mtgo-12838129",
-    "name": "Modern Challenge 64",
-    "cleanName": "Challenge 64",
-    "date": "2026-04-04",
+    "id": "mtgo-12838140",
+    "name": "Modern Challenge 32",
+    "cleanName": "Challenge 32",
+    "date": "2026-04-05",
     "format": "Modern",
     "source": "mtgo",
-    "url": "https://www.mtgo.com/decklist/modern-challenge-64-2026-04-0412838129",
-    "playerCount": 104,
-    "roundCount": 10,
+    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-04-0512838140",
+    "playerCount": 59,
+    "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
-    "path": "2026-04/mtgo-12838129.json"
+    "pairings": true,
+    "path": "2026-04/mtgo-12838140.json"
   },
   {
     "id": "mtgo-12838124",
@@ -1391,8 +1586,23 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-04/mtgo-12838124.json"
+  },
+  {
+    "id": "mtgo-12838129",
+    "name": "Modern Challenge 64",
+    "cleanName": "Challenge 64",
+    "date": "2026-04-04",
+    "format": "Modern",
+    "source": "mtgo",
+    "url": "https://www.mtgo.com/decklist/modern-challenge-64-2026-04-0412838129",
+    "playerCount": 104,
+    "roundCount": 10,
+    "importance": "competitive",
+    "tabletop": false,
+    "pairings": true,
+    "path": "2026-04/mtgo-12838129.json"
   },
   {
     "id": "mtgo-12838122",
@@ -1406,7 +1616,7 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-04/mtgo-12838122.json"
   },
   {
@@ -1421,7 +1631,7 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-04/mtgo-12838113.json"
   },
   {
@@ -1436,7 +1646,7 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-04/mtgo-12838096.json"
   },
   {
@@ -1451,7 +1661,7 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-04/mtgo-12837907.json"
   },
   {
@@ -1466,23 +1676,8 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-03/mtgo-12837908.json"
-  },
-  {
-    "id": "mtgo-12836789",
-    "name": "Modern Challenge 32",
-    "cleanName": "Challenge 32",
-    "date": "2026-03-30",
-    "format": "Modern",
-    "source": "mtgo",
-    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-03-3012836789",
-    "playerCount": 69,
-    "roundCount": 10,
-    "importance": "competitive",
-    "tabletop": false,
-    "pairings": false,
-    "path": "2026-03/mtgo-12836789.json"
   },
   {
     "id": "mtgo-12836793",
@@ -1496,8 +1691,38 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-03/mtgo-12836793.json"
+  },
+  {
+    "id": "mtgo-12836789",
+    "name": "Modern Challenge 32",
+    "cleanName": "Challenge 32",
+    "date": "2026-03-30",
+    "format": "Modern",
+    "source": "mtgo",
+    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-03-3012836789",
+    "playerCount": 69,
+    "roundCount": 10,
+    "importance": "competitive",
+    "tabletop": false,
+    "pairings": true,
+    "path": "2026-03/mtgo-12836789.json"
+  },
+  {
+    "id": "mtgo-12836779",
+    "name": "Modern Challenge 32",
+    "cleanName": "Challenge 32",
+    "date": "2026-03-29",
+    "format": "Modern",
+    "source": "mtgo",
+    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-03-2912836779",
+    "playerCount": 71,
+    "roundCount": 10,
+    "importance": "competitive",
+    "tabletop": false,
+    "pairings": true,
+    "path": "2026-03/mtgo-12836779.json"
   },
   {
     "id": "melee-402747",
@@ -1515,21 +1740,6 @@
     "path": "2026-03/melee-402747.json"
   },
   {
-    "id": "mtgo-12836779",
-    "name": "Modern Challenge 32",
-    "cleanName": "Challenge 32",
-    "date": "2026-03-29",
-    "format": "Modern",
-    "source": "mtgo",
-    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-03-2912836779",
-    "playerCount": 71,
-    "roundCount": 10,
-    "importance": "competitive",
-    "tabletop": false,
-    "pairings": false,
-    "path": "2026-03/mtgo-12836779.json"
-  },
-  {
     "id": "mtgo-12836775",
     "name": "Modern Challenge 32",
     "cleanName": "Challenge 32",
@@ -1541,8 +1751,23 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-03/mtgo-12836775.json"
+  },
+  {
+    "id": "mtgo-12836763",
+    "name": "Modern Challenge 32",
+    "cleanName": "Challenge 32",
+    "date": "2026-03-28",
+    "format": "Modern",
+    "source": "mtgo",
+    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-03-2812836763",
+    "playerCount": 42,
+    "roundCount": 9,
+    "importance": "competitive",
+    "tabletop": false,
+    "pairings": true,
+    "path": "2026-03/mtgo-12836763.json"
   },
   {
     "id": "melee-402502",
@@ -1571,7 +1796,7 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-03/mtgo-12836761.json"
   },
   {
@@ -1586,23 +1811,8 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-03/mtgo-12836768.json"
-  },
-  {
-    "id": "mtgo-12836763",
-    "name": "Modern Challenge 32",
-    "cleanName": "Challenge 32",
-    "date": "2026-03-28",
-    "format": "Modern",
-    "source": "mtgo",
-    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-03-2812836763",
-    "playerCount": 42,
-    "roundCount": 9,
-    "importance": "competitive",
-    "tabletop": false,
-    "pairings": false,
-    "path": "2026-03/mtgo-12836763.json"
   },
   {
     "id": "mtgo-12836826",
@@ -1616,7 +1826,7 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-03/mtgo-12836826.json"
   },
   {
@@ -1631,7 +1841,7 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-03/mtgo-12836735.json"
   },
   {
@@ -1646,7 +1856,7 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-03/mtgo-12836825.json"
   },
   {
@@ -1661,7 +1871,7 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-03/mtgo-12836041.json"
   },
   {
@@ -1676,7 +1886,7 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-03/mtgo-12836018.json"
   },
   {
@@ -1691,7 +1901,7 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-03/mtgo-12836023.json"
   },
   {
@@ -1706,7 +1916,7 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-03/mtgo-12836008.json"
   },
   {
@@ -1721,38 +1931,8 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-03/mtgo-12836004.json"
-  },
-  {
-    "id": "mtgo-12835990",
-    "name": "Modern Challenge 32",
-    "cleanName": "Challenge 32",
-    "date": "2026-03-21",
-    "format": "Modern",
-    "source": "mtgo",
-    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-03-2112835990",
-    "playerCount": 64,
-    "roundCount": 9,
-    "importance": "competitive",
-    "tabletop": false,
-    "pairings": false,
-    "path": "2026-03/mtgo-12835990.json"
-  },
-  {
-    "id": "mtgo-12835998",
-    "name": "Modern Challenge 32",
-    "cleanName": "Challenge 32",
-    "date": "2026-03-21",
-    "format": "Modern",
-    "source": "mtgo",
-    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-03-2112835998",
-    "playerCount": 47,
-    "roundCount": 9,
-    "importance": "competitive",
-    "tabletop": false,
-    "pairings": false,
-    "path": "2026-03/mtgo-12835998.json"
   },
   {
     "id": "mtgo-12835952",
@@ -1766,8 +1946,23 @@
     "roundCount": 12,
     "importance": "premier",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-03/mtgo-12835952.json"
+  },
+  {
+    "id": "mtgo-12835998",
+    "name": "Modern Challenge 32",
+    "cleanName": "Challenge 32",
+    "date": "2026-03-21",
+    "format": "Modern",
+    "source": "mtgo",
+    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-03-2112835998",
+    "playerCount": 47,
+    "roundCount": 9,
+    "importance": "competitive",
+    "tabletop": false,
+    "pairings": true,
+    "path": "2026-03/mtgo-12835998.json"
   },
   {
     "id": "mtgo-12835992",
@@ -1781,8 +1976,23 @@
     "roundCount": 8,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-03/mtgo-12835992.json"
+  },
+  {
+    "id": "mtgo-12835990",
+    "name": "Modern Challenge 32",
+    "cleanName": "Challenge 32",
+    "date": "2026-03-21",
+    "format": "Modern",
+    "source": "mtgo",
+    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-03-2112835990",
+    "playerCount": 64,
+    "roundCount": 9,
+    "importance": "competitive",
+    "tabletop": false,
+    "pairings": true,
+    "path": "2026-03/mtgo-12835990.json"
   },
   {
     "id": "mtgo-12835981",
@@ -1796,7 +2006,7 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-03/mtgo-12835981.json"
   },
   {
@@ -1811,7 +2021,7 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-03/mtgo-12835963.json"
   },
   {
@@ -1826,7 +2036,7 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-03/mtgo-12835366.json"
   },
   {
@@ -1841,7 +2051,7 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-03/mtgo-12835356.json"
   },
   {
@@ -1856,7 +2066,7 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-03/mtgo-12835340.json"
   },
   {
@@ -1871,7 +2081,7 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-03/mtgo-12835336.json"
   },
   {
@@ -1886,7 +2096,7 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-03/mtgo-12835326.json"
   },
   {
@@ -1901,8 +2111,23 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-03/mtgo-12835322.json"
+  },
+  {
+    "id": "mtgo-12835308",
+    "name": "Modern Challenge 32",
+    "cleanName": "Challenge 32",
+    "date": "2026-03-14",
+    "format": "Modern",
+    "source": "mtgo",
+    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-03-1412835308",
+    "playerCount": 55,
+    "roundCount": 9,
+    "importance": "competitive",
+    "tabletop": false,
+    "pairings": true,
+    "path": "2026-03/mtgo-12835308.json"
   },
   {
     "id": "mtgo-12835315",
@@ -1916,7 +2141,7 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-03/mtgo-12835315.json"
   },
   {
@@ -1931,23 +2156,8 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-03/mtgo-12835310.json"
-  },
-  {
-    "id": "mtgo-12835308",
-    "name": "Modern Challenge 32",
-    "cleanName": "Challenge 32",
-    "date": "2026-03-14",
-    "format": "Modern",
-    "source": "mtgo",
-    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-03-1412835308",
-    "playerCount": 55,
-    "roundCount": 9,
-    "importance": "competitive",
-    "tabletop": false,
-    "pairings": false,
-    "path": "2026-03/mtgo-12835308.json"
   },
   {
     "id": "mtgo-12835299",
@@ -1961,7 +2171,7 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-03/mtgo-12835299.json"
   },
   {
@@ -1976,7 +2186,7 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-03/mtgo-12835281.json"
   },
   {
@@ -1991,7 +2201,7 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-03/mtgo-12834561.json"
   },
   {
@@ -2006,7 +2216,7 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-03/mtgo-12834551.json"
   },
   {
@@ -2021,7 +2231,7 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-03/mtgo-12834536.json"
   },
   {
@@ -2036,7 +2246,7 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-03/mtgo-12834532.json"
   },
   {
@@ -2055,19 +2265,19 @@
     "path": "2026-03/melee-402341.json"
   },
   {
-    "id": "mtgo-12834518",
+    "id": "mtgo-12834522",
     "name": "Modern Challenge 32",
     "cleanName": "Challenge 32",
     "date": "2026-03-08",
     "format": "Modern",
     "source": "mtgo",
-    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-03-0812834518",
-    "playerCount": 69,
-    "roundCount": 10,
+    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-03-0812834522",
+    "playerCount": 37,
+    "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
-    "path": "2026-03/mtgo-12834518.json"
+    "pairings": true,
+    "path": "2026-03/mtgo-12834522.json"
   },
   {
     "id": "mtgo-12834457",
@@ -2081,23 +2291,38 @@
     "roundCount": 12,
     "importance": "premier",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-03/mtgo-12834457.json"
   },
   {
-    "id": "mtgo-12834522",
+    "id": "mtgo-12834518",
     "name": "Modern Challenge 32",
     "cleanName": "Challenge 32",
     "date": "2026-03-08",
     "format": "Modern",
     "source": "mtgo",
-    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-03-0812834522",
-    "playerCount": 37,
-    "roundCount": 9,
+    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-03-0812834518",
+    "playerCount": 69,
+    "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
-    "path": "2026-03/mtgo-12834522.json"
+    "pairings": true,
+    "path": "2026-03/mtgo-12834518.json"
+  },
+  {
+    "id": "mtgo-12834506",
+    "name": "Modern Challenge 32",
+    "cleanName": "Challenge 32",
+    "date": "2026-03-07",
+    "format": "Modern",
+    "source": "mtgo",
+    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-03-0712834506",
+    "playerCount": 32,
+    "roundCount": 8,
+    "importance": "competitive",
+    "tabletop": false,
+    "pairings": true,
+    "path": "2026-03/mtgo-12834506.json"
   },
   {
     "id": "melee-402364",
@@ -2130,19 +2355,19 @@
     "path": "2026-03/melee-402362.json"
   },
   {
-    "id": "mtgo-12834506",
-    "name": "Modern Challenge 32",
-    "cleanName": "Challenge 32",
+    "id": "mtgo-12834511",
+    "name": "Modern Challenge 64",
+    "cleanName": "Challenge 64",
     "date": "2026-03-07",
     "format": "Modern",
     "source": "mtgo",
-    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-03-0712834506",
-    "playerCount": 32,
-    "roundCount": 8,
+    "url": "https://www.mtgo.com/decklist/modern-challenge-64-2026-03-0712834511",
+    "playerCount": 73,
+    "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
-    "path": "2026-03/mtgo-12834506.json"
+    "pairings": true,
+    "path": "2026-03/mtgo-12834511.json"
   },
   {
     "id": "mtgo-12834504",
@@ -2156,23 +2381,8 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-03/mtgo-12834504.json"
-  },
-  {
-    "id": "mtgo-12834511",
-    "name": "Modern Challenge 64",
-    "cleanName": "Challenge 64",
-    "date": "2026-03-07",
-    "format": "Modern",
-    "source": "mtgo",
-    "url": "https://www.mtgo.com/decklist/modern-challenge-64-2026-03-0712834511",
-    "playerCount": 73,
-    "roundCount": 10,
-    "importance": "competitive",
-    "tabletop": false,
-    "pairings": false,
-    "path": "2026-03/mtgo-12834511.json"
   },
   {
     "id": "melee-402357",
@@ -2201,7 +2411,7 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-03/mtgo-12834495.json"
   },
   {
@@ -2216,7 +2426,7 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-03/mtgo-12834478.json"
   },
   {
@@ -2231,7 +2441,7 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-03/mtgo-12834469.json"
   },
   {
@@ -2246,7 +2456,7 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-03/mtgo-12834459.json"
   },
   {
@@ -2261,7 +2471,7 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-03/mtgo-12834096.json"
   },
   {
@@ -2276,23 +2486,8 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-03/mtgo-12834100.json"
-  },
-  {
-    "id": "mtgo-12834033",
-    "name": "Modern Showcase Challenge",
-    "cleanName": "Showcase Challenge",
-    "date": "2026-03-01",
-    "format": "Modern",
-    "source": "mtgo",
-    "url": "https://www.mtgo.com/decklist/modern-showcase-challenge-2026-03-0112834033",
-    "playerCount": 322,
-    "roundCount": 12,
-    "importance": "premier",
-    "tabletop": false,
-    "pairings": false,
-    "path": "2026-03/mtgo-12834033.json"
   },
   {
     "id": "mtgo-12834086",
@@ -2306,8 +2501,23 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-03/mtgo-12834086.json"
+  },
+  {
+    "id": "mtgo-12834033",
+    "name": "Modern Showcase Challenge",
+    "cleanName": "Showcase Challenge",
+    "date": "2026-03-01",
+    "format": "Modern",
+    "source": "mtgo",
+    "url": "https://www.mtgo.com/decklist/modern-showcase-challenge-2026-03-0112834033",
+    "playerCount": 322,
+    "roundCount": 12,
+    "importance": "premier",
+    "tabletop": false,
+    "pairings": true,
+    "path": "2026-03/mtgo-12834033.json"
   },
   {
     "id": "mtgo-12834082",
@@ -2321,23 +2531,8 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-03/mtgo-12834082.json"
-  },
-  {
-    "id": "mtgo-12834075",
-    "name": "Modern Challenge 64",
-    "cleanName": "Challenge 64",
-    "date": "2026-02-28",
-    "format": "Modern",
-    "source": "mtgo",
-    "url": "https://www.mtgo.com/decklist/modern-challenge-64-2026-02-2812834075",
-    "playerCount": 89,
-    "roundCount": 10,
-    "importance": "competitive",
-    "tabletop": false,
-    "pairings": false,
-    "path": "2026-02/mtgo-12834075.json"
   },
   {
     "id": "mtgo-12834070",
@@ -2351,8 +2546,23 @@
     "roundCount": 8,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-02/mtgo-12834070.json"
+  },
+  {
+    "id": "mtgo-12834075",
+    "name": "Modern Challenge 64",
+    "cleanName": "Challenge 64",
+    "date": "2026-02-28",
+    "format": "Modern",
+    "source": "mtgo",
+    "url": "https://www.mtgo.com/decklist/modern-challenge-64-2026-02-2812834075",
+    "playerCount": 89,
+    "roundCount": 10,
+    "importance": "competitive",
+    "tabletop": false,
+    "pairings": true,
+    "path": "2026-02/mtgo-12834075.json"
   },
   {
     "id": "mtgo-12834068",
@@ -2366,7 +2576,7 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-02/mtgo-12834068.json"
   },
   {
@@ -2381,7 +2591,7 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-02/mtgo-12834059.json"
   },
   {
@@ -2396,7 +2606,7 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-02/mtgo-12834042.json"
   },
   {
@@ -2411,7 +2621,7 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-02/mtgo-12834113.json"
   },
   {
@@ -2426,7 +2636,7 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-02/mtgo-12833586.json"
   },
   {
@@ -2441,7 +2651,7 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-02/mtgo-12833571.json"
   },
   {
@@ -2456,8 +2666,23 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-02/mtgo-12833567.json"
+  },
+  {
+    "id": "mtgo-12833557",
+    "name": "Modern Challenge 32",
+    "cleanName": "Challenge 32",
+    "date": "2026-02-22",
+    "format": "Modern",
+    "source": "mtgo",
+    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-02-2212833557",
+    "playerCount": 52,
+    "roundCount": 9,
+    "importance": "competitive",
+    "tabletop": false,
+    "pairings": true,
+    "path": "2026-02/mtgo-12833557.json"
   },
   {
     "id": "melee-395233",
@@ -2475,6 +2700,21 @@
     "path": "2026-02/melee-395233.json"
   },
   {
+    "id": "mtgo-12833553",
+    "name": "Modern Challenge 32",
+    "cleanName": "Challenge 32",
+    "date": "2026-02-22",
+    "format": "Modern",
+    "source": "mtgo",
+    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-02-2212833553",
+    "playerCount": 52,
+    "roundCount": 9,
+    "importance": "competitive",
+    "tabletop": false,
+    "pairings": true,
+    "path": "2026-02/mtgo-12833553.json"
+  },
+  {
     "id": "melee-395229",
     "name": "$uper $unday RCQ - Modern - SCG CON Milwaukee - Sunday - 10:00 am",
     "cleanName": "$uper $unday RCQ - SCG CON Milwaukee",
@@ -2488,36 +2728,6 @@
     "tabletop": true,
     "pairings": true,
     "path": "2026-02/melee-395229.json"
-  },
-  {
-    "id": "mtgo-12833557",
-    "name": "Modern Challenge 32",
-    "cleanName": "Challenge 32",
-    "date": "2026-02-22",
-    "format": "Modern",
-    "source": "mtgo",
-    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-02-2212833557",
-    "playerCount": 52,
-    "roundCount": 9,
-    "importance": "competitive",
-    "tabletop": false,
-    "pairings": false,
-    "path": "2026-02/mtgo-12833557.json"
-  },
-  {
-    "id": "mtgo-12833553",
-    "name": "Modern Challenge 32",
-    "cleanName": "Challenge 32",
-    "date": "2026-02-22",
-    "format": "Modern",
-    "source": "mtgo",
-    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-02-2212833553",
-    "playerCount": 52,
-    "roundCount": 9,
-    "importance": "competitive",
-    "tabletop": false,
-    "pairings": false,
-    "path": "2026-02/mtgo-12833553.json"
   },
   {
     "id": "melee-395232",
@@ -2535,6 +2745,21 @@
     "path": "2026-02/melee-395232.json"
   },
   {
+    "id": "mtgo-12833541",
+    "name": "Modern Challenge 32",
+    "cleanName": "Challenge 32",
+    "date": "2026-02-21",
+    "format": "Modern",
+    "source": "mtgo",
+    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-02-2112833541",
+    "playerCount": 32,
+    "roundCount": 8,
+    "importance": "competitive",
+    "tabletop": false,
+    "pairings": true,
+    "path": "2026-02/mtgo-12833541.json"
+  },
+  {
     "id": "melee-395231",
     "name": "ReCQ - Modern - SCG CON Milwaukee - Saturday - 2:00 pm",
     "cleanName": "ReCQ - SCG CON Milwaukee",
@@ -2548,6 +2773,21 @@
     "tabletop": true,
     "pairings": true,
     "path": "2026-02/melee-395231.json"
+  },
+  {
+    "id": "mtgo-12833539",
+    "name": "Modern Challenge 32",
+    "cleanName": "Challenge 32",
+    "date": "2026-02-21",
+    "format": "Modern",
+    "source": "mtgo",
+    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-02-2112833539",
+    "playerCount": 55,
+    "roundCount": 9,
+    "importance": "competitive",
+    "tabletop": false,
+    "pairings": true,
+    "path": "2026-02/mtgo-12833539.json"
   },
   {
     "id": "melee-395230",
@@ -2565,34 +2805,19 @@
     "path": "2026-02/melee-395230.json"
   },
   {
-    "id": "mtgo-12833541",
+    "id": "mtgo-12833530",
     "name": "Modern Challenge 32",
     "cleanName": "Challenge 32",
-    "date": "2026-02-21",
+    "date": "2026-02-20",
     "format": "Modern",
     "source": "mtgo",
-    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-02-2112833541",
-    "playerCount": 32,
-    "roundCount": 8,
-    "importance": "competitive",
-    "tabletop": false,
-    "pairings": false,
-    "path": "2026-02/mtgo-12833541.json"
-  },
-  {
-    "id": "mtgo-12833539",
-    "name": "Modern Challenge 32",
-    "cleanName": "Challenge 32",
-    "date": "2026-02-21",
-    "format": "Modern",
-    "source": "mtgo",
-    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-02-2112833539",
-    "playerCount": 55,
+    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-02-2012833530",
+    "playerCount": 54,
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
-    "path": "2026-02/mtgo-12833539.json"
+    "pairings": true,
+    "path": "2026-02/mtgo-12833530.json"
   },
   {
     "id": "melee-395278",
@@ -2610,21 +2835,6 @@
     "path": "2026-02/melee-395278.json"
   },
   {
-    "id": "mtgo-12833530",
-    "name": "Modern Challenge 32",
-    "cleanName": "Challenge 32",
-    "date": "2026-02-20",
-    "format": "Modern",
-    "source": "mtgo",
-    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-02-2012833530",
-    "playerCount": 54,
-    "roundCount": 9,
-    "importance": "competitive",
-    "tabletop": false,
-    "pairings": false,
-    "path": "2026-02/mtgo-12833530.json"
-  },
-  {
     "id": "mtgo-12833513",
     "name": "Modern Challenge 64",
     "cleanName": "Challenge 64",
@@ -2636,7 +2846,7 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-02/mtgo-12833513.json"
   },
   {
@@ -2651,7 +2861,7 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-02/mtgo-12833086.json"
   },
   {
@@ -2666,7 +2876,7 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-02/mtgo-12833599.json"
   },
   {
@@ -2681,7 +2891,7 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-02/mtgo-12833061.json"
   },
   {
@@ -2696,23 +2906,8 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-02/mtgo-12833057.json"
-  },
-  {
-    "id": "mtgo-12833047",
-    "name": "Modern Challenge 32",
-    "cleanName": "Challenge 32",
-    "date": "2026-02-15",
-    "format": "Modern",
-    "source": "mtgo",
-    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-02-1512833047",
-    "playerCount": 37,
-    "roundCount": 9,
-    "importance": "competitive",
-    "tabletop": false,
-    "pairings": false,
-    "path": "2026-02/mtgo-12833047.json"
   },
   {
     "id": "mtgo-12833043",
@@ -2726,8 +2921,23 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-02/mtgo-12833043.json"
+  },
+  {
+    "id": "mtgo-12833047",
+    "name": "Modern Challenge 32",
+    "cleanName": "Challenge 32",
+    "date": "2026-02-15",
+    "format": "Modern",
+    "source": "mtgo",
+    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-02-1512833047",
+    "playerCount": 37,
+    "roundCount": 9,
+    "importance": "competitive",
+    "tabletop": false,
+    "pairings": true,
+    "path": "2026-02/mtgo-12833047.json"
   },
   {
     "id": "mtgo-12833037",
@@ -2741,8 +2951,23 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-02/mtgo-12833037.json"
+  },
+  {
+    "id": "mtgo-12833029",
+    "name": "Modern Challenge 32",
+    "cleanName": "Challenge 32",
+    "date": "2026-02-14",
+    "format": "Modern",
+    "source": "mtgo",
+    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-02-1412833029",
+    "playerCount": 49,
+    "roundCount": 9,
+    "importance": "competitive",
+    "tabletop": false,
+    "pairings": true,
+    "path": "2026-02/mtgo-12833029.json"
   },
   {
     "id": "mtgo-12832991",
@@ -2756,7 +2981,7 @@
     "roundCount": 12,
     "importance": "premier",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-02/mtgo-12832991.json"
   },
   {
@@ -2771,23 +2996,8 @@
     "roundCount": 8,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-02/mtgo-12833031.json"
-  },
-  {
-    "id": "mtgo-12833029",
-    "name": "Modern Challenge 32",
-    "cleanName": "Challenge 32",
-    "date": "2026-02-14",
-    "format": "Modern",
-    "source": "mtgo",
-    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-02-1412833029",
-    "playerCount": 49,
-    "roundCount": 9,
-    "importance": "competitive",
-    "tabletop": false,
-    "pairings": false,
-    "path": "2026-02/mtgo-12833029.json"
   },
   {
     "id": "mtgo-12833020",
@@ -2801,7 +3011,7 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-02/mtgo-12833020.json"
   },
   {
@@ -2816,7 +3026,7 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-02/mtgo-12833003.json"
   },
   {
@@ -2831,7 +3041,7 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-02/mtgo-12832579.json"
   },
   {
@@ -2846,23 +3056,8 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-02/mtgo-12832569.json"
-  },
-  {
-    "id": "mtgo-12832554",
-    "name": "Modern Challenge 32",
-    "cleanName": "Challenge 32",
-    "date": "2026-02-09",
-    "format": "Modern",
-    "source": "mtgo",
-    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-02-0912832554",
-    "playerCount": 65,
-    "roundCount": 10,
-    "importance": "competitive",
-    "tabletop": false,
-    "pairings": false,
-    "path": "2026-02/mtgo-12832554.json"
   },
   {
     "id": "mtgo-12832550",
@@ -2876,8 +3071,23 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-02/mtgo-12832550.json"
+  },
+  {
+    "id": "mtgo-12832554",
+    "name": "Modern Challenge 32",
+    "cleanName": "Challenge 32",
+    "date": "2026-02-09",
+    "format": "Modern",
+    "source": "mtgo",
+    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-02-0912832554",
+    "playerCount": 65,
+    "roundCount": 10,
+    "importance": "competitive",
+    "tabletop": false,
+    "pairings": true,
+    "path": "2026-02/mtgo-12832554.json"
   },
   {
     "id": "mtgo-12832540",
@@ -2891,7 +3101,7 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-02/mtgo-12832540.json"
   },
   {
@@ -2906,23 +3116,8 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-02/mtgo-12832536.json"
-  },
-  {
-    "id": "mtgo-12832528",
-    "name": "Modern Challenge 64",
-    "cleanName": "Challenge 64",
-    "date": "2026-02-07",
-    "format": "Modern",
-    "source": "mtgo",
-    "url": "https://www.mtgo.com/decklist/modern-challenge-64-2026-02-0712832528",
-    "playerCount": 64,
-    "roundCount": 9,
-    "importance": "competitive",
-    "tabletop": false,
-    "pairings": false,
-    "path": "2026-02/mtgo-12832528.json"
   },
   {
     "id": "mtgo-12832522",
@@ -2936,8 +3131,23 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-02/mtgo-12832522.json"
+  },
+  {
+    "id": "mtgo-12832528",
+    "name": "Modern Challenge 64",
+    "cleanName": "Challenge 64",
+    "date": "2026-02-07",
+    "format": "Modern",
+    "source": "mtgo",
+    "url": "https://www.mtgo.com/decklist/modern-challenge-64-2026-02-0712832528",
+    "playerCount": 64,
+    "roundCount": 9,
+    "importance": "competitive",
+    "tabletop": false,
+    "pairings": true,
+    "path": "2026-02/mtgo-12832528.json"
   },
   {
     "id": "mtgo-12832513",
@@ -2951,7 +3161,7 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-02/mtgo-12832513.json"
   },
   {
@@ -2966,7 +3176,7 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-02/mtgo-12832496.json"
   },
   {
@@ -2981,7 +3191,7 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-02/mtgo-12831784.json"
   },
   {
@@ -2996,23 +3206,8 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-02/mtgo-12832479.json"
-  },
-  {
-    "id": "mtgo-12831759",
-    "name": "Modern Challenge 32",
-    "cleanName": "Challenge 32",
-    "date": "2026-02-02",
-    "format": "Modern",
-    "source": "mtgo",
-    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-02-0212831759",
-    "playerCount": 60,
-    "roundCount": 9,
-    "importance": "competitive",
-    "tabletop": false,
-    "pairings": false,
-    "path": "2026-02/mtgo-12831759.json"
   },
   {
     "id": "mtgo-12831755",
@@ -3026,8 +3221,38 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-02/mtgo-12831755.json"
+  },
+  {
+    "id": "mtgo-12831759",
+    "name": "Modern Challenge 32",
+    "cleanName": "Challenge 32",
+    "date": "2026-02-02",
+    "format": "Modern",
+    "source": "mtgo",
+    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-02-0212831759",
+    "playerCount": 60,
+    "roundCount": 9,
+    "importance": "competitive",
+    "tabletop": false,
+    "pairings": true,
+    "path": "2026-02/mtgo-12831759.json"
+  },
+  {
+    "id": "mtgo-12831741",
+    "name": "Modern Challenge 32",
+    "cleanName": "Challenge 32",
+    "date": "2026-02-01",
+    "format": "Modern",
+    "source": "mtgo",
+    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-02-0112831741",
+    "playerCount": 58,
+    "roundCount": 9,
+    "importance": "competitive",
+    "tabletop": false,
+    "pairings": true,
+    "path": "2026-02/mtgo-12831741.json"
   },
   {
     "id": "melee-399006",
@@ -3056,23 +3281,8 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-02/mtgo-12831745.json"
-  },
-  {
-    "id": "mtgo-12831741",
-    "name": "Modern Challenge 32",
-    "cleanName": "Challenge 32",
-    "date": "2026-02-01",
-    "format": "Modern",
-    "source": "mtgo",
-    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-02-0112831741",
-    "playerCount": 58,
-    "roundCount": 9,
-    "importance": "competitive",
-    "tabletop": false,
-    "pairings": false,
-    "path": "2026-02/mtgo-12831741.json"
   },
   {
     "id": "mtgo-12831734",
@@ -3086,7 +3296,7 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-01/mtgo-12831734.json"
   },
   {
@@ -3101,7 +3311,7 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-01/mtgo-12831718.json"
   },
   {
@@ -3116,7 +3326,7 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-01/mtgo-12831701.json"
   },
   {
@@ -3131,7 +3341,7 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-01/mtgo-12830698.json"
   },
   {
@@ -3146,7 +3356,7 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-01/mtgo-12830688.json"
   },
   {
@@ -3161,7 +3371,7 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-01/mtgo-12830673.json"
   },
   {
@@ -3176,8 +3386,23 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-01/mtgo-12830669.json"
+  },
+  {
+    "id": "mtgo-12830659",
+    "name": "Modern Challenge 32",
+    "cleanName": "Challenge 32",
+    "date": "2026-01-25",
+    "format": "Modern",
+    "source": "mtgo",
+    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-01-2512830659",
+    "playerCount": 48,
+    "roundCount": 9,
+    "importance": "competitive",
+    "tabletop": false,
+    "pairings": true,
+    "path": "2026-01/mtgo-12830659.json"
   },
   {
     "id": "melee-390011",
@@ -3195,6 +3420,21 @@
     "path": "2026-01/melee-390011.json"
   },
   {
+    "id": "mtgo-12830655",
+    "name": "Modern Challenge 32",
+    "cleanName": "Challenge 32",
+    "date": "2026-01-25",
+    "format": "Modern",
+    "source": "mtgo",
+    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-01-2512830655",
+    "playerCount": 53,
+    "roundCount": 9,
+    "importance": "competitive",
+    "tabletop": false,
+    "pairings": true,
+    "path": "2026-01/mtgo-12830655.json"
+  },
+  {
     "id": "melee-390018",
     "name": "ReCQ - Modern - SCG CON Portland - Sunday - 12:00 pm",
     "cleanName": "ReCQ - SCG CON Portland",
@@ -3210,34 +3450,19 @@
     "path": "2026-01/melee-390018.json"
   },
   {
-    "id": "mtgo-12830659",
+    "id": "mtgo-12830641",
     "name": "Modern Challenge 32",
     "cleanName": "Challenge 32",
-    "date": "2026-01-25",
+    "date": "2026-01-24",
     "format": "Modern",
     "source": "mtgo",
-    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-01-2512830659",
-    "playerCount": 48,
+    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-01-2412830641",
+    "playerCount": 43,
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
-    "path": "2026-01/mtgo-12830659.json"
-  },
-  {
-    "id": "mtgo-12830655",
-    "name": "Modern Challenge 32",
-    "cleanName": "Challenge 32",
-    "date": "2026-01-25",
-    "format": "Modern",
-    "source": "mtgo",
-    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-01-2512830655",
-    "playerCount": 53,
-    "roundCount": 9,
-    "importance": "competitive",
-    "tabletop": false,
-    "pairings": false,
-    "path": "2026-01/mtgo-12830655.json"
+    "pairings": true,
+    "path": "2026-01/mtgo-12830641.json"
   },
   {
     "id": "melee-390015",
@@ -3270,21 +3495,6 @@
     "path": "2026-01/melee-390016.json"
   },
   {
-    "id": "mtgo-12830648",
-    "name": "Modern Challenge 64",
-    "cleanName": "Challenge 64",
-    "date": "2026-01-24",
-    "format": "Modern",
-    "source": "mtgo",
-    "url": "https://www.mtgo.com/decklist/modern-challenge-64-2026-01-2412830648",
-    "playerCount": 70,
-    "roundCount": 10,
-    "importance": "competitive",
-    "tabletop": false,
-    "pairings": false,
-    "path": "2026-01/mtgo-12830648.json"
-  },
-  {
     "id": "mtgo-12830592",
     "name": "Modern RC Super Qualifier",
     "cleanName": "RC Super Qualifier",
@@ -3296,23 +3506,23 @@
     "roundCount": 11,
     "importance": "premier",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-01/mtgo-12830592.json"
   },
   {
-    "id": "mtgo-12830641",
-    "name": "Modern Challenge 32",
-    "cleanName": "Challenge 32",
+    "id": "mtgo-12830648",
+    "name": "Modern Challenge 64",
+    "cleanName": "Challenge 64",
     "date": "2026-01-24",
     "format": "Modern",
     "source": "mtgo",
-    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-01-2412830641",
-    "playerCount": 43,
-    "roundCount": 9,
+    "url": "https://www.mtgo.com/decklist/modern-challenge-64-2026-01-2412830648",
+    "playerCount": 70,
+    "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
-    "path": "2026-01/mtgo-12830641.json"
+    "pairings": true,
+    "path": "2026-01/mtgo-12830648.json"
   },
   {
     "id": "mtgo-12830632",
@@ -3326,7 +3536,7 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-01/mtgo-12830632.json"
   },
   {
@@ -3341,7 +3551,7 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-01/mtgo-12830615.json"
   },
   {
@@ -3356,7 +3566,7 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-01/mtgo-12830606.json"
   },
   {
@@ -3371,23 +3581,8 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-01/mtgo-12830720.json"
-  },
-  {
-    "id": "mtgo-12830076",
-    "name": "Modern Challenge 32",
-    "cleanName": "Challenge 32",
-    "date": "2026-01-19",
-    "format": "Modern",
-    "source": "mtgo",
-    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-01-1912830076",
-    "playerCount": 68,
-    "roundCount": 10,
-    "importance": "competitive",
-    "tabletop": false,
-    "pairings": false,
-    "path": "2026-01/mtgo-12830076.json"
   },
   {
     "id": "mtgo-12830072",
@@ -3401,23 +3596,23 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-01/mtgo-12830072.json"
   },
   {
-    "id": "mtgo-12830062",
+    "id": "mtgo-12830076",
     "name": "Modern Challenge 32",
     "cleanName": "Challenge 32",
-    "date": "2026-01-18",
+    "date": "2026-01-19",
     "format": "Modern",
     "source": "mtgo",
-    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-01-1812830062",
-    "playerCount": 59,
-    "roundCount": 9,
+    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-01-1912830076",
+    "playerCount": 68,
+    "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
-    "path": "2026-01/mtgo-12830062.json"
+    "pairings": true,
+    "path": "2026-01/mtgo-12830076.json"
   },
   {
     "id": "mtgo-12830058",
@@ -3431,8 +3626,23 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-01/mtgo-12830058.json"
+  },
+  {
+    "id": "mtgo-12830062",
+    "name": "Modern Challenge 32",
+    "cleanName": "Challenge 32",
+    "date": "2026-01-18",
+    "format": "Modern",
+    "source": "mtgo",
+    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-01-1812830062",
+    "playerCount": 59,
+    "roundCount": 9,
+    "importance": "competitive",
+    "tabletop": false,
+    "pairings": true,
+    "path": "2026-01/mtgo-12830062.json"
   },
   {
     "id": "mtgo-12830051",
@@ -3446,7 +3656,7 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-01/mtgo-12830051.json"
   },
   {
@@ -3461,7 +3671,7 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-01/mtgo-12830046.json"
   },
   {
@@ -3476,7 +3686,7 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-01/mtgo-12830044.json"
   },
   {
@@ -3491,7 +3701,7 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-01/mtgo-12830035.json"
   },
   {
@@ -3506,7 +3716,7 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-01/mtgo-12830018.json"
   },
   {
@@ -3521,7 +3731,7 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-01/mtgo-12830096.json"
   },
   {
@@ -3536,23 +3746,8 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-01/mtgo-12829408.json"
-  },
-  {
-    "id": "mtgo-12829393",
-    "name": "Modern Challenge 32",
-    "cleanName": "Challenge 32",
-    "date": "2026-01-12",
-    "format": "Modern",
-    "source": "mtgo",
-    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-01-1212829393",
-    "playerCount": 66,
-    "roundCount": 10,
-    "importance": "competitive",
-    "tabletop": false,
-    "pairings": false,
-    "path": "2026-01/mtgo-12829393.json"
   },
   {
     "id": "mtgo-12829389",
@@ -3566,8 +3761,38 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-01/mtgo-12829389.json"
+  },
+  {
+    "id": "mtgo-12829393",
+    "name": "Modern Challenge 32",
+    "cleanName": "Challenge 32",
+    "date": "2026-01-12",
+    "format": "Modern",
+    "source": "mtgo",
+    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-01-1212829393",
+    "playerCount": 66,
+    "roundCount": 10,
+    "importance": "competitive",
+    "tabletop": false,
+    "pairings": true,
+    "path": "2026-01/mtgo-12829393.json"
+  },
+  {
+    "id": "mtgo-12829379",
+    "name": "Modern Challenge 32",
+    "cleanName": "Challenge 32",
+    "date": "2026-01-11",
+    "format": "Modern",
+    "source": "mtgo",
+    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-01-1112829379",
+    "playerCount": 45,
+    "roundCount": 9,
+    "importance": "competitive",
+    "tabletop": false,
+    "pairings": true,
+    "path": "2026-01/mtgo-12829379.json"
   },
   {
     "id": "melee-387526",
@@ -3585,6 +3810,21 @@
     "path": "2026-01/melee-387526.json"
   },
   {
+    "id": "mtgo-12829375",
+    "name": "Modern Challenge 32",
+    "cleanName": "Challenge 32",
+    "date": "2026-01-11",
+    "format": "Modern",
+    "source": "mtgo",
+    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-01-1112829375",
+    "playerCount": 55,
+    "roundCount": 9,
+    "importance": "competitive",
+    "tabletop": false,
+    "pairings": true,
+    "path": "2026-01/mtgo-12829375.json"
+  },
+  {
     "id": "melee-394577",
     "name": "[Lyon Sun 09:30] Destination Qualifier: Modern",
     "cleanName": "Lyon Destination Qualifier",
@@ -3600,34 +3840,19 @@
     "path": "2026-01/melee-394577.json"
   },
   {
-    "id": "mtgo-12829379",
-    "name": "Modern Challenge 32",
-    "cleanName": "Challenge 32",
-    "date": "2026-01-11",
+    "id": "mtgo-12829368",
+    "name": "Modern Challenge 64",
+    "cleanName": "Challenge 64",
+    "date": "2026-01-10",
     "format": "Modern",
     "source": "mtgo",
-    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-01-1112829379",
-    "playerCount": 45,
-    "roundCount": 9,
+    "url": "https://www.mtgo.com/decklist/modern-challenge-64-2026-01-1012829368",
+    "playerCount": 67,
+    "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
-    "path": "2026-01/mtgo-12829379.json"
-  },
-  {
-    "id": "mtgo-12829375",
-    "name": "Modern Challenge 32",
-    "cleanName": "Challenge 32",
-    "date": "2026-01-11",
-    "format": "Modern",
-    "source": "mtgo",
-    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-01-1112829375",
-    "playerCount": 55,
-    "roundCount": 9,
-    "importance": "competitive",
-    "tabletop": false,
-    "pairings": false,
-    "path": "2026-01/mtgo-12829375.json"
+    "pairings": true,
+    "path": "2026-01/mtgo-12829368.json"
   },
   {
     "id": "melee-392633",
@@ -3660,6 +3885,21 @@
     "path": "2026-01/melee-387511.json"
   },
   {
+    "id": "mtgo-12829361",
+    "name": "Modern Challenge 32",
+    "cleanName": "Challenge 32",
+    "date": "2026-01-10",
+    "format": "Modern",
+    "source": "mtgo",
+    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-01-1012829361",
+    "playerCount": 47,
+    "roundCount": 9,
+    "importance": "competitive",
+    "tabletop": false,
+    "pairings": true,
+    "path": "2026-01/mtgo-12829361.json"
+  },
+  {
     "id": "melee-387514",
     "name": "ReCQ - Modern - SCG CON Atlanta - Saturday - 2:00 pm",
     "cleanName": "ReCQ - SCG CON Atlanta",
@@ -3686,38 +3926,8 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-01/mtgo-12829363.json"
-  },
-  {
-    "id": "mtgo-12829361",
-    "name": "Modern Challenge 32",
-    "cleanName": "Challenge 32",
-    "date": "2026-01-10",
-    "format": "Modern",
-    "source": "mtgo",
-    "url": "https://www.mtgo.com/decklist/modern-challenge-32-2026-01-1012829361",
-    "playerCount": 47,
-    "roundCount": 9,
-    "importance": "competitive",
-    "tabletop": false,
-    "pairings": false,
-    "path": "2026-01/mtgo-12829361.json"
-  },
-  {
-    "id": "mtgo-12829368",
-    "name": "Modern Challenge 64",
-    "cleanName": "Challenge 64",
-    "date": "2026-01-10",
-    "format": "Modern",
-    "source": "mtgo",
-    "url": "https://www.mtgo.com/decklist/modern-challenge-64-2026-01-1012829368",
-    "playerCount": 67,
-    "roundCount": 10,
-    "importance": "competitive",
-    "tabletop": false,
-    "pairings": false,
-    "path": "2026-01/mtgo-12829368.json"
   },
   {
     "id": "melee-387510",
@@ -3746,7 +3956,7 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-01/mtgo-12829619.json"
   },
   {
@@ -3761,7 +3971,7 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-01/mtgo-12829335.json"
   },
   {
@@ -3776,7 +3986,7 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-01/mtgo-12828402.json"
   },
   {
@@ -3791,7 +4001,7 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-01/mtgo-12828221.json"
   },
   {
@@ -3806,7 +4016,7 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-01/mtgo-12828694.json"
   },
   {
@@ -3821,7 +4031,7 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-01/mtgo-12828202.json"
   },
   {
@@ -3836,7 +4046,7 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-01/mtgo-12828192.json"
   },
   {
@@ -3851,23 +4061,8 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-01/mtgo-12828187.json"
-  },
-  {
-    "id": "mtgo-12828180",
-    "name": "Modern Challenge 64",
-    "cleanName": "Challenge 64",
-    "date": "2026-01-03",
-    "format": "Modern",
-    "source": "mtgo",
-    "url": "https://www.mtgo.com/decklist/modern-challenge-64-2026-01-0312828180",
-    "playerCount": 76,
-    "roundCount": 10,
-    "importance": "competitive",
-    "tabletop": false,
-    "pairings": false,
-    "path": "2026-01/mtgo-12828180.json"
   },
   {
     "id": "mtgo-12828175",
@@ -3881,8 +4076,23 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-01/mtgo-12828175.json"
+  },
+  {
+    "id": "mtgo-12828180",
+    "name": "Modern Challenge 64",
+    "cleanName": "Challenge 64",
+    "date": "2026-01-03",
+    "format": "Modern",
+    "source": "mtgo",
+    "url": "https://www.mtgo.com/decklist/modern-challenge-64-2026-01-0312828180",
+    "playerCount": 76,
+    "roundCount": 10,
+    "importance": "competitive",
+    "tabletop": false,
+    "pairings": true,
+    "path": "2026-01/mtgo-12828180.json"
   },
   {
     "id": "mtgo-12828173",
@@ -3896,7 +4106,7 @@
     "roundCount": 9,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-01/mtgo-12828173.json"
   },
   {
@@ -3911,7 +4121,7 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-01/mtgo-12828164.json"
   },
   {
@@ -3926,7 +4136,7 @@
     "roundCount": 10,
     "importance": "competitive",
     "tabletop": false,
-    "pairings": false,
+    "pairings": true,
     "path": "2026-01/mtgo-12828147.json"
   }
 ]
