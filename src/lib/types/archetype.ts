@@ -19,6 +19,7 @@ export interface ArchetypeYaml {
 }
 
 export interface ParsedArchetypeConfig {
+	format: string;
 	archetypes: ArchetypeDefinition[];
 	nameEqualsCommander: boolean;
 }

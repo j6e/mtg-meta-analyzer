@@ -14,6 +14,7 @@
 		activeConfigId,
 		setActiveConfig,
 		builtinConfigId,
+		configFormat,
 		BUILTIN_CONFIGS,
 	} from "../stores/archetype-configs";
 
@@ -54,7 +55,7 @@
 	/** User-saved archetype configs matching the current format. */
 	const matchingSavedConfigs = $derived(
 		$settings.format
-			? $savedConfigs.filter((c) => c.format === $settings.format)
+			? $savedConfigs.filter((c) => configFormat(c) === $settings.format)
 			: $savedConfigs,
 	);
 
@@ -100,7 +101,7 @@
 		const builtinMatch = builtinConfigId(format);
 		const isMatchingFormat =
 			currentId === builtinMatch ||
-			$savedConfigs.some((c) => c.id === currentId && c.format === format);
+			$savedConfigs.some((c) => c.id === currentId && configFormat(c) === format);
 		if (!isMatchingFormat && BUILTIN_CONFIGS.some((c) => c.id === builtinMatch)) {
 			setActiveConfig(builtinMatch);
 		}
@@ -427,7 +428,7 @@
 					{/each}
 					{#each matchingSavedConfigs as config}
 						<option value={config.id}
-							>{config.name} ({config.format})</option
+							>{config.name} ({configFormat(config)})</option
 						>
 					{/each}
 				</select>

@@ -25,6 +25,7 @@ export interface ClassificationResult {
 export function parseArchetypeYaml(yamlContent: string): ParsedArchetypeConfig {
 	const data = parseYaml(yamlContent) as ArchetypeYaml;
 	return {
+		format: data.format ?? "",
 		archetypes: data.archetypes ?? [],
 		nameEqualsCommander: data.nameEqualsCommander ?? false,
 	};

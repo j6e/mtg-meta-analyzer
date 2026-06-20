@@ -141,7 +141,7 @@ export const activeArchetypeConfig = derived(
 		try {
 			return parseArchetypeYaml($yaml);
 		} catch {
-			return { archetypes: [], nameEqualsCommander: false };
+			return { format: "", archetypes: [], nameEqualsCommander: false };
 		}
 	},
 );
@@ -151,6 +151,19 @@ export const activeArchetypeDefs = derived(
 	activeArchetypeConfig,
 	($config): ArchetypeDefinition[] => $config.archetypes,
 );
+
+/**
+ * Effective format of a saved config. The `format` field declared in the YAML
+ * (what the user edits) is the source of truth; the stored metadata field is a
+ * fallback for robustness.
+ */
+export function configFormat(config: SavedArchetypeConfig): string {
+	try {
+		return parseArchetypeYaml(config.yamlContent).format || config.format;
+	} catch {
+		return config.format;
+	}
+}
 
 // --- Actions ---
 

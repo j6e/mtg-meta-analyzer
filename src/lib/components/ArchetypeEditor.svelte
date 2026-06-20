@@ -9,16 +9,26 @@
 		updateConfig,
 		deleteConfig,
 		setActiveConfig,
+		configFormat,
 		type SavedArchetypeConfig,
 	} from '../stores/archetype-configs';
+	import { parseArchetypeYaml } from '../algorithms/archetype-classifier';
 	import { validateArchetypeYaml, type ValidationResult } from '../utils/yaml-validator';
+
+	/** Format declared in the editor's YAML; falls back to "Standard" if absent/invalid. */
+	function formatFromYaml(yaml: string): string {
+		try {
+			return parseArchetypeYaml(yaml).format || 'Standard';
+		} catch {
+			return 'Standard';
+		}
+	}
 
 	let selectedConfigId = $state(DEFAULT_BUILTIN_ID);
 	let editorYaml = $state(builtinArchetypeYaml);
 	let validationResult = $state<ValidationResult | null>(null);
 	let showSaveForm = $state(false);
 	let saveName = $state('');
-	let saveFormat = $state('Standard');
 	let cageEl = $state<HTMLElement | null>(null);
 	let lineNumEl = $state<HTMLElement | null>(null);
 	let highlightEl = $state<HTMLElement | null>(null);
@@ -129,7 +139,7 @@
 		if (!saveName.trim()) return;
 		const result = validateArchetypeYaml(editorYaml);
 		validationResult = result;
-		const id = saveConfig(saveName.trim(), saveFormat.trim() || 'Standard', editorYaml);
+		const id = saveConfig(saveName.trim(), formatFromYaml(editorYaml), editorYaml);
 		selectedConfigId = id;
 		showSaveForm = false;
 		saveName = '';
@@ -153,7 +163,6 @@
 		validationResult = null;
 		showSaveForm = true;
 		saveName = '';
-		saveFormat = 'Standard';
 		editorYaml = `format: Standard\ndate: ${new Date().toISOString().slice(0, 10)}\narchetypes:\n  - name: New Archetype\n    signatureCards:\n      - name: Card Name\n`;
 	}
 
@@ -186,7 +195,7 @@
 						<option value={cfg.id}>Built-in: {cfg.displayName}</option>
 					{/each}
 					{#each $savedConfigs as config}
-						<option value={config.id}>{config.name} ({config.format})</option>
+						<option value={config.id}>{config.name} ({configFormat(config)})</option>
 					{/each}
 				</select>
 			</label>
@@ -226,10 +235,7 @@
 					Name
 					<input type="text" bind:value={saveName} placeholder="My Custom Config" />
 				</label>
-				<label>
-					Format
-					<input type="text" bind:value={saveFormat} placeholder="Standard" />
-				</label>
+				<span class="save-format-hint">Format: <strong>{formatFromYaml(editorYaml)}</strong> (from the YAML's <code>format:</code> field)</span>
 				<button class="btn btn-accent" onclick={handleSaveAs} disabled={!saveName.trim()}>
 					Save
 				</button>
@@ -514,6 +520,18 @@
 		border-radius: var(--radius);
 		font-size: 0.85rem;
 		background: var(--color-bg);
+	}
+
+	.save-format-hint {
+		font-size: 0.75rem;
+		color: var(--color-text-muted);
+		padding-bottom: 0.35rem;
+	}
+
+	.save-format-hint code {
+		background: var(--color-bg);
+		padding: 0.05rem 0.25rem;
+		border-radius: 3px;
 	}
 
 	.validation {
