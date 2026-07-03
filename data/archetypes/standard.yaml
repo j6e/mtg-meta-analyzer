@@ -23,6 +23,13 @@ archetypes:
       - name: Jeskai Revelation
         minCopies: 4
 
+  - name: Izzet Maestro
+    signatureCards:
+      - name: "Ashling's Command"
+        minCopies: 4
+      - name: Colorstorm Stallion
+        minCopies: 4
+
   - name: Selesnya Gearhulk
     signatureCards:
       - name: Brightglass Gearhulk
@@ -243,6 +250,21 @@ archetypes:
         minCopies: 1
       - name: Quantum Riddler
         exactCopies: 0
+      - name: Hardened Academic
+        exactCopies: 0
+
+  - name: Mardu Discard
+    signatureCards:
+      - name: Moonshadow
+        minCopies: 3
+      - name: Marauding Mako
+        minCopies: 3
+      - name: Bloodghast
+        minCopies: 1
+      - name: Quantum Riddler
+        exactCopies: 0
+      - name: Hardened Academic
+        minCopies: 3
 
   - name: Grixis Discard
     signatureCards:
