@@ -1,5 +1,5 @@
 format: Legacy
-date: "2026-03-11"
+date: "2026-07-08"
 archetypes:
   - name: Dimir Tempo
     strictMode: true
@@ -16,7 +16,7 @@ archetypes:
         exactCopies: 0
       - name: Doomsday
         exactCopies: 0
-  - name: Mardu Pride
+  - name: Mardu Energy
     signatureCards:
       - name: "Ocelot Pride"
         minCopies: 3
@@ -32,16 +32,22 @@ archetypes:
         minCopies: 3
       - name: "Amped Raptor"
         minCopies: 3
-  - name: Izzet Affinity
+  - name: Affinity Stompy
     signatureCards:
-      - name: "Pinnacle Emissary"
-        minCopies: 1
+      - name: "Kappa Cannoneer"
+        minCopies: 2
       - name: "Mox Opal"
-        minCopies: 3
-      - name: "Mishra's Bauble"
         minCopies: 3
       - name: "Urza's Saga"
         minCopies: 3
+  - name: Blue Artifacts
+    signatureCards:
+      - name: "Emry, Lurker of the Loch"
+        minCopies: 3
+      - name: "Goblin Welder"
+        minCopies: 2
+      - name: "Painter's Servant"
+        exactCopies: 0
   - name: Sultai Doomsday
     signatureCards:
       - name: "Doomsday"
@@ -58,13 +64,59 @@ archetypes:
         minCopies: 3
       - name: "Phelia, Exuberant Shepherd"
         minCopies: 2
-  - name: Mono-Red Eldrazi
+  - name: Azorius Control
+    signatureCards:
+      - name: "Tamiyo, Inquisitive Student"
+        minCopies: 3
+      - name: "Swords to Plowshares"
+        minCopies: 3
+      - name: "Flow State"
+        minCopies: 2
+      - name: "Stoneforge Mystic"
+        exactCopies: 0
+  - name: Stiflenought
+    signatureCards:
+      - name: "Phyrexian Dreadnought"
+        minCopies: 3
+      - name: "Stifle"
+        minCopies: 2
+  - name: Azorius Tempo
+    signatureCards:
+      - name: "Quantum Riddler"
+        minCopies: 3
+      - name: "Phelia, Exuberant Shepherd"
+        minCopies: 3
+      - name: "Up the Beanstalk"
+        exactCopies: 0
+      - name: "Stoneforge Mystic"
+        exactCopies: 0
+  - name: Jeskai Control
+    signatureCards:
+      - name: "Stock Up"
+        minCopies: 3
+      - name: "Flow State"
+        minCopies: 2
+      - name: "Swords to Plowshares"
+        minCopies: 2
+  - name: Eldrazi
     signatureCards:
       - name: "Thought-Knot Seer"
         minCopies: 3
       - name: "Lotus Petal"
         minCopies: 3
       - name: "Eldrazi Linebreaker"
+        minCopies: 3
+  - name: Workshop Stompy
+    signatureCards:
+      - name: "Urza's Workshop"
+        minCopies: 3
+      - name: "Grim Monolith"
+        minCopies: 2
+  - name: Blue Cloudpost
+    signatureCards:
+      - name: "Stock Up"
+        minCopies: 3
+      - name: "Planar Nexus"
         minCopies: 3
   - name: Izzet Delver
     signatureCards:
@@ -74,14 +126,42 @@ archetypes:
         minCopies: 3
       - name: "Daze"
         minCopies: 2
+  - name: Dimir Car
+    signatureCards:
+      - name: "The Fantasticar"
+        minCopies: 3
+      - name: "Dark Ritual"
+        minCopies: 2
+      - name: "Thoughtseize"
+        minCopies: 2
+      - name: "Reanimate"
+        exactCopies: 0
+      - name: "Arclight Phoenix"
+        exactCopies: 0
+      - name: "Doomsday"
+        exactCopies: 0
+  - name: Rakdos Reanimator
+    signatureCards:
+      - name: "Reanimate"
+        minCopies: 3
+      - name: "Animate Dead"
+        minCopies: 3
+      - name: "Dark Ritual"
+        minCopies: 3
+  - name: Dimir Reanimator
+    signatureCards:
+      - name: "Reanimate"
+        minCopies: 2
+      - name: "Force of Will"
+        minCopies: 2
   - name: Bant Beanstalk
     signatureCards:
       - name: "Up the Beanstalk"
         minCopies: 3
-      - name: "Quantum Riddler"
-        minCopies: 3
       - name: "Swords to Plowshares"
-        minCopies: 3
+        minCopies: 2
+      - name: "Force of Will"
+        minCopies: 2
   - name: Lands
     signatureCards:
       - name: "Exploration"
@@ -92,11 +172,7 @@ archetypes:
         minCopies: 2
   - name: Oops! All Spells
     signatureCards:
-      - name: "Undercity Informer"
-        minCopies: 3
-      - name: "Simian Spirit Guide"
-        minCopies: 3
-      - name: "Elvish Spirit Guide"
+      - name: "Balustrade Spy"
         minCopies: 3
   - name: Omni-Tell
     signatureCards:
@@ -122,14 +198,22 @@ archetypes:
         minCopies: 2
       - name: "Goblin Engineer"
         minCopies: 2
-  - name: Death and Taxes (Yorion)
+  - name: Death and Taxes (Yorion) - Black/White
     signatureCards:
+      - name: "Overlord of the Balemurk"
+        minCopies: 2
       - name: "Phelia, Exuberant Shepherd"
-        minCopies: 3
-      - name: "Thoughtseize"
-        minCopies: 3
-      - name: "Swords to Plowshares"
-        minCopies: 3
+        minCopies: 2
+      - name: "White Orchid Phantom"
+        minCopies: 1
+  - name: Death and Taxes (Yorion) - Mono White
+    signatureCards:
+      - name: "White Orchid Phantom"
+        minCopies: 2
+      - name: "Phelia, Exuberant Shepherd"
+        minCopies: 2
+      - name: "Overlord of the Balemurk"
+        exactCopies: 0
   - name: Cephalid Breakfast
     signatureCards:
       - name: "Cephalid Illusionist"
@@ -150,11 +234,23 @@ archetypes:
     signatureCards:
       - name: "Aluren"
         minCopies: 3
-  - name: Tendrils Storm
+  - name: Maverick
     signatureCards:
-      - name: "Tendrils of Agony"
-        minCopies: 1
-      - name: "Dark Ritual"
+      - name: "Knight of the Reliquary"
+        minCopies: 2
+      - name: "Elvish Reclaimer"
+        minCopies: 2
+  - name: The EPIC Storm
+    signatureCards:
+      - name: "Burning Wish"
+        minCopies: 3
+      - name: "Gamble"
+        minCopies: 3
+      - name: "Lion's Eye Diamond"
+        minCopies: 3
+  - name: Saga Storm
+    signatureCards:
+      - name: "Infernal Tutor"
         minCopies: 3
       - name: "Lion's Eye Diamond"
         minCopies: 3
@@ -169,11 +265,29 @@ archetypes:
   - name: Mono-Black Midrange
     signatureCards:
       - name: "Dauthi Voidwalker"
+        minCopies: 2
+      - name: "Nethergoyf"
+        minCopies: 2
+  - name: Nic Fit
+    signatureCards:
+      - name: "Veteran Explorer"
         minCopies: 3
-      - name: "Barrowgoyf"
+      - name: "Cabal Therapy"
+        minCopies: 2
+      - name: "Aluren"
+        exactCopies: 0
+  - name: Living End
+    signatureCards:
+      - name: "Living End"
+        minCopies: 2
+      - name: "Shardless Agent"
         minCopies: 3
-      - name: "Dark Ritual"
-        minCopies: 3
+  - name: Boros Initiative
+    signatureCards:
+      - name: "Caves of Chaos Adventurer"
+        minCopies: 2
+      - name: "Seasoned Dungeoneer"
+        minCopies: 2
   - name: High Tide
     signatureCards:
       - name: "High Tide"
@@ -188,9 +302,3 @@ archetypes:
         minCopies: 3
       - name: "Rite of Flame"
         minCopies: 3
-  - name: Cloudpost
-    signatureCards:
-      - name: "Cloudpost"
-        minCopies: 4
-      - name: "Kozilek's Command"
-        minCopies: 2
