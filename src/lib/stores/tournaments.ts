@@ -268,58 +268,6 @@ export function getTournament(id: string): TournamentData | null {
 	return allTournaments.get(id) ?? null;
 }
 
-// --- Global stores (all tournaments, independent of metagame page filters) ---
-
-/** All tournaments as an array. */
-const allTournamentArray = [...allTournaments.values()];
-
-/** Classification results across ALL tournaments (pooled KNN). */
-export const globalClassificationResults = derived(
-	activeArchetypeConfig,
-	($config): Map<string, ClassificationResult[]> => {
-		const tournamentDecklists = new Map(
-			allTournamentArray.map((t) => [t.meta.id, t.decklists]),
-		);
-		return classifyAllPooled(tournamentDecklists, $config.archetypes, {
-			minConfidence: 0.4,
-			nameEqualsCommander: $config.nameEqualsCommander,
-		});
-	},
-);
-
-/** Player ID → archetype across ALL tournaments. */
-export const globalPlayerArchetypes = derived(
-	globalClassificationResults,
-	($resultsMap): Map<string, string> => {
-		const combined = new Map<string, string>();
-		for (const t of allTournamentArray) {
-			const results = $resultsMap.get(t.meta.id) ?? [];
-			const map = buildPlayerArchetypeMap(t, results);
-			for (const [playerId, archetype] of map) {
-				combined.set(`${t.meta.id}:${playerId}`, archetype);
-			}
-		}
-		return combined;
-	},
-);
-
-/** Matchup matrix and stats across ALL tournaments (no "Other" collapsing). */
-export const globalMetagameData = derived(globalPlayerArchetypes, ($archetypes) => {
-	if (allTournamentArray.length === 0 || $archetypes.size === 0) return null;
-	return buildMatchupMatrix(allTournamentArray, $archetypes, {
-		excludeMirrors: true,
-	});
-});
-
-/** Attribution matrix: classified vs self-reported archetypes across ALL tournaments. */
-export const globalAttributionMatrix = derived(
-	globalClassificationResults,
-	($resultsMap) => {
-		if (allTournamentArray.length === 0) return null;
-		return buildAttributionMatrix(allTournamentArray, $resultsMap);
-	},
-);
-
 /** Attribution matrix scoped to the currently filtered tournaments. */
 export const attributionMatrix = derived(
 	[filteredTournaments, classificationResults],
@@ -332,11 +280,6 @@ export const attributionMatrix = derived(
 /** Look up an archetype definition by name (non-reactive snapshot). */
 export function getArchetypeDefinition(name: string): ArchetypeDefinition | null {
 	return get(activeArchetypeDefs).find((d) => d.name === name) ?? null;
-}
-
-/** All tournament data values (for player pages). */
-export function getAllTournaments(): TournamentData[] {
-	return allTournamentArray;
 }
 
 /** Look up index entry for a tournament (non-reactive). */

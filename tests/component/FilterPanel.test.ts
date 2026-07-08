@@ -30,13 +30,8 @@ vi.mock("../../src/lib/stores/tournaments", () => {
 		metagameData: writable(null),
 		archetypeStats: writable([]),
 		currentTournamentArchetypes: writable(new Map()),
-		globalClassificationResults: writable(new Map()),
-		globalPlayerArchetypes: writable(new Map()),
-		globalMetagameData: writable(null),
-		globalAttributionMatrix: writable(null),
 		attributionMatrix: writable(null),
 		getTournament: vi.fn(() => null),
-		getAllTournaments: vi.fn(() => []),
 	};
 });
 
