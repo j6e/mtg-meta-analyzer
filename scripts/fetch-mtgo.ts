@@ -22,16 +22,9 @@ import { MtgoClient, MtgoFetchError, type MtgoListingEntry } from "./lib/mtgo-cl
 // Target formats and event type filters
 // ---------------------------------------------------------------------------
 
-const TARGET_FORMATS = new Set([
-	"Standard",
-	"Modern",
-	"Pioneer",
-	"Legacy",
-	"Pauper",
-	"Vintage",
-	"Premodern",
-	"Duel Commander",
-]);
+// Duel Commander only: every other format is fetched from the Videre database
+// via scripts/fetch-videre.ts (full pairings), which videre doesn't track for DC.
+const TARGET_FORMATS = new Set(["Duel Commander"]);
 
 /** Returns true for Challenge 32/64, Showcase Challenge, and Duel Commander Trial events. */
 function isTargetEvent(title: string): boolean {
