@@ -1,5 +1,5 @@
 format: Standard
-date: "2026-07-03"
+date: "2026-07-08"
 archetypes:
   - name: Izzet Lessons
     signatureCards:
@@ -30,14 +30,43 @@ archetypes:
       - name: Colorstorm Stallion
         minCopies: 4
 
+  - name: 4-Color Gearhulk
+    signatureCards:
+      - name: Bloom Tender
+        minCopies: 3
+      - name: Brightglass Gearhulk
+        minCopies: 2
+      - name: Sewer-veillance Cam
+        minCopies: 2
+
+  - name: Simic Jackal
+    signatureCards:
+      - name: "Jackal, Genius Geneticist"
+        minCopies: 3
+      - name: "Pawpatch Recruit"
+        minCopies: 3
+      - name: "Llanowar Elves"
+        minCopies: 4
+
   - name: Selesnya Gearhulk
     signatureCards:
+      - name: Badgermole Cub
+        minCopies: 4
       - name: Brightglass Gearhulk
-        minCopies: 4
-      - name: Leatherhead, Swamp Stalker
+        minCopies: 3
+      - name: Gene Pollinator
         minCopies: 2
-      - name: Practiced Offense
+      - name: Pawpatch Recruit
+        minCopies: 2
+
+  - name: Selesnya Ouroboroid
+    signatureCards:
+      - name: Badgermole Cub
         minCopies: 4
+      - name: Pawpatch Recruit
+        minCopies: 3
+      - name: Ouroboroid
+        minCopies: 1
 
   - name: Mono-Green Landfall
     signatureCards:
@@ -73,25 +102,56 @@ archetypes:
 
   - name: Selesnya Landfall
     signatureCards:
-      - name: Mightform Harmonizer
-        minCopies: 3
-      - name: "Sazh's Chocobo"
-        minCopies: 4
-      - name: Fabled Passage
-        minCopies: 4
       - name: Earthbender Ascension
         minCopies: 3
-      - name: Temple Garden
+      - name: Fabled Passage
+        minCopies: 3
+      - name: Erode
         minCopies: 2
+
+  - name: Sultai Reanimator
+    signatureCards:
+      - name: Deceit
+        minCopies: 3
+      - name: "Rakshasa's Bargain"
+        minCopies: 3
+      - name: Awaken the Honored Dead
+        minCopies: 2
+
+  - name: 4-Color Reanimator
+    signatureCards:
+      - name: "Bringer of the Last Gift"
+        minCopies: 3
+      - name: "Superior Spider-Man"
+        minCopies: 3
+      - name: Deceit
+        minCopies: 3
 
   - name: Dimir Excruciator
     signatureCards:
       - name: Doomsday Excruciator
         minCopies: 1
-      - name: Superior Spider-Man
-        minCopies: 3
       - name: Deceit
         minCopies: 3
+      - name: Requiting Hex
+        minCopies: 2
+
+  - name: Dimir Reanimator
+    signatureCards:
+      - name: Deceit
+        minCopies: 3
+      - name: Superior Spider-Man
+        minCopies: 3
+      - name: Requiting Hex
+        minCopies: 2
+      - name: Doomsday Excruciator
+        exactCopies: 0
+      - name: "Bringer of the Last Gift"
+        exactCopies: 0
+      - name: "Rakshasa's Bargain"
+        exactCopies: 0
+      - name: "Ashling, Rekindled"
+        exactCopies: 0
 
   - name: Simic Rhythm
     signatureCards:
@@ -121,6 +181,15 @@ archetypes:
       - name: Seam Rip
         minCopies: 1
 
+  - name: Golgari Midrange
+    signatureCards:
+      - name: Blooming Marsh
+        minCopies: 3
+      - name: Wastewood Verge
+        minCopies: 3
+      - name: Llanowar Elves
+        minCopies: 3
+
   - name: Dimir Midrange
     signatureCards:
       - name: Kaito, Bane of Nightmares
@@ -143,10 +212,10 @@ archetypes:
     signatureCards:
       - name: Eddymurk Crab
         minCopies: 4
-      - name: Sunderflock
-        minCopies: 4
-      - name: Hearth Elemental
+      - name: Opt
         minCopies: 3
+      - name: Slickshot Show-Off
+        exactCopies: 0
 
   - name: Izzet Elementals
     signatureCards:
@@ -180,13 +249,13 @@ archetypes:
         minCopies: 2
       - name: Stock Up
         minCopies: 2
+      - name: Inevitable Defeat
+        exactCopies: 0
 
   - name: 4-Color Control
     signatureCards:
       - name: Inevitable Defeat
         minCopies: 2
-      - name: Jeskai Revelation
-        minCopies: 1
       - name: Stock Up
         minCopies: 1
 
@@ -201,11 +270,11 @@ archetypes:
 
   - name: Boros Tremors
     signatureCards:
-      - name: Warleader's Call
-        minCopies: 1
-      - name: "Ojer Axonil, Deepest Might"
-        minCopies: 1
+      - name: "Warleader's Call"
+        minCopies: 2
       - name: "Voice of Victory"
+        minCopies: 2
+      - name: Inspiring Vantage
         minCopies: 2
 
   - name: Izzet Prowess
@@ -231,14 +300,19 @@ archetypes:
       - name: Full Bore
         minCopies: 3
 
+  - name: Leyline Aggro
+    signatureCards:
+      - name: "Leyline of Resonance"
+        minCopies: 4
+      - name: "Ancestral Anger"
+        minCopies: 2
+
   - name: Mono-Red Aggro
     signatureCards:
       - name: Hired Claw
         minCopies: 3
       - name: Burst Lightning
         minCopies: 3
-      - name: Mountain
-        minCopies: 12
 
   - name: Rakdos Discard
     signatureCards:
@@ -284,15 +358,6 @@ archetypes:
       - name: Quantum Riddler
         minCopies: 4
 
-  - name: Sultai Reanimator
-    signatureCards:
-      - name: "Bringer of the Last Gift"
-        minCopies: 3
-      - name: "Superior Spider-Man"
-        minCopies: 4
-      - name: "Ardyn, the Usurper"
-        minCopies: 2
-
   - name: Esper Pixie
     signatureCards:
       - name: "Nurturing Pixie"
@@ -315,27 +380,25 @@ archetypes:
     signatureCards:
       - name: "Deadly Cover-Up"
         minCopies: 2
-      - name: "Demolition Field"
-        minCopies: 2
-      - name: "Three Steps Ahead"
-        minCopies: 2
       - name: "Consult the Star Charts"
+        minCopies: 3
+      - name: "Watery Grave"
         minCopies: 3
 
   - name: Azorius Control
     signatureCards:
       - name: No More Lies
         minCopies: 3
-      - name: "Seam Rip"
-        minCopies: 3
-      - name: "Get Lost"
-        minCopies: 3
       - name: "Consult the Star Charts"
         minCopies: 3
-      - name: "Jeskai Revelation"
+      - name: "Hallowed Fountain"
+        minCopies: 3
+      - name: "Steam Vents"
+        exactCopies: 0
+      - name: "Inevitable Defeat"
         exactCopies: 0
 
-  - name: Momo-White
+  - name: Azorius Momo
     signatureCards:
       - name: Momo, Friendly Flier
         minCopies: 3
@@ -353,32 +416,14 @@ archetypes:
       - name: "Hallowed Fountain"
         minCopies: 4
 
-  - name: Golgari Rythm
-    signatureCards:
-      - name: "Blooming Marsh"
-        minCopies: 4
-      - name: "Badgermole Cub"
-        minCopies: 4
-      - name: "Nature's Rhythm"
-        minCopies: 2
-
   - name: Boros Burn
     signatureCards:
       - name: "Boros Charm"
         minCopies: 3
-      - name: "Lightning Helix"
+      - name: "Boltwave"
+        minCopies: 3
+      - name: "Inspiring Vantage"
         minCopies: 1
-      - name: "Emberheart Challenger"
-        minCopies: 3
-
-  - name: Simic Jackal
-    signatureCards:
-      - name: "Jackal, Genius Geneticist"
-        minCopies: 3
-      - name: "Pawpatch Recruit"
-        minCopies: 3
-      - name: "Llanowar Elves"
-        minCopies: 4
 
   - name: Temur Battlecrier
     signatureCards:
@@ -405,15 +450,6 @@ archetypes:
       - name: "United Battlefront"
         minCopies: 3
 
-  - name: Leyline Aggro
-    signatureCards:
-      - name: "Leyline of Resonance"
-        minCopies: 4
-      - name: "Callous Sell-Sword"
-        minCopies: 3
-      - name: "Might of the Meek"
-        minCopies: 4
-
   - name: 4-Color Allies
     signatureCards:
       - name: "Earth King's Lieutenant"
@@ -437,6 +473,6 @@ archetypes:
       - name: "Bloodletter of Aclazotz"
         minCopies: 2
       - name: "Unholy Annex"
-        minCopies: 4
+        minCopies: 3
       - name: "Swamp"
-        minCopies: 10
+        minCopies: 8
