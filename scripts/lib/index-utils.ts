@@ -1,7 +1,12 @@
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
-import type { TournamentIndexEntry } from "../../src/lib/types/tournament";
+import type { RoundInfo, TournamentIndexEntry } from "../../src/lib/types/tournament";
 import { cleanTournamentName, inferImportance } from "./importance";
+
+/** Total match count across all rounds, for index entries. */
+export function countMatches(rounds: Record<string, RoundInfo>): number {
+	return Object.values(rounds).reduce((sum, r) => sum + r.matches.length, 0);
+}
 
 /**
  * Update or create a per-format index.json, preserving manual overrides.

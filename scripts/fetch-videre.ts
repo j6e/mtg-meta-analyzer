@@ -22,7 +22,7 @@ import { join } from "node:path";
 import type { TournamentIndexEntry } from "../src/lib/types/tournament";
 import { parseArgValue } from "./lib/cli-utils";
 import { cleanTournamentName, inferImportance, toFormatSlug } from "./lib/importance";
-import { updateFormatIndex } from "./lib/index-utils";
+import { countMatches, updateFormatIndex } from "./lib/index-utils";
 import { assembleVidereTournament } from "./lib/videre-assembler";
 import { VidereClient } from "./lib/videre-client";
 
@@ -205,6 +205,7 @@ async function main() {
 					url: tournament.meta.url,
 					playerCount: tournament.meta.playerCount,
 					roundCount: tournament.meta.roundCount,
+					matchCount: countMatches(tournament.rounds),
 					importance: inferImportance(tournament.meta.name),
 					tabletop: false,
 					pairings: true,

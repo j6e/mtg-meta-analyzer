@@ -23,7 +23,7 @@ import {
 	inferImportance,
 	toFormatSlug,
 } from "./lib/importance";
-import { updateFormatIndex } from "./lib/index-utils";
+import { countMatches, updateFormatIndex } from "./lib/index-utils";
 import { MeleeApiError, MeleeClient } from "./lib/melee-client";
 import { extractRoundNumber } from "./lib/round-utils";
 import type { MeleeMatchRow, MeleeStandingRow, ParsedRound } from "./lib/types";
@@ -294,6 +294,7 @@ async function main() {
 			url: tournament.meta.url,
 			playerCount: tournament.meta.playerCount,
 			roundCount: tournament.meta.roundCount,
+			matchCount: countMatches(tournament.rounds),
 			importance: inferImportance(tournament.meta.name),
 			tabletop: tournament.meta.tabletop,
 			pairings: true,

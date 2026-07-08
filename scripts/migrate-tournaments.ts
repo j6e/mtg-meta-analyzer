@@ -16,6 +16,7 @@ import {
 	inferImportance,
 	toFormatSlug,
 } from "./lib/importance";
+import { countMatches } from "./lib/index-utils";
 
 const DATA_DIR = join(import.meta.dir, "../data");
 const TOURNAMENTS_DIR = join(DATA_DIR, "tournaments");
@@ -76,6 +77,7 @@ async function main() {
 			url: data.meta.url,
 			playerCount: data.meta.playerCount,
 			roundCount: data.meta.roundCount,
+			matchCount: countMatches(data.rounds),
 			importance: inferImportance(data.meta.name),
 			tabletop: true,
 			pairings: true,

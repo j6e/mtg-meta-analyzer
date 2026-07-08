@@ -22,6 +22,7 @@ vi.mock("../src/lib/data/loader", () => {
 		...meta,
 		cleanName: meta.name,
 		format: "Standard",
+		matchCount: 0,
 		importance: "other",
 		tabletop: true,
 		pairings: false,

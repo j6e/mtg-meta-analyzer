@@ -9,6 +9,7 @@ import { existsSync, readdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import type { TournamentData, TournamentIndexEntry } from "../src/lib/types/tournament";
 import { cleanTournamentName, inferImportance } from "./lib/importance";
+import { countMatches } from "./lib/index-utils";
 
 const DATA_DIR = join(import.meta.dir, "../data");
 
@@ -84,9 +85,12 @@ async function main() {
 					url: data.meta.url,
 					playerCount: data.meta.playerCount,
 					roundCount: data.meta.roundCount,
+					matchCount: countMatches(data.rounds),
 					importance,
 					tabletop: data.meta.tabletop,
-					pairings: Object.keys(data.rounds).length > 0,
+					// Preserve the fetch script's verdict: mtgo.com files carry only a
+					// top-8 bracket, so rounds-on-disk would wrongly flip this to true
+					pairings: existing?.pairings ?? Object.keys(data.rounds).length > 0,
 					path: `${ym}/${filename}`,
 				});
 			}

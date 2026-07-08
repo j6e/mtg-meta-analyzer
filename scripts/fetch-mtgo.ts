@@ -14,7 +14,7 @@ import { existsSync, mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { parseArgValue } from "./lib/cli-utils";
 import { cleanTournamentName, inferImportance, toFormatSlug } from "./lib/importance";
-import { updateFormatIndex } from "./lib/index-utils";
+import { countMatches, updateFormatIndex } from "./lib/index-utils";
 import { assembleMtgoTournament } from "./lib/mtgo-assembler";
 import { MtgoClient, MtgoFetchError, type MtgoListingEntry } from "./lib/mtgo-client";
 
@@ -204,6 +204,7 @@ async function main() {
 				url: tournament.meta.url,
 				playerCount: tournament.meta.playerCount,
 				roundCount: tournament.meta.roundCount,
+				matchCount: countMatches(tournament.rounds),
 				importance: inferImportance(tournament.meta.name),
 				tabletop: false,
 				pairings: false,

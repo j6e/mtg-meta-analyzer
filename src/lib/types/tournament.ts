@@ -78,6 +78,7 @@ export interface TournamentIndexEntry {
 	url: string;
 	playerCount: number;
 	roundCount: number;
+	matchCount: number; // total matches across all rounds (0 when pairings are unavailable)
 	importance: TournamentImportance;
 	tabletop: boolean;
 	pairings: boolean; // whether match/round data is available (mtgo.com-sourced events don't have this; videre-sourced ones do)
