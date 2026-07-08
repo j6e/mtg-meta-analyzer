@@ -5,6 +5,7 @@
 import { derived, get, writable } from "svelte/store";
 import { parseArchetypeYaml } from "../algorithms/archetype-classifier";
 import type { ArchetypeDefinition, ParsedArchetypeConfig } from "../types/archetype";
+import { formatSlug } from "../utils/format-slug";
 // --- Built-in config auto-discovery ---
 
 export interface BuiltinArchetypeConfig {
@@ -25,7 +26,7 @@ function stemToDisplayName(stem: string): string {
 }
 
 export function builtinConfigId(format: string): string {
-	return `builtin:${format.toLowerCase().replace(/\s+/g, "-")}`;
+	return `builtin:${formatSlug(format)}`;
 }
 
 export const BUILTIN_CONFIGS: BuiltinArchetypeConfig[] = Object.entries(builtinModules)
