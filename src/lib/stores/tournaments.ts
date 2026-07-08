@@ -192,7 +192,12 @@ export const playerArchetypes = derived(
 		const combined = new Map<string, string>();
 		for (const t of $tournaments) {
 			const results = $resultsMap.get(t.meta.id) ?? [];
-			const map = buildPlayerArchetypeMap(t, results);
+			// Videre (MTGO) events only carry the published top-32 decklists;
+			// deckless players there are censored losers, so drop them entirely
+			// rather than letting them pollute Other/Unknown winrates.
+			const map = buildPlayerArchetypeMap(t, results, {
+				skipPlayersWithoutDecklist: t.meta.source === "videre",
+			});
 			for (const [playerId, archetype] of map) {
 				combined.set(`${t.meta.id}:${playerId}`, archetype);
 			}

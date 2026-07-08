@@ -117,6 +117,10 @@ export function extractTrainingData(
 
 				const p1Arch = playerArchetypes.get(`${t.meta.id}:${match.player1Id}`);
 				const p2Arch = playerArchetypes.get(`${t.meta.id}:${match.player2Id}`);
+				// Skip matches involving players absent from the map (e.g. censored
+				// videre players with no published decklist) — near-automatic wins
+				// that would attenuate card coefficients.
+				if (!p1Arch || !p2Arch) continue;
 
 				// Find which player is our archetype
 				let targetId: string | null = null;

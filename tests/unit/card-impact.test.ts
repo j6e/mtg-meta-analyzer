@@ -229,6 +229,16 @@ describe("extractTrainingData", () => {
 		const obs = extractTrainingData([tournament], archetypes, "Aggro", "Control");
 		expect(obs).toHaveLength(6); // All matches are vs Control
 	});
+
+	it("excludes matches vs players absent from the archetype map", () => {
+		// c3 censored (e.g. videre player with no published decklist)
+		const censoredArchetypes = new Map(archetypes);
+		censoredArchetypes.delete("melee-1:c3");
+
+		const obs = extractTrainingData([tournament], censoredArchetypes, "Aggro");
+		// a5-vs-c3 dropped; the a2-vs-c3 draw was already excluded
+		expect(obs).toHaveLength(5);
+	});
 });
 
 // ── selectFlexFeatures ──

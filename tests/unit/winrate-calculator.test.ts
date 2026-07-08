@@ -197,6 +197,45 @@ describe("buildPlayerArchetypeMap", () => {
 		const map = buildPlayerArchetypeMap(tournament, results);
 		expect(map.get("p1")).toBe("Midrange");
 	});
+
+	it("omits players without decklists when skipPlayersWithoutDecklist is set", () => {
+		const tournament = makeTournament({
+			players: {
+				p1: makePlayer("Alice", ["d1"]),
+				p2: makePlayer("Bob", []), // no decklist — censored
+			},
+			decklists: { d1: makeDecklist("p1") },
+		});
+
+		const results: ClassificationResult[] = [
+			{
+				decklistId: "d1",
+				archetype: "Aggro",
+				method: "signature",
+				confidence: 1.0,
+			},
+		];
+
+		const map = buildPlayerArchetypeMap(tournament, results, {
+			skipPlayersWithoutDecklist: true,
+		});
+		expect(map.get("p1")).toBe("Aggro");
+		expect(map.has("p2")).toBe(false);
+	});
+
+	it("keeps unclassified players that have a decklist when skipPlayersWithoutDecklist is set", () => {
+		const tournament = makeTournament({
+			players: {
+				p1: makePlayer("Alice", ["d1"]), // decklist exists, no classification
+			},
+			decklists: { d1: makeDecklist("p1") },
+		});
+
+		const map = buildPlayerArchetypeMap(tournament, [], {
+			skipPlayersWithoutDecklist: true,
+		});
+		expect(map.get("p1")).toBe("Unknown");
+	});
 });
 
 describe("buildMatchupMatrix", () => {
@@ -510,6 +549,37 @@ describe("buildMatchupMatrix", () => {
 		const aggIdx = matrix.archetypes.indexOf("Aggro");
 		const unkIdx = matrix.archetypes.indexOf("Unknown");
 		expect(matrix.cells[aggIdx][unkIdx].wins).toBe(1);
+	});
+
+	it("excludes matches, byes and share for players absent from the archetype map", () => {
+		const tournament = makeTournament({
+			players: {
+				p1: makePlayer("Alice"),
+				p2: makePlayer("Bob"),
+				p3: makePlayer("Carol"), // censored — not in the map
+			},
+			rounds: {
+				r1: makeRound("Round 1", 1, [
+					makeMatch("p1", "p2", "p1"),
+					makeMatch("p1", "p3", "p1"), // vs censored player — must not count
+					makeMatch("p3", null, "p3"), // censored player's bye — must not count
+				]),
+			},
+		});
+
+		const playerArchetypes = makeArchetypeMap("melee-1", [
+			["p1", "Aggro"],
+			["p2", "Control"],
+		]);
+		const { matrix, stats } = buildMatchupMatrix([tournament], playerArchetypes);
+
+		expect(matrix.archetypes).toEqual(["Aggro", "Control"]);
+		const aggro = stats.find((s) => s.name === "Aggro")!;
+		expect(aggro.wins).toBe(1); // only the p1-vs-p2 match
+		expect(aggro.totalMatches).toBe(1);
+		expect(aggro.metagameShare).toBe(0.5); // p3 not in the share denominator
+		const totalCells = matrix.cells.flat().reduce((sum, c) => sum + c.total, 0);
+		expect(totalCells).toBe(2); // one match, counted once per side
 	});
 
 	it("aggregates multiple tournaments", () => {

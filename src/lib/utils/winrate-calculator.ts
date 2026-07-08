@@ -20,6 +20,16 @@ export interface MatrixOptions {
 	useStandings?: boolean; // supplement overall stats with standings W-L-D for incomplete tournaments
 }
 
+export interface PlayerArchetypeMapOptions {
+	/**
+	 * Omit players with no decklist from the map entirely (instead of "Unknown").
+	 * Used for sources with censored decklist coverage (MTGO publishes only top-32
+	 * lists), where deckless players are disproportionately losers and would bias
+	 * winrates. Downstream consumers skip matches involving unmapped players.
+	 */
+	skipPlayersWithoutDecklist?: boolean;
+}
+
 /**
  * Build a playerId → archetype mapping from classifier results and tournament data.
  * For players with multiple decklists (multi-format), uses the first classified decklist.
@@ -27,6 +37,7 @@ export interface MatrixOptions {
 export function buildPlayerArchetypeMap(
 	tournament: TournamentData,
 	results: ClassificationResult[],
+	options: PlayerArchetypeMapOptions = {},
 ): Map<string, string> {
 	const deckArchetype = new Map<string, string>();
 	for (const r of results) {
@@ -35,6 +46,9 @@ export function buildPlayerArchetypeMap(
 
 	const playerArchetype = new Map<string, string>();
 	for (const [playerId, player] of Object.entries(tournament.players)) {
+		if (options.skipPlayersWithoutDecklist && player.decklistIds.length === 0) {
+			continue;
+		}
 		let archetype = "Unknown";
 		for (const deckId of player.decklistIds) {
 			const a = deckArchetype.get(deckId);
