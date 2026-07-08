@@ -1,15 +1,36 @@
 format: Modern
-date: "2026-03-08"
+date: "2026-07-08"
 archetypes:
-  - name: Boros Energy
+  # --- Energy family: Mardu (black marker) before Boros; Boros excludes blue/black ---
+  - name: Mardu Energy
     signatureCards:
-      - name: "Ocelot Pride"
-        minCopies: 3
-      - name: "Ragavan, Nimble Pilferer"
-        minCopies: 3
-      - name: "Phlage, Titan of Fire's Fury"
+      - name: "Ajani, Nacatl Pariah"
         minCopies: 3
       - name: "Guide of Souls"
+        minCopies: 3
+      - name: "Ocelot Pride"
+        minCopies: 3
+      - name: "Orcish Bowmasters"
+        minCopies: 2
+  - name: Boros Energy
+    signatureCards:
+      - name: "Ajani, Nacatl Pariah"
+        minCopies: 3
+      - name: "Guide of Souls"
+        minCopies: 3
+      - name: "Ocelot Pride"
+        minCopies: 3
+      - name: "Quantum Riddler"
+        exactCopies: 0
+      - name: "Orcish Bowmasters"
+        exactCopies: 0
+  - name: Jeskai Energy
+    signatureCards:
+      - name: "Ajani, Nacatl Pariah"
+        minCopies: 3
+      - name: "Guide of Souls"
+        minCopies: 3
+      - name: "Quantum Riddler"
         minCopies: 3
   - name: Izzet Affinity
     signatureCards:
@@ -18,6 +39,14 @@ archetypes:
       - name: "Spirebluff Canal"
         minCopies: 3
       - name: "Urza's Saga"
+        minCopies: 3
+      - name: "Mishra's Bauble"
+        minCopies: 3
+  - name: Izzet Steel-Cutter
+    signatureCards:
+      - name: "Emry, Lurker of the Loch"
+        minCopies: 3
+      - name: "Cori-Steel Cutter"
         minCopies: 3
       - name: "Mishra's Bauble"
         minCopies: 3
@@ -37,18 +66,43 @@ archetypes:
         minCopies: 3
       - name: "Amulet of Vigor"
         minCopies: 4
+  # --- Blink family: Esper (Overlord) / Azorius (no Overlord) / Jeskai (Consign) ---
+  - name: Esper Blink
+    signatureCards:
+      - name: "Phelia, Exuberant Shepherd"
+        minCopies: 3
+      - name: "Overlord of the Balemurk"
+        minCopies: 3
+      - name: "Quantum Riddler"
+        minCopies: 3
+  - name: Azorius Blink
+    signatureCards:
+      - name: "Ephemerate"
+        minCopies: 3
+      - name: "Quantum Riddler"
+        minCopies: 3
+      - name: "Overlord of the Balemurk"
+        exactCopies: 0
+      - name: "Ajani, Nacatl Pariah"
+        exactCopies: 0
+      - name: "Galvanic Discharge"
+        exactCopies: 0
+      - name: "Goryo's Vengeance"
+        exactCopies: 0
   - name: Jeskai Blink
     signatureCards:
       - name: "Phelia, Exuberant Shepherd"
         minCopies: 3
-      - name: "Ragavan, Nimble Pilferer"
-        minCopies: 3
       - name: "Consign to Memory"
-        minCopies: 1
-      - name: "Fable of the Mirror-Breaker"
-        minCopies: 2
-      - name: "Hallowed Fountain"
-        minCopies: 1
+        minCopies: 3
+  - name: Boros Ponza
+    signatureCards:
+      - name: "Erode"
+        minCopies: 3
+      - name: "Wrath of the Skies"
+        minCopies: 3
+      - name: "Price of Freedom"
+        minCopies: 3
   - name: Domain Zoo
     signatureCards:
       - name: "Leyline of the Guildpact"
@@ -63,6 +117,12 @@ archetypes:
         minCopies: 3
       - name: "Tameshi, Reality Architect"
         minCopies: 3
+  - name: Boros Belcher
+    signatureCards:
+      - name: "Goblin Charbelcher"
+        minCopies: 3
+      - name: "Legion Leadership"
+        minCopies: 3
   - name: Simic Ritual
     signatureCards:
       - name: "Birthing Ritual"
@@ -70,6 +130,12 @@ archetypes:
       - name: "Coiling Oracle"
         minCopies: 3
       - name: "Shardless Agent"
+        minCopies: 3
+  - name: Sam Combo
+    signatureCards:
+      - name: "Samwise Gamgee"
+        minCopies: 3
+      - name: "Cauldron Familiar"
         minCopies: 3
   - name: Esper Reanimator
     signatureCards:
@@ -85,36 +151,23 @@ archetypes:
         minCopies: 3
       - name: "Grist, the Hunger Tide"
         minCopies: 1
-  - name: Gruul Eldrazi Ramp
+  # --- Broodscale siblings: partition on Devourer of Destiny; keep before Eldrazi Ramp ---
+  - name: Mono-Green Broodscale Combo
     signatureCards:
-      - name: "Malevolent Rumble"
+      - name: "Basking Broodscale"
         minCopies: 3
-      - name: "Icetill Explorer"
-        minCopies: 1
       - name: "Devourer of Destiny"
-        minCopies: 1
-      - name: "Stomping Ground"
-        minCopies: 1
-  - name: Gruul Eldrazi Aggro
-    signatureCards:
-      - name: "Eldrazi Linebreaker"
         minCopies: 3
-      - name: "Forest"
-        minCopies: 1
-      - name: "Mountain"
-        minCopies: 1
-  - name: Broodscale Combo
+      - name: "Blade of the Bloodchief"
+        minCopies: 2
+  - name: Gruul Broodscale Combo
     signatureCards:
       - name: "Basking Broodscale"
         minCopies: 3
       - name: "Blade of the Bloodchief"
         minCopies: 3
-  - name: Ruby Storm
-    signatureCards:
-      - name: "Ral, Monsoon Mage"
-        minCopies: 3
-      - name: "Ruby Medallion"
-        minCopies: 3
+      - name: "Devourer of Destiny"
+        exactCopies: 0
   - name: Eldrazi Tron
     signatureCards:
       - name: "Thought-Knot Seer"
@@ -127,16 +180,44 @@ archetypes:
         minCopies: 1
       - name: "Karn, the Great Creator"
         minCopies: 1
+  - name: Mono-Black Eldrazi
+    signatureCards:
+      - name: "Thought-Knot Seer"
+        minCopies: 3
+      - name: "Urza's Saga"
+        minCopies: 3
+      - name: "Kozilek's Command"
+        minCopies: 3
+  - name: Eldrazi Ramp
+    signatureCards:
+      - name: "Sowing Mycospawn"
+        minCopies: 3
+      - name: "Ugin's Labyrinth"
+        minCopies: 3
+      - name: "Eldrazi Temple"
+        minCopies: 3
+  - name: Gruul Eldrazi Aggro
+    signatureCards:
+      - name: "Eldrazi Linebreaker"
+        minCopies: 3
+      - name: "Forest"
+        minCopies: 1
+      - name: "Mountain"
+        minCopies: 1
+  - name: Ruby Storm
+    signatureCards:
+      - name: "Ral, Monsoon Mage"
+        minCopies: 3
+      - name: "Ruby Medallion"
+        minCopies: 3
   - name: Living End
     signatureCards:
       - name: "Living End"
         minCopies: 3
   - name: Dimir Midrange
     signatureCards:
-      - name: "Kaito, Bane of Nightmares"
-        minCopies: 1
-      - name: Orcish Bowmasters
-        minCopies: 2
+      - name: "Psychic Frog"
+        minCopies: 3
       - name: "Fatal Push"
         minCopies: 3
   - name: Dimir Mill
@@ -149,6 +230,12 @@ archetypes:
     signatureCards:
       - name: "Neoform"
         minCopies: 3
+  - name: Golgari Persist
+    signatureCards:
+      - name: "Eyetwitch"
+        minCopies: 3
+      - name: "Persist"
+        minCopies: 3
   - name: Grixis Reanimator
     signatureCards:
       - name: "Abhorrent Oculus"
@@ -157,12 +244,27 @@ archetypes:
         minCopies: 1
       - name: "Faithless Looting"
         minCopies: 3
+  - name: Arclight Phoenix
+    signatureCards:
+      - name: "Arclight Phoenix"
+        minCopies: 3
+      - name: "Creeping Chill"
+        minCopies: 3
   - name: Burn
     signatureCards:
       - name: "Boltwave"
         minCopies: 3
       - name: "Lightning Bolt"
         minCopies: 4
+  # --- Control pair: partition on Galvanic Discharge (red) ---
+  - name: Jeskai Control
+    signatureCards:
+      - name: "Orim's Chant"
+        minCopies: 2
+      - name: "Wrath of the Skies"
+        minCopies: 2
+      - name: "Galvanic Discharge"
+        minCopies: 2
   - name: Azorius Control
     signatureCards:
       - name: "Teferi, Time Raveler"
@@ -171,18 +273,14 @@ archetypes:
         minCopies: 1
       - name: "Orim's Chant"
         minCopies: 1
-  - name: Esper Blink
+      - name: "Galvanic Discharge"
+        exactCopies: 0
+  - name: Mono-Black Midrange
     signatureCards:
-      - name: "Phelia, Exuberant Shepherd"
+      - name: "Necrodominance"
         minCopies: 3
-      - name: "Emperor of Bones"
-        minCopies: 2
-      - name: "Overlord of the Balemurk"
-        minCopies: 1
-      - name: "Hallowed Fountain"
-        minCopies: 1
-      - name: "Ephemerate"
-        minCopies: 1
+      - name: "Boggart Trawler"
+        minCopies: 3
   - name: Mono-Blue Merfolk
     signatureCards:
       - name: "Lord of Atlantis"
