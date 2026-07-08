@@ -1,4 +1,5 @@
 <script lang="ts">
+	import LoadingNotice from '$lib/components/LoadingNotice.svelte';
 	import MatchupMatrix from '$lib/components/MatchupMatrix.svelte';
 	import MetagameEvolution from '$lib/components/MetagameEvolution.svelte';
 	import MetagameScatter from '$lib/components/MetagameScatter.svelte';
@@ -6,6 +7,7 @@
 		archetypeCardMap,
 		archetypeStats,
 		filteredTournaments,
+		isCurrentFormatLoading,
 		metagameData,
 		playerArchetypes,
 	} from '$lib/stores/tournaments';
@@ -65,6 +67,8 @@
 			archetypeCardMap={$archetypeCardMap}
 		/>
 	</section>
+{:else if $isCurrentFormatLoading}
+	<LoadingNotice />
 {:else if noTournamentsSelected}
 	<p class="no-data warning">No tournaments selected. Select at least one tournament to run the analysis.</p>
 {:else}

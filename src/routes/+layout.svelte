@@ -6,6 +6,7 @@
 	import { page } from '$app/state';
 	import AppSidebar from '$lib/components/AppSidebar.svelte';
 	import { settings } from '$lib/stores/settings';
+	import { ensureFormatLoaded } from '$lib/stores/tournaments';
 	import { searchParamsToSettings, settingsQueryString } from '$lib/stores/url-settings';
 
 	let { children } = $props();
@@ -42,6 +43,12 @@
 		const q = qs;
 		if (!initialized) return;
 		replaceState(`${page.url.pathname}${q}`, {});
+	});
+
+	// Fetch the selected format's tournament data (no-op once loaded).
+	// The layout wraps every route, so this also covers format switches.
+	$effect(() => {
+		ensureFormatLoaded($settings.format);
 	});
 </script>
 

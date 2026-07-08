@@ -1,6 +1,7 @@
 <script lang="ts">
 import { base } from '$app/paths';
-import { metagameData } from '$lib/stores/tournaments';
+import LoadingNotice from '$lib/components/LoadingNotice.svelte';
+import { isCurrentFormatLoading, metagameData } from '$lib/stores/tournaments';
 import { settingsQueryString } from '$lib/stores/url-settings';
 import { pct } from '$lib/utils/format';
 
@@ -137,6 +138,8 @@ function sortIndicator(key: SortKey): string {
 			</tbody>
 		</table>
 	</div>
+{:else if $isCurrentFormatLoading}
+	<LoadingNotice />
 {:else}
 	<p class="no-data">No archetype data available. Load tournament data from the Metagame page.</p>
 {/if}

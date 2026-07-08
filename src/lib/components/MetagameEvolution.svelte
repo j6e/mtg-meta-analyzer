@@ -277,7 +277,11 @@
 	}
 
 	onMount(() => buildChart(series));
-	onDestroy(() => chart?.destroy());
+	onDestroy(() => {
+		chart?.destroy();
+		// Null out so in-flight image onload callbacks don't update a destroyed chart
+		chart = null;
+	});
 
 	$effect(() => {
 		const s = series;

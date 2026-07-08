@@ -1,7 +1,8 @@
 <script lang="ts">
-	import { attributionMatrix } from '$lib/stores/tournaments';
+	import { attributionMatrix, isCurrentFormatLoading } from '$lib/stores/tournaments';
 	import AttributionMatrix from '$lib/components/AttributionMatrix.svelte';
 	import ArchetypeEditor from '$lib/components/ArchetypeEditor.svelte';
+	import LoadingNotice from '$lib/components/LoadingNotice.svelte';
 </script>
 
 <svelte:head>
@@ -27,6 +28,8 @@
 		</p>
 		<AttributionMatrix matrix={$attributionMatrix} />
 	</section>
+{:else if $isCurrentFormatLoading}
+	<LoadingNotice />
 {/if}
 
 <style>
