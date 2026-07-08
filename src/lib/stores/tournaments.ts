@@ -1,22 +1,24 @@
 /**
- * Tournament data store — loads all tournament JSON at build time and provides
- * reactive derived data (player lists, decklists, classifications, metagame stats).
+ * Tournament data store — per-format indexes are bundled at build time (a
+ * lightweight catalog, available synchronously); full tournament data is
+ * fetched lazily per format via ensureFormatLoaded(). Derived data
+ * (classifications, metagame stats) recomputes reactively as formats arrive.
  */
-import { derived, get } from "svelte/store";
+import { derived, get, writable } from "svelte/store";
 import type { ClassificationResult } from "../algorithms/archetype-classifier";
 import {
 	classifyAllPooled,
 	classifyAllSelfReported,
 } from "../algorithms/archetype-classifier";
-import { loadIndexes, loadTournaments } from "../data/loader";
+import { fetchFormatTournaments, loadIndexes } from "../data/loader";
 import type { ArchetypeDefinition } from "../types/archetype";
 import type { ArchetypeStats } from "../types/metagame";
 import type {
 	TournamentData,
 	TournamentImportance,
-	TournamentIndexEntry,
 	TournamentMeta,
 } from "../types/tournament";
+import { formatSlug } from "../utils/format-slug";
 import {
 	buildAttributionMatrix,
 	buildMatchupMatrix,
@@ -27,51 +29,93 @@ import {
 import { activeArchetypeConfig, activeArchetypeDefs } from "./archetype-configs";
 import { settings } from "./settings";
 
-// --- Raw data (loaded once at build time) ---
+// --- Catalog (per-format indexes, bundled at build time) ---
 
-const allTournaments = loadTournaments();
 const allIndexes = loadIndexes();
 
-/** Flat lookup of index entries by tournament ID (merged across all formats). */
-const indexById = new Map<string, TournamentIndexEntry>();
-for (const entries of allIndexes.values()) {
-	for (const entry of entries) {
-		indexById.set(entry.id, entry);
+// --- Lazily fetched tournament data ---
+
+/** Full tournament data fetched so far, keyed by tournament ID. */
+const loadedTournaments = writable<Map<string, TournamentData>>(new Map());
+
+/** Fetch state per format slug. */
+const formatLoadState = writable<Map<string, "loading" | "loaded" | "error">>(
+	new Map(),
+);
+
+/**
+ * Fetch a format's tournament data unless already loaded/loading.
+ * Results are committed in a single store update so downstream derivations
+ * (KNN classification, matchup matrices) recompute once per format, not
+ * once per file.
+ */
+export async function ensureFormatLoaded(format: string): Promise<void> {
+	const slug = formatSlug(format);
+	const state = get(formatLoadState).get(slug);
+	if (state === "loading" || state === "loaded") return;
+	const entries = allIndexes.get(slug);
+	if (!entries) return; // format without indexed data — nothing to fetch
+	formatLoadState.update((m) => new Map(m).set(slug, "loading"));
+	try {
+		const tournaments = await fetchFormatTournaments(slug, entries);
+		loadedTournaments.update((map) => {
+			const next = new Map(map);
+			for (const t of tournaments) {
+				next.set(t.meta.id, t);
+			}
+			return next;
+		});
+		formatLoadState.update((m) => new Map(m).set(slug, "loaded"));
+	} catch (e) {
+		console.error(`Failed to load ${format} tournament data:`, e);
+		formatLoadState.update((m) => new Map(m).set(slug, "error"));
 	}
 }
 
+/** Whether the currently selected format's data is still being fetched. */
+export const isCurrentFormatLoading = derived(
+	[settings, formatLoadState],
+	([$settings, $state]) => $state.get(formatSlug($settings.format)) === "loading",
+);
+
 // --- Derived stores ---
 
-export type TournamentListEntry = TournamentMeta & {
+export type TournamentListEntry = Omit<TournamentMeta, "fetchedAt"> & {
 	matchCount: number;
 	cleanName: string;
 	importance: TournamentImportance;
 };
 
-/** List of all tournament metadata (with computed match count + index data), sorted by date descending. */
+/** List of all tournament metadata (from the bundled indexes), sorted by date descending. */
 export const tournamentList = derived([], (): TournamentListEntry[] => {
-	return [...allTournaments.values()]
-		.map((t) => {
-			const idx = indexById.get(t.meta.id);
-			return {
-				...t.meta,
-				matchCount: Object.values(t.rounds).reduce(
-					(sum, r) => sum + r.matches.length,
-					0,
-				),
-				cleanName: idx?.cleanName ?? t.meta.name,
-				importance: idx?.importance ?? "other",
-			};
-		})
-		.sort((a, b) => b.date.localeCompare(a.date));
+	const list: TournamentListEntry[] = [];
+	for (const entries of allIndexes.values()) {
+		for (const e of entries) {
+			list.push({
+				id: e.id,
+				name: e.name,
+				date: e.date,
+				formats: [e.format],
+				url: e.url,
+				playerCount: e.playerCount,
+				roundCount: e.roundCount,
+				source: e.source,
+				tabletop: e.tabletop,
+				matchCount: e.matchCount,
+				cleanName: e.cleanName,
+				importance: e.importance,
+			});
+		}
+	}
+	return list.sort((a, b) => b.date.localeCompare(a.date));
 });
 
-/** All unique formats across all tournaments. */
+/** All formats with indexed data, sorted alphabetically. */
 export const availableFormats = derived([], (): string[] => {
 	const formats = new Set<string>();
-	for (const t of allTournaments.values()) {
-		for (const f of t.meta.formats) {
-			formats.add(f);
+	for (const entries of allIndexes.values()) {
+		for (const e of entries) {
+			formats.add(e.format);
 		}
 	}
 	return [...formats].sort();
@@ -79,9 +123,9 @@ export const availableFormats = derived([], (): string[] => {
 
 /** Tournaments filtered by the current settings (format, date range, selection). */
 export const filteredTournaments = derived(
-	[settings],
-	([$settings]): TournamentData[] => {
-		let tournaments = [...allTournaments.values()];
+	[settings, loadedTournaments],
+	([$settings, $loaded]): TournamentData[] => {
+		let tournaments = [...$loaded.values()];
 
 		// Filter by explicitly selected tournaments
 		const idSet = new Set($settings.selectedTournamentIds);

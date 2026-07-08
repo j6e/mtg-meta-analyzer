@@ -42,7 +42,6 @@ const premodernTournament: TournamentListEntry = {
 	date: "2026-06-01",
 	formats: ["Premodern"],
 	url: "",
-	fetchedAt: "",
 	playerCount: 64,
 	roundCount: 8,
 	source: "mtgo",

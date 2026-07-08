@@ -1,6 +1,12 @@
 import { derived, get, writable } from "svelte/store";
 import { describe, expect, it } from "vitest";
 import { resetSettings, settings } from "../../src/lib/stores/settings";
+import {
+	availableFormats,
+	ensureFormatLoaded,
+	filteredTournaments,
+	tournamentList,
+} from "../../src/lib/stores/tournaments";
 
 describe("settings store", () => {
 	it("has correct defaults", () => {
@@ -73,6 +79,35 @@ describe("settings store", () => {
 		expect(s.format).toBe("Standard");
 		expect(s.selectedTournamentIds).toEqual([]);
 		expect(s.otherMode).toBe("minShare");
+	});
+});
+
+describe("lazy tournament loading", () => {
+	// tests/setup.ts mocks the loader: index fixture has one Standard entry
+	// ("test-1") and fetchFormatTournaments resolves its full data.
+
+	it("exposes the catalog synchronously from the bundled indexes", () => {
+		expect(get(tournamentList).map((t) => t.id)).toEqual(["test-1"]);
+		expect(get(availableFormats)).toEqual(["Standard"]);
+	});
+
+	it("populates filteredTournaments once the format is loaded", async () => {
+		resetSettings();
+		settings.update((s) => ({
+			...s,
+			format: "Standard",
+			dateFrom: "2026-01-01",
+			dateTo: "2026-12-31",
+			selectedTournamentIds: ["test-1"],
+		}));
+		expect(get(filteredTournaments)).toEqual([]);
+		await ensureFormatLoaded("Standard");
+		expect(get(filteredTournaments).map((t) => t.meta.id)).toEqual(["test-1"]);
+		resetSettings();
+	});
+
+	it("is a no-op for formats without indexed data", async () => {
+		await expect(ensureFormatLoaded("Vintage")).resolves.toBeUndefined();
 	});
 });
 

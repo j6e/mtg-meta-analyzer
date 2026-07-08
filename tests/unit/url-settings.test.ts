@@ -16,7 +16,6 @@ function makeTournament(id: string, format: string, date: string): TournamentLis
 		date,
 		formats: [format],
 		url: "",
-		fetchedAt: "",
 		playerCount: 32,
 		roundCount: 5,
 		source: "melee" as const,

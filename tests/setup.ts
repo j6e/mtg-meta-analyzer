@@ -1,10 +1,10 @@
 import "@testing-library/jest-dom/vitest";
 import { vi } from "vitest";
 
-// Mock the build-time data loader so tests never eagerly import the entire
-// data/ tree (hundreds of MB of tournament JSON — OOMs local machines).
-// One tiny fixture keeps data-derived stores in their normal "populated"
-// state (e.g. settingsQueryString emits "" while tournamentList is empty).
+// Mock the data loader so tests neither bundle the real per-format indexes
+// nor hit the network for tournament data. One tiny fixture keeps
+// data-derived stores in their normal "populated" state (e.g.
+// settingsQueryString emits "" while tournamentList is empty).
 vi.mock("../src/lib/data/loader", () => {
 	const meta = {
 		id: "test-1",
@@ -29,8 +29,8 @@ vi.mock("../src/lib/data/loader", () => {
 		path: "2026-01/test-1.json",
 	};
 	return {
-		loadTournaments: () =>
-			new Map([["test-1", { meta, players: {}, decklists: {}, rounds: {} }]]),
 		loadIndexes: () => new Map([["standard", [indexEntry]]]),
+		fetchFormatTournaments: () =>
+			Promise.resolve([{ meta, players: {}, decklists: {}, rounds: {} }]),
 	};
 });

@@ -20,7 +20,6 @@ function entry(
 		date,
 		formats: [format],
 		url: "",
-		fetchedAt: "",
 		playerCount: 10,
 		roundCount: 3,
 		matchCount,
