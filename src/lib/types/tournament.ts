@@ -80,6 +80,6 @@ export interface TournamentIndexEntry {
 	roundCount: number;
 	importance: TournamentImportance;
 	tabletop: boolean;
-	pairings: boolean; // whether match/round data is available (MTGO doesn't have this)
+	pairings: boolean; // whether match/round data is available (mtgo.com-sourced events don't have this; videre-sourced ones do)
 	path: string; // relative path within format dir, e.g. "2026-03/melee-385576.json"
 }

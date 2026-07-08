@@ -72,7 +72,8 @@
 				Content: <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>
 			</p>
 			<p class="disclaimer">
-				Data from <a href="https://melee.gg" target="_blank" rel="noopener">melee.gg</a>
+				Data from <a href="https://melee.gg" target="_blank" rel="noopener">melee.gg</a>,
+				the <a href="https://github.com/videre-project" target="_blank" rel="noopener">Videre Project</a> (MTGO)
 				&amp; <a href="https://scryfall.com" target="_blank" rel="noopener">Scryfall</a>.
 				Magic: The Gathering is &trade; &amp; &copy; Wizards of the Coast.
 				Not affiliated with or endorsed by WotC.

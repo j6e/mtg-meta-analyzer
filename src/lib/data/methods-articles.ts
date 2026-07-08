@@ -46,7 +46,9 @@ const winRateCorrection: MethodArticle = {
 	the losses, inflating every archetype's observed win rate above 50%.
 </p>
 <p>
-	Other tournaments (mostly paper events) publish full round data with pairings, giving us
+	Other tournaments — paper events from melee.gg and, since May 2026, MTGO events sourced
+	from the <a href="https://github.com/videre-project" target="_blank" rel="noopener">Videre Project</a> —
+	publish full round data with pairings, giving us
 	unbiased match-level information. The correction needs to handle both data sources
 	gracefully, using the unbiased round data as an anchor when available.
 </p>`,
