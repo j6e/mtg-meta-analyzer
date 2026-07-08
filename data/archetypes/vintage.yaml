@@ -1,14 +1,6 @@
 format: Vintage
-date: "2026-03-15"
+date: "2026-07-08"
 archetypes:
-  - name: Lurrus PO
-    signatureCards:
-      - name: "Lurrus of the Dream-Den"
-        minCopies: 1
-      - name: "Stock Up"
-        minCopies: 1
-      - name: "Thundertrap Trainer"
-        minCopies: 1
   - name: Raker Shops
     signatureCards:
       - name: "Grim Monolith"
@@ -16,30 +8,6 @@ archetypes:
       - name: "The One Ring"
         minCopies: 1
       - name: "Sensei's Divining Top"
-        minCopies: 1
-  - name: Mono-White Initiative
-    signatureCards:
-      - name: "White Plume Adventurer"
-        minCopies: 1
-      - name: "Chrome Mox"
-        minCopies: 1
-      - name: "Seasoned Dungeoneer"
-        minCopies: 1
-  - name: Esper Lurrus Control
-    signatureCards:
-      - name: "Lurrus of the Dream-Den"
-        minCopies: 1
-      - name: "Orcish Bowmasters"
-        minCopies: 1
-      - name: "Psychic Frog"
-        minCopies: 1
-  - name: Jewel Shops
-    signatureCards:
-      - name: "Coveted Jewel"
-        minCopies: 1
-      - name: "Transmute Artifact"
-        minCopies: 1
-      - name: "The One Ring"
         minCopies: 1
   - name: Sphere Shops
     signatureCards:
@@ -49,51 +17,117 @@ archetypes:
         minCopies: 1
       - name: "Null Rod"
         minCopies: 1
+  - name: Jewel Shops
+    signatureCards:
+      - name: "Coveted Jewel"
+        minCopies: 3
+      - name: "Mishra's Workshop"
+        minCopies: 3
+  - name: Mono-White Initiative
+    signatureCards:
+      - name: "White Plume Adventurer"
+        minCopies: 1
+      - name: "Chrome Mox"
+        minCopies: 1
+      - name: "Seasoned Dungeoneer"
+        minCopies: 1
   - name: Dredge
     signatureCards:
       - name: "Bazaar of Baghdad"
-        minCopies: 1
-      - name: "Force of Negation"
-        minCopies: 1
+        minCopies: 3
       - name: "Grief"
         minCopies: 1
-  - name: Dimir Lurrus Control
+  - name: Counter Vine
     signatureCards:
-      - name: "Lurrus of the Dream-Den"
-        minCopies: 1
-      - name: "Orcish Bowmasters"
-        minCopies: 1
-      - name: "Psychic Frog"
-        minCopies: 1
-  - name: Lurrus Breach
-    signatureCards:
-      - name: "Lurrus of the Dream-Den"
-        minCopies: 1
-      - name: "Stock Up"
-        minCopies: 1
-      - name: "Mana Drain"
-        minCopies: 1
+      - name: "Bazaar of Baghdad"
+        minCopies: 3
+      - name: "Vengevine"
+        minCopies: 3
   - name: Oath of Druids
     signatureCards:
       - name: "Oath of Druids"
-        minCopies: 1
-      - name: "Atraxa, Grand Unifier"
-        minCopies: 1
-      - name: "Ponder"
-        minCopies: 1
-  - name: Blue Tempo
-    signatureCards:
-      - name: "Psychic Frog"
-        minCopies: 1
-      - name: "Collector Ouphe"
-        minCopies: 1
-      - name: "Murktide Regent"
-        minCopies: 1
+        minCopies: 3
+      - name: "Forbidden Orchard"
+        minCopies: 3
   - name: Doomsday
     signatureCards:
       - name: "Doomsday"
+        minCopies: 3
+      - name: "Dark Ritual"
+        minCopies: 3
+  - name: Lurrus PO
+    signatureCards:
+      - name: "Paradoxical Outcome"
         minCopies: 1
-      - name: "Lurrus of the Dream-Den"
+      - name: "Thundertrap Trainer"
+        minCopies: 3
+  - name: Paradoxical Outcome
+    signatureCards:
+      - name: "Paradoxical Outcome"
+        minCopies: 2
+      - name: "Thundertrap Trainer"
+        exactCopies: 0
+  - name: Blue Tinker
+    signatureCards:
+      - name: "Tinker"
         minCopies: 1
+      - name: "Flow State"
+        minCopies: 2
+  - name: Lurrus Breach
+    signatureCards:
+      - name: "Gifts Ungiven"
+        minCopies: 1
+      - name: "Underworld Breach"
+        minCopies: 1
+  - name: Lurrus DRS
+    signatureCards:
+      - name: "Deathrite Shaman"
+        minCopies: 3
       - name: "Psychic Frog"
+        minCopies: 1
+      - name: "Force of Vigor"
+        minCopies: 3
+  - name: Sultai Midrange
+    signatureCards:
+      - name: "Deathrite Shaman"
+        minCopies: 3
+      - name: "Psychic Frog"
+        minCopies: 1
+      - name: "Force of Vigor"
+        exactCopies: 0
+  - name: Esper Lurrus Control
+    signatureCards:
+      - name: "Psychic Frog"
+        minCopies: 1
+      - name: "Orcish Bowmasters"
+        minCopies: 1
+      - name: "Swords to Plowshares"
+        minCopies: 1
+      - name: "Deathrite Shaman"
+        exactCopies: 0
+  - name: Dimir Lurrus Control
+    signatureCards:
+      - name: "Psychic Frog"
+        minCopies: 1
+      - name: "Orcish Bowmasters"
+        minCopies: 1
+      - name: "Swords to Plowshares"
+        exactCopies: 0
+      - name: "Deathrite Shaman"
+        exactCopies: 0
+  - name: Stiflenought
+    signatureCards:
+      - name: "Phyrexian Dreadnought"
+        minCopies: 3
+  - name: Eldrazi
+    signatureCards:
+      - name: "Eldrazi Temple"
+        minCopies: 3
+      - name: "Glaring Fleshraker"
+        minCopies: 3
+  - name: High Tide
+    signatureCards:
+      - name: "High Tide"
+        minCopies: 1
+      - name: "Frantic Search"
         minCopies: 1
