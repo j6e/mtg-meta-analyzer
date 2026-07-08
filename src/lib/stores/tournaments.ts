@@ -2,16 +2,14 @@
  * Tournament data store — loads all tournament JSON at build time and provides
  * reactive derived data (player lists, decklists, classifications, metagame stats).
  */
-import { derived, get, writable } from "svelte/store";
+import { derived, get } from "svelte/store";
 import type { ClassificationResult } from "../algorithms/archetype-classifier";
 import {
-	classifyAll,
 	classifyAllPooled,
 	classifyAllSelfReported,
 } from "../algorithms/archetype-classifier";
 import { loadIndexes, loadTournaments } from "../data/loader";
 import type { ArchetypeDefinition } from "../types/archetype";
-import type { DecklistInfo } from "../types/decklist";
 import type { ArchetypeStats } from "../types/metagame";
 import type {
 	TournamentData,
@@ -41,11 +39,6 @@ for (const entries of allIndexes.values()) {
 		indexById.set(entry.id, entry);
 	}
 }
-
-/** Writable store for the currently selected tournament ID (single-select for decklist view). */
-export const selectedTournamentId = writable<string | null>(
-	allTournaments.size > 0 ? [...allTournaments.keys()][0] : null,
-);
 
 // --- Derived stores ---
 
@@ -84,11 +77,6 @@ export const availableFormats = derived([], (): string[] => {
 	return [...formats].sort();
 });
 
-/** All format slugs that have index files (e.g. "standard", "modern"). */
-export const availableFormatSlugs = derived([], (): string[] => {
-	return [...allIndexes.keys()].sort();
-});
-
 /** Tournaments filtered by the current settings (format, date range, selection). */
 export const filteredTournaments = derived(
 	[settings],
@@ -115,31 +103,6 @@ export const filteredTournaments = derived(
 		}
 
 		return tournaments;
-	},
-);
-
-/** The currently selected single tournament (for decklist/player views). */
-export const currentTournament = derived(
-	selectedTournamentId,
-	($id): TournamentData | null => {
-		if ($id === null) return null;
-		return allTournaments.get($id) ?? null;
-	},
-);
-
-/** All players in the current tournament, sorted by rank. */
-export const playerList = derived(currentTournament, ($tournament) => {
-	if (!$tournament) return [];
-	return Object.entries($tournament.players)
-		.map(([id, info]) => ({ id, ...info }))
-		.sort((a, b) => a.rank - b.rank);
-});
-
-/** All decklists in the current tournament, keyed by decklist ID. */
-export const decklistMap = derived(
-	currentTournament,
-	($tournament): Record<string, DecklistInfo> => {
-		return $tournament?.decklists ?? {};
 	},
 );
 
@@ -239,40 +202,6 @@ export const archetypeStats = derived(
 	($data): ArchetypeStats[] => $data?.stats ?? [],
 );
 
-/** Player ID → archetype for the currently selected single tournament. */
-export const currentTournamentArchetypes = derived(
-	[
-		currentTournament,
-		classificationResults,
-		activeArchetypeConfig,
-		useSelfReportedArchetype,
-	],
-	([$tournament, $resultsMap, $config, $useSelfReported]): Map<string, string> => {
-		if (!$tournament) return new Map();
-		// Reuse pooled results when the tournament is in the filtered set
-		const cached = $resultsMap.get($tournament.meta.id);
-		if (cached) {
-			return buildPlayerArchetypeMap($tournament, cached);
-		}
-		// Fallback: tournament not in filtered set (rare)
-		if ($useSelfReported) {
-			const single = new Map([[$tournament.meta.id, $tournament.decklists]]);
-			const map = classifyAllSelfReported(single);
-			return buildPlayerArchetypeMap($tournament, map.get($tournament.meta.id) ?? []);
-		}
-		const results = classifyAll($tournament.decklists, $config.archetypes, {
-			minConfidence: 0.4,
-			nameEqualsCommander: $config.nameEqualsCommander,
-		});
-		return buildPlayerArchetypeMap($tournament, results);
-	},
-);
-
-/** Look up a tournament by ID (non-reactive). */
-export function getTournament(id: string): TournamentData | null {
-	return allTournaments.get(id) ?? null;
-}
-
 /** Attribution matrix scoped to the currently filtered tournaments. */
 export const attributionMatrix = derived(
 	[filteredTournaments, classificationResults],
@@ -285,9 +214,4 @@ export const attributionMatrix = derived(
 /** Look up an archetype definition by name (non-reactive snapshot). */
 export function getArchetypeDefinition(name: string): ArchetypeDefinition | null {
 	return get(activeArchetypeDefs).find((d) => d.name === name) ?? null;
-}
-
-/** Look up index entry for a tournament (non-reactive). */
-export function getIndexEntry(id: string): TournamentIndexEntry | undefined {
-	return indexById.get(id);
 }

@@ -19,19 +19,13 @@ vi.mock("../../src/lib/stores/tournaments", () => {
 	return {
 		tournamentList: mockTournamentList,
 		availableFormats: mockAvailableFormats,
-		selectedTournamentId: writable(null),
 		filteredTournaments: writable([]),
-		currentTournament: writable(null),
-		playerList: writable([]),
-		decklistMap: writable({}),
 		archetypeCardMap: writable(new Map()),
 		classificationResults: writable(new Map()),
 		playerArchetypes: writable(new Map()),
 		metagameData: writable(null),
 		archetypeStats: writable([]),
-		currentTournamentArchetypes: writable(new Map()),
 		attributionMatrix: writable(null),
-		getTournament: vi.fn(() => null),
 	};
 });
 
