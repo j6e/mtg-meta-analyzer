@@ -3,10 +3,17 @@ import { join } from "node:path";
 import type { TournamentIndexEntry } from "../../src/lib/types/tournament";
 import { cleanTournamentName, inferImportance } from "./importance";
 
-/** Update or create a per-format index.json, preserving manual overrides. */
+/**
+ * Update or create a per-format index.json, preserving manual overrides.
+ *
+ * `opts.supersedesId` handles the same event changing id (e.g. mtgo-X →
+ * videre-X): the old entry is replaced in place and its manual overrides
+ * carried onto the new entry, in one atomic read-modify-write.
+ */
 export function updateFormatIndex(
 	formatSlug: string,
 	newEntry: TournamentIndexEntry,
+	opts?: { supersedesId?: string },
 ): void {
 	const indexPath = join("data", formatSlug, "index.json");
 	let entries: TournamentIndexEntry[] = [];
@@ -15,8 +22,11 @@ export function updateFormatIndex(
 		entries = JSON.parse(readFileSync(indexPath, "utf-8"));
 	}
 
-	// Find existing entry and preserve manual overrides
-	const existingIdx = entries.findIndex((e) => e.id === newEntry.id);
+	// Find existing entry (same id, or the entry this one supersedes) and
+	// preserve manual overrides
+	const existingIdx = entries.findIndex(
+		(e) => e.id === newEntry.id || e.id === opts?.supersedesId,
+	);
 	if (existingIdx >= 0) {
 		const existing = entries[existingIdx];
 		// Preserve cleanName if it was manually edited (differs from both raw and auto-cleaned)

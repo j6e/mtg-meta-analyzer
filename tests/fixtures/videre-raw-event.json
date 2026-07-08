@@ -1,0 +1,285 @@
+{
+	"event": {
+		"id": 12846504,
+		"name": "Pauper Challenge 32",
+		"date": "2026-07-05",
+		"format": "Pauper",
+		"kind": "Challenge",
+		"rounds": 6,
+		"players": 53
+	},
+	"decks": [
+		{
+			"id": 58591496,
+			"player": "Brvnx",
+			"mainboard": [
+				{
+					"id": 33520,
+					"name": "Force Spike",
+					"quantity": 3
+				},
+				{
+					"id": 30394,
+					"name": "Brainstorm",
+					"quantity": 4
+				},
+				{
+					"id": 38498,
+					"name": "Counterspell",
+					"quantity": 4
+				}
+			],
+			"sideboard": [
+				{
+					"id": 69463,
+					"name": "Murmuring Mystic",
+					"quantity": 2
+				},
+				{
+					"id": 126131,
+					"name": "Deem Inferior",
+					"quantity": 2
+				},
+				{
+					"id": 99999,
+					"name": "Alive // Well",
+					"quantity": 1
+				}
+			]
+		},
+		{
+			"id": 58591530,
+			"player": "kuldothared",
+			"mainboard": [
+				{
+					"id": 67627,
+					"name": "Cast Down",
+					"quantity": 4
+				},
+				{
+					"id": 83247,
+					"name": "Cleansing Wildfire",
+					"quantity": 4
+				},
+				{
+					"id": 105488,
+					"name": "Drossforge Bridge",
+					"quantity": 4
+				}
+			],
+			"sideboard": [
+				{
+					"id": 147217,
+					"name": "Faerie Macabre",
+					"quantity": 1
+				},
+				{
+					"id": 35136,
+					"name": "Terminate",
+					"quantity": 1
+				}
+			]
+		}
+	],
+	"matches": [
+		{
+			"round": 1,
+			"player": "Justsome_guy",
+			"opponent": null,
+			"record": "2-0-0",
+			"result": "win",
+			"isbye": true
+		},
+		{
+			"round": 1,
+			"player": "Arbitation",
+			"opponent": "kuldothared",
+			"record": "0-2-0",
+			"result": "loss",
+			"isbye": false
+		},
+		{
+			"round": 1,
+			"player": "kuldothared",
+			"opponent": "Arbitation",
+			"record": "2-0-0",
+			"result": "win",
+			"isbye": false
+		},
+		{
+			"round": 2,
+			"player": "Brvnx",
+			"opponent": "kuldothared",
+			"record": "1-1-1",
+			"result": "draw",
+			"isbye": false
+		},
+		{
+			"round": 2,
+			"player": "kuldothared",
+			"opponent": "Brvnx",
+			"record": "1-1-1",
+			"result": "draw",
+			"isbye": false
+		},
+		{
+			"round": 7,
+			"player": "_blaze66",
+			"opponent": "Hamuda",
+			"record": "0-2-0",
+			"result": "loss",
+			"isbye": false
+		},
+		{
+			"round": 7,
+			"player": "Brvnx",
+			"opponent": "LuffyDoChapeuDePalha",
+			"record": "2-1-0",
+			"result": "win",
+			"isbye": false
+		},
+		{
+			"round": 7,
+			"player": "GhastM4n",
+			"opponent": "Kirblinxy",
+			"record": "0-2-0",
+			"result": "loss",
+			"isbye": false
+		},
+		{
+			"round": 7,
+			"player": "Hamuda",
+			"opponent": "_blaze66",
+			"record": "2-0-0",
+			"result": "win",
+			"isbye": false
+		},
+		{
+			"round": 7,
+			"player": "Kirblinxy",
+			"opponent": "GhastM4n",
+			"record": "2-0-0",
+			"result": "win",
+			"isbye": false
+		},
+		{
+			"round": 7,
+			"player": "kuldothared",
+			"opponent": "marzaboi",
+			"record": "2-0-0",
+			"result": "win",
+			"isbye": false
+		},
+		{
+			"round": 7,
+			"player": "LuffyDoChapeuDePalha",
+			"opponent": "Brvnx",
+			"record": "1-2-0",
+			"result": "loss",
+			"isbye": false
+		},
+		{
+			"round": 7,
+			"player": "marzaboi",
+			"opponent": "kuldothared",
+			"record": "0-2-0",
+			"result": "loss",
+			"isbye": false
+		},
+		{
+			"round": 8,
+			"player": "Brvnx",
+			"opponent": "Hamuda",
+			"record": "2-1-0",
+			"result": "win",
+			"isbye": false
+		},
+		{
+			"round": 8,
+			"player": "Hamuda",
+			"opponent": "Brvnx",
+			"record": "1-2-0",
+			"result": "loss",
+			"isbye": false
+		},
+		{
+			"round": 8,
+			"player": "Kirblinxy",
+			"opponent": "kuldothared",
+			"record": "1-2-0",
+			"result": "loss",
+			"isbye": false
+		},
+		{
+			"round": 8,
+			"player": "kuldothared",
+			"opponent": "Kirblinxy",
+			"record": "2-1-0",
+			"result": "win",
+			"isbye": false
+		},
+		{
+			"round": 9,
+			"player": "Brvnx",
+			"opponent": "kuldothared",
+			"record": "0-2-0",
+			"result": "loss",
+			"isbye": false
+		},
+		{
+			"round": 9,
+			"player": "kuldothared",
+			"opponent": "Brvnx",
+			"record": "2-0-0",
+			"result": "win",
+			"isbye": false
+		}
+	],
+	"standings": [
+		{
+			"rank": 1,
+			"player": "kuldothared",
+			"record": "8-1-0",
+			"points": 24,
+			"omwp": 61.11,
+			"gwp": 66.67,
+			"owp": 55.6
+		},
+		{
+			"rank": 2,
+			"player": "Brvnx",
+			"record": "7-2-0",
+			"points": 21,
+			"omwp": 61.11,
+			"gwp": 71.43,
+			"owp": 56.87
+		},
+		{
+			"rank": 3,
+			"player": "Kirblinxy",
+			"record": "6-2-0",
+			"points": 18,
+			"omwp": 61.11,
+			"gwp": 76.92,
+			"owp": 57.47
+		},
+		{
+			"rank": 4,
+			"player": "Hamuda",
+			"record": "6-2-0",
+			"points": 18,
+			"omwp": 61.11,
+			"gwp": 76.92,
+			"owp": 56.14
+		},
+		{
+			"rank": 18,
+			"player": "Justsome_guy",
+			"record": "3-3-0",
+			"points": 9,
+			"omwp": 63.33,
+			"gwp": 50,
+			"owp": 55.6
+		}
+	]
+}

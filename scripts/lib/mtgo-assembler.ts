@@ -13,6 +13,7 @@ import type {
 	MtgoRawTournament,
 	MtgoRawWinLoss,
 } from "./mtgo-client";
+import { PLAYOFF_ROUNDS } from "./round-utils";
 
 // ---------------------------------------------------------------------------
 // Format code mapping
@@ -138,22 +139,13 @@ function parseCards(cards: MtgoRawDeck["main_deck"]): CardEntry[] {
 	}));
 }
 
-const BRACKET_ROUND_NAMES: Record<
-	number,
-	{ key: string; name: string; number: number }
-> = {
-	0: { key: "playoffs-f", name: "Finals", number: 999 },
-	1: { key: "playoffs-sf", name: "Semifinals", number: 950 },
-	2: { key: "playoffs-qf", name: "Quarterfinals", number: 900 },
-};
-
 function buildPlayoffRounds(
 	brackets: MtgoRawBracketRound[],
 ): Record<string, RoundInfo> {
 	const rounds: Record<string, RoundInfo> = {};
 
 	for (const bracket of brackets) {
-		const info = BRACKET_ROUND_NAMES[bracket.index];
+		const info = PLAYOFF_ROUNDS[bracket.index];
 		if (!info) continue;
 
 		const matches: MatchResult[] = bracket.matches.map((m) => {

@@ -1,0 +1,74 @@
+name: Fetch Videre Tournaments
+
+on:
+  schedule:
+    - cron: '0 6 * * 1' # weekly, Mondays at 06:00 UTC
+  workflow_dispatch:
+    inputs:
+      from:
+        description: 'Start month (YYYY-MM), defaults to past month'
+        required: false
+        type: string
+      to:
+        description: 'End month (YYYY-MM), defaults to current month'
+        required: false
+        type: string
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          ref: master
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - run: bun install --frozen-lockfile
+
+      - name: Start Videre DB bridge
+        run: |
+          curl -fsSL -o cloudflared \
+            https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64
+          chmod +x cloudflared
+          ./cloudflared access tcp \
+            --hostname public-db.videreproject.com --url 127.0.0.1:5432 &
+          for i in $(seq 1 30); do
+            (exec 3<>/dev/tcp/127.0.0.1/5432) 2>/dev/null && exit 0
+            sleep 1
+          done
+          echo "Bridge did not come up on port 5432" >&2
+          exit 1
+
+      - name: Fetch Videre tournaments
+        run: |
+          if [ -n "${{ inputs.from }}" ] || [ -n "${{ inputs.to }}" ]; then
+            ARGS=""
+            [ -n "${{ inputs.from }}" ] && ARGS="$ARGS --from ${{ inputs.from }}"
+            [ -n "${{ inputs.to }}" ] && ARGS="$ARGS --to ${{ inputs.to }}"
+            bun run scripts/fetch-videre.ts $ARGS
+          else
+            PREV_MONTH=$(date -u -d "1 month ago" +%Y-%m)
+            CURR_MONTH=$(date -u +%Y-%m)
+            bun run scripts/fetch-videre.ts --from "$PREV_MONTH" --to "$CURR_MONTH"
+          fi
+
+      - name: Commit and push
+        run: |
+          git add data/
+          if git diff --cached --quiet; then
+            echo "No new Videre tournaments found."
+            exit 0
+          fi
+          COUNT=$(git diff --cached --name-only --diff-filter=A | grep -c 'videre-.*\.json$')
+          DATE=$(date -u +%Y-%m-%d)
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "data: fetch $COUNT videre tournaments ($DATE)"
+          git push

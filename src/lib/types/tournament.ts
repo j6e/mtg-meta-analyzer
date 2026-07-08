@@ -1,6 +1,6 @@
 import type { DecklistInfo } from "./decklist.ts";
 
-export type TournamentSource = "melee" | "spicerack" | "mtgo";
+export type TournamentSource = "melee" | "spicerack" | "mtgo" | "videre";
 
 /** professional (***), premier (**), competitive (*), other (blank) */
 export type TournamentImportance = "professional" | "premier" | "competitive" | "other";
