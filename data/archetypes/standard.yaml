@@ -1,5 +1,5 @@
 format: Standard
-date: "2026-03-08"
+date: "2026-07-03"
 archetypes:
   - name: Izzet Lessons
     signatureCards:
@@ -8,6 +8,35 @@ archetypes:
       - name: Firebending Lesson
         minCopies: 4
       - name: Accumulate Wisdom
+        minCopies: 4
+      - name: Jeskai Revelation
+        exactCopies: 0
+
+  - name: Jeskai Lessons
+    signatureCards:
+      - name: Gran-Gran
+        minCopies: 4
+      - name: Firebending Lesson
+        minCopies: 4
+      - name: Accumulate Wisdom
+        minCopies: 4
+      - name: Jeskai Revelation
+        minCopies: 4
+
+  - name: Izzet Maestro
+    signatureCards:
+      - name: "Ashling's Command"
+        minCopies: 4
+      - name: Colorstorm Stallion
+        minCopies: 4
+
+  - name: Selesnya Gearhulk
+    signatureCards:
+      - name: Brightglass Gearhulk
+        minCopies: 4
+      - name: Leatherhead, Swamp Stalker
+        minCopies: 2
+      - name: Practiced Offense
         minCopies: 4
 
   - name: Mono-Green Landfall
@@ -53,7 +82,7 @@ archetypes:
       - name: Earthbender Ascension
         minCopies: 3
       - name: Temple Garden
-        minCopies: 4
+        minCopies: 2
 
   - name: Dimir Excruciator
     signatureCards:
@@ -117,7 +146,7 @@ archetypes:
       - name: Sunderflock
         minCopies: 4
       - name: Hearth Elemental
-        minCopies: 4
+        minCopies: 3
 
   - name: Izzet Elementals
     signatureCards:
@@ -158,8 +187,6 @@ archetypes:
         minCopies: 2
       - name: Jeskai Revelation
         minCopies: 1
-      - name: No More Lies
-        minCopies: 2
       - name: Stock Up
         minCopies: 1
 
@@ -187,8 +214,6 @@ archetypes:
         minCopies: 4
       - name: "Stormchaser's Talent"
         minCopies: 4
-      - name: Elusive Otter
-        minCopies: 3
 
   - name: Bant Airbending
     signatureCards:
@@ -225,6 +250,21 @@ archetypes:
         minCopies: 1
       - name: Quantum Riddler
         exactCopies: 0
+      - name: Hardened Academic
+        exactCopies: 0
+
+  - name: Mardu Discard
+    signatureCards:
+      - name: Moonshadow
+        minCopies: 3
+      - name: Marauding Mako
+        minCopies: 3
+      - name: Bloodghast
+        minCopies: 1
+      - name: Quantum Riddler
+        exactCopies: 0
+      - name: Hardened Academic
+        minCopies: 3
 
   - name: Grixis Discard
     signatureCards:
