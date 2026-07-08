@@ -1,5 +1,5 @@
 format: Pauper
-date: "2026-03-10"
+date: "2026-07-08"
 archetypes:
   - name: Mono-Blue Terror
     signatureCards:
@@ -41,9 +41,17 @@ archetypes:
     signatureCards:
       - name: "Goblin Bushwhacker"
         minCopies: 3
+      - name: "Rally at the Hornburg"
+        minCopies: 2
+      - name: "Great Furnace"
+        minCopies: 2
+  - name: Burn
+    signatureCards:
+      - name: "Goblin Tomb Raider"
+        minCopies: 3
       - name: "Great Furnace"
         minCopies: 3
-      - name: "Sneaky Snacker"
+      - name: "Rally at the Hornburg"
         exactCopies: 0
   - name: Mono-Red Madness
     signatureCards:
@@ -63,14 +71,30 @@ archetypes:
         minCopies: 3
       - name: "Refurbished Familiar"
         minCopies: 3
+  - name: Esper Affinity
+    signatureCards:
+      - name: "Glint Hawk"
+        minCopies: 2
+      - name: "Cryogen Relic"
+        minCopies: 2
+      - name: "Refurbished Familiar"
+        minCopies: 2
+      - name: "Kor Skyfisher"
+        minCopies: 2
   - name: Azorius Caw-Gates
     signatureCards:
       - name: "Squadron Hawk"
-        minCopies: 4
+        minCopies: 3
+      - name: "Basilisk Gate"
+        minCopies: 2
+  - name: Naya Gates
+    signatureCards:
+      - name: "Basilisk Gate"
+        minCopies: 3
+      - name: "Pursue the Past"
+        minCopies: 2
       - name: "Sacred Cat"
-        minCopies: 3
-      - name: "The Modern Age"
-        minCopies: 3
+        minCopies: 2
   - name: Mono-White Aggro
     signatureCards:
       - name: "Battle Screech"
@@ -83,11 +107,11 @@ archetypes:
     signatureCards:
       - name: "Spellstutter Sprite"
         minCopies: 3
-      - name: "Of One Mind"
-        minCopies: 3
-      - name: "Ninja of the Deep Hours"
+      - name: "Faerie Seer"
         minCopies: 3
       - name: "Swamp"
+        exactCopies: 0
+      - name: "Skred"
         exactCopies: 0
   - name: Dimir Faeries
     signatureCards:
@@ -107,7 +131,15 @@ archetypes:
         minCopies: 1
       - name: "Archaeomancer"
         minCopies: 1
-  - name: Gruul Monsters
+  - name: Gruul Ponza
+    signatureCards:
+      - name: "Thermokarst"
+        minCopies: 2
+      - name: "Mwonvuli Acid-Moss"
+        minCopies: 2
+      - name: "Utopia Sprawl"
+        minCopies: 2
+  - name: Gruul Ramp
     signatureCards:
       - name: "Writhing Chrysalis"
         minCopies: 3
@@ -131,6 +163,16 @@ archetypes:
         minCopies: 3
       - name: "Generous Ent"
         minCopies: 3
+  - name: Food Gardens
+    signatureCards:
+      - name: "Lembas"
+        minCopies: 3
+      - name: "Khalni Garden"
+        minCopies: 2
+      - name: "Fanatical Offering"
+        minCopies: 2
+      - name: "Cauldron Familiar"
+        minCopies: 2
   - name: Golgari Gardens
     signatureCards:
       - name: "Khalni Garden"
@@ -147,14 +189,20 @@ archetypes:
         minCopies: 3
       - name: "Ethereal Armor"
         minCopies: 3
-  - name: Gruul Storm
+  - name: Ruby Storm
     signatureCards:
-      - name: "Seize the Storm"
-        minCopies: 1
-      - name: "Goblin Anarchomancer"
+      - name: "Seething Song"
         minCopies: 3
       - name: "Manamorphose"
         minCopies: 3
+  - name: Green Tron
+    signatureCards:
+      - name: "Urza's Tower"
+        minCopies: 2
+      - name: "Maelstrom Colossus"
+        minCopies: 2
+      - name: "Boulderbranch Golem"
+        minCopies: 2
   - name: Altar Tron
     signatureCards:
       - name: "Ashnod's Altar"
@@ -171,6 +219,30 @@ archetypes:
         minCopies: 1
       - name: "Urza's Mine"
         minCopies: 1
+  - name: Turbo Fog
+    signatureCards:
+      - name: "Moment's Peace"
+        minCopies: 3
+      - name: "Growth Spiral"
+        minCopies: 2
+  - name: Inside Out Combo
+    signatureCards:
+      - name: "Tireless Tribe"
+        minCopies: 3
+      - name: "Inside Out"
+        minCopies: 3
+  - name: Cycle Storm
+    signatureCards:
+      - name: "Songs of the Damned"
+        minCopies: 3
+      - name: "Drannith Stinger"
+        minCopies: 2
+  - name: Slivers
+    signatureCards:
+      - name: "Muscle Sliver"
+        minCopies: 3
+      - name: "Predatory Sliver"
+        minCopies: 3
   - name: Walls Combo
     signatureCards:
       - name: "Axebane Guardian"
@@ -179,20 +251,10 @@ archetypes:
         minCopies: 1
   - name: Mono-Black Sacrifice
     signatureCards:
-      - name: "Nezumi Linkbreaker"
-        minCopies: 1
-      - name: "Supernatural Stamina"
+      - name: "Bloodthrone Vampire"
         minCopies: 2
-      - name: "Village Rites"
+      - name: "Nested Shambler"
         minCopies: 3
-  - name: Esper Affinity
-    signatureCards:
-      - name: "Glint Hawk"
-        minCopies: 2
-      - name: "Cryogen Relic"
-        minCopies: 2
-      - name: "Refurbished Familiar"
-        minCopies: 2
   - name: Orzhov Blade
     signatureCards:
       - name: "Tithing Blade"
@@ -207,21 +269,35 @@ archetypes:
         minCopies: 3
       - name: "Thoughtcast"
         exactCopies: 0
-  - name: Izzet Control
+  - name: Boros Synthesizer
+    signatureCards:
+      - name: "Galvanic Blast"
+        minCopies: 3
+      - name: "Glint Hawk"
+        minCopies: 3
+      - name: "Kor Skyfisher"
+        minCopies: 3
+  - name: Grixis Control
     signatureCards:
       - name: "Skred"
-        minCopies: 4
-      - name: "Volatile Fjord"
-        minCopies: 4
+        minCopies: 3
       - name: "Tolarian Terror"
         minCopies: 3
+      - name: "Snuff Out"
+        minCopies: 1
+  - name: Izzet Terror
+    signatureCards:
+      - name: "Skred"
+        minCopies: 3
+      - name: "Tolarian Terror"
+        minCopies: 3
+      - name: "Snuff Out"
+        exactCopies: 0
   - name: Jeskai Ephemerate
     signatureCards:
-      - name: "Ephemerate"
-        minCopies: 1
-      - name: "Cleansing Wildfire"
+      - name: "Skred"
         minCopies: 3
-      - name: "Silverbluff Bridge"
-        minCopies: 3
-      - name: "Preordain"
+      - name: "Augur of Bolas"
+        minCopies: 2
+      - name: "Counterspell"
         minCopies: 3
