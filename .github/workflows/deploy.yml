@@ -32,7 +32,6 @@ jobs:
       - run: bun run build
         env:
           BASE_PATH: '/${{ github.event.repository.name }}'
-          NODE_OPTIONS: '--max-old-space-size=8192'
 
       - uses: actions/upload-pages-artifact@v5
         with:

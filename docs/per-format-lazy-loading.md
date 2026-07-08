@@ -1,6 +1,14 @@
 # Plan: Per-format lazy loading of tournament data
 
-> Status: **PROPOSED — awaiting approval, no code changes yet.**
+> Status: **IMPLEMENTED** (2026-07-08, branch `worktree-per-format-lazy-loading`) —
+> pending Joan's build + preview verification (step 7 checklist below).
+> Deviations from the plan as written: the dev-server middleware of D2 turned out
+> to be unnecessary and harmful (Vite already serves `/data/*` raw in dev; the
+> middleware broke the module imports of the bundled indexes), so the plugin is
+> build-only; `formatSlug` lives in `src/lib/utils/format-slug.ts` instead of
+> `loader.ts` (the module-wide loader mock in tests/setup.ts would hide it);
+> plus a chart-teardown fix in MetagameScatter/MetagameEvolution (format
+> switches now unmount charts while card art is loading).
 > Date: 2026-07-08. Branch: `worktree-per-format-lazy-loading` (rebased onto `master` @ `f46b663`).
 > Context: follow-up to `docs/build-memory-investigation.md` (build OOM root cause).
 > Prep already merged on master: `adbe437` (unused `global*` stores) and `f46b663`
