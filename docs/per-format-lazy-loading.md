@@ -1,15 +1,18 @@
 # Plan: Per-format lazy loading of tournament data
 
-> Status: **IMPLEMENTED** (2026-07-08, branch `worktree-per-format-lazy-loading`) —
-> pending Joan's build + preview verification (step 7 checklist below).
+> Status: **IMPLEMENTED & VERIFIED** (2026-07-10, branch `worktree-per-format-lazy-loading`) —
+> build passes on default heap, `build/data` present, preview walkthrough green.
 > Deviations from the plan as written: the dev-server middleware of D2 turned out
 > to be unnecessary and harmful (Vite already serves `/data/*` raw in dev; the
-> middleware broke the module imports of the bundled indexes), so the plugin is
-> build-only; `formatSlug` lives in `src/lib/utils/format-slug.ts` instead of
+> middleware broke the module imports of the bundled indexes); the build copy
+> runs in the SSR build's `closeBundle` (the adapter runs there and rewrites
+> `build/`, so the client build is too early); `vite preview` needs its own
+> `/data/*` middleware (it serves `.svelte-kit/output`, not `build/`);
+> `formatSlug` lives in `src/lib/utils/format-slug.ts` instead of
 > `loader.ts` (the module-wide loader mock in tests/setup.ts would hide it);
 > plus a chart-teardown fix in MetagameScatter/MetagameEvolution (format
 > switches now unmount charts while card art is loading).
-> Date: 2026-07-08. Branch: `worktree-per-format-lazy-loading` (rebased onto `master` @ `f46b663`).
+> Date: 2026-07-10. Branch: `worktree-per-format-lazy-loading` (rebased onto `master` @ `b1c236f`).
 > Context: follow-up to `docs/build-memory-investigation.md` (build OOM root cause).
 > Prep already merged on master: `adbe437` (unused `global*` stores) and `f46b663`
 > (unused single-tournament store chain) — the store surface below reflects that.
