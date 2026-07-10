@@ -1,4 +1,4 @@
-import { cp } from "node:fs/promises";
+import { cp, readFile } from "node:fs/promises";
 import { resolve } from "node:path";
 import { sveltekit } from "@sveltejs/kit/vite";
 import { defineConfig, type Plugin } from "vite";
@@ -28,6 +28,25 @@ function copyDataPlugin(): Plugin {
 				await cp(resolve("data"), resolve("build/data"), { recursive: true });
 				console.log("copy-tournament-data: copied data/ → build/data");
 			},
+		},
+		// vite preview serves .svelte-kit/output (not build/), and SvelteKit's
+		// preview middlewares end in a terminal catch-all, so serve /data/*
+		// here — hook-body middlewares run before all returned post-hooks.
+		configurePreviewServer(server) {
+			server.middlewares.use("/data", async (req, res, next) => {
+				const urlPath = decodeURIComponent((req.url ?? "").split("?")[0]);
+				if (urlPath.includes("..")) return next();
+				try {
+					const content = await readFile(resolve("data") + urlPath);
+					res.setHeader(
+						"Content-Type",
+						urlPath.endsWith(".json") ? "application/json" : "application/octet-stream",
+					);
+					res.end(content);
+				} catch {
+					next();
+				}
+			});
 		},
 	};
 }
