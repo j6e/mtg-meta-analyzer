@@ -45,9 +45,12 @@ test.describe("Navigation", () => {
 		// Wait for table rows to appear
 		await expect(page.locator("tbody tr").first()).toBeVisible();
 
-		// Tournament links should point to melee.gg or mtgo.com
+		// Tournament links should point to a known data source
 		const firstLink = page.locator("tbody tr").first().locator("a");
-		await expect(firstLink).toHaveAttribute("href", /melee\.gg|mtgo\.com/);
+		await expect(firstLink).toHaveAttribute(
+			"href",
+			/melee\.gg|mtgo\.com|videreproject\.com/,
+		);
 	});
 
 	test("archetypes page shows archetype table", async ({ page }) => {
