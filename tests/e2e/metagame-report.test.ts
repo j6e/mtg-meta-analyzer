@@ -3,6 +3,10 @@ import { expect, test } from "@playwright/test";
 test.describe("Metagame Report", () => {
 	test.beforeEach(async ({ page }) => {
 		await page.goto("/metagame");
+		// Tournament data loads lazily per format; wait for the report to render
+		await expect(page.locator(".tournament-info")).toBeVisible({
+			timeout: 60_000,
+		});
 	});
 
 	test("renders page title and filter panel", async ({ page }) => {
