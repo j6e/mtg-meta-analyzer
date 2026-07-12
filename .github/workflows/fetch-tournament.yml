@@ -32,6 +32,14 @@ jobs:
       - name: Fetch tournament data
         run: bun run scripts/fetch-tournament.ts "${{ inputs.tournament_url }}"
 
+      - name: Rebuild card image index
+        run: |
+          if [ -n "$(git status --porcelain data/)" ]; then
+            bun run scripts/build-card-image-index.ts
+          else
+            echo "No data changes — skipping image index rebuild."
+          fi
+
       - name: Check for changes
         id: changes
         run: |
@@ -40,7 +48,7 @@ jobs:
             echo "changed=false" >> "$GITHUB_OUTPUT"
           else
             echo "changed=true" >> "$GITHUB_OUTPUT"
-            FILENAME=$(git diff --cached --name-only | grep -v 'index\.json' | head -1)
+            FILENAME=$(git diff --cached --name-only | grep -v -e 'index\.json' -e 'card-images\.json' | head -1)
             ID=$(basename "$FILENAME" .json)
             echo "tournament_id=$ID" >> "$GITHUB_OUTPUT"
             echo "filename=$FILENAME" >> "$GITHUB_OUTPUT"

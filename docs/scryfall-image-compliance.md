@@ -9,6 +9,22 @@ plain image request poisons the browser cache for the CORS-mode canvas-plugin
 load of the same URL (this cache incoherence is what the old double-request
 fallback had been papering over).
 
+Deviations from the plan below, accepted after review:
+
+- The index covers **every** signature card (not just `signatureCards[0]`) and
+  companion cards — a few hundred extra entries buys resilience to future
+  representative-card changes.
+- `art_crop` is optional in the index: rare cards without a Scryfall art crop
+  keep their `normal` tooltip image; charts fall back to the colored point.
+- If fetching `card-images.json` fails at runtime, the store settles on an
+  empty index so previews fall back to text instead of loading forever
+  (`null` strictly means "loading"); the next preview interaction retries.
+
+Ingestion wiring: each tournament-fetch workflow (`fetch-mtgo.yml`,
+`fetch-videre.yml`, `fetch-tournament.yml`) rebuilds the index after a fetch
+that changed `data/` and commits it alongside the tournament files. For
+manual/local ingestion, run `bun run build:card-images`.
+
 ## Problems found
 
 1. **We hotlink the rate-limited API endpoint.** `getScryfallImageUrl`

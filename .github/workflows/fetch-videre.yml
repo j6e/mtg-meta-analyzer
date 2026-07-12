@@ -59,6 +59,14 @@ jobs:
             bun run scripts/fetch-videre.ts --from "$PREV_MONTH" --to "$CURR_MONTH"
           fi
 
+      - name: Rebuild card image index
+        run: |
+          if [ -n "$(git status --porcelain data/)" ]; then
+            bun run scripts/build-card-image-index.ts
+          else
+            echo "No data changes — skipping image index rebuild."
+          fi
+
       - name: Commit and push
         run: |
           git add data/

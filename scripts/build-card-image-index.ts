@@ -21,6 +21,7 @@ import {
 } from "node:fs";
 import { join } from "node:path";
 import { parse as parseYaml } from "yaml";
+import type { CardImageEntry } from "../src/lib/stores/card-images";
 import { getFrontFace } from "../src/lib/utils/card-normalizer";
 
 const ROOT = join(import.meta.dir, "..");
@@ -31,18 +32,11 @@ const CACHE_MAX_AGE_MS = 24 * 60 * 60 * 1000;
 const OUTPUT_FILE = join(DATA_DIR, "card-images.json");
 const USER_AGENT = "mtg-meta-analyzer/1.0";
 
-interface CardImageEntry {
-	normal: string;
-	art_crop: string;
-	artist: string;
-}
-
 interface ScryfallCard {
 	name: string;
 	image_uris?: Record<string, string>;
 	card_faces?: Array<{ image_uris?: Record<string, string>; artist?: string }>;
 	artist?: string;
-	image_status?: string;
 }
 
 /** Collect every card name used in decklists and archetype definitions. */
@@ -123,10 +117,11 @@ async function loadBulkData(): Promise<ScryfallCard[]> {
 
 function extractEntry(card: ScryfallCard): CardImageEntry | null {
 	const imageUris = card.image_uris ?? card.card_faces?.[0]?.image_uris;
-	if (!imageUris?.normal || !imageUris?.art_crop) return null;
+	if (!imageUris?.normal) return null;
 	return {
 		normal: imageUris.normal,
-		art_crop: imageUris.art_crop,
+		// Rare cards have no art crop; keep the tooltip image regardless
+		...(imageUris.art_crop ? { art_crop: imageUris.art_crop } : {}),
 		artist: card.artist ?? card.card_faces?.[0]?.artist ?? "",
 	};
 }
