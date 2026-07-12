@@ -1,7 +1,13 @@
 # Scryfall image compliance plan
 
-Status: proposal — not implemented. Written 2026-07-12 after auditing our card-preview
-usage against Scryfall's API docs (Overview & Rules, Rate Limits, Card Imagery).
+Status: IMPLEMENTED & verified 2026-07-12 (branch scryfall-image-compliance).
+Written 2026-07-12 after auditing our card-preview usage against Scryfall's API
+docs (Overview & Rules, Rate Limits, Card Imagery).
+
+Implementation note: the legend `<img>`s needed `crossorigin="anonymous"` — a
+plain image request poisons the browser cache for the CORS-mode canvas-plugin
+load of the same URL (this cache incoherence is what the old double-request
+fallback had been papering over).
 
 ## Problems found
 
