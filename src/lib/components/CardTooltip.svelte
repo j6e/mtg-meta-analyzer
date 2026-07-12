@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getScryfallImageUrl } from '../utils/card-normalizer';
+	import { cardImageIndex, ensureCardImagesLoaded, lookupCardImage } from '../stores/card-images';
 
 	let { cardName, children }: { cardName: string; children: any } = $props();
 
@@ -9,8 +9,8 @@
 	let x = $state(0);
 	let y = $state(0);
 
-	/** Use 'normal' size (488×680) for good quality without being too large. */
-	const imageUrl = $derived(getScryfallImageUrl(cardName, 'normal'));
+	/** 'normal' size (488×680): good quality without being too large. */
+	const imageUrl = $derived(lookupCardImage($cardImageIndex, cardName)?.normal ?? null);
 
 	// Reset loaded/error state when card name changes
 	$effect(() => {
@@ -20,6 +20,7 @@
 	});
 
 	function show(e: MouseEvent) {
+		void ensureCardImagesLoaded();
 		visible = true;
 		updatePosition(e);
 	}
@@ -77,7 +78,7 @@
 
 {#if visible}
 	<div class="card-tooltip" style="left: {x}px; top: {y}px;" role="tooltip">
-		{#if !error}
+		{#if imageUrl && !error}
 			<img
 				src={imageUrl}
 				alt={cardName}
@@ -89,6 +90,8 @@
 			{#if !loaded}
 				<div class="placeholder">Loading...</div>
 			{/if}
+		{:else if !error && $cardImageIndex === null}
+			<div class="placeholder">Loading...</div>
 		{:else}
 			<div class="fallback">{cardName}</div>
 		{/if}

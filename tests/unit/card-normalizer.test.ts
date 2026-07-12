@@ -2,7 +2,6 @@ import { describe, expect, it } from "vitest";
 import {
 	getCommanderShortName,
 	getFrontFace,
-	getScryfallImageUrl,
 	normalizeCardName,
 } from "../../src/lib/utils/card-normalizer";
 
@@ -88,30 +87,5 @@ describe("getCommanderShortName", () => {
 
 	it("handles names with multiple commas (drops at first comma)", () => {
 		expect(getCommanderShortName("Ojer Axonil, Deepest Might")).toBe("Ojer Axonil");
-	});
-});
-
-describe("getScryfallImageUrl", () => {
-	it("builds a Scryfall image URL for a regular card", () => {
-		const url = getScryfallImageUrl("Lightning Bolt");
-		expect(url).toBe(
-			"https://api.scryfall.com/cards/named?format=image&version=normal&exact=Lightning%20Bolt",
-		);
-	});
-
-	it("uses the front face for DFCs", () => {
-		const url = getScryfallImageUrl("Aclazotz, Deepest Betrayal // Temple of the Dead");
-		expect(url).toContain("exact=Aclazotz%2C%20Deepest%20Betrayal");
-		expect(url).not.toContain("Temple");
-	});
-
-	it("supports different image versions", () => {
-		const url = getScryfallImageUrl("Lightning Bolt", "small");
-		expect(url).toContain("version=small");
-	});
-
-	it("encodes special characters in the URL", () => {
-		const url = getScryfallImageUrl("Agatha's Soul Cauldron");
-		expect(url).toContain("Agatha's%20Soul%20Cauldron");
 	});
 });

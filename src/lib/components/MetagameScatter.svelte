@@ -10,7 +10,7 @@
 	} from 'chart.js';
 	import type { ArchetypeStats } from '../types/metagame';
 	import { archetypeCardMap } from '../stores/tournaments';
-	import { getScryfallImageUrl } from '../utils/card-normalizer';
+	import { cardImageIndex, ensureCardImagesLoaded, lookupCardImage } from '../stores/card-images';
 
 	Chart.register(BubbleController, LinearScale, PointElement, Tooltip, Legend);
 
@@ -64,15 +64,18 @@
 	}
 
 	/** Load art_crop images for all archetypes that have a signature card. */
-	function loadArchetypeImages(archetypeNames: string[]) {
+	async function loadArchetypeImages(archetypeNames: string[]) {
+		await ensureCardImagesLoaded();
 		for (const name of archetypeNames) {
 			if (loadedImages.has(name)) continue;
 			const cardName = $archetypeCardMap.get(name);
 			if (!cardName) continue;
 
-			const url = getScryfallImageUrl(cardName, 'art_crop');
+			const entry = lookupCardImage($cardImageIndex, cardName);
+			if (!entry) continue;
 
-			// Try with CORS first (needed for color extraction via getImageData)
+			// CORS-enabled load (needed for color extraction via getImageData);
+			// on failure the bubble just keeps its colored fill.
 			const img = new Image();
 			img.crossOrigin = 'anonymous';
 			img.onload = () => {
@@ -80,16 +83,7 @@
 				dominantColors.set(name, extractDominantColor(img));
 				if (chart) chart.update('none');
 			};
-			img.onerror = () => {
-				// CORS failed — retry without (can draw but can't extract color)
-				const fallback = new Image();
-				fallback.onload = () => {
-					loadedImages.set(name, fallback);
-					if (chart) chart.update('none');
-				};
-				fallback.src = url;
-			};
-			img.src = url;
+			img.src = entry.art_crop;
 		}
 	}
 
@@ -169,7 +163,7 @@
 		if (filtered.length === 0) return;
 
 		// Start loading images for all visible archetypes
-		loadArchetypeImages(filtered.map((s) => s.name));
+		void loadArchetypeImages(filtered.map((s) => s.name));
 
 		const maxMatches = Math.max(...filtered.map((s) => s.totalMatches), 1);
 
@@ -237,7 +231,17 @@
 									`Matches: ${s.totalMatches}`,
 								];
 							},
+							// Scryfall imagery guideline: art crops must credit the artist
+							footer(items) {
+								const archName = (items[0]?.dataset as any)?.label as string | undefined;
+								const cardName = archName ? $archetypeCardMap.get(archName) : undefined;
+								const artist = cardName
+									? lookupCardImage($cardImageIndex, cardName)?.artist
+									: undefined;
+								return artist ? `Art: ${artist} © Wizards of the Coast` : '';
+							},
 						},
+						footerFont: { weight: 'normal', size: 10 },
 					},
 				},
 			},
@@ -269,13 +273,12 @@
 
 <div class="legend">
 	{#each stats.filter((s) => s.name !== 'Unknown' && s.totalMatches > 0) as s, i}
+		{@const art = lookupCardImage($cardImageIndex, $archetypeCardMap.get(s.name) ?? '')}
 		<span class="legend-item">
-			{#if $archetypeCardMap.has(s.name)}
-				<img
-					class="legend-art"
-					src={getScryfallImageUrl($archetypeCardMap.get(s.name)!, 'art_crop')}
-					alt={s.name}
-				/>
+			{#if art}
+				<!-- crossorigin keeps the browser cache coherent with the CORS-mode
+				     plugin loads of the same URL (else Chrome blocks the second use) -->
+				<img class="legend-art" crossorigin="anonymous" src={art.art_crop} alt={s.name} />
 			{:else}
 				<span class="dot" style="background: {s.name === 'Other' ? OTHER_COLOR : COLORS[i % COLORS.length]}"></span>
 			{/if}

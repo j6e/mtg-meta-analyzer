@@ -49,18 +49,3 @@ export function getCommanderShortName(name: string): string {
 	const commaIndex = frontFace.indexOf(",");
 	return commaIndex === -1 ? frontFace : frontFace.slice(0, commaIndex);
 }
-
-/**
- * Construct a Scryfall image URL for a card.
- * Uses the front face name for DFCs (Scryfall resolves these correctly).
- *
- * @param cardName - Card name (may include // for DFCs)
- * @param version - Image version: 'normal', 'small', 'large', 'art_crop', 'border_crop'
- */
-export function getScryfallImageUrl(
-	cardName: string,
-	version: "normal" | "small" | "large" | "art_crop" | "border_crop" = "normal",
-): string {
-	const frontFace = getFrontFace(cardName);
-	return `https://api.scryfall.com/cards/named?format=image&version=${version}&exact=${encodeURIComponent(frontFace)}`;
-}

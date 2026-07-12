@@ -16,7 +16,7 @@
 		type EvolutionSeries,
 		type PeriodSize,
 	} from '../utils/metagame-evolution';
-	import { getScryfallImageUrl } from '../utils/card-normalizer';
+	import { cardImageIndex, ensureCardImagesLoaded, lookupCardImage } from '../stores/card-images';
 	import { settings } from '../stores/settings';
 
 	Chart.register(CategoryScale, Legend, LineController, LineElement, LinearScale, PointElement, Tooltip);
@@ -92,12 +92,16 @@
 		return `rgb(${Math.round(rSum / count)}, ${Math.round(gSum / count)}, ${Math.round(bSum / count)})`;
 	}
 
-	function loadArchetypeImages(names: string[]) {
+	async function loadArchetypeImages(names: string[]) {
+		await ensureCardImagesLoaded();
 		for (const name of names) {
 			if (loadedImages.has(name)) continue;
 			const cardName = archetypeCardMap.get(name);
 			if (!cardName) continue;
-			const url = getScryfallImageUrl(cardName, 'art_crop');
+			const entry = lookupCardImage($cardImageIndex, cardName);
+			if (!entry) continue;
+			// CORS-enabled load (needed for color extraction via getImageData);
+			// on failure the point just keeps its colored fill.
 			const img = new Image();
 			img.crossOrigin = 'anonymous';
 			img.onload = () => {
@@ -105,15 +109,7 @@
 				dominantColors.set(name, extractDominantColor(img));
 				if (chart) chart.update('none');
 			};
-			img.onerror = () => {
-				const fallback = new Image();
-				fallback.onload = () => {
-					loadedImages.set(name, fallback);
-					if (chart) chart.update('none');
-				};
-				fallback.src = url;
-			};
-			img.src = url;
+			img.src = entry.art_crop;
 		}
 	}
 
@@ -211,7 +207,7 @@
 		}
 		if (currentSeries.length === 0 || currentSeries[0].points.length === 0) return;
 
-		loadArchetypeImages(currentSeries.map((s) => s.name));
+		void loadArchetypeImages(currentSeries.map((s) => s.name));
 
 		const visibleSeries = currentSeries.filter((s) => !hiddenSeries.has(s.name));
 		const labels = currentSeries[0].points.map((p) => p.label);
@@ -268,7 +264,18 @@
 					tooltip: {
 						callbacks: {
 							label: (ctx) => `${ctx.dataset.label}: ${(ctx.parsed.y ?? 0).toFixed(1)}%`,
+							// Scryfall imagery guideline: art crops must credit the artist
+							footer: (items) => {
+								const archName = (items[0]?.dataset as unknown as Record<string, unknown>)
+									?.archetypeName as string | undefined;
+								const cardName = archName ? archetypeCardMap.get(archName) : undefined;
+								const artist = cardName
+									? lookupCardImage($cardImageIndex, cardName)?.artist
+									: undefined;
+								return artist ? `Art: ${artist} © Wizards of the Coast` : '';
+							},
 						},
+						footerFont: { weight: 'normal', size: 10 },
 					},
 				},
 			},
@@ -341,18 +348,17 @@
 
 <div class="legend">
 	{#each series as s, i}
+		{@const art = lookupCardImage($cardImageIndex, archetypeCardMap.get(s.name) ?? '')}
 		<button
 			type="button"
 			class="legend-item"
 			class:legend-hidden={hiddenSeries.has(s.name)}
 			onclick={() => toggleSeries(s.name)}
 		>
-			{#if archetypeCardMap.has(s.name)}
-				<img
-					class="legend-art"
-					src={getScryfallImageUrl(archetypeCardMap.get(s.name)!, 'art_crop')}
-					alt={s.name}
-				/>
+			{#if art}
+				<!-- crossorigin keeps the browser cache coherent with the CORS-mode
+				     plugin loads of the same URL (else Chrome blocks the second use) -->
+				<img class="legend-art" crossorigin="anonymous" src={art.art_crop} alt={s.name} />
 			{:else}
 				<span
 					class="dot"
