@@ -8,6 +8,7 @@ import type { Chart } from "chart.js";
 import { get } from "svelte/store";
 import {
 	cardImageIndex,
+	corsRetryUrl,
 	ensureCardImagesLoaded,
 	lookupCardImage,
 } from "../stores/card-images";
@@ -66,7 +67,8 @@ export function createArchetypeArtLoader(
 		for (const name of archetypeNames) {
 			if (images.has(name)) continue;
 			const entry = lookupCardImage(index, getCardName(name));
-			if (!entry?.art_crop) continue;
+			const artCrop = entry?.art_crop;
+			if (!artCrop) continue;
 			const img = new Image();
 			img.crossOrigin = "anonymous";
 			img.onload = () => {
@@ -74,7 +76,17 @@ export function createArchetypeArtLoader(
 				dominantColors.set(name, extractDominantColor(img));
 				onImageLoad();
 			};
-			img.src = entry.art_crop;
+			img.onerror = () => {
+				// Browsers that visited the pre-index site hold these URLs in
+				// cache WITHOUT CORS headers (Scryfall only sends
+				// Access-Control-Allow-Origin when the request has an Origin,
+				// and caches for a year), which fails this CORS-mode load.
+				// Retry once under a different cache key to force a network
+				// fetch; see docs/scryfall-image-compliance.md.
+				const retrySrc = corsRetryUrl(artCrop);
+				if (img.src !== retrySrc) img.src = retrySrc;
+			};
+			img.src = artCrop;
 		}
 	}
 

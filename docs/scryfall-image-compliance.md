@@ -9,6 +9,23 @@ plain image request poisons the browser cache for the CORS-mode canvas-plugin
 load of the same URL (this cache incoherence is what the old double-request
 fallback had been papering over).
 
+Post-deploy follow-up (2026-07-12): returning visitors saw plain colored
+bubbles instead of chart art. Cause: the pre-index site had already loaded the
+same `cards.scryfall.io` art-crop URLs via no-CORS `<img>` requests (the old
+`api.scryfall.com/cards/named` hotlinks 302-redirect there), and Scryfall only
+sends `Access-Control-Allow-Origin` when the request carries an `Origin`
+header — no `Vary` otherwise — with `max-age` of one year. The browser reuses
+that headerless cached response for the new CORS-mode loads and fails them
+without touching the network, so no redeploy can fix it server-side.
+Mitigation: on image error, retry once with a `cors=1` query param
+(`corsRetryUrl` in `src/lib/stores/card-images.ts`) — a different cache key
+forces a fresh CORS-mode fetch, which then caches correctly. Applied to the
+chart art loader and the legend icons; `CardTooltip` is unaffected (its
+`normal`-size URLs are never loaded in CORS mode). The old "retry without
+crossOrigin" fallback was deliberately NOT restored: a tainted image would
+taint the chart canvas and break both color extraction and "Export as image"
+(`toDataURL` throws on tainted canvases).
+
 Deviations from the plan below, accepted after review:
 
 - The index covers **every** signature card (not just `signatureCards[0]`) and
