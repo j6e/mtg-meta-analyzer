@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   workflow_run:
-    workflows: [CI, Fetch MTGO Tournaments]
+    workflows: [CI, Fetch MTGO Tournaments, Fetch Videre Tournaments]
     branches: [master]
     types: [completed]
   workflow_dispatch:
