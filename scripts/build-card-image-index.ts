@@ -2,7 +2,7 @@
  * Build data/card-images.json: card name → Scryfall CDN image URLs + artist.
  *
  * Resolves every card name appearing in tournament decklists and archetype
- * signature definitions against Scryfall's oracle_cards bulk data, so the app
+ * signature definitions against Scryfall's default_cards bulk data, so the app
  * never hits the rate-limited api.scryfall.com at runtime (see
  * docs/scryfall-image-compliance.md).
  *
@@ -27,16 +27,68 @@ import { getFrontFace } from "../src/lib/utils/card-normalizer";
 const ROOT = join(import.meta.dir, "..");
 const DATA_DIR = join(ROOT, "data");
 const CACHE_DIR = join(ROOT, ".scratch");
-const CACHE_FILE = join(CACHE_DIR, "scryfall-oracle-cards.json");
+const CACHE_FILE = join(CACHE_DIR, "scryfall-default-cards.json");
 const CACHE_MAX_AGE_MS = 24 * 60 * 60 * 1000;
 const OUTPUT_FILE = join(DATA_DIR, "card-images.json");
 const USER_AGENT = "mtg-meta-analyzer/1.0";
 
-interface ScryfallCard {
+export interface ScryfallCard {
 	name: string;
+	layout?: string;
+	released_at?: string;
+	set?: string;
+	collector_number?: string;
+	id?: string;
 	image_uris?: Record<string, string>;
 	card_faces?: Array<{ image_uris?: Record<string, string>; artist?: string }>;
 	artist?: string;
+}
+
+/** Scryfall layouts that represent supplements, tokens, or other non-deck cards. */
+const NON_PLAYABLE_LAYOUTS = new Set([
+	"art_series",
+	"token",
+	"double_faced_token",
+	"emblem",
+	"helper",
+	"planar",
+	"scheme",
+	"vanguard",
+	"phenomenon",
+	"conspiracy",
+]);
+
+export function isPlayableCard(card: ScryfallCard): boolean {
+	return !NON_PLAYABLE_LAYOUTS.has(card.layout ?? "");
+}
+
+function compareCardVersions(a: ScryfallCard, b: ScryfallCard): number {
+	const date = (a.released_at ?? "9999-99-99").localeCompare(
+		b.released_at ?? "9999-99-99",
+	);
+	if (date !== 0) return date;
+
+	return [a.set ?? "", a.collector_number ?? "", a.id ?? ""]
+		.join("/")
+		.localeCompare([b.set ?? "", b.collector_number ?? "", b.id ?? ""].join("/"));
+}
+
+/** Select preferred printings for all needed names in one pass through the bulk file. */
+export function selectPreferredCards(
+	cards: ScryfallCard[],
+	names: Set<string>,
+): Map<string, ScryfallCard> {
+	const selected = new Map<string, ScryfallCard>();
+	for (const card of cards) {
+		if (!isPlayableCard(card)) continue;
+		const name = getFrontFace(card.name);
+		if (!names.has(name)) continue;
+		const current = selected.get(name);
+		if (!current || compareCardVersions(card, current) < 0) {
+			selected.set(name, card);
+		}
+	}
+	return selected;
 }
 
 /** Collect every card name used in decklists and archetype definitions. */
@@ -83,7 +135,7 @@ function collectNeededNames(): Set<string> {
 	return needed;
 }
 
-/** Download oracle_cards bulk data, reusing a <24h-old cached copy. */
+/** Download default_cards bulk data, reusing a <24h-old cached copy. */
 async function loadBulkData(): Promise<ScryfallCard[]> {
 	if (
 		existsSync(CACHE_FILE) &&
@@ -99,13 +151,13 @@ async function loadBulkData(): Promise<ScryfallCard[]> {
 	if (!manifestRes.ok)
 		throw new Error(`Manifest fetch failed: HTTP ${manifestRes.status}`);
 	const manifest = await manifestRes.json();
-	const oracleCards = manifest.data.find(
-		(d: { type: string }) => d.type === "oracle_cards",
+	const defaultCards = manifest.data.find(
+		(d: { type: string }) => d.type === "default_cards",
 	);
-	if (!oracleCards) throw new Error("No oracle_cards entry in bulk data manifest");
+	if (!defaultCards) throw new Error("No default_cards entry in bulk data manifest");
 
-	console.log(`Downloading ${oracleCards.download_uri} ...`);
-	const res = await fetch(oracleCards.download_uri, { headers });
+	console.log(`Downloading ${defaultCards.download_uri} ...`);
+	const res = await fetch(defaultCards.download_uri, { headers });
 	if (!res.ok) throw new Error(`Bulk download failed: HTTP ${res.status}`);
 	const text = await res.text();
 
@@ -131,13 +183,12 @@ async function main() {
 	console.log(`Collected ${needed.size} distinct card names from data/`);
 
 	const cards = await loadBulkData();
-	console.log(`Bulk data has ${cards.length} oracle cards`);
+	console.log(`Bulk data has ${cards.length} cards`);
 
 	const index: Record<string, CardImageEntry> = {};
-	for (const card of cards) {
-		const key = getFrontFace(card.name);
-		if (!needed.has(key) || index[key]) continue;
-		const entry = extractEntry(card);
+	const selected = selectPreferredCards(cards, needed);
+	for (const key of needed) {
+		const entry = selected.has(key) ? extractEntry(selected.get(key)!) : null;
 		if (entry) index[key] = entry;
 	}
 
@@ -154,4 +205,4 @@ async function main() {
 	console.log(`\nWrote ${Object.keys(sorted).length} entries to ${OUTPUT_FILE}`);
 }
 
-main();
+if (import.meta.main) main();

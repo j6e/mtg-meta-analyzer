@@ -84,17 +84,19 @@ New script `scripts/build-card-image-index.ts` (bun):
 
 - Fetch the bulk-data manifest from `https://api.scryfall.com/bulk-data` (one request,
   with an accurate `User-Agent` like `mtg-meta-analyzer/1.0` and an `Accept` header),
-  then download the `oracle_cards` bulk file (~150 MB, from `*.scryfall.io`, no rate
-  limit). Cache the download locally ≥24h (docs ask for this).
+  then download the `default_cards` bulk file (from `*.scryfall.io`, no rate limit).
+  Cache the download locally ≥24h (docs ask for this).
 - Collect the set of card names we actually need:
   - every distinct maindeck/sideboard card name across `data/<format>/*.json`
     (this also covers commander `representativeCard` values, since those come from
     decklists), plus
   - every `signatureCards[0].name` from `data/archetypes/*.yaml`.
+- Select the oldest printing for each needed name by `released_at`, excluding
+  non-playable layouts such as `art_series`, tokens, emblems, and planes/schemes.
 - Emit `data/card-images.json`: `name → { normal, art_crop, artist }` taken from the
-  card's `image_uris` (front face for DFCs). Storing the real `image_uris` avoids
-  depending on the undocumented `cards.scryfall.io/{size}/front/{a}/{b}/{id}.jpg`
-  path pattern.
+  selected card's `image_uris` (front face for DFCs). Storing the real `image_uris`
+  avoids depending on the undocumented
+  `cards.scryfall.io/{size}/front/{a}/{b}/{id}.jpg` path pattern.
 - Size estimate: ~10k distinct names × ~2 URLs ≈ 1–2 MB raw, well under 500 KB gzipped
   if we store only the UUID-bearing path suffixes. Start with full URLs; optimize only
   if it matters.
