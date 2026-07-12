@@ -13,7 +13,8 @@ import { getFrontFace } from "../utils/card-normalizer";
 
 export interface CardImageEntry {
 	normal: string;
-	art_crop: string;
+	/** Absent for the rare cards whose Scryfall record has no art crop. */
+	art_crop?: string;
 	artist: string;
 }
 
@@ -33,6 +34,10 @@ export function ensureCardImagesLoaded(): Promise<void> {
 			.then((json: Record<string, CardImageEntry>) => cardImageIndex.set(json))
 			.catch((e) => {
 				console.warn("Failed to load card image index:", e);
+				// Settle on an empty index so consumers fall back to text
+				// rendering instead of waiting forever; null keeps meaning
+				// "not attempted yet / loading".
+				cardImageIndex.update((v) => v ?? {});
 				pending = null; // allow a later retry
 			});
 	}
@@ -45,7 +50,8 @@ export function ensureCardImagesLoaded(): Promise<void> {
  */
 export function lookupCardImage(
 	index: Record<string, CardImageEntry> | null,
-	cardName: string,
+	cardName: string | undefined,
 ): CardImageEntry | null {
+	if (!cardName) return null;
 	return index?.[getFrontFace(cardName)] ?? null;
 }

@@ -10,7 +10,9 @@
 	} from 'chart.js';
 	import type { ArchetypeStats } from '../types/metagame';
 	import { archetypeCardMap } from '../stores/tournaments';
-	import { cardImageIndex, ensureCardImagesLoaded, lookupCardImage } from '../stores/card-images';
+	import { cardImageIndex, lookupCardImage } from '../stores/card-images';
+	import { createArchetypeArtLoader } from '../utils/archetype-art';
+	import ArchetypeLegendIcon from './ArchetypeLegendIcon.svelte';
 
 	Chart.register(BubbleController, LinearScale, PointElement, Tooltip, Legend);
 
@@ -19,10 +21,12 @@
 	let canvas: HTMLCanvasElement;
 	let chart: Chart | null = null;
 
-	/** Loaded card art images keyed by archetype name. */
-	const loadedImages = new Map<string, HTMLImageElement>();
-	/** Dominant color extracted from each archetype's card art. */
-	const dominantColors = new Map<string, string>();
+	/** Card art for chart bubbles (plugin + tooltip artist credit). */
+	const archetypeArt = createArchetypeArtLoader(
+		(name) => $archetypeCardMap.get(name),
+		() => chart?.update('none'),
+		2.5,
+	);
 
 	const OTHER_COLOR = '#555555';
 
@@ -31,61 +35,6 @@
 		'#0891b2', '#ca8a04', '#be185d', '#059669', '#d97706',
 		'#6366f1', '#dc2626', '#65a30d', '#0d9488', '#a855f7',
 	];
-
-	/** Extract the dominant color from an image by sampling center pixels. */
-	function extractDominantColor(img: HTMLImageElement): string {
-		const size = 32;
-		const offscreen = document.createElement('canvas');
-		offscreen.width = size;
-		offscreen.height = size;
-		const ctx = offscreen.getContext('2d');
-		if (!ctx) return '#888888';
-
-		// Draw a small center crop of the image
-		const imgW = img.naturalWidth;
-		const imgH = img.naturalHeight;
-		const cropSize = Math.min(imgW, imgH);
-		const sx = (imgW - cropSize) / 2;
-		const sy = (imgH - cropSize) / 2;
-		ctx.drawImage(img, sx, sy, cropSize, cropSize, 0, 0, size, size);
-
-		const data = ctx.getImageData(0, 0, size, size).data;
-		let rSum = 0, gSum = 0, bSum = 0, count = 0;
-		for (let i = 0; i < data.length; i += 4) {
-			rSum += data[i];
-			gSum += data[i + 1];
-			bSum += data[i + 2];
-			count++;
-		}
-		const r = Math.round(rSum / count);
-		const g = Math.round(gSum / count);
-		const b = Math.round(bSum / count);
-		return `rgb(${r}, ${g}, ${b})`;
-	}
-
-	/** Load art_crop images for all archetypes that have a signature card. */
-	async function loadArchetypeImages(archetypeNames: string[]) {
-		await ensureCardImagesLoaded();
-		for (const name of archetypeNames) {
-			if (loadedImages.has(name)) continue;
-			const cardName = $archetypeCardMap.get(name);
-			if (!cardName) continue;
-
-			const entry = lookupCardImage($cardImageIndex, cardName);
-			if (!entry) continue;
-
-			// CORS-enabled load (needed for color extraction via getImageData);
-			// on failure the bubble just keeps its colored fill.
-			const img = new Image();
-			img.crossOrigin = 'anonymous';
-			img.onload = () => {
-				loadedImages.set(name, img);
-				dominantColors.set(name, extractDominantColor(img));
-				if (chart) chart.update('none');
-			};
-			img.src = entry.art_crop;
-		}
-	}
 
 	/** Reference line plugin: draws a horizontal dashed line at 50% winrate. */
 	const refLinePlugin = {
@@ -106,56 +55,6 @@
 		},
 	};
 
-	/** Card art plugin: draws circular-cropped card art over each bubble. */
-	const cardArtPlugin = {
-		id: 'cardArt',
-		afterDatasetsDraw(chart: Chart) {
-			const ctx = chart.ctx;
-			for (let dsIndex = 0; dsIndex < chart.data.datasets.length; dsIndex++) {
-				const ds = chart.data.datasets[dsIndex] as any;
-				const archName = ds.label as string;
-				const img = loadedImages.get(archName);
-				if (!img) continue;
-
-				const meta = chart.getDatasetMeta(dsIndex);
-				for (let ptIndex = 0; ptIndex < meta.data.length; ptIndex++) {
-					const element = meta.data[ptIndex] as any;
-					const { x, y } = element;
-					// Bubble radius from the resolved element (Chart.js PointElement)
-					const r = element.options?.pointRadius ?? element.options?.radius ?? element.radius ?? ds.data[ptIndex]?.r ?? 10;
-
-					ctx.save();
-
-					// Clip to circle
-					ctx.beginPath();
-					ctx.arc(x, y, r, 0, Math.PI * 2);
-					ctx.closePath();
-					ctx.clip();
-
-					// Draw art_crop (landscape 626×457) — take centered square crop
-					const imgW = img.naturalWidth;
-					const imgH = img.naturalHeight;
-					const cropSize = Math.min(imgW, imgH);
-					const sx = (imgW - cropSize) / 2;
-					const sy = (imgH - cropSize) / 2;
-
-					ctx.drawImage(img, sx, sy, cropSize, cropSize, x - r, y - r, r * 2, r * 2);
-
-					ctx.restore();
-
-					// Draw border ring using dominant color from the card art
-					ctx.save();
-					ctx.beginPath();
-					ctx.arc(x, y, r, 0, Math.PI * 2);
-					ctx.strokeStyle = dominantColors.get(archName) ?? 'rgba(255, 255, 255, 0.6)';
-					ctx.lineWidth = 2.5;
-					ctx.stroke();
-					ctx.restore();
-				}
-			}
-		},
-	};
-
 	function buildChart() {
 		if (chart) chart.destroy();
 
@@ -163,7 +62,7 @@
 		if (filtered.length === 0) return;
 
 		// Start loading images for all visible archetypes
-		void loadArchetypeImages(filtered.map((s) => s.name));
+		void archetypeArt.load(filtered.map((s) => s.name));
 
 		const maxMatches = Math.max(...filtered.map((s) => s.totalMatches), 1);
 
@@ -232,20 +131,13 @@
 								];
 							},
 							// Scryfall imagery guideline: art crops must credit the artist
-							footer(items) {
-								const archName = (items[0]?.dataset as any)?.label as string | undefined;
-								const cardName = archName ? $archetypeCardMap.get(archName) : undefined;
-								const artist = cardName
-									? lookupCardImage($cardImageIndex, cardName)?.artist
-									: undefined;
-								return artist ? `Art: ${artist} © Wizards of the Coast` : '';
-							},
+							footer: archetypeArt.tooltipFooter,
 						},
 						footerFont: { weight: 'normal', size: 10 },
 					},
 				},
 			},
-			plugins: [refLinePlugin, cardArtPlugin],
+			plugins: [refLinePlugin, archetypeArt.plugin],
 		});
 	}
 
@@ -273,15 +165,13 @@
 
 <div class="legend">
 	{#each stats.filter((s) => s.name !== 'Unknown' && s.totalMatches > 0) as s, i}
-		{@const art = lookupCardImage($cardImageIndex, $archetypeCardMap.get(s.name) ?? '')}
+		{@const art = lookupCardImage($cardImageIndex, $archetypeCardMap.get(s.name))}
 		<span class="legend-item">
-			{#if art}
-				<!-- crossorigin keeps the browser cache coherent with the CORS-mode
-				     plugin loads of the same URL (else Chrome blocks the second use) -->
-				<img class="legend-art" crossorigin="anonymous" src={art.art_crop} alt={s.name} />
-			{:else}
-				<span class="dot" style="background: {s.name === 'Other' ? OTHER_COLOR : COLORS[i % COLORS.length]}"></span>
-			{/if}
+			<ArchetypeLegendIcon
+				{art}
+				name={s.name}
+				color={s.name === 'Other' ? OTHER_COLOR : COLORS[i % COLORS.length]}
+			/>
 			{s.name}
 		</span>
 	{/each}
@@ -311,18 +201,4 @@
 		gap: 0.3rem;
 	}
 
-	.dot {
-		width: 10px;
-		height: 10px;
-		border-radius: 50%;
-		display: inline-block;
-	}
-
-	.legend-art {
-		width: 18px;
-		height: 18px;
-		border-radius: 50%;
-		object-fit: cover;
-		border: 1px solid var(--color-border);
-	}
 </style>

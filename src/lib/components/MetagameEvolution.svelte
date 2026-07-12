@@ -16,7 +16,9 @@
 		type EvolutionSeries,
 		type PeriodSize,
 	} from '../utils/metagame-evolution';
-	import { cardImageIndex, ensureCardImagesLoaded, lookupCardImage } from '../stores/card-images';
+	import { cardImageIndex, lookupCardImage } from '../stores/card-images';
+	import { createArchetypeArtLoader } from '../utils/archetype-art';
+	import ArchetypeLegendIcon from './ArchetypeLegendIcon.svelte';
 	import { settings } from '../stores/settings';
 
 	Chart.register(CategoryScale, Legend, LineController, LineElement, LinearScale, PointElement, Tooltip);
@@ -52,10 +54,11 @@
 	let canvas: HTMLCanvasElement;
 	let chart: Chart | null = null;
 
-	/** Loaded card art images keyed by archetype name. */
-	const loadedImages = new Map<string, HTMLImageElement>();
-	/** Dominant color extracted from each archetype's card art. */
-	const dominantColors = new Map<string, string>();
+	/** Card art for chart points (plugin + tooltip artist credit). */
+	const archetypeArt = createArchetypeArtLoader(
+		(name) => archetypeCardMap.get(name),
+		() => chart?.update('none'),
+	);
 
 	const COLORS = [
 		'#2563eb', '#e11d48', '#16a34a', '#ea580c', '#7c3aed',
@@ -63,55 +66,6 @@
 		'#6366f1', '#dc2626', '#65a30d', '#0d9488', '#a855f7',
 	];
 	const OTHER_COLOR = '#555555';
-
-	/** Extract dominant color from image center (reused from MetagameScatter). */
-	function extractDominantColor(img: HTMLImageElement): string {
-		const size = 32;
-		const offscreen = document.createElement('canvas');
-		offscreen.width = size;
-		offscreen.height = size;
-		const ctx = offscreen.getContext('2d');
-		if (!ctx) return '#888888';
-		const imgW = img.naturalWidth;
-		const imgH = img.naturalHeight;
-		const cropSize = Math.min(imgW, imgH);
-		const sx = (imgW - cropSize) / 2;
-		const sy = (imgH - cropSize) / 2;
-		ctx.drawImage(img, sx, sy, cropSize, cropSize, 0, 0, size, size);
-		const data = ctx.getImageData(0, 0, size, size).data;
-		let rSum = 0,
-			gSum = 0,
-			bSum = 0,
-			count = 0;
-		for (let i = 0; i < data.length; i += 4) {
-			rSum += data[i];
-			gSum += data[i + 1];
-			bSum += data[i + 2];
-			count++;
-		}
-		return `rgb(${Math.round(rSum / count)}, ${Math.round(gSum / count)}, ${Math.round(bSum / count)})`;
-	}
-
-	async function loadArchetypeImages(names: string[]) {
-		await ensureCardImagesLoaded();
-		for (const name of names) {
-			if (loadedImages.has(name)) continue;
-			const cardName = archetypeCardMap.get(name);
-			if (!cardName) continue;
-			const entry = lookupCardImage($cardImageIndex, cardName);
-			if (!entry) continue;
-			// CORS-enabled load (needed for color extraction via getImageData);
-			// on failure the point just keeps its colored fill.
-			const img = new Image();
-			img.crossOrigin = 'anonymous';
-			img.onload = () => {
-				loadedImages.set(name, img);
-				dominantColors.set(name, extractDominantColor(img));
-				if (chart) chart.update('none');
-			};
-			img.src = entry.art_crop;
-		}
-	}
 
 	/** Highlights the hovered line and dims all others. */
 	let hoveredDatasetIndex = -1;
@@ -143,55 +97,6 @@
 		},
 	};
 
-	/** Card-art plugin: draws circular card art over points where share > 0. */
-	const cardArtPlugin = {
-		id: 'evolutionCardArt',
-		afterDatasetsDraw(chartInstance: Chart) {
-			const ctx = chartInstance.ctx;
-			for (let dsIndex = 0; dsIndex < chartInstance.data.datasets.length; dsIndex++) {
-				const ds = chartInstance.data.datasets[dsIndex] as unknown as Record<string, unknown>;
-				const archName = ds.archetypeName as string;
-				const img = loadedImages.get(archName);
-				if (!img) continue;
-				const meta = chartInstance.getDatasetMeta(dsIndex);
-				for (let ptIndex = 0; ptIndex < meta.data.length; ptIndex++) {
-					const element = meta.data[ptIndex] as unknown as Record<string, unknown> & { x: number; y: number };
-					const opts = element.options as Record<string, number> | undefined;
-					const r = opts?.pointRadius ?? opts?.radius ?? 0;
-					if (r === 0) continue; // skip 0% points
-					const { x, y } = element;
-					ctx.save();
-					ctx.beginPath();
-					ctx.arc(x, y, r, 0, Math.PI * 2);
-					ctx.closePath();
-					ctx.clip();
-					const imgW = img.naturalWidth;
-					const imgH = img.naturalHeight;
-					const cropSize = Math.min(imgW, imgH);
-					ctx.drawImage(
-						img,
-						(imgW - cropSize) / 2,
-						(imgH - cropSize) / 2,
-						cropSize,
-						cropSize,
-						x - r,
-						y - r,
-						r * 2,
-						r * 2,
-					);
-					ctx.restore();
-					ctx.save();
-					ctx.beginPath();
-					ctx.arc(x, y, r, 0, Math.PI * 2);
-					ctx.strokeStyle = dominantColors.get(archName) ?? 'rgba(255,255,255,0.6)';
-					ctx.lineWidth = 2;
-					ctx.stroke();
-					ctx.restore();
-				}
-			}
-		},
-	};
-
 	function toggleSeries(name: string) {
 		const next = new Set(hiddenSeries);
 		if (next.has(name)) next.delete(name);
@@ -207,7 +112,7 @@
 		}
 		if (currentSeries.length === 0 || currentSeries[0].points.length === 0) return;
 
-		void loadArchetypeImages(currentSeries.map((s) => s.name));
+		void archetypeArt.load(currentSeries.map((s) => s.name));
 
 		const visibleSeries = currentSeries.filter((s) => !hiddenSeries.has(s.name));
 		const labels = currentSeries[0].points.map((p) => p.label);
@@ -226,7 +131,6 @@
 					const hidden = hiddenSeries.has(s.name);
 					return {
 						label: s.name,
-						archetypeName: s.name,
 						baseColor: color,
 						data: hidden ? s.points.map(() => null) : s.points.map((p) => (p.share === null ? null : p.share * 100)),
 						pointRadius: hidden ? 0 : s.points.map((p) => (p.share ? 10 : 0)),
@@ -265,21 +169,13 @@
 						callbacks: {
 							label: (ctx) => `${ctx.dataset.label}: ${(ctx.parsed.y ?? 0).toFixed(1)}%`,
 							// Scryfall imagery guideline: art crops must credit the artist
-							footer: (items) => {
-								const archName = (items[0]?.dataset as unknown as Record<string, unknown>)
-									?.archetypeName as string | undefined;
-								const cardName = archName ? archetypeCardMap.get(archName) : undefined;
-								const artist = cardName
-									? lookupCardImage($cardImageIndex, cardName)?.artist
-									: undefined;
-								return artist ? `Art: ${artist} © Wizards of the Coast` : '';
-							},
+							footer: archetypeArt.tooltipFooter,
 						},
 						footerFont: { weight: 'normal', size: 10 },
 					},
 				},
 			},
-			plugins: [hoverHighlightPlugin, cardArtPlugin],
+			plugins: [hoverHighlightPlugin, archetypeArt.plugin],
 		});
 	}
 
@@ -348,23 +244,18 @@
 
 <div class="legend">
 	{#each series as s, i}
-		{@const art = lookupCardImage($cardImageIndex, archetypeCardMap.get(s.name) ?? '')}
+		{@const art = lookupCardImage($cardImageIndex, archetypeCardMap.get(s.name))}
 		<button
 			type="button"
 			class="legend-item"
 			class:legend-hidden={hiddenSeries.has(s.name)}
 			onclick={() => toggleSeries(s.name)}
 		>
-			{#if art}
-				<!-- crossorigin keeps the browser cache coherent with the CORS-mode
-				     plugin loads of the same URL (else Chrome blocks the second use) -->
-				<img class="legend-art" crossorigin="anonymous" src={art.art_crop} alt={s.name} />
-			{:else}
-				<span
-					class="dot"
-					style="background: {s.name === 'Other' ? OTHER_COLOR : COLORS[i % COLORS.length]}"
-				></span>
-			{/if}
+			<ArchetypeLegendIcon
+				{art}
+				name={s.name}
+				color={s.name === 'Other' ? OTHER_COLOR : COLORS[i % COLORS.length]}
+			/>
 			{s.name}
 		</button>
 	{/each}
@@ -449,21 +340,6 @@
 	.legend-hidden {
 		opacity: 0.4;
 		filter: grayscale(1);
-	}
-
-	.dot {
-		width: 10px;
-		height: 10px;
-		border-radius: 50%;
-		display: inline-block;
-	}
-
-	.legend-art {
-		width: 18px;
-		height: 18px;
-		border-radius: 50%;
-		object-fit: cover;
-		border: 1px solid var(--color-border);
 	}
 
 	.separator {
