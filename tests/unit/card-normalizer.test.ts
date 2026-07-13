@@ -20,6 +20,17 @@ describe("normalizeCardName", () => {
 		expect(normalizeCardName("Fire //Ice")).toBe("Fire // Ice");
 	});
 
+	it("normalizes single-slash split and double-faced card names", () => {
+		expect(normalizeCardName("Claim/Fame")).toBe("Claim // Fame");
+		expect(normalizeCardName("Lunarch Veteran / Luminous Phantom")).toBe(
+			"Lunarch Veteran // Luminous Phantom",
+		);
+	});
+
+	it("preserves literal slashes in regular card names", () => {
+		expect(normalizeCardName("Summon: Choco/Mog")).toBe("Summon: Choco/Mog");
+	});
+
 	it("normalizes curly single quotes to straight quotes", () => {
 		expect(normalizeCardName("Nature\u2019s Rhythm")).toBe("Nature's Rhythm");
 		expect(normalizeCardName("\u2018quoted\u2019")).toBe("'quoted'");
@@ -59,6 +70,13 @@ describe("getFrontFace", () => {
 
 	it("handles split cards", () => {
 		expect(getFrontFace("Fire // Ice")).toBe("Fire");
+	});
+
+	it("handles importer-style single-slash split and DFC names", () => {
+		expect(getFrontFace("Claim/Fame")).toBe("Claim");
+		expect(getFrontFace("Oko, Lorwyn Liege / Oko, Shadowmoor Scion")).toBe(
+			"Oko, Lorwyn Liege",
+		);
 	});
 
 	it("handles adventure cards", () => {

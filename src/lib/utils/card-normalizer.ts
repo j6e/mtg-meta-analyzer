@@ -5,7 +5,11 @@
  * Scryfall accepts either the full name or just the front face.
  */
 
-const SPLIT_SEPARATOR = /\s*\/\/\s*/;
+const DOUBLE_SLASH_SEPARATOR = /\s*\/\/\s*/g;
+const SINGLE_SLASH_SEPARATOR = /(?<!\/)\s*\/\s*(?!\/)/g;
+
+// This is a literal slash in a regular card name, not a face separator.
+const LITERAL_SLASH_CARD_NAMES = new Set(["Summon: Choco/Mog"]);
 
 /**
  * Normalize a card name for consistent matching.
@@ -20,8 +24,11 @@ export function normalizeCardName(name: string): string {
 	normalized = normalized.replace(/[\u2018\u2019\u201A]/g, "'");
 	normalized = normalized.replace(/[\u201C\u201D\u201E]/g, '"');
 
-	// Normalize // separator spacing: ensure exactly " // "
-	normalized = normalized.replace(SPLIT_SEPARATOR, " // ");
+	// Normalize both canonical // and importer-style / separators to " // ".
+	normalized = normalized.replace(DOUBLE_SLASH_SEPARATOR, " // ");
+	if (!LITERAL_SLASH_CARD_NAMES.has(normalized)) {
+		normalized = normalized.replace(SINGLE_SLASH_SEPARATOR, " // ");
+	}
 
 	return normalized;
 }
