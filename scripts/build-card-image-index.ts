@@ -11,26 +11,26 @@
  * Usage:
  *   bun run scripts/build-card-image-index.ts
  */
-import {
-	existsSync,
-	mkdirSync,
-	readdirSync,
-	readFileSync,
-	statSync,
-	writeFileSync,
-} from "node:fs";
-import { join } from "node:path";
-import { parse as parseYaml } from "yaml";
+import { existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 import type { CardImageEntry } from "../src/lib/stores/card-images";
 import { getFrontFace } from "../src/lib/utils/card-normalizer";
+import {
+	CARD_IMAGE_STATUS_SCHEMA_VERSION,
+	collectNeededNames,
+	type DefaultCardsManifest,
+	fetchDefaultCardsManifest,
+} from "./lib/card-image-index";
 
-const ROOT = join(import.meta.dir, "..");
+const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const DATA_DIR = join(ROOT, "data");
 const CACHE_DIR = join(ROOT, ".scratch");
 const CACHE_FILE = join(CACHE_DIR, "scryfall-default-cards.json");
+const CACHE_METADATA_FILE = join(CACHE_DIR, "scryfall-default-cards-status.json");
 const CACHE_MAX_AGE_MS = 24 * 60 * 60 * 1000;
 const OUTPUT_FILE = join(DATA_DIR, "card-images.json");
-const USER_AGENT = "mtg-meta-analyzer/1.0";
+const STATUS_FILE = join(DATA_DIR, "card-images-status.json");
 
 export interface ScryfallCard {
 	name: string;
@@ -97,77 +97,47 @@ export function selectPreferredCards(
 	return selected;
 }
 
-/** Collect every card name used in decklists and archetype definitions. */
-function collectNeededNames(): Set<string> {
-	const needed = new Set<string>();
-	const add = (name: string) => needed.add(getFrontFace(name));
-
-	const formatDirs = readdirSync(DATA_DIR, { withFileTypes: true })
-		.filter((e) => e.isDirectory() && e.name !== "archetypes")
-		.map((e) => e.name);
-
-	for (const format of formatDirs) {
-		const formatDir = join(DATA_DIR, format);
-		const monthDirs = readdirSync(formatDir, { withFileTypes: true })
-			.filter((e) => e.isDirectory())
-			.map((e) => e.name);
-		for (const month of monthDirs) {
-			const monthDir = join(formatDir, month);
-			for (const file of readdirSync(monthDir).filter((f) => f.endsWith(".json"))) {
-				const data = JSON.parse(readFileSync(join(monthDir, file), "utf-8"));
-				for (const decklist of Object.values(data.decklists ?? {}) as Array<
-					Record<string, unknown>
-				>) {
-					for (const key of ["mainboard", "sideboard", "commanders"]) {
-						const cards = decklist[key];
-						if (!Array.isArray(cards)) continue;
-						for (const card of cards) add(card.cardName);
-					}
-					const companion = decklist.companion as { cardName: string } | null;
-					if (companion?.cardName) add(companion.cardName);
-				}
+/** Open default_cards as a stream, reusing a matching <24h-old cached copy. */
+async function openBulkDataStream(
+	manifest: DefaultCardsManifest,
+): Promise<ReadableStream<Uint8Array>> {
+	let cachedVersion = "";
+	if (existsSync(CACHE_METADATA_FILE)) {
+		try {
+			const metadata = JSON.parse(readFileSync(CACHE_METADATA_FILE, "utf-8")) as {
+				bulkDataUpdatedAt?: unknown;
+			};
+			if (typeof metadata.bulkDataUpdatedAt === "string") {
+				cachedVersion = metadata.bulkDataUpdatedAt;
 			}
+		} catch {
+			// Treat malformed cache metadata as a cache miss.
 		}
 	}
 
-	const archetypeDir = join(DATA_DIR, "archetypes");
-	for (const file of readdirSync(archetypeDir).filter((f) => f.endsWith(".yaml"))) {
-		const doc = parseYaml(readFileSync(join(archetypeDir, file), "utf-8"));
-		for (const archetype of doc.archetypes ?? []) {
-			for (const card of archetype.signatureCards ?? []) add(card.name);
-		}
-	}
-
-	return needed;
-}
-
-/** Open default_cards as a stream, reusing a <24h-old cached copy. */
-async function openBulkDataStream(): Promise<ReadableStream<Uint8Array>> {
 	if (
 		existsSync(CACHE_FILE) &&
+		cachedVersion === manifest.updated_at &&
 		Date.now() - statSync(CACHE_FILE).mtimeMs < CACHE_MAX_AGE_MS
 	) {
 		console.log(`Using cached bulk data (${CACHE_FILE})`);
 		return Bun.file(CACHE_FILE).stream();
 	}
 
-	const headers = { "User-Agent": USER_AGENT, Accept: "application/json" };
-	console.log("Fetching bulk data manifest...");
-	const manifestRes = await fetch("https://api.scryfall.com/bulk-data", { headers });
-	if (!manifestRes.ok)
-		throw new Error(`Manifest fetch failed: HTTP ${manifestRes.status}`);
-	const manifest = await manifestRes.json();
-	const defaultCards = manifest.data.find(
-		(d: { type: string }) => d.type === "default_cards",
-	);
-	if (!defaultCards) throw new Error("No default_cards entry in bulk data manifest");
-
-	console.log(`Downloading ${defaultCards.download_uri} ...`);
-	const res = await fetch(defaultCards.download_uri, { headers });
+	const headers = {
+		"User-Agent": "mtg-meta-analyzer/1.0",
+		Accept: "application/json",
+	};
+	console.log(`Downloading ${manifest.download_uri} ...`);
+	const res = await fetch(manifest.download_uri, { headers });
 	if (!res.ok) throw new Error(`Bulk download failed: HTTP ${res.status}`);
 
 	mkdirSync(CACHE_DIR, { recursive: true });
 	await Bun.write(CACHE_FILE, res);
+	await Bun.write(
+		CACHE_METADATA_FILE,
+		`${JSON.stringify({ bulkDataUpdatedAt: manifest.updated_at })}\n`,
+	);
 	console.log(
 		`Cached ${(statSync(CACHE_FILE).size / 1024 / 1024).toFixed(0)}MB to ${CACHE_FILE}`,
 	);
@@ -291,6 +261,7 @@ async function isLineDelimitedBulkFile(): Promise<boolean> {
 
 async function selectPreferredCardsFromBulk(
 	names: Set<string>,
+	manifest: DefaultCardsManifest,
 ): Promise<{ selected: Map<string, ScryfallCard>; count: number }> {
 	const selected = new Map<string, ScryfallCard>();
 	let count = 0;
@@ -298,7 +269,7 @@ async function selectPreferredCardsFromBulk(
 		count++;
 		considerPreferredCard(selected, JSON.parse(json) as ScryfallCard, names);
 	};
-	const stream = await openBulkDataStream();
+	const stream = await openBulkDataStream(manifest);
 	const consume = (await isLineDelimitedBulkFile())
 		? forEachLineDelimitedJsonArrayObject
 		: forEachJsonArrayObject;
@@ -318,10 +289,11 @@ function extractEntry(card: ScryfallCard): CardImageEntry | null {
 }
 
 async function main() {
-	const needed = collectNeededNames();
+	const needed = collectNeededNames(DATA_DIR);
 	console.log(`Collected ${needed.size} distinct card names from data/`);
 
-	const { selected, count } = await selectPreferredCardsFromBulk(needed);
+	const manifest = await fetchDefaultCardsManifest();
+	const { selected, count } = await selectPreferredCardsFromBulk(needed, manifest);
 	console.log(`Bulk data has ${count} cards`);
 
 	const index: Record<string, CardImageEntry> = {};
@@ -340,7 +312,20 @@ async function main() {
 		Object.entries(index).sort(([a], [b]) => a.localeCompare(b)),
 	);
 	writeFileSync(OUTPUT_FILE, `${JSON.stringify(sorted, null, "\t")}\n`);
+	writeFileSync(
+		STATUS_FILE,
+		`${JSON.stringify(
+			{
+				schemaVersion: CARD_IMAGE_STATUS_SCHEMA_VERSION,
+				bulkDataUpdatedAt: manifest.updated_at,
+				unresolved: misses,
+			},
+			null,
+			2,
+		)}\n`,
+	);
 	console.log(`\nWrote ${Object.keys(sorted).length} entries to ${OUTPUT_FILE}`);
+	console.log(`Wrote status metadata to ${STATUS_FILE}`);
 }
 
 if (import.meta.main) main();

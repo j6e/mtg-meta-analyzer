@@ -45,12 +45,12 @@ jobs:
             bun run scripts/fetch-mtgo.ts --from "$PREV_MONTH" --to "$CURR_MONTH"
           fi
 
-      - name: Rebuild card image index
+      - name: Check/rebuild card image index
         run: |
-          if [ -n "$(git status --porcelain data/)" ]; then
-            bun run scripts/build-card-image-index.ts
+          if bun run scripts/check-card-image-index.ts; then
+            echo "Card image index is current."
           else
-            echo "No data changes — skipping image index rebuild."
+            bun run scripts/build-card-image-index.ts
           fi
 
       - name: Commit and push
@@ -60,9 +60,14 @@ jobs:
             echo "No new MTGO tournaments found."
             exit 0
           fi
-          COUNT=$(git diff --cached --name-only | grep -v 'card-images\.json' | grep -c '\.json$')
+          COUNT=$(git diff --cached --name-only | grep -v -e 'card-images\.json' -e 'card-images-status\.json' | grep -c '\.json$' || true)
           DATE=$(date -u +%Y-%m-%d)
+          if [ "$COUNT" -gt 0 ]; then
+            MESSAGE="data: fetch $COUNT MTGO tournaments ($DATE)"
+          else
+            MESSAGE="data: refresh card image index ($DATE)"
+          fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -m "data: fetch $COUNT MTGO tournaments ($DATE)"
+          git commit -m "$MESSAGE"
           git push

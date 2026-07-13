@@ -59,12 +59,12 @@ jobs:
             bun run scripts/fetch-videre.ts --from "$PREV_MONTH" --to "$CURR_MONTH"
           fi
 
-      - name: Rebuild card image index
+      - name: Check/rebuild card image index
         run: |
-          if [ -n "$(git status --porcelain data/)" ]; then
-            bun run scripts/build-card-image-index.ts
+          if bun run scripts/check-card-image-index.ts; then
+            echo "Card image index is current."
           else
-            echo "No data changes — skipping image index rebuild."
+            bun run scripts/build-card-image-index.ts
           fi
 
       - name: Commit and push
@@ -74,9 +74,14 @@ jobs:
             echo "No new Videre tournaments found."
             exit 0
           fi
-          COUNT=$(git diff --cached --name-only --diff-filter=A | grep -c 'videre-.*\.json$')
+          COUNT=$(git diff --cached --name-only --diff-filter=A | grep -c 'videre-.*\.json$' || true)
           DATE=$(date -u +%Y-%m-%d)
+          if [ "$COUNT" -gt 0 ]; then
+            MESSAGE="data: fetch $COUNT videre tournaments ($DATE)"
+          else
+            MESSAGE="data: refresh card image index ($DATE)"
+          fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -m "data: fetch $COUNT videre tournaments ($DATE)"
+          git commit -m "$MESSAGE"
           git push

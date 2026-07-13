@@ -32,12 +32,12 @@ jobs:
       - name: Fetch tournament data
         run: bun run scripts/fetch-tournament.ts "${{ inputs.tournament_url }}"
 
-      - name: Rebuild card image index
+      - name: Check/rebuild card image index
         run: |
-          if [ -n "$(git status --porcelain data/)" ]; then
-            bun run scripts/build-card-image-index.ts
+          if bun run scripts/check-card-image-index.ts; then
+            echo "Card image index is current."
           else
-            echo "No data changes — skipping image index rebuild."
+            bun run scripts/build-card-image-index.ts
           fi
 
       - name: Check for changes
@@ -48,10 +48,18 @@ jobs:
             echo "changed=false" >> "$GITHUB_OUTPUT"
           else
             echo "changed=true" >> "$GITHUB_OUTPUT"
-            FILENAME=$(git diff --cached --name-only | grep -v -e 'index\.json' -e 'card-images\.json' | head -1)
-            ID=$(basename "$FILENAME" .json)
+            FILENAME=$(git diff --cached --name-only | grep -v -e 'index\.json' -e 'card-images\.json' -e 'card-images-status\.json' | head -1 || true)
+            if [ -n "$FILENAME" ]; then
+              ID=$(basename "$FILENAME" .json)
+              MESSAGE="Add tournament data: $ID"
+            else
+              FILENAME="data/card-images.json"
+              ID="card-image-index-refresh"
+              MESSAGE="Refresh card image index"
+            fi
             echo "tournament_id=$ID" >> "$GITHUB_OUTPUT"
             echo "filename=$FILENAME" >> "$GITHUB_OUTPUT"
+            echo "commit_message=$MESSAGE" >> "$GITHUB_OUTPUT"
           fi
 
       - name: Commit and push directly
@@ -59,7 +67,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -m "Add tournament data: ${{ steps.changes.outputs.tournament_id }}"
+          git commit -m "${{ steps.changes.outputs.commit_message }}"
           git push
 
       - name: Create pull request
@@ -71,10 +79,10 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git checkout -b "$BRANCH"
-          git commit -m "Add tournament data: ${{ steps.changes.outputs.tournament_id }}"
+          git commit -m "${{ steps.changes.outputs.commit_message }}"
           git push -u origin "$BRANCH"
           gh pr create \
-            --title "Add tournament ${{ steps.changes.outputs.tournament_id }}" \
+            --title "${{ steps.changes.outputs.commit_message }}" \
             --body "Fetched tournament data from melee.gg.
 
           **File:** \`${{ steps.changes.outputs.filename }}\`
