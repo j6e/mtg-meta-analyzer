@@ -5,7 +5,6 @@ import type {
 	RoundInfo,
 	TournamentData,
 } from "../../src/lib/types/tournament";
-import { getFrontFace } from "../../src/lib/utils/card-normalizer";
 import type {
 	MtgoRawBracketRound,
 	MtgoRawDeck,
@@ -13,6 +12,7 @@ import type {
 	MtgoRawTournament,
 	MtgoRawWinLoss,
 } from "./mtgo-client";
+import { normalizeImportedCardName } from "./omenpaths-names";
 import { PLAYOFF_ROUNDS } from "./round-utils";
 
 // ---------------------------------------------------------------------------
@@ -134,7 +134,7 @@ export function assembleMtgoTournament(
 
 function parseCards(cards: MtgoRawDeck["main_deck"]): CardEntry[] {
 	return cards.map((c) => ({
-		cardName: getFrontFace(c.card_attributes.card_name),
+		cardName: normalizeImportedCardName(c.card_attributes.card_name),
 		quantity: Number(c.qty),
 	}));
 }

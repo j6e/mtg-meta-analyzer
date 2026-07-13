@@ -12,16 +12,14 @@ import { readdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import type { TournamentData } from "../src/lib/types/tournament";
 import {
-	buildOmenpathsNameMaps,
 	convertOmenpathsName,
-	type OmenpathsCard,
+	getOmenpathsNameMaps,
 	type OmenpathsDirection,
 	parseOmenpathsDirection,
 } from "./lib/omenpaths-names";
 
 const ROOT = join(import.meta.dir, "..");
 const DATA_DIR = join(ROOT, "data");
-const USER_AGENT = "mtg-meta-analyzer/1.0";
 
 type Direction = OmenpathsDirection;
 
@@ -74,54 +72,11 @@ function walkJsonFiles(dir: string): string[] {
 	return files;
 }
 
-const wait = (milliseconds: number) =>
-	new Promise((resolve) => setTimeout(resolve, milliseconds));
-
-async function fetchScryfallPage(
-	uri: string,
-	headers: Record<string, string>,
-): Promise<{ data: OmenpathsCard[]; has_more: boolean; next_page?: string }> {
-	for (let attempt = 0; attempt < 4; attempt++) {
-		const response = await fetch(uri, { headers });
-		if (response.ok) {
-			return (await response.json()) as {
-				data: OmenpathsCard[];
-				has_more: boolean;
-				next_page?: string;
-			};
-		}
-		if (response.status !== 429) {
-			throw new Error(`Scryfall request failed: HTTP ${response.status}`);
-		}
-
-		const retryAfter = Number(response.headers.get("Retry-After"));
-		await wait(Number.isFinite(retryAfter) ? retryAfter * 1000 : 1000 * 2 ** attempt);
-	}
-
-	throw new Error("Scryfall request failed: rate limit did not clear after retries");
-}
-
-async function fetchOmenpathsCards(): Promise<OmenpathsCard[]> {
-	const headers = { Accept: "application/json", "User-Agent": USER_AGENT };
-	let uri = "https://api.scryfall.com/cards/search?q=set%3Aom1&unique=prints";
-	const cards: OmenpathsCard[] = [];
-
-	while (uri) {
-		const page = await fetchScryfallPage(uri, headers);
-		cards.push(...page.data);
-		uri = page.has_more && page.next_page ? page.next_page : "";
-		if (uri) await wait(100);
-	}
-
-	return cards;
-}
-
 async function main() {
 	const options = parseOptions(process.argv.slice(2));
 	const dataDir = options.format ? join(DATA_DIR, options.format) : DATA_DIR;
 
-	const cards = await fetchOmenpathsCards();
-	const maps = buildOmenpathsNameMaps(cards);
+	const maps = getOmenpathsNameMaps();
 	const nameMap = options.direction === "to-paper" ? maps.toPaper : maps.toOnline;
 	let filesScanned = 0;
 	let filesModified = 0;

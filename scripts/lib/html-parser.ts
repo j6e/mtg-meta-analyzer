@@ -1,5 +1,5 @@
 import { parse } from "node-html-parser";
-import { getFrontFace } from "../../src/lib/utils/card-normalizer";
+import { normalizeImportedCardName } from "./omenpaths-names";
 import type {
 	MeleeDecklistDetails,
 	ParsedDecklist,
@@ -111,7 +111,7 @@ export function parseDecklistRecords(details: MeleeDecklistDetails): ParsedDeckl
 	const commanders: { cardName: string; quantity: number }[] = [];
 
 	for (const record of details.Records) {
-		const entry = { cardName: getFrontFace(record.n), quantity: record.q };
+		const entry = { cardName: normalizeImportedCardName(record.n), quantity: record.q };
 		if (record.c === 0) {
 			mainboard.push(entry);
 		} else if (record.c === 2 || record.c === 3) {

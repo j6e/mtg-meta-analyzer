@@ -2,6 +2,8 @@ import { describe, expect, it } from "vitest";
 import {
 	buildOmenpathsNameMaps,
 	convertOmenpathsName,
+	getOmenpathsNameMaps,
+	normalizeImportedCardName,
 	parseOmenpathsDirection,
 } from "../../scripts/lib/omenpaths-names";
 
@@ -63,5 +65,24 @@ describe("Through the Omenpaths name maps", () => {
 		expect(convertOmenpathsName("Lightning Bolt", maps, "to-paper")).toBe(
 			"Lightning Bolt",
 		);
+	});
+});
+
+describe("checked-in Through the Omenpaths catalog", () => {
+	it("provides the reverse online mapping without network access", () => {
+		const maps = getOmenpathsNameMaps();
+		expect(convertOmenpathsName("Spider-Sense", maps, "to-online")).toBe(
+			"Detect Intrusion",
+		);
+	});
+});
+
+describe("normalizeImportedCardName", () => {
+	it("canonicalizes a Through the Omenpaths online display name", () => {
+		expect(normalizeImportedCardName("Detect Intrusion")).toBe("Spider-Sense");
+	});
+
+	it("preserves literal slash card names", () => {
+		expect(normalizeImportedCardName("Summon: Choco/Mog")).toBe("Summon: Choco/Mog");
 	});
 });

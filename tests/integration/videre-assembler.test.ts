@@ -99,6 +99,16 @@ describe("assembleVidereTournament", () => {
 			expect(names.some((n) => n.includes("//"))).toBe(false);
 		});
 
+		it("canonicalizes Through the Omenpaths display names", () => {
+			const input = structuredClone(raw);
+			input.decks[0].mainboard[0].name = "Detect Intrusion";
+			const assembled = assembleVidereTournament(input);
+			expect(assembled.decklists["videre-deck-58591496"].mainboard[0]).toEqual({
+				cardName: "Spider-Sense",
+				quantity: 3,
+			});
+		});
+
 		it("sets commanders, companion and reportedArchetype to null", () => {
 			const deck = result.decklists["videre-deck-58591530"];
 			expect(deck.commanders).toBeNull();

@@ -1,4 +1,5 @@
 import { getFrontFace } from "../../src/lib/utils/card-normalizer";
+import { OMENPATHS_TO_PAPER } from "./omenpaths-catalog";
 
 export interface OmenpathsCardFace {
 	name: string;
@@ -22,6 +23,24 @@ export interface OmenpathsNameMaps {
 	toPaper: Map<string, string>;
 	/** Scryfall's canonical paper name → MTGO/online display name. */
 	toOnline: Map<string, string>;
+}
+
+/** Load the checked-in, bidirectional Omenpaths catalog without network access. */
+export function getOmenpathsNameMaps(): OmenpathsNameMaps {
+	const toPaper = new Map(OMENPATHS_TO_PAPER);
+	const toOnline = new Map<string, string>();
+
+	for (const [onlineName, paperName] of toPaper) {
+		const existingOnline = toOnline.get(paperName);
+		if (existingOnline && existingOnline !== onlineName) {
+			throw new Error(
+				`Ambiguous Through the Omenpaths paper name ${JSON.stringify(paperName)}: ${existingOnline} / ${onlineName}`,
+			);
+		}
+		toOnline.set(paperName, onlineName);
+	}
+
+	return { toPaper, toOnline };
 }
 
 /**
@@ -71,4 +90,16 @@ export function convertOmenpathsName(
 	return (
 		(direction === "to-paper" ? maps.toPaper : maps.toOnline).get(frontFace) ?? name
 	);
+}
+
+/**
+ * Normalize a card name received from an ingestion source into the canonical
+ * paper/front-face name used by the application.
+ *
+ * The catalog is checked in and loaded locally so tournament fetching never
+ * depends on Scryfall availability or rate limits.
+ */
+export function normalizeImportedCardName(name: string): string {
+	const frontFace = getFrontFace(name);
+	return OMENPATHS_TO_PAPER.get(frontFace) ?? frontFace;
 }

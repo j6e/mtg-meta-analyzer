@@ -227,4 +227,28 @@ describe("parseDecklistRecords", () => {
 		const result = parseDecklistRecords(details);
 		expect(result.mainboard[0].cardName).toBe("Imodane's Recruiter");
 	});
+
+	it("canonicalizes Through the Omenpaths display names", () => {
+		const details: MeleeDecklistDetails = {
+			Guid: "test-guid",
+			DecklistName: "Test Deck",
+			FormatName: "Standard",
+			Game: "MagicTheGathering",
+			Records: [
+				{
+					l: "detectintrusion",
+					n: "Detect Intrusion",
+					s: null,
+					q: 1,
+					c: 0,
+					t: "Creature",
+				},
+			],
+			LinkToCards: true,
+			Components: [],
+		};
+
+		const result = parseDecklistRecords(details);
+		expect(result.mainboard[0].cardName).toBe("Spider-Sense");
+	});
 });

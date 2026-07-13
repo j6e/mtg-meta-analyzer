@@ -133,6 +133,16 @@ describe("assembleMtgoTournament", () => {
 			expect(deck.sideboard).toEqual([{ cardName: "Pyroblast", quantity: 2 }]);
 		});
 
+		it("canonicalizes Through the Omenpaths display names", () => {
+			const input = structuredClone(raw);
+			input.decklists[0].main_deck[0].card_attributes.card_name = "Detect Intrusion";
+			const assembled = assembleMtgoTournament(input, HREF);
+			expect(assembled.decklists["mtgo-deck-58471820"].mainboard[0]).toEqual({
+				cardName: "Spider-Sense",
+				quantity: 4,
+			});
+		});
+
 		it("handles empty sideboard", () => {
 			const deck = result.decklists["mtgo-deck-58471822"];
 			expect(deck.sideboard).toEqual([]);

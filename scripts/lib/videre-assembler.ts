@@ -5,7 +5,7 @@ import type {
 	RoundInfo,
 	TournamentData,
 } from "../../src/lib/types/tournament";
-import { getFrontFace } from "../../src/lib/utils/card-normalizer";
+import { normalizeImportedCardName } from "./omenpaths-names";
 import { PLAYOFF_ROUNDS } from "./round-utils";
 import type { VidereRawCard, VidereRawEvent, VidereRawMatch } from "./videre-client";
 
@@ -77,7 +77,7 @@ export function assembleVidereTournament(raw: VidereRawEvent): TournamentData {
 
 function parseCards(cards: VidereRawCard[]): CardEntry[] {
 	return cards.map((c) => ({
-		cardName: getFrontFace(c.name),
+		cardName: normalizeImportedCardName(c.name),
 		quantity: c.quantity,
 	}));
 }
