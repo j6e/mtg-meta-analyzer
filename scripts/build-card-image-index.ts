@@ -6,7 +6,7 @@
  * never hits the rate-limited api.scryfall.com at runtime (see
  * docs/scryfall-image-compliance.md).
  *
- * The bulk file (~180MB) is cached in .scratch/ and re-downloaded after 24h.
+ * The bulk file is cached in .scratch/ and re-downloaded after 24h.
  *
  * Usage:
  *   bun run scripts/build-card-image-index.ts
@@ -73,21 +73,27 @@ function compareCardVersions(a: ScryfallCard, b: ScryfallCard): number {
 		.localeCompare([b.set ?? "", b.collector_number ?? "", b.id ?? ""].join("/"));
 }
 
+function considerPreferredCard(
+	selected: Map<string, ScryfallCard>,
+	card: ScryfallCard,
+	names: Set<string>,
+): void {
+	if (!isPlayableCard(card)) return;
+	const name = getFrontFace(card.name);
+	if (!names.has(name)) return;
+	const current = selected.get(name);
+	if (!current || compareCardVersions(card, current) < 0) {
+		selected.set(name, card);
+	}
+}
+
 /** Select preferred printings for all needed names in one pass through the bulk file. */
 export function selectPreferredCards(
 	cards: ScryfallCard[],
 	names: Set<string>,
 ): Map<string, ScryfallCard> {
 	const selected = new Map<string, ScryfallCard>();
-	for (const card of cards) {
-		if (!isPlayableCard(card)) continue;
-		const name = getFrontFace(card.name);
-		if (!names.has(name)) continue;
-		const current = selected.get(name);
-		if (!current || compareCardVersions(card, current) < 0) {
-			selected.set(name, card);
-		}
-	}
+	for (const card of cards) considerPreferredCard(selected, card, names);
 	return selected;
 }
 
@@ -135,14 +141,14 @@ function collectNeededNames(): Set<string> {
 	return needed;
 }
 
-/** Download default_cards bulk data, reusing a <24h-old cached copy. */
-async function loadBulkData(): Promise<ScryfallCard[]> {
+/** Open default_cards as a stream, reusing a <24h-old cached copy. */
+async function openBulkDataStream(): Promise<ReadableStream<Uint8Array>> {
 	if (
 		existsSync(CACHE_FILE) &&
 		Date.now() - statSync(CACHE_FILE).mtimeMs < CACHE_MAX_AGE_MS
 	) {
 		console.log(`Using cached bulk data (${CACHE_FILE})`);
-		return JSON.parse(readFileSync(CACHE_FILE, "utf-8"));
+		return Bun.file(CACHE_FILE).stream();
 	}
 
 	const headers = { "User-Agent": USER_AGENT, Accept: "application/json" };
@@ -159,12 +165,145 @@ async function loadBulkData(): Promise<ScryfallCard[]> {
 	console.log(`Downloading ${defaultCards.download_uri} ...`);
 	const res = await fetch(defaultCards.download_uri, { headers });
 	if (!res.ok) throw new Error(`Bulk download failed: HTTP ${res.status}`);
-	const text = await res.text();
 
 	mkdirSync(CACHE_DIR, { recursive: true });
-	writeFileSync(CACHE_FILE, text);
-	console.log(`Cached ${(text.length / 1024 / 1024).toFixed(0)}MB to ${CACHE_FILE}`);
-	return JSON.parse(text);
+	await Bun.write(CACHE_FILE, res);
+	console.log(
+		`Cached ${(statSync(CACHE_FILE).size / 1024 / 1024).toFixed(0)}MB to ${CACHE_FILE}`,
+	);
+	return Bun.file(CACHE_FILE).stream();
+}
+
+/**
+ * Process objects in a top-level JSON array without retaining the whole array.
+ * Scryfall's bulk files are arrays of card objects, so a small structural parser
+ * is sufficient and avoids a multi-hundred-megabyte JSON.parse allocation.
+ */
+async function forEachJsonArrayObject(
+	stream: ReadableStream<Uint8Array>,
+	onObject: (json: string) => void,
+): Promise<void> {
+	const reader = stream.getReader();
+	const decoder = new TextDecoder();
+	let object = "";
+	let depth = 0;
+	let escaped = false;
+	let inObject = false;
+	let inString = false;
+
+	const consume = (text: string) => {
+		for (const char of text) {
+			if (!inObject) {
+				if (char === "{") {
+					inObject = true;
+					depth = 1;
+					object = char;
+				}
+				continue;
+			}
+
+			object += char;
+			if (inString) {
+				if (escaped) escaped = false;
+				else if (char === "\\") escaped = true;
+				else if (char === '"') inString = false;
+				continue;
+			}
+
+			if (char === '"') inString = true;
+			else if (char === "{") depth++;
+			else if (char === "}") {
+				depth--;
+				if (depth === 0) {
+					onObject(object);
+					object = "";
+					inObject = false;
+				}
+			}
+		}
+	};
+
+	while (true) {
+		const { value, done } = await reader.read();
+		if (done) break;
+		consume(decoder.decode(value, { stream: true }));
+	}
+	consume(decoder.decode());
+	if (inObject) throw new Error("Unexpected end of bulk JSON array");
+}
+
+/** Fast path for Scryfall's current one-card-per-line bulk-file format. */
+async function forEachLineDelimitedJsonArrayObject(
+	stream: ReadableStream<Uint8Array>,
+	onObject: (json: string) => void,
+): Promise<void> {
+	const reader = stream.getReader();
+	const decoder = new TextDecoder();
+	let pending = "";
+
+	const processLine = (line: string) => {
+		const trimmed = line.trim();
+		if (!trimmed || trimmed === "[" || trimmed === "]") return;
+		if (
+			!trimmed.startsWith("{") ||
+			(!trimmed.endsWith(",") && !trimmed.endsWith("}"))
+		) {
+			throw new Error("Bulk JSON is not one card object per line");
+		}
+		onObject(trimmed.endsWith(",") ? trimmed.slice(0, -1) : trimmed);
+	};
+
+	const consume = (text: string, final = false) => {
+		pending += text;
+		const lines = pending.split("\n");
+		pending = final ? "" : (lines.pop() ?? "");
+		for (const line of lines) processLine(line);
+	};
+
+	while (true) {
+		const { value, done } = await reader.read();
+		if (done) break;
+		consume(decoder.decode(value, { stream: true }));
+	}
+	consume(decoder.decode(), true);
+	if (pending.trim()) processLine(pending);
+}
+
+async function isLineDelimitedBulkFile(): Promise<boolean> {
+	const sample = await Bun.file(CACHE_FILE)
+		.slice(0, 1024 * 1024)
+		.text();
+	const lines = sample
+		.split("\n")
+		.map((line) => line.trim())
+		.filter(Boolean)
+		.slice(0, 4);
+	return (
+		lines[0] === "[" &&
+		lines.slice(1).length >= 2 &&
+		lines
+			.slice(1)
+			.every(
+				(line) => line.startsWith("{") && (line.endsWith(",") || line.endsWith("}")),
+			)
+	);
+}
+
+async function selectPreferredCardsFromBulk(
+	names: Set<string>,
+): Promise<{ selected: Map<string, ScryfallCard>; count: number }> {
+	const selected = new Map<string, ScryfallCard>();
+	let count = 0;
+	const consumeCard = (json: string) => {
+		count++;
+		considerPreferredCard(selected, JSON.parse(json) as ScryfallCard, names);
+	};
+	const stream = await openBulkDataStream();
+	const consume = (await isLineDelimitedBulkFile())
+		? forEachLineDelimitedJsonArrayObject
+		: forEachJsonArrayObject;
+	await consume(stream, consumeCard);
+	return { selected, count };
 }
 
 function extractEntry(card: ScryfallCard): CardImageEntry | null {
@@ -182,11 +321,10 @@ async function main() {
 	const needed = collectNeededNames();
 	console.log(`Collected ${needed.size} distinct card names from data/`);
 
-	const cards = await loadBulkData();
-	console.log(`Bulk data has ${cards.length} cards`);
+	const { selected, count } = await selectPreferredCardsFromBulk(needed);
+	console.log(`Bulk data has ${count} cards`);
 
 	const index: Record<string, CardImageEntry> = {};
-	const selected = selectPreferredCards(cards, needed);
 	for (const key of needed) {
 		const entry = selected.has(key) ? extractEntry(selected.get(key)!) : null;
 		if (entry) index[key] = entry;
