@@ -26,7 +26,7 @@ import {
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const DATA_DIR = join(ROOT, "data");
 const CACHE_DIR = join(ROOT, ".scratch");
-const CACHE_FILE = join(CACHE_DIR, "scryfall-default-cards.json");
+const CACHE_FILE = join(CACHE_DIR, "scryfall-default-cards.jsonl.gz");
 const CACHE_METADATA_FILE = join(CACHE_DIR, "scryfall-default-cards-status.json");
 const CACHE_MAX_AGE_MS = 24 * 60 * 60 * 1000;
 const OUTPUT_FILE = join(DATA_DIR, "card-images.json");
@@ -97,7 +97,11 @@ export function selectPreferredCards(
 	return selected;
 }
 
-/** Open default_cards as a stream, reusing a matching <24h-old cached copy. */
+function openCompressedBulkDataStream(): ReadableStream<Uint8Array> {
+	return Bun.file(CACHE_FILE).stream().pipeThrough(new DecompressionStream("gzip"));
+}
+
+/** Open default_cards as a decompressed JSONL stream, reusing a matching cache. */
 async function openBulkDataStream(
 	manifest: DefaultCardsManifest,
 ): Promise<ReadableStream<Uint8Array>> {
@@ -121,19 +125,31 @@ async function openBulkDataStream(
 		Date.now() - statSync(CACHE_FILE).mtimeMs < CACHE_MAX_AGE_MS
 	) {
 		console.log(`Using cached bulk data (${CACHE_FILE})`);
-		return Bun.file(CACHE_FILE).stream();
+		return openCompressedBulkDataStream();
 	}
 
-	const headers = {
-		"User-Agent": "mtg-meta-analyzer/1.0",
-		Accept: "application/json",
-	};
-	console.log(`Downloading ${manifest.download_uri} ...`);
-	const res = await fetch(manifest.download_uri, { headers });
-	if (!res.ok) throw new Error(`Bulk download failed: HTTP ${res.status}`);
-
+	console.log(`Downloading ${manifest.jsonl_download_uri} ...`);
 	mkdirSync(CACHE_DIR, { recursive: true });
-	await Bun.write(CACHE_FILE, res);
+	const download = Bun.spawn(
+		[
+			"curl",
+			"--fail",
+			"--location",
+			"--retry",
+			"3",
+			"--silent",
+			"--show-error",
+			"--user-agent",
+			"mtg-meta-analyzer/1.0",
+			"--output",
+			CACHE_FILE,
+			manifest.jsonl_download_uri,
+		],
+		{ stdout: "inherit", stderr: "inherit" },
+	);
+	const exitCode = await download.exited;
+	if (exitCode !== 0) throw new Error(`Bulk download failed: curl exited ${exitCode}`);
+
 	await Bun.write(
 		CACHE_METADATA_FILE,
 		`${JSON.stringify({ bulkDataUpdatedAt: manifest.updated_at })}\n`,
@@ -141,55 +157,24 @@ async function openBulkDataStream(
 	console.log(
 		`Cached ${(statSync(CACHE_FILE).size / 1024 / 1024).toFixed(0)}MB to ${CACHE_FILE}`,
 	);
-	return Bun.file(CACHE_FILE).stream();
+	return openCompressedBulkDataStream();
 }
 
-/**
- * Process objects in a top-level JSON array without retaining the whole array.
- * Scryfall's bulk files are arrays of card objects, so a small structural parser
- * is sufficient and avoids a multi-hundred-megabyte JSON.parse allocation.
- */
-async function forEachJsonArrayObject(
+/** Process Scryfall's JSONL bulk file without retaining it in memory. */
+async function forEachJsonLine(
 	stream: ReadableStream<Uint8Array>,
 	onObject: (json: string) => void,
 ): Promise<void> {
 	const reader = stream.getReader();
 	const decoder = new TextDecoder();
-	let object = "";
-	let depth = 0;
-	let escaped = false;
-	let inObject = false;
-	let inString = false;
+	let pending = "";
 
 	const consume = (text: string) => {
-		for (const char of text) {
-			if (!inObject) {
-				if (char === "{") {
-					inObject = true;
-					depth = 1;
-					object = char;
-				}
-				continue;
-			}
-
-			object += char;
-			if (inString) {
-				if (escaped) escaped = false;
-				else if (char === "\\") escaped = true;
-				else if (char === '"') inString = false;
-				continue;
-			}
-
-			if (char === '"') inString = true;
-			else if (char === "{") depth++;
-			else if (char === "}") {
-				depth--;
-				if (depth === 0) {
-					onObject(object);
-					object = "";
-					inObject = false;
-				}
-			}
+		pending += text;
+		const lines = pending.split("\n");
+		pending = lines.pop() ?? "";
+		for (const line of lines) {
+			if (line.trim()) onObject(line);
 		}
 	};
 
@@ -199,64 +184,7 @@ async function forEachJsonArrayObject(
 		consume(decoder.decode(value, { stream: true }));
 	}
 	consume(decoder.decode());
-	if (inObject) throw new Error("Unexpected end of bulk JSON array");
-}
-
-/** Fast path for Scryfall's current one-card-per-line bulk-file format. */
-async function forEachLineDelimitedJsonArrayObject(
-	stream: ReadableStream<Uint8Array>,
-	onObject: (json: string) => void,
-): Promise<void> {
-	const reader = stream.getReader();
-	const decoder = new TextDecoder();
-	let pending = "";
-
-	const processLine = (line: string) => {
-		const trimmed = line.trim();
-		if (!trimmed || trimmed === "[" || trimmed === "]") return;
-		if (
-			!trimmed.startsWith("{") ||
-			(!trimmed.endsWith(",") && !trimmed.endsWith("}"))
-		) {
-			throw new Error("Bulk JSON is not one card object per line");
-		}
-		onObject(trimmed.endsWith(",") ? trimmed.slice(0, -1) : trimmed);
-	};
-
-	const consume = (text: string, final = false) => {
-		pending += text;
-		const lines = pending.split("\n");
-		pending = final ? "" : (lines.pop() ?? "");
-		for (const line of lines) processLine(line);
-	};
-
-	while (true) {
-		const { value, done } = await reader.read();
-		if (done) break;
-		consume(decoder.decode(value, { stream: true }));
-	}
-	consume(decoder.decode(), true);
-	if (pending.trim()) processLine(pending);
-}
-
-async function isLineDelimitedBulkFile(): Promise<boolean> {
-	const sample = await Bun.file(CACHE_FILE)
-		.slice(0, 1024 * 1024)
-		.text();
-	const lines = sample
-		.split("\n")
-		.map((line) => line.trim())
-		.filter(Boolean)
-		.slice(0, 4);
-	return (
-		lines[0] === "[" &&
-		lines.slice(1).length >= 2 &&
-		lines
-			.slice(1)
-			.every(
-				(line) => line.startsWith("{") && (line.endsWith(",") || line.endsWith("}")),
-			)
-	);
+	if (pending.trim()) onObject(pending);
 }
 
 async function selectPreferredCardsFromBulk(
@@ -270,10 +198,7 @@ async function selectPreferredCardsFromBulk(
 		considerPreferredCard(selected, JSON.parse(json) as ScryfallCard, names);
 	};
 	const stream = await openBulkDataStream(manifest);
-	const consume = (await isLineDelimitedBulkFile())
-		? forEachLineDelimitedJsonArrayObject
-		: forEachJsonArrayObject;
-	await consume(stream, consumeCard);
+	await forEachJsonLine(stream, consumeCard);
 	return { selected, count };
 }
 

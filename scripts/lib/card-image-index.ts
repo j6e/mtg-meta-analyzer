@@ -9,7 +9,7 @@ const USER_AGENT = "mtg-meta-analyzer/1.0";
 
 export interface DefaultCardsManifest {
 	updated_at: string;
-	download_uri: string;
+	jsonl_download_uri: string;
 }
 
 export interface CardImageIndexStatus {
@@ -68,23 +68,28 @@ export function collectNeededNames(
 	return needed;
 }
 
+export function parseDefaultCardsManifest(value: unknown): DefaultCardsManifest {
+	const manifest = value as {
+		data?: Array<Partial<DefaultCardsManifest> & { type?: string }>;
+	};
+	const defaultCards = manifest?.data?.find((data) => data.type === "default_cards");
+	if (!defaultCards?.updated_at || !defaultCards.jsonl_download_uri) {
+		throw new Error(
+			"default_cards manifest is missing updated_at or jsonl_download_uri",
+		);
+	}
+	return {
+		updated_at: defaultCards.updated_at,
+		jsonl_download_uri: defaultCards.jsonl_download_uri,
+	};
+}
+
 export async function fetchDefaultCardsManifest(): Promise<DefaultCardsManifest> {
 	console.log("Fetching bulk data manifest...");
 	const headers = { "User-Agent": USER_AGENT, Accept: "application/json" };
 	const response = await fetch("https://api.scryfall.com/bulk-data", { headers });
 	if (!response.ok) throw new Error(`Manifest fetch failed: HTTP ${response.status}`);
-
-	const manifest = (await response.json()) as {
-		data?: Array<Partial<DefaultCardsManifest> & { type?: string }>;
-	};
-	const defaultCards = manifest.data?.find((data) => data.type === "default_cards");
-	if (!defaultCards?.updated_at || !defaultCards.download_uri) {
-		throw new Error("default_cards manifest is missing updated_at or download_uri");
-	}
-	return {
-		updated_at: defaultCards.updated_at,
-		download_uri: defaultCards.download_uri,
-	};
+	return parseDefaultCardsManifest(await response.json());
 }
 
 export function isValidCardImageStatus(value: unknown): value is CardImageIndexStatus {

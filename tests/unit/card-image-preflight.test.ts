@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
 	isCardImageIndexCurrent,
 	isValidCardImageStatus,
+	parseDefaultCardsManifest,
 } from "../../scripts/lib/card-image-index";
 
 const status = {
@@ -11,6 +12,25 @@ const status = {
 };
 
 describe("card image index preflight", () => {
+	it("reads Scryfall's compressed JSONL bulk-data manifest", () => {
+		expect(
+			parseDefaultCardsManifest({
+				data: [
+					{
+						type: "default_cards",
+						updated_at: "2026-08-01T09:09:42.050+00:00",
+						jsonl_download_uri:
+							"https://data.scryfall.io/default-cards/default-cards.jsonl.gz",
+					},
+				],
+			}),
+		).toEqual({
+			updated_at: "2026-08-01T09:09:42.050+00:00",
+			jsonl_download_uri:
+				"https://data.scryfall.io/default-cards/default-cards.jsonl.gz",
+		});
+	});
+
 	it("accepts names covered by resolved entries", () => {
 		expect(
 			isCardImageIndexCurrent({
