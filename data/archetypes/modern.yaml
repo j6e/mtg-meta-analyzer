@@ -205,23 +205,13 @@ archetypes:
         minCopies: 3
       - name: "Grist, the Hunger Tide"
         minCopies: 1
-  # --- Broodscale siblings: partition on Devourer of Destiny; keep before Eldrazi Ramp ---
-  - name: Mono-Green Broodscale Combo
+  # --- keep before Eldrazi Ramp: shares the Eldrazi land base ---
+  - name: Broodscale Combo
     signatureCards:
       - name: "Basking Broodscale"
-        minCopies: 3
-      - name: "Devourer of Destiny"
         minCopies: 3
       - name: "Blade of the Bloodchief"
         minCopies: 2
-  - name: Gruul Broodscale Combo
-    signatureCards:
-      - name: "Basking Broodscale"
-        minCopies: 3
-      - name: "Blade of the Bloodchief"
-        minCopies: 3
-      - name: "Devourer of Destiny"
-        exactCopies: 0
   # --- Tron siblings: Eldrazi Tron keeps Thought-Knot Seer, plain Tron runs none ---
   - name: Eldrazi Tron
     signatureCards:
@@ -264,7 +254,7 @@ archetypes:
         minCopies: 3
       - name: "Eldrazi Temple"
         minCopies: 3
-      # the Broodscale combo decks run the same Eldrazi land base; yield to them
+      # the Broodscale combo deck runs the same Eldrazi land base; yield to it
       - name: "Basking Broodscale"
         exactCopies: 0
       # no red, and no Gruul Eldrazi Aggro payoff: yield the Gruul builds too
