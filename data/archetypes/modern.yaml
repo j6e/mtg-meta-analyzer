@@ -12,6 +12,18 @@ archetypes:
         minCopies: 3
       - name: "Orcish Bowmasters"
         minCopies: 2
+  - name: Orzhov Energy
+    signatureCards:
+      - name: "Guide of Souls"
+        minCopies: 3
+      - name: "Ocelot Pride"
+        minCopies: 3
+      - name: "Godless Shrine"
+        minCopies: 1
+      - name: "Necrodominance"
+        minCopies: 3
+      - name: "Sacred Foundry"
+        exactCopies: 0
   - name: Boros Energy
     signatureCards:
       - name: "Ajani, Nacatl Pariah"
@@ -20,6 +32,8 @@ archetypes:
         minCopies: 3
       - name: "Ocelot Pride"
         minCopies: 3
+      - name: "Sacred Foundry"
+        minCopies: 1
       - name: "Quantum Riddler"
         exactCopies: 0
       - name: "Orcish Bowmasters"
@@ -50,6 +64,46 @@ archetypes:
         minCopies: 3
       - name: "Mishra's Bauble"
         minCopies: 3
+  - name: Song of Creation
+    signatureCards:
+      - name: "Song of Creation"
+        minCopies: 3
+      - name: "Emry, Lurker of the Loch"
+        minCopies: 3
+      - name: "Tamiyo, Inquisitive Student"
+        minCopies: 3
+      - name: "Mox Amber"
+        minCopies: 4
+      - name: "Mox Opal"
+        minCopies: 4
+      - name: "Mishra's Bauble"
+        minCopies: 4
+  - name: Sewer-Veillance Combo
+    signatureCards:
+      - name: "Emry, Lurker of the Loch"
+        minCopies: 4
+      - name: "Tamiyo, Inquisitive Student"
+        minCopies: 4
+      - name: "Mishra's Bauble"
+        minCopies: 4
+      - name: "Mox Amber"
+        minCopies: 3
+      - name: "Mox Opal"
+        minCopies: 4
+      - name: "Urza's Saga"
+        minCopies: 4
+      - name: "Sewer-veillance Cam"
+        minCopies: 1
+      - name: "Hallowed Fountain"
+        minCopies: 2
+      - name: "Portable Hole"
+        minCopies: 2
+      - name: "Malevolent Rumble"
+        exactCopies: 0
+      - name: "Cori-Steel Cutter"
+        exactCopies: 0
+      - name: "Song of Creation"
+        exactCopies: 0
   - name: Izzet Prowess
     signatureCards:
       - name: "Slickshot Show-Off"
@@ -168,10 +222,12 @@ archetypes:
         minCopies: 3
       - name: "Devourer of Destiny"
         exactCopies: 0
+  # --- Tron siblings: Eldrazi Tron keeps Thought-Knot Seer, plain Tron runs none ---
   - name: Eldrazi Tron
     signatureCards:
+      # 2 copies, not 3: a fifth of the cluster trimmed the fourth and third copy
       - name: "Thought-Knot Seer"
-        minCopies: 3
+        minCopies: 2
       - name: "Urza's Mine"
         minCopies: 4
       - name: "Urza's Tower"
@@ -180,6 +236,18 @@ archetypes:
         minCopies: 1
       - name: "Karn, the Great Creator"
         minCopies: 1
+  - name: Tron
+    signatureCards:
+      - name: "Kozilek's Command"
+        minCopies: 4
+      - name: "Urza's Power Plant"
+        minCopies: 4
+      - name: "Urza's Tower"
+        minCopies: 4
+      - name: "Ugin, Eye of the Storms"
+        minCopies: 1
+      - name: "Thought-Knot Seer"
+        exactCopies: 0
   - name: Mono-Black Eldrazi
     signatureCards:
       - name: "Thought-Knot Seer"
@@ -195,6 +263,42 @@ archetypes:
       - name: "Ugin's Labyrinth"
         minCopies: 3
       - name: "Eldrazi Temple"
+        minCopies: 3
+      # the Broodscale combo decks run the same Eldrazi land base; yield to them
+      - name: "Basking Broodscale"
+        exactCopies: 0
+      # no red, and no Gruul Eldrazi Aggro payoff: yield the Gruul builds too
+      - name: "Mountain"
+        exactCopies: 0
+      - name: "Eldrazi Linebreaker"
+        exactCopies: 0
+      # the Fight Rigging build shares this land base; yield to Eldrazi Rigging
+      - name: "Fight Rigging"
+        exactCopies: 0
+      # so does the emerge build; yield to Gruul Eldrazi Emerge
+      - name: "Herigast, Erupting Nullkite"
+        exactCopies: 0
+      # anything on the full Urza set is a Tron deck, not a ramp deck
+      - name: "Urza's Tower"
+        exactCopies: 0
+  - name: Eldrazi Rigging
+    signatureCards:
+      - name: "Fight Rigging"
+        minCopies: 3
+      - name: "Slumbering Trudge"
+        minCopies: 3
+      - name: "Sowing Mycospawn"
+        minCopies: 3
+      - name: "Eldrazi Temple"
+        minCopies: 3
+  - name: Gruul Eldrazi Emerge
+    signatureCards:
+      # 1 copy is enough: no other Eldrazi deck plays Herigast at all
+      - name: "Herigast, Erupting Nullkite"
+        minCopies: 1
+      - name: "Utopia Sprawl"
+        minCopies: 3
+      - name: "Talisman of Impulse"
         minCopies: 3
   - name: Gruul Eldrazi Aggro
     signatureCards:
@@ -220,6 +324,16 @@ archetypes:
         minCopies: 3
       - name: "Fatal Push"
         minCopies: 3
+      - name: "Island"
+        minCopies: 1
+      - name: "Necrodominance"
+        exactCopies: 0
+      - name: "Archon of Cruelty"
+        exactCopies: 0
+      - name: "Goryo's Vengeance"
+        exactCopies: 0
+      - name: "Leyline of the Guildpact"
+        exactCopies: 0
   - name: Dimir Mill
     signatureCards:
       - name: "Hedron Crab"
@@ -275,12 +389,50 @@ archetypes:
         minCopies: 1
       - name: "Galvanic Discharge"
         exactCopies: 0
-  - name: Mono-Black Midrange
+  - name: Golgari Necrodominance
     signatureCards:
       - name: "Necrodominance"
         minCopies: 3
-      - name: "Boggart Trawler"
+      - name: "Soul Spike"
         minCopies: 3
+      - name: "Overgrown Tomb"
+        minCopies: 1
+  - name: Mono-Black Necrodominance
+    signatureCards:
+      - name: "Necrodominance"
+        minCopies: 3
+      - name: "Soul Spike"
+        minCopies: 3
+      - name: "Overgrown Tomb"
+        exactCopies: 0
+      - name: "Blooming Marsh"
+        exactCopies: 0
+      - name: "Twilight Mire"
+        exactCopies: 0
+      - name: "Nurturing Peatland"
+        exactCopies: 0
+      - name: "Woodland Cemetery"
+        exactCopies: 0
+      - name: "Witherbloom Charm"
+        exactCopies: 0
+      - name: "Cosmogoyf"
+        exactCopies: 0
+      - name: "Darkbore Pathway"
+        exactCopies: 0
+      - name: "Psychic Frog"
+        exactCopies: 0
+      - name: "Watery Grave"
+        exactCopies: 0
+      - name: "Undercity Sewers"
+        exactCopies: 0
+      - name: "Darkslick Shores"
+        exactCopies: 0
+      - name: "Godless Shrine"
+        exactCopies: 0
+      - name: "Bleachbone Verge"
+        exactCopies: 0
+      - name: "Ketramose, the New Dawn"
+        exactCopies: 0
   - name: Mono-Blue Merfolk
     signatureCards:
       - name: "Lord of Atlantis"
@@ -293,3 +445,40 @@ archetypes:
         minCopies: 3
       - name: "Urza's Saga"
         minCopies: 3
+  - name: Jund Cosmogoyf
+    signatureCards:
+      - name: "Cosmogoyf"
+        minCopies: 4
+      - name: "Thud"
+        minCopies: 4
+      - name: "Spoils of the Vault"
+        minCopies: 4
+  - name: Devoted Combo
+    signatureCards:
+      - name: "Devoted Druid"
+        minCopies: 4
+      - name: "Tyvar, Jubilant Brawler"
+        minCopies: 4
+  - name: Hammer Time
+    signatureCards:
+      - name: "Colossus Hammer"
+        minCopies: 4
+      - name: "Leyline Axe"
+        minCopies: 1
+  # --- Hollow One siblings: partition on Vengevine (the 4c recursion package) ---
+  - name: 4c HollowOne
+    signatureCards:
+      - name: "Hollow One"
+        minCopies: 4
+      - name: "Hardened Academic"
+        minCopies: 4
+      - name: "Vengevine"
+        minCopies: 4
+  - name: Rakdos HollowOne
+    signatureCards:
+      - name: "Hollow One"
+        minCopies: 4
+      - name: "Nethergoyf"
+        minCopies: 2
+      - name: "Vengevine"
+        exactCopies: 0
