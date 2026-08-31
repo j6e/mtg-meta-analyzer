@@ -71,6 +71,7 @@ Spotlight TMNT - Richmond
 ```
 
 - Use the **set acronym**, not the long set name. Known acronyms:
+  - `HOB` = The Hobbit
   - `SOS` = Secrets of Strixhaven
   - `TMNT` = Teenage Mutant Ninja Turtles
 - The same Spotlight (same set) runs in multiple cities; keep them consistent
