@@ -133,6 +133,10 @@ archetypes:
     signatureCards:
       - name: "Ephemerate"
         minCopies: 3
+      # Ephemerate plus Quantum Riddler also fits 5c Omnath Ritual, which would
+      # double-match and cost both definitions the deck.
+      - name: "Omnath, Locus of Creation"
+        exactCopies: 0
       - name: "Quantum Riddler"
         minCopies: 3
       - name: "Overlord of the Balemurk"
@@ -142,6 +146,29 @@ archetypes:
       - name: "Galvanic Discharge"
         exactCopies: 0
       - name: "Goryo's Vengeance"
+        exactCopies: 0
+      # These decks are Esper (12-13 black sources, Psychic Frog 4x). Without this
+      # gate they single-match Azorius Blink, because they run no Overlord and so
+      # fail Esper Blink.
+      - name: "Psychic Frog"
+        exactCopies: 0
+  # Not a blink deck despite the Riddler/Solitude engine: only 46% run Ephemerate
+  # at 3+. Frog, Thoughtseize and Prismatic Ending make it a midrange shell.
+  # The gates below only exist to stop double-matches with Esper Reanimator,
+  # Esper Blink and 5c Omnath Ritual, which share that same engine.
+  - name: Esper Midrange
+    signatureCards:
+      - name: "Psychic Frog"
+        minCopies: 3
+      - name: "Quantum Riddler"
+        minCopies: 3
+      - name: "Solitude"
+        minCopies: 3
+      - name: "Atraxa, Grand Unifier"
+        exactCopies: 0
+      - name: "Overlord of the Balemurk"
+        exactCopies: 0
+      - name: "Omnath, Locus of Creation"
         exactCopies: 0
   - name: Jeskai Blink
     signatureCards:
@@ -185,6 +212,15 @@ archetypes:
         minCopies: 3
       - name: "Shardless Agent"
         minCopies: 3
+  # --- Birthing Ritual siblings: partition on Omnath (the five-color shell) ---
+  - name: 5c Omnath Ritual
+    signatureCards:
+      - name: "Omnath, Locus of Creation"
+        minCopies: 2
+      - name: "Birthing Ritual"
+        minCopies: 4
+      - name: "Solitude"
+        minCopies: 3
   - name: Sam Combo
     signatureCards:
       - name: "Samwise Gamgee"
@@ -205,17 +241,14 @@ archetypes:
         minCopies: 3
       - name: "Grist, the Hunger Tide"
         minCopies: 1
-  # --- keep before Eldrazi Ramp: shares the Eldrazi land base ---
   - name: Broodscale Combo
     signatureCards:
       - name: "Basking Broodscale"
         minCopies: 3
       - name: "Blade of the Bloodchief"
         minCopies: 2
-  # --- Tron siblings: Eldrazi Tron keeps Thought-Knot Seer, plain Tron runs none ---
   - name: Eldrazi Tron
     signatureCards:
-      # 2 copies, not 3: a fifth of the cluster trimmed the fourth and third copy
       - name: "Thought-Knot Seer"
         minCopies: 2
       - name: "Urza's Mine"
@@ -254,7 +287,7 @@ archetypes:
         minCopies: 3
       - name: "Eldrazi Temple"
         minCopies: 3
-      # the Broodscale combo deck runs the same Eldrazi land base; yield to it
+      # the Broodscale combo decks run the same Eldrazi land base; yield to them
       - name: "Basking Broodscale"
         exactCopies: 0
       # no red, and no Gruul Eldrazi Aggro payoff: yield the Gruul builds too
@@ -308,6 +341,18 @@ archetypes:
     signatureCards:
       - name: "Living End"
         minCopies: 3
+  # Cascade Rhinos: Footfalls plus a full set of Shardless Agent. The Scion gate keeps the
+  # three Domain-mana Footfalls builds with Domain Zoo, which already claims them on Leyline
+  # of the Guildpact and Leyline Binding. Without the gate they double-match and, under
+  # exactly-one-match semantics, all three lose their label.
+  - name: Rhinos
+    signatureCards:
+      - name: "Crashing Footfalls"
+        minCopies: 4
+      - name: "Shardless Agent"
+        minCopies: 4
+      - name: "Scion of Draco"
+        exactCopies: 0
   - name: Dimir Midrange
     signatureCards:
       - name: "Psychic Frog"
@@ -472,3 +517,23 @@ archetypes:
         minCopies: 2
       - name: "Vengevine"
         exactCopies: 0
+  # Indomitable Creativity into Archon of Cruelty, with Dwarven Mine as the token target.
+  # Archon counts swing 1 to 4 across the 30 decks in this window, so it is not a usable
+  # clause. Dwarven Mine is: all 30 run at least 3.
+  - name: Creativity
+    signatureCards:
+      - name: "Indomitable Creativity"
+        minCopies: 3
+      - name: "Dwarven Mine"
+        minCopies: 3
+  # Lantern is unmistakable: the 22 decks in this window run all five pieces, and nothing
+  # else in Modern touches any of them (lift above 530 on each). Clauses sit at the lowest
+  # observed counts so a 3-of build still lands.
+  - name: Lantern Control
+    signatureCards:
+      - name: "Lantern of Insight"
+        minCopies: 3
+      - name: "Ensnaring Bridge"
+        minCopies: 3
+      - name: "Codex Shredder"
+        minCopies: 2

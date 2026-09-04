@@ -1,26 +1,97 @@
 format: Standard
-date: "2026-07-08"
+date: "2026-08-21"
 archetypes:
-  - name: Izzet Lessons
+  - name: Orzhov Lifegain
     signatureCards:
-      - name: Gran-Gran
+      - name: "Case of the Uneaten Feast"
         minCopies: 4
-      - name: Firebending Lesson
+      - name: "Hinterland Sanctifier"
         minCopies: 4
-      - name: Accumulate Wisdom
+      - name: "Amalia Benavides Aguirre"
+        minCopies: 3
+      - name: "Lunar Convocation"
+        minCopies: 1
+
+  - name: Golgari Annex
+    signatureCards:
+      - name: "Unholy Annex"
         minCopies: 4
-      - name: Jeskai Revelation
+      - name: "Professor Dellian Fel"
+        minCopies: 2
+      - name: "Requiting Hex"
+        minCopies: 3
+      - name: "Bloodletter of Aclazotz"
         exactCopies: 0
 
-  - name: Jeskai Lessons
+  - name: Jeskai Control
     signatureCards:
-      - name: Gran-Gran
+      - name: "Jeskai Revelation"
         minCopies: 4
-      - name: Firebending Lesson
+      - name: "Tablet of Discovery"
         minCopies: 4
-      - name: Accumulate Wisdom
+      - name: "Firebending Lesson"
         minCopies: 4
-      - name: Jeskai Revelation
+      - name: "Inevitable Defeat"
+        exactCopies: 0
+
+  - name: Izzet Monument
+    signatureCards:
+      - name: "Monument to Endurance"
+        minCopies: 4
+      - name: "Artist's Talent"
+        minCopies: 4
+      - name: "Flow State"
+        minCopies: 4
+
+  - name: Izzet Aggro
+    signatureCards:
+      - name: "Colorstorm Stallion"
+        minCopies: 3
+      - name: "Hired Claw"
+        minCopies: 3
+      - name: "Vibrant Outburst"
+        minCopies: 3
+      - name: "Slickshot Show-Off"
+        exactCopies: 0
+
+  - name: Izzet Prowess
+    signatureCards:
+      - name: "Wild Ride"
+        minCopies: 2
+      - name: "Elusive Otter"
+        minCopies: 4
+      - name: "Slickshot Show-Off"
+        minCopies: 4
+      - name: "Leyline of Resonance"
+        exactCopies: 0
+
+  - name: Boros Dwarves
+    signatureCards:
+      - name: "Dwarven Mauler"
+        minCopies: 4
+      - name: "Kíli the Resourceful"
+        minCopies: 4
+      - name: "Dáin's Company"
+        minCopies: 3
+
+  - name: Mono-Black Corpses
+    signatureCards:
+      - name: "Corpses of the Lost"
+        minCopies: 4
+      - name: "Forsaken Miner"
+        minCopies: 4
+      - name: "Iridescent Vinelasher"
+        minCopies: 4
+
+  - name: Gruul Break Out
+    signatureCards:
+      - name: "Break Out"
+        minCopies: 4
+      - name: "Keen-Eyed Curator"
+        minCopies: 4
+      - name: "Patchwork Beastie"
+        minCopies: 4
+      - name: "Wildfire Wickerfolk"
         minCopies: 4
 
   - name: Izzet Maestro
@@ -47,26 +118,6 @@ archetypes:
         minCopies: 3
       - name: "Llanowar Elves"
         minCopies: 4
-
-  - name: Selesnya Gearhulk
-    signatureCards:
-      - name: Badgermole Cub
-        minCopies: 4
-      - name: Brightglass Gearhulk
-        minCopies: 3
-      - name: Gene Pollinator
-        minCopies: 2
-      - name: Pawpatch Recruit
-        minCopies: 2
-
-  - name: Selesnya Ouroboroid
-    signatureCards:
-      - name: Badgermole Cub
-        minCopies: 4
-      - name: Pawpatch Recruit
-        minCopies: 3
-      - name: Ouroboroid
-        minCopies: 1
 
   - name: Mono-Green Landfall
     signatureCards:
@@ -113,19 +164,10 @@ archetypes:
     signatureCards:
       - name: Deceit
         minCopies: 3
-      - name: "Rakshasa's Bargain"
-        minCopies: 3
-      - name: Awaken the Honored Dead
-        minCopies: 2
-
-  - name: 4-Color Reanimator
-    signatureCards:
-      - name: "Bringer of the Last Gift"
-        minCopies: 3
       - name: "Superior Spider-Man"
         minCopies: 3
-      - name: Deceit
-        minCopies: 3
+      - name: Awaken the Honored Dead
+        minCopies: 1
 
   - name: Dimir Excruciator
     signatureCards:
@@ -135,6 +177,8 @@ archetypes:
         minCopies: 3
       - name: Requiting Hex
         minCopies: 2
+      - name: Breeding Pool
+        exactCopies: 0
 
   - name: Dimir Reanimator
     signatureCards:
@@ -148,47 +192,10 @@ archetypes:
         exactCopies: 0
       - name: "Bringer of the Last Gift"
         exactCopies: 0
-      - name: "Rakshasa's Bargain"
+      - name: "Breeding Pool"
         exactCopies: 0
       - name: "Ashling, Rekindled"
         exactCopies: 0
-
-  - name: Simic Rhythm
-    signatureCards:
-      - name: Badgermole Cub
-        minCopies: 4
-      - name: "Nature's Rhythm"
-        minCopies: 4
-      - name: Gene Pollinator
-        minCopies: 3
-      - name: Llanowar Elves
-        minCopies: 4
-      - name: Blooming Marsh
-        exactCopies: 0
-
-  - name: Bant Rhythm
-    signatureCards:
-      - name: Brightglass Gearhulk
-        minCopies: 1
-      - name: Badgermole Cub
-        minCopies: 4
-      - name: "Nature's Rhythm"
-        minCopies: 3
-      - name: Gene Pollinator
-        minCopies: 3
-      - name: Llanowar Elves
-        minCopies: 4
-      - name: Seam Rip
-        minCopies: 1
-
-  - name: Golgari Midrange
-    signatureCards:
-      - name: Blooming Marsh
-        minCopies: 3
-      - name: Wastewood Verge
-        minCopies: 3
-      - name: Llanowar Elves
-        minCopies: 3
 
   - name: Dimir Midrange
     signatureCards:
@@ -212,6 +219,8 @@ archetypes:
     signatureCards:
       - name: Eddymurk Crab
         minCopies: 4
+      - name: Hearth Elemental
+        minCopies: 3
       - name: Opt
         minCopies: 3
       - name: Slickshot Show-Off
@@ -241,17 +250,6 @@ archetypes:
       - name: Vibrance
         minCopies: 2
 
-  - name: Jeskai Control
-    signatureCards:
-      - name: Jeskai Revelation
-        minCopies: 1
-      - name: No More Lies
-        minCopies: 2
-      - name: Stock Up
-        minCopies: 2
-      - name: Inevitable Defeat
-        exactCopies: 0
-
   - name: 4-Color Control
     signatureCards:
       - name: Inevitable Defeat
@@ -276,13 +274,6 @@ archetypes:
         minCopies: 2
       - name: Inspiring Vantage
         minCopies: 2
-
-  - name: Izzet Prowess
-    signatureCards:
-      - name: Slickshot Show-Off
-        minCopies: 4
-      - name: "Stormchaser's Talent"
-        minCopies: 4
 
   - name: Bant Airbending
     signatureCards:
@@ -313,6 +304,8 @@ archetypes:
         minCopies: 3
       - name: Burst Lightning
         minCopies: 3
+      - name: Colorstorm Stallion
+        exactCopies: 0
 
   - name: Rakdos Discard
     signatureCards:
@@ -357,15 +350,6 @@ archetypes:
         minCopies: 4
       - name: Quantum Riddler
         minCopies: 4
-
-  - name: Esper Pixie
-    signatureCards:
-      - name: "Nurturing Pixie"
-        minCopies: 4
-      - name: "Stormchaser's Talent"
-        minCopies: 4
-      - name: "Kaito, Bane of Nightmares"
-        minCopies: 1
 
   - name: Simic Kona
     signatureCards:
@@ -458,15 +442,6 @@ archetypes:
         minCopies: 4
       - name: "Jasmine Dragon Tea Shop"
         minCopies: 3
-
-  - name: Temur Otters
-    signatureCards:
-      - name: "Enduring Vitality"
-        minCopies: 4
-      - name: "Stormchaser's Talent"
-        minCopies: 4
-      - name: "Breeding Pool"
-        minCopies: 4
 
   - name: Mono-Black Demons
     signatureCards:

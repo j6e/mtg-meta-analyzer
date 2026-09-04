@@ -1,6 +1,54 @@
 format: Legacy
-date: "2026-07-08"
+date: "2026-08-21"
 archetypes:
+  # --- Rebuilt from post-ban decklists. The Fantasticar was banned in the 2026-08-10
+  # announcement and appears in no Legacy decklist from 2026-08-11 on, so Dimir Car is gone.
+  # Five definitions are new: Hogaak Moonshadow, Grixis Control, Mono-Red Prison and
+  # Monolith Jewel came out of the post-ban Unknown pile, and Mono-White Initiative splits the
+  # decks the centroid was guessing into Boros Initiative. ---
+  - name: Hogaak Moonshadow
+    signatureCards:
+      - name: "Hogaak, Arisen Necropolis"
+        minCopies: 2
+      - name: "Moonshadow"
+        minCopies: 3
+
+  - name: Grixis Control
+    signatureCards:
+      - name: "Kolaghan's Command"
+        minCopies: 1
+      - name: "Sheoldred's Edict"
+        minCopies: 2
+      - name: "Cling to Dust"
+        minCopies: 1
+      - name: "Volcanic Island"
+        minCopies: 1
+
+  - name: Mono-Red Prison
+    signatureCards:
+      - name: "Broadside Bombardiers"
+        minCopies: 4
+      - name: "Chalice of the Void"
+        minCopies: 3
+
+  - name: Mono-White Initiative
+    signatureCards:
+      - name: "Seasoned Dungeoneer"
+        minCopies: 3
+      - name: "Plains"
+        minCopies: 1
+      - name: "Mountain"
+        exactCopies: 0
+
+  - name: Monolith Jewel
+    signatureCards:
+      - name: "Coveted Jewel"
+        minCopies: 3
+      - name: "Transmute Artifact"
+        minCopies: 3
+      - name: "Grim Monolith"
+        minCopies: 4
+
   - name: Dimir Tempo
     strictMode: true
     signatureCards:
@@ -16,6 +64,20 @@ archetypes:
         exactCopies: 0
       - name: Doomsday
         exactCopies: 0
+  # The post-ban Dimir tempo build: Moonshadow plus Bilbo and Nethergoyf, no Tamiyo. It is a
+  # separate deck from Dimir Tempo above, which is the Tamiyo plus Bowmasters build; the two
+  # share no decks in this window. Moonshadow >= 3 is what keeps them apart. Dropping it to
+  # widen the definition double-matches eight Dimir Tempo and Izzet Delver decks, which under
+  # exactly-one-match semantics costs all eight their label. Hogaak Moonshadow needs no gate
+  # here: it runs no Bilbo.
+  - name: Dimir Moonshadow
+    signatureCards:
+      - name: "Moonshadow"
+        minCopies: 3
+      - name: "Bilbo, Thief in the Night"
+        minCopies: 2
+      - name: "Nethergoyf"
+        minCopies: 2
   - name: Mardu Energy
     signatureCards:
       - name: "Ocelot Pride"
@@ -32,6 +94,8 @@ archetypes:
         minCopies: 3
       - name: "Amped Raptor"
         minCopies: 3
+      - name: "Orcish Bowmasters"
+        exactCopies: 0
   - name: Affinity Stompy
     signatureCards:
       - name: "Kappa Cannoneer"
@@ -112,7 +176,7 @@ archetypes:
         minCopies: 3
       - name: "Grim Monolith"
         minCopies: 2
-  - name: Blue Cloudpost
+  - name: Mono-Blue Tron
     signatureCards:
       - name: "Stock Up"
         minCopies: 3
@@ -126,20 +190,6 @@ archetypes:
         minCopies: 3
       - name: "Daze"
         minCopies: 2
-  - name: Dimir Car
-    signatureCards:
-      - name: "The Fantasticar"
-        minCopies: 3
-      - name: "Dark Ritual"
-        minCopies: 2
-      - name: "Thoughtseize"
-        minCopies: 2
-      - name: "Reanimate"
-        exactCopies: 0
-      - name: "Arclight Phoenix"
-        exactCopies: 0
-      - name: "Doomsday"
-        exactCopies: 0
   - name: Rakdos Reanimator
     signatureCards:
       - name: "Reanimate"

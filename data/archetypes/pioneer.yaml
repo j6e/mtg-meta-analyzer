@@ -1,6 +1,10 @@
 format: Pioneer
-date: "2026-03-26"
+date: "2026-07-29"
 archetypes:
+  # --- Post-ban period: Cori-Steel Cutter was banned 2026-05-18, so the definitions that
+  # required it (Izzet Prowess, Gruul Prowess) are rebuilt from post-ban decklists.
+  # Quintorius Combo and Golgari Midrange are rebuilt too — their signature cards
+  # (Fires of Invention, Deceit, Ouroboroid) appear in no post-ban decklist. ---
   - name: Mono-Red Prowess
     signatureCards:
       - name: "Screaming Nemesis"
@@ -18,32 +22,29 @@ archetypes:
       - name: "Greasefang, Okiba Boss"
         minCopies: 4
       - name: "Esika's Chariot"
-        minCopies: 4
+        minCopies: 3
       - name: "Parhelion II"
         minCopies: 4
       - name: "Monument to Endurance"
         exactCopies: 0
   - name: Izzet Prowess
     signatureCards:
-      - name: "Cori-Steel Cutter"
+      - name: "Academic Dispute"
         minCopies: 4
       - name: "Stormchaser's Talent"
         minCopies: 4
-      - name: "Emberheart Challenger"
+      - name: "Soul-Scar Mage"
         minCopies: 4
-      - name: "Steam Vents"
-        minCopies: 2
-      - name: "Arclight Phoenix"
-        exactCopies: 0
   - name: Izzet Lessons
     signatureCards:
       - name: "Gran-Gran"
         minCopies: 1
-      - name: "Boomerang Basics"
-        minCopies: 1
       - name: "Steam Vents"
         minCopies: 2
       - name: "Monastery Swiftspear"
+        exactCopies: 0
+      # the white splash is its own deck; the green Questing Druid splash is not
+      - name: "Jeskai Revelation"
         exactCopies: 0
   - name: Orzhov Greasefang
     signatureCards:
@@ -53,21 +54,26 @@ archetypes:
         minCopies: 4
       - name: "Parhelion II"
         minCopies: 4
-      - name: "Seasoned Hallowblade"
-        minCopies: 4
+      - name: "Guardian of New Benalia"
+        minCopies: 3
       - name: "Esika's Chariot"
         exactCopies: 0
   - name: Azorius Control
     signatureCards:
       - name: "Teferi, Hero of Dominaria"
         minCopies: 2
-      - name: "Consult the Star Charts"
-        minCopies: 4
-      - name: "March of Otherworldly Light"
+      - name: "Hallowed Fountain"
         minCopies: 3
+      # the August lists cut Consult the Star Charts for Temporary Lockdown; No More Lies stayed
+      - name: "No More Lies"
+        minCopies: 2
       - name: "Greasefang, Okiba Boss"
         exactCopies: 0
       - name: "Lotus Field"
+        exactCopies: 0
+      - name: "Momo, Friendly Flier"
+        exactCopies: 0
+      - name: "Jeskai Revelation"
         exactCopies: 0
   - name: Selesnya Company
     signatureCards:
@@ -83,6 +89,8 @@ archetypes:
     signatureCards:
       - name: "Gifted Aetherborn"
         minCopies: 3
+      - name: "Godless Shrine"
+        minCopies: 1
       - name: "Thoughtseize"
         minCopies: 4
       - name: "Fatal Push"
@@ -125,13 +133,17 @@ archetypes:
         exactCopies: 0
   - name: Golgari Midrange
     signatureCards:
-      - name: "Ouroboroid"
-        minCopies: 4
-      - name: "Sentinel of the Nameless City"
-        minCopies: 4
-      - name: "Fatal Push"
-        minCopies: 4
+      # the August lists dropped Sentinel and Tear Asunder for Dellian Fel + Badgermole Cub
+      - name: "Abrupt Decay"
+        minCopies: 1
+      - name: "Overgrown Tomb"
+        minCopies: 1
+      - name: "Unholy Annex"
+        minCopies: 1
       - name: "Greasefang, Okiba Boss"
+        exactCopies: 0
+      # one Jund list carries the Annex package next to the Rakdos Midrange core
+      - name: "Fable of the Mirror-Breaker"
         exactCopies: 0
   - name: Sultai Scapeshift
     signatureCards:
@@ -141,8 +153,6 @@ archetypes:
         minCopies: 4
   - name: Gruul Prowess
     signatureCards:
-      - name: "Cori-Steel Cutter"
-        minCopies: 4
       - name: "Emberheart Challenger"
         minCopies: 4
       - name: "Questing Druid"
@@ -151,19 +161,51 @@ archetypes:
         exactCopies: 0
       - name: "Screaming Nemesis"
         exactCopies: 0
+  - name: Dimir Midrange
+    signatureCards:
+      - name: "Kaito, Bane of Nightmares"
+        minCopies: 4
+      - name: "Moon-Circuit Hacker"
+        minCopies: 4
+      - name: "Floodpits Drowner"
+        minCopies: 3
+      - name: "Thoughtseize"
+        minCopies: 3
+  - name: Izzet Vivi Cauldron
+    signatureCards:
+      - name: "Vivi Ornitier"
+        minCopies: 3
+      - name: "Agatha's Soul Cauldron"
+        minCopies: 4
+      - name: "Fear of Missing Out"
+        minCopies: 4
+      # one Lessons list splashes the Cauldron package; keep it on Izzet Lessons
+      - name: "Gran-Gran"
+        exactCopies: 0
+  - name: Mono-Black Devotion
+    signatureCards:
+      - name: "Nykthos, Shrine to Nyx"
+        minCopies: 4
+      - name: "Gray Merchant of Asphodel"
+        minCopies: 2
   - name: Mono-Black Midrange
     signatureCards:
-      - name: "Sheoldred, the Apocalypse"
+      - name: "Castle Locthwain"
         minCopies: 2
-      - name: "Thoughtseize"
-        minCopies: 4
-      - name: "Fatal Push"
-        minCopies: 4
+      - name: "Unholy Annex"
+        minCopies: 1
       - name: "Greasefang, Okiba Boss"
         exactCopies: 0
+      - name: "Fable of the Mirror-Breaker"
+        exactCopies: 0
+      # off-colour duals: the mono-black assertion the old definition never made
       - name: "Blood Crypt"
         exactCopies: 0
-      - name: "Fable of the Mirror-Breaker"
+      - name: "Watery Grave"
+        exactCopies: 0
+      - name: "Overgrown Tomb"
+        exactCopies: 0
+      - name: "Godless Shrine"
         exactCopies: 0
   - name: Hidden Strings
     signatureCards:
@@ -171,8 +213,8 @@ archetypes:
         minCopies: 4
       - name: "Hidden Strings"
         minCopies: 4
-      - name: "Thassa's Oracle"
-        minCopies: 2
+      - name: "Pore Over the Pages"
+        minCopies: 4
   - name: UW Lotus
     signatureCards:
       - name: "Lotus Field"
@@ -227,17 +269,134 @@ archetypes:
         minCopies: 2
   - name: Mono-Green Devotion
     signatureCards:
-      - name: "Cavalier of Thorns"
-        minCopies: 2
+      # Cavalier of Thorns dropped: the post-ban ramp lists don't run it
       - name: "Nykthos, Shrine to Nyx"
         minCopies: 2
       - name: "Elvish Mystic"
         minCopies: 2
+      # the Selesnya Enduring Vitality lists share the elf base; yield to them
+      - name: "Enduring Vitality"
+        exactCopies: 0
   - name: Quintorius Combo
     signatureCards:
       - name: "Quintorius Kand"
         minCopies: 4
-      - name: "Fires of Invention"
+      - name: "Trumpeting Carnosaur"
         minCopies: 4
-      - name: "Deceit"
+      - name: "Spark Double"
+        minCopies: 4
+  - name: Azorius Momo
+    signatureCards:
+      - name: "Momo, Friendly Flier"
+        minCopies: 4
+      - name: "Quantum Riddler"
+        minCopies: 3
+      - name: "Hallowed Fountain"
+        minCopies: 4
+  - name: 4c Revelation
+    signatureCards:
+      - name: "Jeskai Revelation"
+        minCopies: 3
+      - name: "Inevitable Defeat"
+        minCopies: 2
+      - name: "Stock Up"
+        minCopies: 4
+  - name: Squirrel Girl Combo
+    signatureCards:
+      - name: "Nykthos, Shrine to Nyx"
+        minCopies: 2
+      - name: "Elvish Mystic"
+        minCopies: 4
+      # the Squirrel Girl / Fiend Artisan build; Mono-Green Devotion gates this card to 0
+      - name: "Enduring Vitality"
+        minCopies: 3
+  - name: Izzet Spellementals
+    signatureCards:
+      - name: "Eddymurk Crab"
+        minCopies: 4
+      - name: "Hearth Elemental"
+        minCopies: 3
+      - name: "Steam Vents"
+        minCopies: 1
+  - name: Mono-White Humans
+    signatureCards:
+      - name: "Thalia's Lieutenant"
+        minCopies: 4
+      - name: "Adeline, Resplendent Cathar"
+        minCopies: 4
+      # 3 is enough: two of the lists run a third Coppercoat, everything else is 4x
+      - name: "Coppercoat Vanguard"
+        minCopies: 3
+      # two Plaza of Heroes / Starting Town legends lists share the creature core
+      - name: "Plains"
+        minCopies: 6
+  - name: Boros Ponza
+    signatureCards:
+      - name: "Cleansing Wildfire"
+        minCopies: 4
+      - name: "Erode"
+        minCopies: 3
+      - name: "Demolition Field"
+        minCopies: 3
+      - name: "Sacred Foundry"
+        minCopies: 1
+  - name: 4c Dredge
+    signatureCards:
+      - name: "Exhibition Tidecaller"
+        minCopies: 4
+      - name: "Creeping Chill"
+        minCopies: 4
+      - name: "Narcomoeba"
+        minCopies: 4
+  - name: Jeskai Lessons
+    signatureCards:
+      - name: "Jeskai Revelation"
+        minCopies: 3
+      - name: "Firebending Lesson"
+        minCopies: 4
+      - name: "Hallowed Fountain"
+        minCopies: 3
+  - name: Azorius Spirits
+    signatureCards:
+      - name: "Spell Queller"
+        minCopies: 4
+      - name: "Rattlechains"
+        minCopies: 4
+      - name: "Mausoleum Wanderer"
+        minCopies: 4
+  - name: Selesnya Angels
+    signatureCards:
+      - name: "Righteous Valkyrie"
+        minCopies: 4
+      - name: "Resplendent Angel"
+        minCopies: 4
+      - name: "Bishop of Wings"
+        minCopies: 4
+  - name: Boros Heroic
+    signatureCards:
+      - name: "Favored Hoplite"
+        minCopies: 4
+      - name: "Illuminator Virtuoso"
+        minCopies: 4
+      - name: "Monstrous Rage"
+        minCopies: 4
+  - name: Izzet Creativity
+    signatureCards:
+      - name: "Indomitable Creativity"
+        minCopies: 3
+      - name: "Deduce"
+        minCopies: 2
+  - name: Rona Combo
+    signatureCards:
+      - name: "Rona, Herald of Invasion"
+        minCopies: 3
+      - name: "Stormchaser's Talent"
+        minCopies: 3
+      - name: "Mox Amber"
+        minCopies: 2
+  - name: Boros Dragons
+    signatureCards:
+      - name: "Sarkhan, Dragon Ascendant"
+        minCopies: 3
+      - name: "Shivan Devastator"
         minCopies: 3

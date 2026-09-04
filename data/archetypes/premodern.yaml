@@ -65,6 +65,8 @@ archetypes:
         minCopies: 1
       - name: "Parallax Wave"
         minCopies: 1
+      - name: "Argothian Enchantress"
+        exactCopies: 0
   - name: Naya Terragedon
     signatureCards:
       - name: "Swords to Plowshares"
@@ -113,6 +115,8 @@ archetypes:
         minCopies: 1
       - name: "Opt"
         minCopies: 1
+      - name: "Phyrexian Dreadnought"
+        exactCopies: 0
   - name: Gruul Sligh
     signatureCards:
       - name: "Lightning Bolt"
@@ -129,3 +133,5 @@ archetypes:
         minCopies: 1
       - name: "Gush"
         minCopies: 1
+      - name: "Phyrexian Dreadnought"
+        exactCopies: 0
