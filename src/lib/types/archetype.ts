@@ -3,6 +3,7 @@ export interface SignatureCard {
 	minCopies?: number;
 	exactCopies?: number;
 	usedAsCommander?: boolean;
+	usedInSideboard?: boolean;
 }
 
 export interface ArchetypeDefinition {

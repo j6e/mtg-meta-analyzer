@@ -40,14 +40,12 @@ export function parseArchetypeYaml(yamlContent: string): ParsedArchetypeConfig {
  */
 export function classifyBySignatureCards(
 	mainboard: CardEntry[],
+	sideboard: CardEntry[],
 	commanders: CardEntry[] | null,
 	archetypeDefs: ArchetypeDefinition[],
 ): string | null {
-	const cardQuantities = new Map<string, number>();
-	for (const entry of mainboard) {
-		const name = getFrontFace(entry.cardName);
-		cardQuantities.set(name, (cardQuantities.get(name) ?? 0) + entry.quantity);
-	}
+	const mainboardQuantities = countCards(mainboard);
+	const sideboardQuantities = countCards(sideboard);
 
 	const commanderNames = new Set<string>();
 	if (commanders) {
@@ -64,6 +62,9 @@ export function classifyBySignatureCards(
 			if (sig.usedAsCommander) {
 				return commanderNames.has(sig.name);
 			}
+			const cardQuantities = sig.usedInSideboard
+				? sideboardQuantities
+				: mainboardQuantities;
 			const qty = cardQuantities.get(sig.name) ?? 0;
 			if (sig.exactCopies !== undefined) {
 				return qty === sig.exactCopies;
@@ -78,6 +79,15 @@ export function classifyBySignatureCards(
 	}
 
 	return bestMatch;
+}
+
+function countCards(cards: CardEntry[]): Map<string, number> {
+	const quantities = new Map<string, number>();
+	for (const entry of cards) {
+		const name = getFrontFace(entry.cardName);
+		quantities.set(name, (quantities.get(name) ?? 0) + entry.quantity);
+	}
+	return quantities;
 }
 
 interface DeterministicResult {
@@ -103,6 +113,7 @@ function classifyDeterministic(
 	for (const [id, decklist] of Object.entries(decklists)) {
 		const archetype = classifyBySignatureCards(
 			decklist.mainboard,
+			decklist.sideboard,
 			decklist.commanders,
 			archetypeDefs,
 		);
