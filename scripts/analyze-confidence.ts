@@ -205,6 +205,7 @@ for (const t of filtered) {
 	for (const [id, dl] of Object.entries(t.decklists)) {
 		const archetype = classifyBySignatureCards(
 			dl.mainboard,
+			dl.sideboard,
 			dl.commanders,
 			config.archetypes,
 		);
