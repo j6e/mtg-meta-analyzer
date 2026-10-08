@@ -1,11 +1,23 @@
 // @vitest-environment jsdom
 
 import { cleanup, render } from "@testing-library/svelte";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import DecklistView from "../../src/lib/components/DecklistView.svelte";
+import { cardImageIndex } from "../../src/lib/stores/card-images";
 import type { DecklistInfo } from "../../src/lib/types/decklist";
 
-afterEach(() => cleanup());
+beforeEach(() => {
+	vi.stubGlobal(
+		"fetch",
+		vi.fn(() => new Promise(() => {})),
+	);
+});
+
+afterEach(() => {
+	cleanup();
+	vi.unstubAllGlobals();
+	cardImageIndex.set(null);
+});
 
 const sampleDecklist: DecklistInfo = {
 	playerId: "p1",
@@ -58,6 +70,31 @@ describe("DecklistView component", () => {
 		expect(container.textContent).toContain("Mono-Red Aggro");
 	});
 
+	it("shows tournament, date and finish", () => {
+		const { container } = render(DecklistView, {
+			props: {
+				decklist: sampleDecklist,
+				tournamentName: "Premodern Championship",
+				tournamentDate: "2026-09-08",
+				tournamentUrl: "https://melee.gg/Tournament/View/42",
+				tournamentPlayerCount: 32,
+				playerRank: 3,
+				matchRecord: "6-1-0",
+			},
+		});
+		expect(container.querySelector(".meta")?.textContent).toContain(
+			"Premodern Championship, 32 players",
+		);
+		const link = container.querySelector(".tournament a");
+		expect(link?.textContent).toBe("Premodern Championship");
+		expect(link?.getAttribute("href")).toBe("https://melee.gg/Tournament/View/42");
+		expect(container.querySelector(".rank")?.textContent).toBe("#3 (6-1-0)");
+		expect(container.querySelector("time")?.textContent).toBe("2026-09-08");
+		expect(container.querySelector("time")?.getAttribute("datetime")).toBe(
+			"2026-09-08",
+		);
+	});
+
 	it("hides metadata section when no player/archetype", () => {
 		const { container } = render(DecklistView, {
 			props: { decklist: sampleDecklist },
@@ -96,5 +133,28 @@ describe("DecklistView component", () => {
 		});
 		const triggers = container.querySelectorAll(".card-tooltip-trigger");
 		expect(triggers.length).toBe(5); // 3 mainboard + 2 sideboard
+	});
+
+	it("splits the mainboard into lands, creatures and other cards", () => {
+		const image = { normal: "https://example.test/normal.jpg", artist: "" };
+		cardImageIndex.set({
+			Mountain: { ...image, kind: "land" },
+			"Goblin Guide": { ...image, kind: "creature" },
+			"Lightning Bolt": image,
+		});
+		const { container } = render(DecklistView, {
+			props: { decklist: sampleDecklist },
+		});
+		const groups = [...container.querySelectorAll("section:first-of-type ul")].map(
+			(list) => [
+				list.getAttribute("aria-label"),
+				...[...list.querySelectorAll(".card-name")].map((name) => name.textContent),
+			],
+		);
+		expect(groups).toEqual([
+			["Lands", "Mountain"],
+			["Creatures", "Goblin Guide"],
+			["Other cards", "Lightning Bolt"],
+		]);
 	});
 });

@@ -7,18 +7,19 @@ export interface EnrichedDecklist {
 	playerName: string;
 	playerId: string;
 	playerRank: number;
+	matchRecord: string;
 	tournamentName: string;
+	tournamentDate: string;
+	tournamentUrl: string;
+	tournamentPlayerCount: number;
 	tournamentId: string;
 }
 
-/**
- * Collect all decklists for a given archetype across tournaments,
- * enriched with player and tournament metadata.
- */
 export function collectArchetypeDecklists(
 	tournaments: TournamentData[],
 	playerArchetypes: Map<string, string>,
 	archetypeName: string,
+	tournamentNames: Map<string, string> = new Map(),
 ): EnrichedDecklist[] {
 	const result: EnrichedDecklist[] = [];
 
@@ -34,7 +35,11 @@ export function collectArchetypeDecklists(
 						playerName: player.name,
 						playerId,
 						playerRank: player.rank,
-						tournamentName: t.meta.name,
+						matchRecord: player.matchRecord,
+						tournamentName: tournamentNames.get(t.meta.id) ?? t.meta.name,
+						tournamentDate: t.meta.date,
+						tournamentUrl: t.meta.url,
+						tournamentPlayerCount: t.meta.playerCount,
 						tournamentId: t.meta.id,
 					});
 				}

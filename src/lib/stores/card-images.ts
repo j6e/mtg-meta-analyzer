@@ -1,5 +1,6 @@
 /**
- * Card image index: card name → Scryfall CDN image URLs + artist.
+ * Card image index: card name → Scryfall CDN image URLs, artist and the
+ * land/creature kind that decklists group by.
  *
  * Generated at ingestion time by scripts/build-card-image-index.ts so the
  * browser only ever fetches images from cards.scryfall.io (no rate limits),
@@ -16,6 +17,8 @@ export interface CardImageEntry {
 	/** Absent for the rare cards whose Scryfall record has no art crop. */
 	art_crop?: string;
 	artist: string;
+	/** Front-face type; absent for cards that are neither lands nor creatures. */
+	kind?: "land" | "creature";
 }
 
 /** Front-face card name → image entry; null until the index is fetched. */

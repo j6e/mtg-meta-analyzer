@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+	cardKind,
 	type ScryfallCard,
 	selectPreferredCards,
 } from "../../scripts/build-card-image-index";
@@ -35,5 +36,18 @@ describe("selectPreferredCards", () => {
 		).get("Lightning Bolt");
 
 		expect(selected?.set).toBe("lea");
+	});
+});
+
+describe("cardKind", () => {
+	it.each([
+		["Land Creature — Forest Dryad", "land"],
+		["Artifact Land", "land"],
+		["Artifact Creature — Construct", "creature"],
+		["Creature — Human Wizard // Sorcery — Adventure", "creature"],
+		["Sorcery // Land", undefined],
+		["Legendary Planeswalker — Jace", undefined],
+	])("classifies %s as %s", (typeLine, kind) => {
+		expect(cardKind(card({ type_line: typeLine }))).toBe(kind);
 	});
 });

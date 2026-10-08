@@ -5,6 +5,7 @@
 		metagameData,
 		playerArchetypes,
 		filteredTournaments,
+		tournamentList,
 	} from '$lib/stores/tournaments';
 	import { settingsQueryString } from '$lib/stores/url-settings';
 
@@ -101,12 +102,15 @@
 		return rows;
 	});
 
+	const tournamentNames = $derived(new Map($tournamentList.map((t) => [t.id, t.cleanName])));
+
 	// Enriched decklists for this archetype (with metadata)
 	const enrichedDecklists = $derived.by(() => {
 		return collectArchetypeDecklists(
 			$filteredTournaments,
 			$playerArchetypes,
 			archetypeName,
+			tournamentNames,
 		);
 	});
 
@@ -491,8 +495,12 @@
 						<DecklistView
 							decklist={d.decklist}
 							playerName={d.playerName}
-							archetype={archetypeName}
 							playerRank={d.playerRank}
+							tournamentName={d.tournamentName}
+							tournamentDate={d.tournamentDate}
+							tournamentUrl={d.tournamentUrl}
+							tournamentPlayerCount={d.tournamentPlayerCount}
+							matchRecord={d.matchRecord}
 						/>
 					{/each}
 				</div>

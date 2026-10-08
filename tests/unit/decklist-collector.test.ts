@@ -92,9 +92,26 @@ describe("collectArchetypeDecklists", () => {
 		const result = collectArchetypeDecklists([t], archetypes, "Aggro");
 		expect(result[0]).toMatchObject({
 			playerRank: 5,
+			matchRecord: "0-0-0",
 			tournamentName: "Pro Tour",
+			tournamentDate: "2026-01-01",
+			tournamentUrl: "https://melee.gg/Tournament/View/42",
+			tournamentPlayerCount: 1,
 			tournamentId: "melee-42",
 		});
+	});
+
+	it("uses the display name for known tournaments", () => {
+		const t = makeTournament({
+			name: "Pro Tour Raw Name",
+			players: { p1: makePlayer("Alice", ["d1"]) },
+			decklists: { d1: makeDecklist("p1") },
+		});
+		const archetypes = new Map([["melee-1:p1", "Aggro"]]);
+		const names = new Map([["melee-1", "Pro Tour"]]);
+
+		const result = collectArchetypeDecklists([t], archetypes, "Aggro", names);
+		expect(result[0].tournamentName).toBe("Pro Tour");
 	});
 
 	it("collects across multiple tournaments", () => {

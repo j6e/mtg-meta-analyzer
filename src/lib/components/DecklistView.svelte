@@ -2,18 +2,29 @@
 	import type { DecklistInfo } from '../types/decklist';
 	import type { ClassificationResult } from '../algorithms/archetype-classifier';
 	import CardTooltip from './CardTooltip.svelte';
+	import { cardImageIndex, ensureCardImagesLoaded, lookupCardImage } from '../stores/card-images';
 
 	let {
 		decklist,
 		playerName = '',
 		archetype = '',
 		playerRank,
+		tournamentName = '',
+		tournamentDate = '',
+		tournamentUrl = '',
+		tournamentPlayerCount,
+		matchRecord = '',
 		classificationResult,
 	}: {
 		decklist: DecklistInfo;
 		playerName?: string;
 		archetype?: string;
 		playerRank?: number;
+		tournamentName?: string;
+		tournamentDate?: string;
+		tournamentUrl?: string;
+		tournamentPlayerCount?: number;
+		matchRecord?: string;
 		classificationResult?: ClassificationResult;
 	} = $props();
 
@@ -25,6 +36,27 @@
 	const sortedMainboard = $derived(sortByName(decklist.mainboard));
 	const sortedSideboard = $derived(sortByName(decklist.sideboard));
 
+	$effect(() => {
+		void ensureCardImagesLoaded();
+	});
+
+	const mainboardGroups = $derived(
+		(
+			[
+				['Lands', 'land'],
+				['Creatures', 'creature'],
+				['Other cards', undefined],
+			] as const
+		)
+			.map(([label, kind]) => ({
+				label,
+				cards: sortedMainboard.filter(
+					(card) => lookupCardImage($cardImageIndex, card.cardName)?.kind === kind,
+				),
+			}))
+			.filter((group) => group.cards.length > 0),
+	);
+
 	const mainboardCount = $derived(
 		decklist.mainboard.reduce((sum, c) => sum + c.quantity, 0),
 	);
@@ -34,10 +66,18 @@
 </script>
 
 <div class="decklist">
-	{#if playerName || archetype || playerRank != null}
+	{#if playerName || archetype || playerRank != null || tournamentName}
 		<div class="meta">
-			{#if playerRank != null}<span class="rank">#{playerRank}</span>{/if}
+			{#if tournamentName}
+				<div class="tournament-row">
+					<span class="tournament"><a href={tournamentUrl} target="_blank" rel="noopener">{tournamentName}</a>{tournamentPlayerCount != null ? `, ${tournamentPlayerCount} players` : ''}</span>
+					{#if tournamentDate}<time class="date" datetime={tournamentDate}>{tournamentDate}</time>{/if}
+				</div>
+			{/if}
 			{#if playerName}<span class="player">{playerName}</span>{/if}
+			{#if playerRank != null}
+				<span class="rank">#{playerRank}{matchRecord ? ` (${matchRecord})` : ''}</span>
+			{/if}
 			{#if archetype}<span class="archetype">{archetype}</span>{/if}
 			{#if classificationResult?.method === 'signature'}
 				<span class="method-badge method-rules" title="Classified by signature cards">By rules</span>
@@ -89,16 +129,18 @@
 
 	<section>
 		<h3>Mainboard <span class="count">({mainboardCount})</span></h3>
-		<ul>
-			{#each sortedMainboard as card}
-				<li>
-					<span class="qty">{card.quantity}x</span>
-					<CardTooltip cardName={card.cardName}>
-						<span class="card-name">{card.cardName}</span>
-					</CardTooltip>
-				</li>
-			{/each}
-		</ul>
+		{#each mainboardGroups as group}
+			<ul aria-label={group.label}>
+				{#each group.cards as card}
+					<li>
+						<span class="qty">{card.quantity}x</span>
+						<CardTooltip cardName={card.cardName}>
+							<span class="card-name">{card.cardName}</span>
+						</CardTooltip>
+					</li>
+				{/each}
+			</ul>
+		{/each}
 	</section>
 
 	{#if decklist.sideboard.length > 0}
@@ -130,13 +172,40 @@
 
 	.meta {
 		margin-bottom: 0.75rem;
+		padding-bottom: 0.75rem;
+		border-bottom: 1px solid var(--color-border);
 		display: flex;
 		gap: 0.5rem;
 		align-items: center;
 		flex-wrap: wrap;
 	}
 
+	.tournament-row {
+		flex-basis: 100%;
+		display: flex;
+		justify-content: space-between;
+		align-items: baseline;
+		gap: 0.5rem;
+	}
+
+	.tournament {
+		min-width: 0;
+		overflow-wrap: anywhere;
+	}
+
+	.tournament a {
+		font-weight: 600;
+	}
+
+	.date {
+		white-space: nowrap;
+		font-family: var(--font-mono);
+		font-size: 0.75rem;
+		color: var(--color-text-muted);
+	}
+
 	.rank {
+		white-space: nowrap;
 		font-size: 0.75rem;
 		font-weight: 600;
 		color: var(--color-text-muted);
@@ -147,7 +216,10 @@
 	}
 
 	.player {
+		flex: 1;
+		min-width: 0;
 		font-weight: 600;
+		overflow-wrap: anywhere;
 	}
 
 	.archetype {
@@ -212,6 +284,10 @@
 		list-style: none;
 		padding: 0;
 		margin: 0;
+	}
+
+	ul + ul {
+		margin-top: 0.75rem;
 	}
 
 	li {

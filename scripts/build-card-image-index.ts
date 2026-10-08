@@ -39,6 +39,7 @@ export interface ScryfallCard {
 	set?: string;
 	collector_number?: string;
 	id?: string;
+	type_line?: string;
 	image_uris?: Record<string, string>;
 	card_faces?: Array<{ image_uris?: Record<string, string>; artist?: string }>;
 	artist?: string;
@@ -202,14 +203,23 @@ async function selectPreferredCardsFromBulk(
 	return { selected, count };
 }
 
+export function cardKind(card: ScryfallCard): CardImageEntry["kind"] {
+	const frontTypes = (card.type_line ?? "").split(" // ")[0].split("—")[0];
+	if (/\bLand\b/.test(frontTypes)) return "land";
+	if (/\bCreature\b/.test(frontTypes)) return "creature";
+	return undefined;
+}
+
 function extractEntry(card: ScryfallCard): CardImageEntry | null {
 	const imageUris = card.image_uris ?? card.card_faces?.[0]?.image_uris;
 	if (!imageUris?.normal) return null;
+	const kind = cardKind(card);
 	return {
 		normal: imageUris.normal,
 		// Rare cards have no art crop; keep the tooltip image regardless
 		...(imageUris.art_crop ? { art_crop: imageUris.art_crop } : {}),
 		artist: card.artist ?? card.card_faces?.[0]?.artist ?? "",
+		...(kind ? { kind } : {}),
 	};
 }
 
