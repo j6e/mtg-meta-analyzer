@@ -47,11 +47,12 @@ function makeDecklist(
 	mainboard: CardEntry[],
 	id = "player1",
 	commanders: CardEntry[] | null = null,
+	sideboard: CardEntry[] = [],
 ): DecklistInfo {
 	return {
 		playerId: id,
 		mainboard,
-		sideboard: [],
+		sideboard,
 		commanders,
 		companion: null,
 		reportedArchetype: null,
@@ -145,6 +146,23 @@ archetypes:
 			minCopies: 1,
 		});
 	});
+
+	it("parses usedInSideboard on signature cards", () => {
+		const yaml = `
+format: Standard
+date: "2026-01-10"
+archetypes:
+  - name: Sideboard Control
+    signatureCards:
+      - name: Negate
+        usedInSideboard: true
+`;
+		const result = parseArchetypeYaml(yaml);
+		expect(result.archetypes[0].signatureCards[0]).toEqual({
+			name: "Negate",
+			usedInSideboard: true,
+		});
+	});
 });
 
 describe("classifyBySignatureCards", () => {
@@ -154,7 +172,7 @@ describe("classifyBySignatureCards", () => {
 			["Goblin Guide", 4],
 			["Mountain", 16],
 		);
-		const result = classifyBySignatureCards(mainboard, null, archetypeDefs);
+		const result = classifyBySignatureCards(mainboard, [], null, archetypeDefs);
 		expect(result).toBe("Mono Red");
 	});
 
@@ -164,18 +182,18 @@ describe("classifyBySignatureCards", () => {
 			["Goblin Guide", 2], // needs 3
 			["Mountain", 16],
 		);
-		const result = classifyBySignatureCards(mainboard, null, archetypeDefs);
+		const result = classifyBySignatureCards(mainboard, [], null, archetypeDefs);
 		expect(result).toBeNull();
 	});
 
 	it("returns null when a signature card is missing", () => {
 		const mainboard = cards(["Lightning Bolt", 4], ["Mountain", 20]);
-		const result = classifyBySignatureCards(mainboard, null, archetypeDefs);
+		const result = classifyBySignatureCards(mainboard, [], null, archetypeDefs);
 		expect(result).toBeNull();
 	});
 
 	it("returns null for empty mainboard", () => {
-		const result = classifyBySignatureCards([], null, archetypeDefs);
+		const result = classifyBySignatureCards([], [], null, archetypeDefs);
 		expect(result).toBeNull();
 	});
 
@@ -200,7 +218,7 @@ describe("classifyBySignatureCards", () => {
 			["Mountain", 16],
 		);
 
-		const result = classifyBySignatureCards(mainboard, null, defs);
+		const result = classifyBySignatureCards(mainboard, [], null, defs);
 		expect(result).toBe("Mono Red"); // more signature cards
 	});
 
@@ -215,7 +233,7 @@ describe("classifyBySignatureCards", () => {
 			},
 		];
 		const mainboard = cards(["Combo Piece", 4], ["Enabler", 3], ["Land", 17]);
-		expect(classifyBySignatureCards(mainboard, null, defs)).toBe("Exact Combo");
+		expect(classifyBySignatureCards(mainboard, [], null, defs)).toBe("Exact Combo");
 	});
 
 	it("rejects when deck has more copies than exactCopies", () => {
@@ -226,7 +244,7 @@ describe("classifyBySignatureCards", () => {
 			},
 		];
 		const mainboard = cards(["Combo Piece", 4], ["Land", 20]);
-		expect(classifyBySignatureCards(mainboard, null, defs)).toBeNull();
+		expect(classifyBySignatureCards(mainboard, [], null, defs)).toBeNull();
 	});
 
 	it("rejects when deck has fewer copies than exactCopies", () => {
@@ -237,7 +255,7 @@ describe("classifyBySignatureCards", () => {
 			},
 		];
 		const mainboard = cards(["Combo Piece", 3], ["Land", 21]);
-		expect(classifyBySignatureCards(mainboard, null, defs)).toBeNull();
+		expect(classifyBySignatureCards(mainboard, [], null, defs)).toBeNull();
 	});
 
 	it("exactCopies 0 matches when card is absent from deck", () => {
@@ -251,7 +269,7 @@ describe("classifyBySignatureCards", () => {
 			},
 		];
 		const mainboard = cards(["Key Card", 4], ["Land", 20]);
-		expect(classifyBySignatureCards(mainboard, null, defs)).toBe("No Combo");
+		expect(classifyBySignatureCards(mainboard, [], null, defs)).toBe("No Combo");
 	});
 
 	it("exactCopies 0 rejects when card is present in deck", () => {
@@ -265,7 +283,7 @@ describe("classifyBySignatureCards", () => {
 			},
 		];
 		const mainboard = cards(["Key Card", 4], ["Banned Card", 1], ["Land", 19]);
-		expect(classifyBySignatureCards(mainboard, null, defs)).toBeNull();
+		expect(classifyBySignatureCards(mainboard, [], null, defs)).toBeNull();
 	});
 
 	// --- usedAsCommander tests ---
@@ -278,7 +296,7 @@ describe("classifyBySignatureCards", () => {
 			},
 		];
 		const commanders = cards(["Aragorn, King of Gondor", 1]);
-		const result = classifyBySignatureCards([], commanders, defs);
+		const result = classifyBySignatureCards([], [], commanders, defs);
 		expect(result).toBe("Aragorn Deck");
 	});
 
@@ -290,7 +308,7 @@ describe("classifyBySignatureCards", () => {
 			},
 		];
 		const commanders = cards(["Lumra, Bellow of the Woods", 1]);
-		const result = classifyBySignatureCards([], commanders, defs);
+		const result = classifyBySignatureCards([], [], commanders, defs);
 		expect(result).toBeNull();
 	});
 
@@ -301,7 +319,7 @@ describe("classifyBySignatureCards", () => {
 				signatureCards: [{ name: "Aragorn, King of Gondor", usedAsCommander: true }],
 			},
 		];
-		const result = classifyBySignatureCards([], null, defs);
+		const result = classifyBySignatureCards([], [], null, defs);
 		expect(result).toBeNull();
 	});
 
@@ -312,7 +330,7 @@ describe("classifyBySignatureCards", () => {
 				signatureCards: [{ name: "Aragorn, King of Gondor", usedAsCommander: true }],
 			},
 		];
-		const result = classifyBySignatureCards([], [], defs);
+		const result = classifyBySignatureCards([], [], [], defs);
 		expect(result).toBeNull();
 	});
 
@@ -324,7 +342,7 @@ describe("classifyBySignatureCards", () => {
 			},
 		];
 		const commanders = cards(["Aclazotz, Deepest Betrayal // Temple of the Dead", 1]);
-		const result = classifyBySignatureCards([], commanders, defs);
+		const result = classifyBySignatureCards([], [], commanders, defs);
 		expect(result).toBe("Aclazotz Deck");
 	});
 
@@ -341,17 +359,73 @@ describe("classifyBySignatureCards", () => {
 		const commanders = cards(["Aragorn, King of Gondor", 1]);
 
 		// Has commander but missing mainboard card
-		expect(classifyBySignatureCards([], commanders, defs)).toBeNull();
+		expect(classifyBySignatureCards([], [], commanders, defs)).toBeNull();
 
 		// Has both commander and mainboard card
 		const mainboard = cards(["Lightning Greaves", 1], ["Land", 98]);
-		expect(classifyBySignatureCards(mainboard, commanders, defs)).toBe(
+		expect(classifyBySignatureCards(mainboard, [], commanders, defs)).toBe(
 			"Aragorn Voltron",
 		);
+	});
+
+	it("matches signature cards marked for the sideboard", () => {
+		const defs: ArchetypeDefinition[] = [
+			{
+				name: "Sideboard Control",
+				signatureCards: [{ name: "Negate", minCopies: 2, usedInSideboard: true }],
+			},
+		];
+
+		expect(classifyBySignatureCards([], cards(["Negate", 2]), null, defs)).toBe(
+			"Sideboard Control",
+		);
+	});
+
+	it("does not match sideboard signatures found only in the mainboard", () => {
+		const defs: ArchetypeDefinition[] = [
+			{
+				name: "Sideboard Control",
+				signatureCards: [{ name: "Negate", minCopies: 2, usedInSideboard: true }],
+			},
+		];
+
+		expect(classifyBySignatureCards(cards(["Negate", 2]), [], null, defs)).toBeNull();
+	});
+
+	it("applies exactCopies to sideboard signatures", () => {
+		const defs: ArchetypeDefinition[] = [
+			{
+				name: "Exact Sideboard",
+				signatureCards: [
+					{ name: "Disdainful Stroke", exactCopies: 2, usedInSideboard: true },
+				],
+			},
+		];
+
+		expect(
+			classifyBySignatureCards([], cards(["Disdainful Stroke", 2]), null, defs),
+		).toBe("Exact Sideboard");
 	});
 });
 
 describe("classifyAll", () => {
+	it("passes sideboard cards to signature classification", () => {
+		const defs: ArchetypeDefinition[] = [
+			{
+				name: "Sideboard Control",
+				signatureCards: [{ name: "Negate", minCopies: 2, usedInSideboard: true }],
+			},
+		];
+		const decklists = {
+			d1: makeDecklist([], "player1", null, cards(["Negate", 2])),
+		};
+
+		expect(classifyAll(decklists, defs)[0]).toMatchObject({
+			archetype: "Sideboard Control",
+			method: "signature",
+		});
+	});
+
 	it("classifies decklists by signature cards first", () => {
 		const decklists: Record<string, DecklistInfo> = {
 			d1: makeDecklist(
