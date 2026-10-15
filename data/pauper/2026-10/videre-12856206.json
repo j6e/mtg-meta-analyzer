@@ -1,0 +1,4803 @@
+{
+  "meta": {
+    "id": "videre-12856206",
+    "name": "Pauper Challenge 32",
+    "date": "2026-10-14",
+    "formats": [
+      "Pauper"
+    ],
+    "url": "https://api.videreproject.com/events?event_id=12856206",
+    "fetchedAt": "2026-10-15T10:47:15.314Z",
+    "playerCount": 44,
+    "roundCount": 9,
+    "source": "videre",
+    "tabletop": false
+  },
+  "players": {
+    "MisterTwin": {
+      "name": "MisterTwin",
+      "username": "MisterTwin",
+      "rank": 1,
+      "points": 24,
+      "matchRecord": "8-1-0",
+      "decklistIds": [
+        "videre-deck-58693548"
+      ],
+      "reportedArchetypes": []
+    },
+    "cabrabr12": {
+      "name": "cabrabr12",
+      "username": "cabrabr12",
+      "rank": 2,
+      "points": 18,
+      "matchRecord": "6-3-0",
+      "decklistIds": [
+        "videre-deck-58693566"
+      ],
+      "reportedArchetypes": []
+    },
+    "discoverN": {
+      "name": "discoverN",
+      "username": "discoverN",
+      "rank": 3,
+      "points": 18,
+      "matchRecord": "6-2-0",
+      "decklistIds": [
+        "videre-deck-58693576"
+      ],
+      "reportedArchetypes": []
+    },
+    "Beicodegeia": {
+      "name": "Beicodegeia",
+      "username": "Beicodegeia",
+      "rank": 4,
+      "points": 18,
+      "matchRecord": "6-2-0",
+      "decklistIds": [
+        "videre-deck-58693567"
+      ],
+      "reportedArchetypes": []
+    },
+    "Luminati": {
+      "name": "Luminati",
+      "username": "Luminati",
+      "rank": 5,
+      "points": 15,
+      "matchRecord": "5-2-0",
+      "decklistIds": [
+        "videre-deck-58693569"
+      ],
+      "reportedArchetypes": []
+    },
+    "manohito": {
+      "name": "manohito",
+      "username": "manohito",
+      "rank": 6,
+      "points": 15,
+      "matchRecord": "5-2-0",
+      "decklistIds": [
+        "videre-deck-58693554"
+      ],
+      "reportedArchetypes": []
+    },
+    "Mirozel1": {
+      "name": "Mirozel1",
+      "username": "Mirozel1",
+      "rank": 7,
+      "points": 12,
+      "matchRecord": "4-3-0",
+      "decklistIds": [
+        "videre-deck-58693581"
+      ],
+      "reportedArchetypes": []
+    },
+    "yahakara": {
+      "name": "yahakara",
+      "username": "yahakara",
+      "rank": 8,
+      "points": 12,
+      "matchRecord": "4-3-0",
+      "decklistIds": [
+        "videre-deck-58693580"
+      ],
+      "reportedArchetypes": []
+    },
+    "therock988": {
+      "name": "therock988",
+      "username": "therock988",
+      "rank": 9,
+      "points": 12,
+      "matchRecord": "4-2-0",
+      "decklistIds": [
+        "videre-deck-58693586"
+      ],
+      "reportedArchetypes": []
+    },
+    "Shiib": {
+      "name": "Shiib",
+      "username": "Shiib",
+      "rank": 10,
+      "points": 12,
+      "matchRecord": "4-2-0",
+      "decklistIds": [
+        "videre-deck-58693570"
+      ],
+      "reportedArchetypes": []
+    },
+    "yuxiaoyu": {
+      "name": "yuxiaoyu",
+      "username": "yuxiaoyu",
+      "rank": 11,
+      "points": 12,
+      "matchRecord": "4-2-0",
+      "decklistIds": [
+        "videre-deck-58693572"
+      ],
+      "reportedArchetypes": []
+    },
+    "mami": {
+      "name": "mami",
+      "username": "mami",
+      "rank": 12,
+      "points": 12,
+      "matchRecord": "4-2-0",
+      "decklistIds": [
+        "videre-deck-58693550"
+      ],
+      "reportedArchetypes": []
+    },
+    "DrPP": {
+      "name": "DrPP",
+      "username": "DrPP",
+      "rank": 13,
+      "points": 12,
+      "matchRecord": "4-2-0",
+      "decklistIds": [
+        "videre-deck-58693585"
+      ],
+      "reportedArchetypes": []
+    },
+    "Niederschatten": {
+      "name": "Niederschatten",
+      "username": "Niederschatten",
+      "rank": 14,
+      "points": 12,
+      "matchRecord": "4-2-0",
+      "decklistIds": [
+        "videre-deck-58693556"
+      ],
+      "reportedArchetypes": []
+    },
+    "Spec23": {
+      "name": "Spec23",
+      "username": "Spec23",
+      "rank": 15,
+      "points": 12,
+      "matchRecord": "4-2-0",
+      "decklistIds": [
+        "videre-deck-58693552"
+      ],
+      "reportedArchetypes": []
+    },
+    "FriskiFraska": {
+      "name": "FriskiFraska",
+      "username": "FriskiFraska",
+      "rank": 16,
+      "points": 9,
+      "matchRecord": "3-3-0",
+      "decklistIds": [
+        "videre-deck-58693560"
+      ],
+      "reportedArchetypes": []
+    },
+    "barff": {
+      "name": "barff",
+      "username": "barff",
+      "rank": 17,
+      "points": 9,
+      "matchRecord": "3-3-0",
+      "decklistIds": [
+        "videre-deck-58693573"
+      ],
+      "reportedArchetypes": []
+    },
+    "_blaze66": {
+      "name": "_blaze66",
+      "username": "_blaze66",
+      "rank": 18,
+      "points": 9,
+      "matchRecord": "3-3-0",
+      "decklistIds": [
+        "videre-deck-58693563"
+      ],
+      "reportedArchetypes": []
+    },
+    "Kampo": {
+      "name": "Kampo",
+      "username": "Kampo",
+      "rank": 19,
+      "points": 9,
+      "matchRecord": "3-3-0",
+      "decklistIds": [
+        "videre-deck-58693540"
+      ],
+      "reportedArchetypes": []
+    },
+    "YSZzz": {
+      "name": "YSZzz",
+      "username": "YSZzz",
+      "rank": 20,
+      "points": 9,
+      "matchRecord": "3-3-0",
+      "decklistIds": [
+        "videre-deck-58693582"
+      ],
+      "reportedArchetypes": []
+    },
+    "hyde1234": {
+      "name": "hyde1234",
+      "username": "hyde1234",
+      "rank": 21,
+      "points": 9,
+      "matchRecord": "3-3-0",
+      "decklistIds": [
+        "videre-deck-58693544"
+      ],
+      "reportedArchetypes": []
+    },
+    "asWerty": {
+      "name": "asWerty",
+      "username": "asWerty",
+      "rank": 22,
+      "points": 9,
+      "matchRecord": "3-3-0",
+      "decklistIds": [
+        "videre-deck-58693543"
+      ],
+      "reportedArchetypes": []
+    },
+    "boom_bust": {
+      "name": "boom_bust",
+      "username": "boom_bust",
+      "rank": 23,
+      "points": 9,
+      "matchRecord": "3-3-0",
+      "decklistIds": [
+        "videre-deck-58693551"
+      ],
+      "reportedArchetypes": []
+    },
+    "boytriton": {
+      "name": "boytriton",
+      "username": "boytriton",
+      "rank": 24,
+      "points": 9,
+      "matchRecord": "3-3-0",
+      "decklistIds": [
+        "videre-deck-58693547"
+      ],
+      "reportedArchetypes": []
+    },
+    "CrouchingPig": {
+      "name": "CrouchingPig",
+      "username": "CrouchingPig",
+      "rank": 25,
+      "points": 9,
+      "matchRecord": "3-3-0",
+      "decklistIds": [
+        "videre-deck-58693568"
+      ],
+      "reportedArchetypes": []
+    },
+    "stu909090": {
+      "name": "stu909090",
+      "username": "stu909090",
+      "rank": 26,
+      "points": 6,
+      "matchRecord": "2-3-0",
+      "decklistIds": [
+        "videre-deck-58693536"
+      ],
+      "reportedArchetypes": []
+    },
+    "Bolllll": {
+      "name": "Bolllll",
+      "username": "Bolllll",
+      "rank": 27,
+      "points": 6,
+      "matchRecord": "2-4-0",
+      "decklistIds": [
+        "videre-deck-58693584"
+      ],
+      "reportedArchetypes": []
+    },
+    "DJK3V1N": {
+      "name": "DJK3V1N",
+      "username": "DJK3V1N",
+      "rank": 28,
+      "points": 6,
+      "matchRecord": "2-4-0",
+      "decklistIds": [
+        "videre-deck-58693557"
+      ],
+      "reportedArchetypes": []
+    },
+    "Ixidor29": {
+      "name": "Ixidor29",
+      "username": "Ixidor29",
+      "rank": 29,
+      "points": 6,
+      "matchRecord": "2-4-0",
+      "decklistIds": [
+        "videre-deck-58693571"
+      ],
+      "reportedArchetypes": []
+    },
+    "RitualSinkhole": {
+      "name": "RitualSinkhole",
+      "username": "RitualSinkhole",
+      "rank": 30,
+      "points": 6,
+      "matchRecord": "2-2-0",
+      "decklistIds": [
+        "videre-deck-58693545"
+      ],
+      "reportedArchetypes": []
+    },
+    "fazparte": {
+      "name": "fazparte",
+      "username": "fazparte",
+      "rank": 31,
+      "points": 6,
+      "matchRecord": "2-4-0",
+      "decklistIds": [
+        "videre-deck-58693542"
+      ],
+      "reportedArchetypes": []
+    },
+    "Heisen01": {
+      "name": "Heisen01",
+      "username": "Heisen01",
+      "rank": 32,
+      "points": 6,
+      "matchRecord": "2-4-0",
+      "decklistIds": [
+        "videre-deck-58693574"
+      ],
+      "reportedArchetypes": []
+    },
+    "helldude": {
+      "name": "helldude",
+      "username": "helldude",
+      "rank": 33,
+      "points": 6,
+      "matchRecord": "2-4-0",
+      "decklistIds": [],
+      "reportedArchetypes": []
+    },
+    "mysteryman21": {
+      "name": "mysteryman21",
+      "username": "mysteryman21",
+      "rank": 34,
+      "points": 3,
+      "matchRecord": "1-2-0",
+      "decklistIds": [],
+      "reportedArchetypes": []
+    },
+    "giggimille": {
+      "name": "giggimille",
+      "username": "giggimille",
+      "rank": 35,
+      "points": 3,
+      "matchRecord": "1-3-0",
+      "decklistIds": [],
+      "reportedArchetypes": []
+    },
+    "Varo": {
+      "name": "Varo",
+      "username": "Varo",
+      "rank": 36,
+      "points": 3,
+      "matchRecord": "1-3-0",
+      "decklistIds": [],
+      "reportedArchetypes": []
+    },
+    "LuffyDoChapeuDePalha": {
+      "name": "LuffyDoChapeuDePalha",
+      "username": "LuffyDoChapeuDePalha",
+      "rank": 37,
+      "points": 3,
+      "matchRecord": "1-4-0",
+      "decklistIds": [],
+      "reportedArchetypes": []
+    },
+    "SirFailo": {
+      "name": "SirFailo",
+      "username": "SirFailo",
+      "rank": 38,
+      "points": 3,
+      "matchRecord": "1-5-0",
+      "decklistIds": [],
+      "reportedArchetypes": []
+    },
+    "seasonofmists": {
+      "name": "seasonofmists",
+      "username": "seasonofmists",
+      "rank": 39,
+      "points": 0,
+      "matchRecord": "0-2-0",
+      "decklistIds": [],
+      "reportedArchetypes": []
+    },
+    "Univerce": {
+      "name": "Univerce",
+      "username": "Univerce",
+      "rank": 40,
+      "points": 0,
+      "matchRecord": "0-2-0",
+      "decklistIds": [],
+      "reportedArchetypes": []
+    },
+    "Syns": {
+      "name": "Syns",
+      "username": "Syns",
+      "rank": 41,
+      "points": 0,
+      "matchRecord": "0-4-0",
+      "decklistIds": [],
+      "reportedArchetypes": []
+    },
+    "Keez": {
+      "name": "Keez",
+      "username": "Keez",
+      "rank": 42,
+      "points": 0,
+      "matchRecord": "0-3-0",
+      "decklistIds": [],
+      "reportedArchetypes": []
+    },
+    "AlessandroPiraccini": {
+      "name": "AlessandroPiraccini",
+      "username": "AlessandroPiraccini",
+      "rank": 43,
+      "points": 0,
+      "matchRecord": "0-2-0",
+      "decklistIds": [],
+      "reportedArchetypes": []
+    },
+    "albertosd87": {
+      "name": "albertosd87",
+      "username": "albertosd87",
+      "rank": 44,
+      "points": 0,
+      "matchRecord": "0-1-0",
+      "decklistIds": [],
+      "reportedArchetypes": []
+    }
+  },
+  "decklists": {
+    "videre-deck-58693536": {
+      "playerId": "stu909090",
+      "mainboard": [
+        {
+          "cardName": "Dispel",
+          "quantity": 2
+        },
+        {
+          "cardName": "Spellstutter Sprite",
+          "quantity": 4
+        },
+        {
+          "cardName": "Seething Landscape",
+          "quantity": 2
+        },
+        {
+          "cardName": "Extract a Confession",
+          "quantity": 1
+        },
+        {
+          "cardName": "Lórien Revealed",
+          "quantity": 4
+        },
+        {
+          "cardName": "Island",
+          "quantity": 5
+        },
+        {
+          "cardName": "Arms of Hadar",
+          "quantity": 1
+        },
+        {
+          "cardName": "Moon-Circuit Hacker",
+          "quantity": 2
+        },
+        {
+          "cardName": "Ice Tunnel",
+          "quantity": 4
+        },
+        {
+          "cardName": "Thorn of the Black Rose",
+          "quantity": 2
+        },
+        {
+          "cardName": "Faerie Seer",
+          "quantity": 3
+        },
+        {
+          "cardName": "Island",
+          "quantity": 1
+        },
+        {
+          "cardName": "Island",
+          "quantity": 2
+        },
+        {
+          "cardName": "Ninja of the Deep Hours",
+          "quantity": 2
+        },
+        {
+          "cardName": "Island",
+          "quantity": 1
+        },
+        {
+          "cardName": "Counterspell",
+          "quantity": 4
+        },
+        {
+          "cardName": "Dimir Aqueduct",
+          "quantity": 1
+        },
+        {
+          "cardName": "Snuff Out",
+          "quantity": 4
+        },
+        {
+          "cardName": "Baleful Strix",
+          "quantity": 4
+        },
+        {
+          "cardName": "Swamp",
+          "quantity": 1
+        },
+        {
+          "cardName": "Cast Down",
+          "quantity": 3
+        },
+        {
+          "cardName": "Bojuka Bog",
+          "quantity": 1
+        },
+        {
+          "cardName": "Augur of Bolas",
+          "quantity": 2
+        },
+        {
+          "cardName": "Brainstorm",
+          "quantity": 4
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Okiba-Gang Shinobi",
+          "quantity": 1
+        },
+        {
+          "cardName": "Hydroblast",
+          "quantity": 1
+        },
+        {
+          "cardName": "Blue Elemental Blast",
+          "quantity": 4
+        },
+        {
+          "cardName": "Stormbound Geist",
+          "quantity": 1
+        },
+        {
+          "cardName": "Relic of Progenitus",
+          "quantity": 2
+        },
+        {
+          "cardName": "Mukotai Ambusher",
+          "quantity": 1
+        },
+        {
+          "cardName": "Arms of Hadar",
+          "quantity": 1
+        },
+        {
+          "cardName": "Annul",
+          "quantity": 4
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "videre-deck-58693540": {
+      "playerId": "Kampo",
+      "mainboard": [
+        {
+          "cardName": "Geothermal Crevice",
+          "quantity": 4
+        },
+        {
+          "cardName": "Crossover Collaboration",
+          "quantity": 3
+        },
+        {
+          "cardName": "Glimpse the Impossible",
+          "quantity": 4
+        },
+        {
+          "cardName": "Wrenn's Resolve",
+          "quantity": 4
+        },
+        {
+          "cardName": "Big Score",
+          "quantity": 2
+        },
+        {
+          "cardName": "Reckless Impulse",
+          "quantity": 1
+        },
+        {
+          "cardName": "Seize the Storm",
+          "quantity": 2
+        },
+        {
+          "cardName": "Twinned Vision",
+          "quantity": 4
+        },
+        {
+          "cardName": "Goblin Anarchomancer",
+          "quantity": 4
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 5
+        },
+        {
+          "cardName": "Sandstone Needle",
+          "quantity": 4
+        },
+        {
+          "cardName": "Hickory Woodlot",
+          "quantity": 4
+        },
+        {
+          "cardName": "Desperate Ritual",
+          "quantity": 4
+        },
+        {
+          "cardName": "Seething Song",
+          "quantity": 4
+        },
+        {
+          "cardName": "Thornscape Familiar",
+          "quantity": 4
+        },
+        {
+          "cardName": "First Day of Class",
+          "quantity": 2
+        },
+        {
+          "cardName": "Bitter Reunion",
+          "quantity": 1
+        },
+        {
+          "cardName": "Manamorphose",
+          "quantity": 4
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Abandon Attachments",
+          "quantity": 1
+        },
+        {
+          "cardName": "Origin of Metalbending",
+          "quantity": 1
+        },
+        {
+          "cardName": "Gruul Turf",
+          "quantity": 2
+        },
+        {
+          "cardName": "Weather the Storm",
+          "quantity": 2
+        },
+        {
+          "cardName": "It'll Quench Ya!",
+          "quantity": 1
+        },
+        {
+          "cardName": "Pyroblast",
+          "quantity": 4
+        },
+        {
+          "cardName": "Flaring Pain",
+          "quantity": 1
+        },
+        {
+          "cardName": "Bestial Incursion",
+          "quantity": 2
+        },
+        {
+          "cardName": "Red Elemental Blast",
+          "quantity": 1
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "videre-deck-58693542": {
+      "playerId": "fazparte",
+      "mainboard": [
+        {
+          "cardName": "Lightning Bolt",
+          "quantity": 4
+        },
+        {
+          "cardName": "Fiery Temper",
+          "quantity": 4
+        },
+        {
+          "cardName": "Guttersnipe",
+          "quantity": 4
+        },
+        {
+          "cardName": "Grab the Prize",
+          "quantity": 4
+        },
+        {
+          "cardName": "Fireblast",
+          "quantity": 4
+        },
+        {
+          "cardName": "Highway Robbery",
+          "quantity": 4
+        },
+        {
+          "cardName": "Kessig Flamebreather",
+          "quantity": 4
+        },
+        {
+          "cardName": "Lava Dart",
+          "quantity": 4
+        },
+        {
+          "cardName": "Faithless Looting",
+          "quantity": 4
+        },
+        {
+          "cardName": "Sneaky Snacker",
+          "quantity": 4
+        },
+        {
+          "cardName": "Witch's Mark",
+          "quantity": 1
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 19
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Pyroblast",
+          "quantity": 4
+        },
+        {
+          "cardName": "End the Festivities",
+          "quantity": 2
+        },
+        {
+          "cardName": "Relic of Progenitus",
+          "quantity": 3
+        },
+        {
+          "cardName": "Smash to Smithereens",
+          "quantity": 3
+        },
+        {
+          "cardName": "Cast into the Fire",
+          "quantity": 3
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "videre-deck-58693543": {
+      "playerId": "asWerty",
+      "mainboard": [
+        {
+          "cardName": "Overgrown Battlement",
+          "quantity": 4
+        },
+        {
+          "cardName": "Gatecreeper Vine",
+          "quantity": 2
+        },
+        {
+          "cardName": "Generous Ent",
+          "quantity": 4
+        },
+        {
+          "cardName": "Lead the Stampede",
+          "quantity": 4
+        },
+        {
+          "cardName": "Lotleth Giant",
+          "quantity": 2
+        },
+        {
+          "cardName": "Sagu Wildling",
+          "quantity": 4
+        },
+        {
+          "cardName": "Saruli Caretaker",
+          "quantity": 4
+        },
+        {
+          "cardName": "Dread Return",
+          "quantity": 2
+        },
+        {
+          "cardName": "Balustrade Spy",
+          "quantity": 4
+        },
+        {
+          "cardName": "Winding Way",
+          "quantity": 4
+        },
+        {
+          "cardName": "Wall of Roots",
+          "quantity": 4
+        },
+        {
+          "cardName": "Forest",
+          "quantity": 3
+        },
+        {
+          "cardName": "Quirion Ranger",
+          "quantity": 2
+        },
+        {
+          "cardName": "Masked Vandal",
+          "quantity": 3
+        },
+        {
+          "cardName": "Mesmeric Fiend",
+          "quantity": 3
+        },
+        {
+          "cardName": "Swamp",
+          "quantity": 1
+        },
+        {
+          "cardName": "Land Grant",
+          "quantity": 4
+        },
+        {
+          "cardName": "Nyxborn Hydra",
+          "quantity": 1
+        },
+        {
+          "cardName": "Jaspera Sentinel",
+          "quantity": 1
+        },
+        {
+          "cardName": "Troll of Khazad-dûm",
+          "quantity": 1
+        },
+        {
+          "cardName": "Tinder Wall",
+          "quantity": 1
+        },
+        {
+          "cardName": "Rubblebelt Maverick",
+          "quantity": 2
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Mesmeric Fiend",
+          "quantity": 1
+        },
+        {
+          "cardName": "Gorilla Shaman",
+          "quantity": 2
+        },
+        {
+          "cardName": "Flaring Pain",
+          "quantity": 1
+        },
+        {
+          "cardName": "Cut Down",
+          "quantity": 2
+        },
+        {
+          "cardName": "Faerie Macabre",
+          "quantity": 2
+        },
+        {
+          "cardName": "Masked Vandal",
+          "quantity": 1
+        },
+        {
+          "cardName": "Scattershot Archer",
+          "quantity": 2
+        },
+        {
+          "cardName": "Avenging Hunter",
+          "quantity": 2
+        },
+        {
+          "cardName": "Vitu-Ghazi Inspector",
+          "quantity": 1
+        },
+        {
+          "cardName": "Swamp",
+          "quantity": 1
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "videre-deck-58693544": {
+      "playerId": "hyde1234",
+      "mainboard": [
+        {
+          "cardName": "Lightning Bolt",
+          "quantity": 4
+        },
+        {
+          "cardName": "Fiery Temper",
+          "quantity": 4
+        },
+        {
+          "cardName": "Guttersnipe",
+          "quantity": 4
+        },
+        {
+          "cardName": "Grab the Prize",
+          "quantity": 4
+        },
+        {
+          "cardName": "Fireblast",
+          "quantity": 3
+        },
+        {
+          "cardName": "Highway Robbery",
+          "quantity": 4
+        },
+        {
+          "cardName": "Kessig Flamebreather",
+          "quantity": 4
+        },
+        {
+          "cardName": "Lava Dart",
+          "quantity": 4
+        },
+        {
+          "cardName": "Faithless Looting",
+          "quantity": 3
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 13
+        },
+        {
+          "cardName": "Sneaky Snacker",
+          "quantity": 4
+        },
+        {
+          "cardName": "Voldaren Epicure",
+          "quantity": 2
+        },
+        {
+          "cardName": "Witch's Mark",
+          "quantity": 1
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 1
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 2
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 2
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 1
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "End the Festivities",
+          "quantity": 2
+        },
+        {
+          "cardName": "Relic of Progenitus",
+          "quantity": 3
+        },
+        {
+          "cardName": "Red Elemental Blast",
+          "quantity": 4
+        },
+        {
+          "cardName": "Searing Blaze",
+          "quantity": 1
+        },
+        {
+          "cardName": "Smash to Smithereens",
+          "quantity": 3
+        },
+        {
+          "cardName": "Pyroblast",
+          "quantity": 2
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "videre-deck-58693545": {
+      "playerId": "RitualSinkhole",
+      "mainboard": [
+        {
+          "cardName": "Tangle",
+          "quantity": 2
+        },
+        {
+          "cardName": "Simic Growth Chamber",
+          "quantity": 4
+        },
+        {
+          "cardName": "Behold the Multiverse",
+          "quantity": 3
+        },
+        {
+          "cardName": "Tangled Islet",
+          "quantity": 2
+        },
+        {
+          "cardName": "Moment's Peace",
+          "quantity": 4
+        },
+        {
+          "cardName": "Island",
+          "quantity": 5
+        },
+        {
+          "cardName": "Embrace the Paradox",
+          "quantity": 2
+        },
+        {
+          "cardName": "Forest",
+          "quantity": 2
+        },
+        {
+          "cardName": "Paradox Gardens",
+          "quantity": 1
+        },
+        {
+          "cardName": "Growth Spiral",
+          "quantity": 4
+        },
+        {
+          "cardName": "Fog",
+          "quantity": 2
+        },
+        {
+          "cardName": "Lórien Revealed",
+          "quantity": 4
+        },
+        {
+          "cardName": "Thornwood Falls",
+          "quantity": 3
+        },
+        {
+          "cardName": "Bojuka Bog",
+          "quantity": 1
+        },
+        {
+          "cardName": "Stream of Thought",
+          "quantity": 2
+        },
+        {
+          "cardName": "Arcane Denial",
+          "quantity": 4
+        },
+        {
+          "cardName": "Weather the Storm",
+          "quantity": 4
+        },
+        {
+          "cardName": "Heritage Reclamation",
+          "quantity": 1
+        },
+        {
+          "cardName": "Desert",
+          "quantity": 2
+        },
+        {
+          "cardName": "Plunder the Trollshaws",
+          "quantity": 4
+        },
+        {
+          "cardName": "Accumulated Knowledge",
+          "quantity": 4
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Faerie Macabre",
+          "quantity": 2
+        },
+        {
+          "cardName": "Dispel",
+          "quantity": 2
+        },
+        {
+          "cardName": "Hydroblast",
+          "quantity": 4
+        },
+        {
+          "cardName": "Murmuring Mystic",
+          "quantity": 2
+        },
+        {
+          "cardName": "Desert",
+          "quantity": 1
+        },
+        {
+          "cardName": "Bojuka Bog",
+          "quantity": 1
+        },
+        {
+          "cardName": "Blue Elemental Blast",
+          "quantity": 3
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "videre-deck-58693547": {
+      "playerId": "boytriton",
+      "mainboard": [
+        {
+          "cardName": "Thoughtcast",
+          "quantity": 4
+        },
+        {
+          "cardName": "Blood Fountain",
+          "quantity": 2
+        },
+        {
+          "cardName": "Cast Down",
+          "quantity": 4
+        },
+        {
+          "cardName": "Cryogen Relic",
+          "quantity": 4
+        },
+        {
+          "cardName": "Drossforge Bridge",
+          "quantity": 2
+        },
+        {
+          "cardName": "Swamp",
+          "quantity": 1
+        },
+        {
+          "cardName": "Seat of the Synod",
+          "quantity": 4
+        },
+        {
+          "cardName": "Mistvault Bridge",
+          "quantity": 4
+        },
+        {
+          "cardName": "Moon-Circuit Hacker",
+          "quantity": 2
+        },
+        {
+          "cardName": "Myr Enforcer",
+          "quantity": 4
+        },
+        {
+          "cardName": "Nihil Spellbomb",
+          "quantity": 2
+        },
+        {
+          "cardName": "Reckoner's Bargain",
+          "quantity": 4
+        },
+        {
+          "cardName": "Refurbished Familiar",
+          "quantity": 4
+        },
+        {
+          "cardName": "Island",
+          "quantity": 1
+        },
+        {
+          "cardName": "Silverbluff Bridge",
+          "quantity": 2
+        },
+        {
+          "cardName": "Island",
+          "quantity": 1
+        },
+        {
+          "cardName": "Gearseeker Serpent",
+          "quantity": 3
+        },
+        {
+          "cardName": "Utrom Monitor",
+          "quantity": 4
+        },
+        {
+          "cardName": "Baleful Strix",
+          "quantity": 4
+        },
+        {
+          "cardName": "Vault of Whispers",
+          "quantity": 4
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Blue Elemental Blast",
+          "quantity": 2
+        },
+        {
+          "cardName": "Arms of Hadar",
+          "quantity": 2
+        },
+        {
+          "cardName": "Annul",
+          "quantity": 2
+        },
+        {
+          "cardName": "Extract a Confession",
+          "quantity": 4
+        },
+        {
+          "cardName": "Hydroblast",
+          "quantity": 4
+        },
+        {
+          "cardName": "Suffocating Fumes",
+          "quantity": 1
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "videre-deck-58693548": {
+      "playerId": "MisterTwin",
+      "mainboard": [
+        {
+          "cardName": "Mountain",
+          "quantity": 19
+        },
+        {
+          "cardName": "Lightning Bolt",
+          "quantity": 4
+        },
+        {
+          "cardName": "Faithless Looting",
+          "quantity": 3
+        },
+        {
+          "cardName": "Guttersnipe",
+          "quantity": 3
+        },
+        {
+          "cardName": "Fireblast",
+          "quantity": 3
+        },
+        {
+          "cardName": "Fiery Temper",
+          "quantity": 4
+        },
+        {
+          "cardName": "Lava Dart",
+          "quantity": 4
+        },
+        {
+          "cardName": "Kessig Flamebreather",
+          "quantity": 4
+        },
+        {
+          "cardName": "Voldaren Epicure",
+          "quantity": 4
+        },
+        {
+          "cardName": "Highway Robbery",
+          "quantity": 4
+        },
+        {
+          "cardName": "Sneaky Snacker",
+          "quantity": 4
+        },
+        {
+          "cardName": "Grab the Prize",
+          "quantity": 4
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Red Elemental Blast",
+          "quantity": 2
+        },
+        {
+          "cardName": "Searing Blaze",
+          "quantity": 1
+        },
+        {
+          "cardName": "Relic of Progenitus",
+          "quantity": 2
+        },
+        {
+          "cardName": "Smash to Smithereens",
+          "quantity": 3
+        },
+        {
+          "cardName": "Pyroblast",
+          "quantity": 4
+        },
+        {
+          "cardName": "Gorilla Shaman",
+          "quantity": 1
+        },
+        {
+          "cardName": "Cast into the Fire",
+          "quantity": 2
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "videre-deck-58693550": {
+      "playerId": "mami",
+      "mainboard": [
+        {
+          "cardName": "Mountain",
+          "quantity": 19
+        },
+        {
+          "cardName": "Lightning Bolt",
+          "quantity": 4
+        },
+        {
+          "cardName": "Faithless Looting",
+          "quantity": 2
+        },
+        {
+          "cardName": "Guttersnipe",
+          "quantity": 3
+        },
+        {
+          "cardName": "Fireblast",
+          "quantity": 3
+        },
+        {
+          "cardName": "Fiery Temper",
+          "quantity": 4
+        },
+        {
+          "cardName": "Lava Dart",
+          "quantity": 4
+        },
+        {
+          "cardName": "Voldaren Epicure",
+          "quantity": 3
+        },
+        {
+          "cardName": "Sneaky Snacker",
+          "quantity": 4
+        },
+        {
+          "cardName": "Clockwork Percussionist",
+          "quantity": 4
+        },
+        {
+          "cardName": "Grab the Prize",
+          "quantity": 4
+        },
+        {
+          "cardName": "Melded Moxite",
+          "quantity": 2
+        },
+        {
+          "cardName": "Vision of Love",
+          "quantity": 4
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Smash to Smithereens",
+          "quantity": 3
+        },
+        {
+          "cardName": "Relic of Progenitus",
+          "quantity": 3
+        },
+        {
+          "cardName": "Red Elemental Blast",
+          "quantity": 1
+        },
+        {
+          "cardName": "End the Festivities",
+          "quantity": 2
+        },
+        {
+          "cardName": "Cast into the Fire",
+          "quantity": 2
+        },
+        {
+          "cardName": "Pyroblast",
+          "quantity": 4
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "videre-deck-58693551": {
+      "playerId": "boom_bust",
+      "mainboard": [
+        {
+          "cardName": "Burning-Tree Emissary",
+          "quantity": 4
+        },
+        {
+          "cardName": "Clockwork Percussionist",
+          "quantity": 4
+        },
+        {
+          "cardName": "Chain Lightning",
+          "quantity": 2
+        },
+        {
+          "cardName": "Experimental Synthesizer",
+          "quantity": 3
+        },
+        {
+          "cardName": "Lightning Bolt",
+          "quantity": 4
+        },
+        {
+          "cardName": "Goblin Bushwhacker",
+          "quantity": 4
+        },
+        {
+          "cardName": "Galvanic Blast",
+          "quantity": 4
+        },
+        {
+          "cardName": "Goblin Tomb Raider",
+          "quantity": 4
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 1
+        },
+        {
+          "cardName": "Rally at the Hornburg",
+          "quantity": 4
+        },
+        {
+          "cardName": "Reckless Impulse",
+          "quantity": 3
+        },
+        {
+          "cardName": "Voldaren Epicure",
+          "quantity": 4
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 1
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 3
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 1
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 2
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 2
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 2
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 2
+        },
+        {
+          "cardName": "Great Furnace",
+          "quantity": 4
+        },
+        {
+          "cardName": "End the Festivities",
+          "quantity": 2
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Cast into the Fire",
+          "quantity": 4
+        },
+        {
+          "cardName": "Pyroblast",
+          "quantity": 1
+        },
+        {
+          "cardName": "Red Elemental Blast",
+          "quantity": 4
+        },
+        {
+          "cardName": "Gorilla Shaman",
+          "quantity": 2
+        },
+        {
+          "cardName": "Relic of Progenitus",
+          "quantity": 4
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "videre-deck-58693552": {
+      "playerId": "Spec23",
+      "mainboard": [
+        {
+          "cardName": "Mountain",
+          "quantity": 19
+        },
+        {
+          "cardName": "Fiery Temper",
+          "quantity": 4
+        },
+        {
+          "cardName": "Lightning Bolt",
+          "quantity": 4
+        },
+        {
+          "cardName": "Guttersnipe",
+          "quantity": 3
+        },
+        {
+          "cardName": "Fireblast",
+          "quantity": 3
+        },
+        {
+          "cardName": "Faithless Looting",
+          "quantity": 3
+        },
+        {
+          "cardName": "Lava Dart",
+          "quantity": 4
+        },
+        {
+          "cardName": "Highway Robbery",
+          "quantity": 4
+        },
+        {
+          "cardName": "Sneaky Snacker",
+          "quantity": 4
+        },
+        {
+          "cardName": "Grab the Prize",
+          "quantity": 4
+        },
+        {
+          "cardName": "Kessig Flamebreather",
+          "quantity": 4
+        },
+        {
+          "cardName": "Voldaren Epicure",
+          "quantity": 4
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Smash to Smithereens",
+          "quantity": 3
+        },
+        {
+          "cardName": "Searing Blaze",
+          "quantity": 2
+        },
+        {
+          "cardName": "Red Elemental Blast",
+          "quantity": 2
+        },
+        {
+          "cardName": "Pyroblast",
+          "quantity": 4
+        },
+        {
+          "cardName": "Relic of Progenitus",
+          "quantity": 2
+        },
+        {
+          "cardName": "Cast into the Fire",
+          "quantity": 2
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "videre-deck-58693554": {
+      "playerId": "manohito",
+      "mainboard": [
+        {
+          "cardName": "Refurbished Familiar",
+          "quantity": 4
+        },
+        {
+          "cardName": "Utrom Monitor",
+          "quantity": 4
+        },
+        {
+          "cardName": "Ichor Wellspring",
+          "quantity": 4
+        },
+        {
+          "cardName": "Reckoner's Bargain",
+          "quantity": 4
+        },
+        {
+          "cardName": "Vault of Whispers",
+          "quantity": 4
+        },
+        {
+          "cardName": "Seat of the Synod",
+          "quantity": 4
+        },
+        {
+          "cardName": "Drossforge Bridge",
+          "quantity": 1
+        },
+        {
+          "cardName": "Mistvault Bridge",
+          "quantity": 4
+        },
+        {
+          "cardName": "Silverbluff Bridge",
+          "quantity": 1
+        },
+        {
+          "cardName": "Blood Fountain",
+          "quantity": 3
+        },
+        {
+          "cardName": "Thoughtcast",
+          "quantity": 4
+        },
+        {
+          "cardName": "Myr Enforcer",
+          "quantity": 4
+        },
+        {
+          "cardName": "Nihil Spellbomb",
+          "quantity": 4
+        },
+        {
+          "cardName": "Makeshift Munitions",
+          "quantity": 1
+        },
+        {
+          "cardName": "Galvanic Blast",
+          "quantity": 4
+        },
+        {
+          "cardName": "Eviscerator's Insight",
+          "quantity": 1
+        },
+        {
+          "cardName": "Giant's Boulder",
+          "quantity": 4
+        },
+        {
+          "cardName": "Great Furnace",
+          "quantity": 4
+        },
+        {
+          "cardName": "Swamp",
+          "quantity": 1
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Duress",
+          "quantity": 3
+        },
+        {
+          "cardName": "Extract a Confession",
+          "quantity": 3
+        },
+        {
+          "cardName": "Pyroblast",
+          "quantity": 3
+        },
+        {
+          "cardName": "Cast into the Fire",
+          "quantity": 3
+        },
+        {
+          "cardName": "Blue Elemental Blast",
+          "quantity": 2
+        },
+        {
+          "cardName": "Envelop",
+          "quantity": 1
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "videre-deck-58693556": {
+      "playerId": "Niederschatten",
+      "mainboard": [
+        {
+          "cardName": "Dimir Aqueduct",
+          "quantity": 1
+        },
+        {
+          "cardName": "Swamp",
+          "quantity": 1
+        },
+        {
+          "cardName": "Contaminated Aquifer",
+          "quantity": 4
+        },
+        {
+          "cardName": "Campfire",
+          "quantity": 2
+        },
+        {
+          "cardName": "Molten Tributary",
+          "quantity": 1
+        },
+        {
+          "cardName": "Island",
+          "quantity": 10
+        },
+        {
+          "cardName": "Bojuka Bog",
+          "quantity": 1
+        },
+        {
+          "cardName": "Nihil Spellbomb",
+          "quantity": 2
+        },
+        {
+          "cardName": "Snuff Out",
+          "quantity": 4
+        },
+        {
+          "cardName": "Suffocating Fumes",
+          "quantity": 1
+        },
+        {
+          "cardName": "Cut Down",
+          "quantity": 2
+        },
+        {
+          "cardName": "Cast Down",
+          "quantity": 2
+        },
+        {
+          "cardName": "Plunder the Trollshaws",
+          "quantity": 3
+        },
+        {
+          "cardName": "Preordain",
+          "quantity": 3
+        },
+        {
+          "cardName": "Duress",
+          "quantity": 3
+        },
+        {
+          "cardName": "Counterspell",
+          "quantity": 4
+        },
+        {
+          "cardName": "Lórien Revealed",
+          "quantity": 4
+        },
+        {
+          "cardName": "Baleful Strix",
+          "quantity": 4
+        },
+        {
+          "cardName": "Murmuring Mystic",
+          "quantity": 3
+        },
+        {
+          "cardName": "Thorn of the Black Rose",
+          "quantity": 2
+        },
+        {
+          "cardName": "Extract a Confession",
+          "quantity": 1
+        },
+        {
+          "cardName": "Augur of Bolas",
+          "quantity": 2
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Extract a Confession",
+          "quantity": 1
+        },
+        {
+          "cardName": "Vandalblast",
+          "quantity": 2
+        },
+        {
+          "cardName": "Annul",
+          "quantity": 2
+        },
+        {
+          "cardName": "Arms of Hadar",
+          "quantity": 1
+        },
+        {
+          "cardName": "Hydroblast",
+          "quantity": 2
+        },
+        {
+          "cardName": "Blue Elemental Blast",
+          "quantity": 2
+        },
+        {
+          "cardName": "Stream of Thought",
+          "quantity": 1
+        },
+        {
+          "cardName": "Nihil Spellbomb",
+          "quantity": 1
+        },
+        {
+          "cardName": "Okiba-Gang Shinobi",
+          "quantity": 1
+        },
+        {
+          "cardName": "Steel Sabotage",
+          "quantity": 2
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "videre-deck-58693557": {
+      "playerId": "DJK3V1N",
+      "mainboard": [
+        {
+          "cardName": "Steady Progress",
+          "quantity": 2
+        },
+        {
+          "cardName": "Protege's Awakening",
+          "quantity": 3
+        },
+        {
+          "cardName": "Steady Progress",
+          "quantity": 1
+        },
+        {
+          "cardName": "Infectious Inquiry",
+          "quantity": 4
+        },
+        {
+          "cardName": "Vivisurgeon's Insight",
+          "quantity": 4
+        },
+        {
+          "cardName": "Prologue to Phyresis",
+          "quantity": 2
+        },
+        {
+          "cardName": "Experimental Augury",
+          "quantity": 4
+        },
+        {
+          "cardName": "Snap",
+          "quantity": 3
+        },
+        {
+          "cardName": "Weather the Storm",
+          "quantity": 4
+        },
+        {
+          "cardName": "Contentious Plan",
+          "quantity": 4
+        },
+        {
+          "cardName": "Fiery Cannonade",
+          "quantity": 1
+        },
+        {
+          "cardName": "Snow-Covered Island",
+          "quantity": 3
+        },
+        {
+          "cardName": "Lotus Petal",
+          "quantity": 2
+        },
+        {
+          "cardName": "Saprazzan Skerry",
+          "quantity": 4
+        },
+        {
+          "cardName": "Sandstone Needle",
+          "quantity": 1
+        },
+        {
+          "cardName": "Peat Bog",
+          "quantity": 4
+        },
+        {
+          "cardName": "Hickory Woodlot",
+          "quantity": 4
+        },
+        {
+          "cardName": "Lórien Revealed",
+          "quantity": 4
+        },
+        {
+          "cardName": "Everflowing Chalice",
+          "quantity": 2
+        },
+        {
+          "cardName": "Pentad Prism",
+          "quantity": 4
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Moment's Peace",
+          "quantity": 4
+        },
+        {
+          "cardName": "Dispel",
+          "quantity": 4
+        },
+        {
+          "cardName": "Fiery Cannonade",
+          "quantity": 3
+        },
+        {
+          "cardName": "Bring the Ending",
+          "quantity": 4
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "videre-deck-58693560": {
+      "playerId": "FriskiFraska",
+      "mainboard": [
+        {
+          "cardName": "Galvanic Blast",
+          "quantity": 4
+        },
+        {
+          "cardName": "Black Mage's Rod",
+          "quantity": 3
+        },
+        {
+          "cardName": "Blood Fountain",
+          "quantity": 1
+        },
+        {
+          "cardName": "Cleansing Wildfire",
+          "quantity": 4
+        },
+        {
+          "cardName": "Drossforge Bridge",
+          "quantity": 4
+        },
+        {
+          "cardName": "Experimental Synthesizer",
+          "quantity": 4
+        },
+        {
+          "cardName": "Kor Skyfisher",
+          "quantity": 4
+        },
+        {
+          "cardName": "Glint Hawk",
+          "quantity": 4
+        },
+        {
+          "cardName": "Goldmire Bridge",
+          "quantity": 1
+        },
+        {
+          "cardName": "Great Furnace",
+          "quantity": 1
+        },
+        {
+          "cardName": "Lightning Bolt",
+          "quantity": 3
+        },
+        {
+          "cardName": "Lembas",
+          "quantity": 4
+        },
+        {
+          "cardName": "Makeshift Munitions",
+          "quantity": 1
+        },
+        {
+          "cardName": "Plains",
+          "quantity": 1
+        },
+        {
+          "cardName": "Navigator's Compass",
+          "quantity": 2
+        },
+        {
+          "cardName": "Plains",
+          "quantity": 1
+        },
+        {
+          "cardName": "Refurbished Familiar",
+          "quantity": 4
+        },
+        {
+          "cardName": "Rustvale Bridge",
+          "quantity": 3
+        },
+        {
+          "cardName": "Shattered Landscape",
+          "quantity": 2
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 2
+        },
+        {
+          "cardName": "Thraben Charm",
+          "quantity": 1
+        },
+        {
+          "cardName": "Tithing Blade",
+          "quantity": 1
+        },
+        {
+          "cardName": "Vault of Whispers",
+          "quantity": 1
+        },
+        {
+          "cardName": "Swamp",
+          "quantity": 2
+        },
+        {
+          "cardName": "Ancient Den",
+          "quantity": 2
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Nihil Spellbomb",
+          "quantity": 2
+        },
+        {
+          "cardName": "Krark-Clan Shaman",
+          "quantity": 2
+        },
+        {
+          "cardName": "Navigator's Compass",
+          "quantity": 2
+        },
+        {
+          "cardName": "Red Elemental Blast",
+          "quantity": 2
+        },
+        {
+          "cardName": "Pyroblast",
+          "quantity": 2
+        },
+        {
+          "cardName": "Thraben Charm",
+          "quantity": 1
+        },
+        {
+          "cardName": "Tithing Blade",
+          "quantity": 1
+        },
+        {
+          "cardName": "Dust to Dust",
+          "quantity": 3
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "videre-deck-58693563": {
+      "playerId": "_blaze66",
+      "mainboard": [
+        {
+          "cardName": "Eviscerator's Insight",
+          "quantity": 2
+        },
+        {
+          "cardName": "Refurbished Familiar",
+          "quantity": 4
+        },
+        {
+          "cardName": "Writhing Chrysalis",
+          "quantity": 4
+        },
+        {
+          "cardName": "Twisted Landscape",
+          "quantity": 4
+        },
+        {
+          "cardName": "Fanatical Offering",
+          "quantity": 3
+        },
+        {
+          "cardName": "Swamp",
+          "quantity": 3
+        },
+        {
+          "cardName": "Forest",
+          "quantity": 2
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 2
+        },
+        {
+          "cardName": "Snuff Out",
+          "quantity": 1
+        },
+        {
+          "cardName": "Pulse of Murasa",
+          "quantity": 1
+        },
+        {
+          "cardName": "Cast Down",
+          "quantity": 4
+        },
+        {
+          "cardName": "Cleansing Wildfire",
+          "quantity": 4
+        },
+        {
+          "cardName": "Slagwoods Bridge",
+          "quantity": 4
+        },
+        {
+          "cardName": "Drossforge Bridge",
+          "quantity": 4
+        },
+        {
+          "cardName": "Nihil Spellbomb",
+          "quantity": 4
+        },
+        {
+          "cardName": "Blood Fountain",
+          "quantity": 2
+        },
+        {
+          "cardName": "Ichor Wellspring",
+          "quantity": 2
+        },
+        {
+          "cardName": "Lembas",
+          "quantity": 2
+        },
+        {
+          "cardName": "Vault of Whispers",
+          "quantity": 2
+        },
+        {
+          "cardName": "Makeshift Munitions",
+          "quantity": 1
+        },
+        {
+          "cardName": "Nyxborn Hydra",
+          "quantity": 1
+        },
+        {
+          "cardName": "Krark-Clan Shaman",
+          "quantity": 3
+        },
+        {
+          "cardName": "Toxin Analysis",
+          "quantity": 1
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Pyroblast",
+          "quantity": 1
+        },
+        {
+          "cardName": "Weather the Storm",
+          "quantity": 4
+        },
+        {
+          "cardName": "Troublemaker Ouphe",
+          "quantity": 2
+        },
+        {
+          "cardName": "Duress",
+          "quantity": 3
+        },
+        {
+          "cardName": "Pyroblast",
+          "quantity": 2
+        },
+        {
+          "cardName": "Cast into the Fire",
+          "quantity": 3
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "videre-deck-58693566": {
+      "playerId": "cabrabr12",
+      "mainboard": [
+        {
+          "cardName": "Fortress Kin-Guard",
+          "quantity": 4
+        },
+        {
+          "cardName": "Guardians' Pledge",
+          "quantity": 1
+        },
+        {
+          "cardName": "Leonardo, Big Brother",
+          "quantity": 4
+        },
+        {
+          "cardName": "Lunarch Veteran",
+          "quantity": 3
+        },
+        {
+          "cardName": "Martyr's Soul",
+          "quantity": 4
+        },
+        {
+          "cardName": "Novice Inspector",
+          "quantity": 4
+        },
+        {
+          "cardName": "Battle Screech",
+          "quantity": 3
+        },
+        {
+          "cardName": "Raffine's Informant",
+          "quantity": 4
+        },
+        {
+          "cardName": "Ramosian Rally",
+          "quantity": 4
+        },
+        {
+          "cardName": "Salt Road Packbeast",
+          "quantity": 4
+        },
+        {
+          "cardName": "Search Party Captain",
+          "quantity": 4
+        },
+        {
+          "cardName": "Thraben Inspector",
+          "quantity": 4
+        },
+        {
+          "cardName": "Plains",
+          "quantity": 17
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Dust to Dust",
+          "quantity": 4
+        },
+        {
+          "cardName": "Holy Light",
+          "quantity": 3
+        },
+        {
+          "cardName": "Standard Bearer",
+          "quantity": 2
+        },
+        {
+          "cardName": "Thraben Charm",
+          "quantity": 3
+        },
+        {
+          "cardName": "Ultimate Alliance",
+          "quantity": 3
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "videre-deck-58693567": {
+      "playerId": "Beicodegeia",
+      "mainboard": [
+        {
+          "cardName": "Preordain",
+          "quantity": 4
+        },
+        {
+          "cardName": "Campfire",
+          "quantity": 2
+        },
+        {
+          "cardName": "Lórien Revealed",
+          "quantity": 4
+        },
+        {
+          "cardName": "Cast Down",
+          "quantity": 3
+        },
+        {
+          "cardName": "Cut Down",
+          "quantity": 2
+        },
+        {
+          "cardName": "Plunder the Trollshaws",
+          "quantity": 3
+        },
+        {
+          "cardName": "Suffocating Fumes",
+          "quantity": 1
+        },
+        {
+          "cardName": "Snuff Out",
+          "quantity": 4
+        },
+        {
+          "cardName": "Extract a Confession",
+          "quantity": 1
+        },
+        {
+          "cardName": "Duress",
+          "quantity": 3
+        },
+        {
+          "cardName": "Contaminated Aquifer",
+          "quantity": 4
+        },
+        {
+          "cardName": "Thorn of the Black Rose",
+          "quantity": 3
+        },
+        {
+          "cardName": "Murmuring Mystic",
+          "quantity": 3
+        },
+        {
+          "cardName": "Ice Tunnel",
+          "quantity": 2
+        },
+        {
+          "cardName": "Baleful Strix",
+          "quantity": 4
+        },
+        {
+          "cardName": "Island",
+          "quantity": 9
+        },
+        {
+          "cardName": "Bojuka Bog",
+          "quantity": 1
+        },
+        {
+          "cardName": "Dimir Aqueduct",
+          "quantity": 1
+        },
+        {
+          "cardName": "Swamp",
+          "quantity": 1
+        },
+        {
+          "cardName": "Relic of Progenitus",
+          "quantity": 1
+        },
+        {
+          "cardName": "Counterspell",
+          "quantity": 4
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Blue Elemental Blast",
+          "quantity": 1
+        },
+        {
+          "cardName": "Relic of Progenitus",
+          "quantity": 2
+        },
+        {
+          "cardName": "Arms of Hadar",
+          "quantity": 2
+        },
+        {
+          "cardName": "Hydroblast",
+          "quantity": 4
+        },
+        {
+          "cardName": "Dispel",
+          "quantity": 1
+        },
+        {
+          "cardName": "Envelop",
+          "quantity": 1
+        },
+        {
+          "cardName": "Annul",
+          "quantity": 4
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "videre-deck-58693568": {
+      "playerId": "CrouchingPig",
+      "mainboard": [
+        {
+          "cardName": "Avenging Hunter",
+          "quantity": 4
+        },
+        {
+          "cardName": "Timberwatch Elf",
+          "quantity": 3
+        },
+        {
+          "cardName": "Generous Ent",
+          "quantity": 4
+        },
+        {
+          "cardName": "Gingerbread Cabin",
+          "quantity": 1
+        },
+        {
+          "cardName": "Snow-Covered Forest",
+          "quantity": 11
+        },
+        {
+          "cardName": "Lead the Stampede",
+          "quantity": 4
+        },
+        {
+          "cardName": "Llanowar Elves",
+          "quantity": 4
+        },
+        {
+          "cardName": "Masked Vandal",
+          "quantity": 4
+        },
+        {
+          "cardName": "Nyxborn Hydra",
+          "quantity": 4
+        },
+        {
+          "cardName": "Priest of Titania",
+          "quantity": 4
+        },
+        {
+          "cardName": "Quirion Ranger",
+          "quantity": 4
+        },
+        {
+          "cardName": "Sagu Wildling",
+          "quantity": 3
+        },
+        {
+          "cardName": "Land Grant",
+          "quantity": 2
+        },
+        {
+          "cardName": "Fyndhorn Elves",
+          "quantity": 4
+        },
+        {
+          "cardName": "Winding Way",
+          "quantity": 4
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Monstrous Emergence",
+          "quantity": 4
+        },
+        {
+          "cardName": "Viridian Longbow",
+          "quantity": 2
+        },
+        {
+          "cardName": "Spinewoods Paladin",
+          "quantity": 2
+        },
+        {
+          "cardName": "Vitu-Ghazi Inspector",
+          "quantity": 3
+        },
+        {
+          "cardName": "Faerie Macabre",
+          "quantity": 3
+        },
+        {
+          "cardName": "Gleeful Sabotage",
+          "quantity": 1
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "videre-deck-58693569": {
+      "playerId": "Luminati",
+      "mainboard": [
+        {
+          "cardName": "Tolarian Terror",
+          "quantity": 4
+        },
+        {
+          "cardName": "Brainstorm",
+          "quantity": 4
+        },
+        {
+          "cardName": "Counterspell",
+          "quantity": 4
+        },
+        {
+          "cardName": "Sleep of the Dead",
+          "quantity": 2
+        },
+        {
+          "cardName": "Island",
+          "quantity": 16
+        },
+        {
+          "cardName": "Mental Note",
+          "quantity": 4
+        },
+        {
+          "cardName": "Cryptic Serpent",
+          "quantity": 4
+        },
+        {
+          "cardName": "Lórien Revealed",
+          "quantity": 4
+        },
+        {
+          "cardName": "Thought Scour",
+          "quantity": 4
+        },
+        {
+          "cardName": "Deem Inferior",
+          "quantity": 4
+        },
+        {
+          "cardName": "Ponder",
+          "quantity": 3
+        },
+        {
+          "cardName": "Murmuring Mystic",
+          "quantity": 2
+        },
+        {
+          "cardName": "Delver of Secrets",
+          "quantity": 4
+        },
+        {
+          "cardName": "Deep Analysis",
+          "quantity": 1
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Hydroblast",
+          "quantity": 4
+        },
+        {
+          "cardName": "Annul",
+          "quantity": 4
+        },
+        {
+          "cardName": "Gut Shot",
+          "quantity": 2
+        },
+        {
+          "cardName": "Blue Elemental Blast",
+          "quantity": 2
+        },
+        {
+          "cardName": "Dispel",
+          "quantity": 2
+        },
+        {
+          "cardName": "Envelop",
+          "quantity": 1
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "videre-deck-58693570": {
+      "playerId": "Shiib",
+      "mainboard": [
+        {
+          "cardName": "Fyndhorn Elves",
+          "quantity": 3
+        },
+        {
+          "cardName": "Lead the Stampede",
+          "quantity": 4
+        },
+        {
+          "cardName": "Sagu Wildling",
+          "quantity": 3
+        },
+        {
+          "cardName": "Timberwatch Elf",
+          "quantity": 4
+        },
+        {
+          "cardName": "Priest of Titania",
+          "quantity": 4
+        },
+        {
+          "cardName": "Quirion Ranger",
+          "quantity": 4
+        },
+        {
+          "cardName": "Winding Way",
+          "quantity": 4
+        },
+        {
+          "cardName": "Llanowar Elves",
+          "quantity": 3
+        },
+        {
+          "cardName": "Nyxborn Hydra",
+          "quantity": 4
+        },
+        {
+          "cardName": "Generous Ent",
+          "quantity": 4
+        },
+        {
+          "cardName": "Masked Vandal",
+          "quantity": 4
+        },
+        {
+          "cardName": "Elvish Mystic",
+          "quantity": 2
+        },
+        {
+          "cardName": "Avenging Hunter",
+          "quantity": 4
+        },
+        {
+          "cardName": "Snow-Covered Forest",
+          "quantity": 11
+        },
+        {
+          "cardName": "Land Grant",
+          "quantity": 2
+        },
+        {
+          "cardName": "Gingerbread Cabin",
+          "quantity": 1
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Lignify",
+          "quantity": 4
+        },
+        {
+          "cardName": "Faerie Macabre",
+          "quantity": 3
+        },
+        {
+          "cardName": "Mwonvuli Acid-Moss",
+          "quantity": 4
+        },
+        {
+          "cardName": "Primordial Pachyderm",
+          "quantity": 4
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "videre-deck-58693571": {
+      "playerId": "Ixidor29",
+      "mainboard": [
+        {
+          "cardName": "Snow-Covered Forest",
+          "quantity": 14
+        },
+        {
+          "cardName": "Arbor Elf",
+          "quantity": 4
+        },
+        {
+          "cardName": "Snow-Covered Mountain",
+          "quantity": 2
+        },
+        {
+          "cardName": "Eldrazi Repurposer",
+          "quantity": 4
+        },
+        {
+          "cardName": "Jewel Thief",
+          "quantity": 4
+        },
+        {
+          "cardName": "Writhing Chrysalis",
+          "quantity": 4
+        },
+        {
+          "cardName": "Avenging Hunter",
+          "quantity": 3
+        },
+        {
+          "cardName": "Annoyed Altisaur",
+          "quantity": 3
+        },
+        {
+          "cardName": "Malevolent Rumble",
+          "quantity": 2
+        },
+        {
+          "cardName": "Utopia Sprawl",
+          "quantity": 4
+        },
+        {
+          "cardName": "Wild Growth",
+          "quantity": 2
+        },
+        {
+          "cardName": "Bannerhide Krushok",
+          "quantity": 2
+        },
+        {
+          "cardName": "Sagu Wildling",
+          "quantity": 2
+        },
+        {
+          "cardName": "Boarding Party",
+          "quantity": 4
+        },
+        {
+          "cardName": "Skred",
+          "quantity": 3
+        },
+        {
+          "cardName": "You Meet in a Tavern",
+          "quantity": 2
+        },
+        {
+          "cardName": "Colossal Dreadmask",
+          "quantity": 1
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Relic of Progenitus",
+          "quantity": 2
+        },
+        {
+          "cardName": "Weather the Storm",
+          "quantity": 3
+        },
+        {
+          "cardName": "Breath Weapon",
+          "quantity": 4
+        },
+        {
+          "cardName": "Vandalblast",
+          "quantity": 3
+        },
+        {
+          "cardName": "Flaring Pain",
+          "quantity": 1
+        },
+        {
+          "cardName": "Pyroblast",
+          "quantity": 2
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "videre-deck-58693572": {
+      "playerId": "yuxiaoyu",
+      "mainboard": [
+        {
+          "cardName": "Plunder the Trollshaws",
+          "quantity": 4
+        },
+        {
+          "cardName": "Campfire",
+          "quantity": 2
+        },
+        {
+          "cardName": "Snuff Out",
+          "quantity": 4
+        },
+        {
+          "cardName": "Contaminated Aquifer",
+          "quantity": 4
+        },
+        {
+          "cardName": "Cut Down",
+          "quantity": 2
+        },
+        {
+          "cardName": "Lórien Revealed",
+          "quantity": 4
+        },
+        {
+          "cardName": "Swamp",
+          "quantity": 1
+        },
+        {
+          "cardName": "Island",
+          "quantity": 10
+        },
+        {
+          "cardName": "Murmuring Mystic",
+          "quantity": 3
+        },
+        {
+          "cardName": "Cast Down",
+          "quantity": 2
+        },
+        {
+          "cardName": "Suffocating Fumes",
+          "quantity": 1
+        },
+        {
+          "cardName": "Counterspell",
+          "quantity": 4
+        },
+        {
+          "cardName": "Ponder",
+          "quantity": 4
+        },
+        {
+          "cardName": "Dimir Aqueduct",
+          "quantity": 1
+        },
+        {
+          "cardName": "Duress",
+          "quantity": 2
+        },
+        {
+          "cardName": "Bojuka Bog",
+          "quantity": 1
+        },
+        {
+          "cardName": "Nihil Spellbomb",
+          "quantity": 2
+        },
+        {
+          "cardName": "Baleful Strix",
+          "quantity": 4
+        },
+        {
+          "cardName": "Molten Tributary",
+          "quantity": 1
+        },
+        {
+          "cardName": "Thorn of the Black Rose",
+          "quantity": 2
+        },
+        {
+          "cardName": "Extract a Confession",
+          "quantity": 1
+        },
+        {
+          "cardName": "Dispel",
+          "quantity": 1
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Hydroblast",
+          "quantity": 4
+        },
+        {
+          "cardName": "Mind Extraction",
+          "quantity": 2
+        },
+        {
+          "cardName": "Blue Elemental Blast",
+          "quantity": 1
+        },
+        {
+          "cardName": "Nihil Spellbomb",
+          "quantity": 1
+        },
+        {
+          "cardName": "Stream of Thought",
+          "quantity": 1
+        },
+        {
+          "cardName": "Vandalblast",
+          "quantity": 3
+        },
+        {
+          "cardName": "Annul",
+          "quantity": 1
+        },
+        {
+          "cardName": "Arms of Hadar",
+          "quantity": 2
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "videre-deck-58693573": {
+      "playerId": "barff",
+      "mainboard": [
+        {
+          "cardName": "Bojuka Bog",
+          "quantity": 1
+        },
+        {
+          "cardName": "Cast Down",
+          "quantity": 3
+        },
+        {
+          "cardName": "Contaminated Aquifer",
+          "quantity": 4
+        },
+        {
+          "cardName": "Faerie Seer",
+          "quantity": 3
+        },
+        {
+          "cardName": "Seething Landscape",
+          "quantity": 1
+        },
+        {
+          "cardName": "Ninja of the Deep Hours",
+          "quantity": 2
+        },
+        {
+          "cardName": "Snuff Out",
+          "quantity": 4
+        },
+        {
+          "cardName": "Dispel",
+          "quantity": 2
+        },
+        {
+          "cardName": "Thorn of the Black Rose",
+          "quantity": 2
+        },
+        {
+          "cardName": "Lórien Revealed",
+          "quantity": 4
+        },
+        {
+          "cardName": "Arms of Hadar",
+          "quantity": 1
+        },
+        {
+          "cardName": "Island",
+          "quantity": 10
+        },
+        {
+          "cardName": "Plunder the Trollshaws",
+          "quantity": 1
+        },
+        {
+          "cardName": "Swamp",
+          "quantity": 1
+        },
+        {
+          "cardName": "Spellstutter Sprite",
+          "quantity": 3
+        },
+        {
+          "cardName": "Baleful Strix",
+          "quantity": 4
+        },
+        {
+          "cardName": "Brainstorm",
+          "quantity": 4
+        },
+        {
+          "cardName": "Augur of Bolas",
+          "quantity": 3
+        },
+        {
+          "cardName": "Mukotai Ambusher",
+          "quantity": 1
+        },
+        {
+          "cardName": "Extract a Confession",
+          "quantity": 1
+        },
+        {
+          "cardName": "Counterspell",
+          "quantity": 4
+        },
+        {
+          "cardName": "Dimir Aqueduct",
+          "quantity": 1
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Arms of Hadar",
+          "quantity": 1
+        },
+        {
+          "cardName": "Blue Elemental Blast",
+          "quantity": 4
+        },
+        {
+          "cardName": "Hydroblast",
+          "quantity": 2
+        },
+        {
+          "cardName": "Annul",
+          "quantity": 4
+        },
+        {
+          "cardName": "Relic of Progenitus",
+          "quantity": 2
+        },
+        {
+          "cardName": "Campfire",
+          "quantity": 1
+        },
+        {
+          "cardName": "Okiba-Gang Shinobi",
+          "quantity": 1
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "videre-deck-58693574": {
+      "playerId": "Heisen01",
+      "mainboard": [
+        {
+          "cardName": "Island",
+          "quantity": 6
+        },
+        {
+          "cardName": "Tangled Islet",
+          "quantity": 1
+        },
+        {
+          "cardName": "Dimir Aqueduct",
+          "quantity": 2
+        },
+        {
+          "cardName": "Stream of Thought",
+          "quantity": 2
+        },
+        {
+          "cardName": "Growth Spiral",
+          "quantity": 4
+        },
+        {
+          "cardName": "Weather the Storm",
+          "quantity": 4
+        },
+        {
+          "cardName": "Tangle",
+          "quantity": 4
+        },
+        {
+          "cardName": "Forest",
+          "quantity": 2
+        },
+        {
+          "cardName": "Arcane Denial",
+          "quantity": 3
+        },
+        {
+          "cardName": "Desert",
+          "quantity": 3
+        },
+        {
+          "cardName": "Simic Growth Chamber",
+          "quantity": 4
+        },
+        {
+          "cardName": "Bojuka Bog",
+          "quantity": 1
+        },
+        {
+          "cardName": "Behold the Multiverse",
+          "quantity": 4
+        },
+        {
+          "cardName": "Embrace the Paradox",
+          "quantity": 3
+        },
+        {
+          "cardName": "Moment's Peace",
+          "quantity": 4
+        },
+        {
+          "cardName": "Plunder the Trollshaws",
+          "quantity": 3
+        },
+        {
+          "cardName": "Lórien Revealed",
+          "quantity": 4
+        },
+        {
+          "cardName": "Bojuka Bog",
+          "quantity": 2
+        },
+        {
+          "cardName": "Meditation Pools",
+          "quantity": 2
+        },
+        {
+          "cardName": "Fog",
+          "quantity": 1
+        },
+        {
+          "cardName": "Heritage Reclamation",
+          "quantity": 1
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Dispel",
+          "quantity": 2
+        },
+        {
+          "cardName": "Hydroblast",
+          "quantity": 4
+        },
+        {
+          "cardName": "Faerie Macabre",
+          "quantity": 3
+        },
+        {
+          "cardName": "Blue Elemental Blast",
+          "quantity": 4
+        },
+        {
+          "cardName": "Stream of Thought",
+          "quantity": 1
+        },
+        {
+          "cardName": "Heritage Reclamation",
+          "quantity": 1
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "videre-deck-58693576": {
+      "playerId": "discoverN",
+      "mainboard": [
+        {
+          "cardName": "Mental Note",
+          "quantity": 4
+        },
+        {
+          "cardName": "Counterspell",
+          "quantity": 4
+        },
+        {
+          "cardName": "Tolarian Terror",
+          "quantity": 4
+        },
+        {
+          "cardName": "Brainstorm",
+          "quantity": 4
+        },
+        {
+          "cardName": "Lórien Revealed",
+          "quantity": 4
+        },
+        {
+          "cardName": "Island",
+          "quantity": 16
+        },
+        {
+          "cardName": "Cryptic Serpent",
+          "quantity": 4
+        },
+        {
+          "cardName": "Deem Inferior",
+          "quantity": 2
+        },
+        {
+          "cardName": "Ponder",
+          "quantity": 3
+        },
+        {
+          "cardName": "Dispel",
+          "quantity": 3
+        },
+        {
+          "cardName": "Delver of Secrets",
+          "quantity": 4
+        },
+        {
+          "cardName": "Sleep of the Dead",
+          "quantity": 2
+        },
+        {
+          "cardName": "Deep Analysis",
+          "quantity": 1
+        },
+        {
+          "cardName": "Thought Scour",
+          "quantity": 4
+        },
+        {
+          "cardName": "Murmuring Mystic",
+          "quantity": 1
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Hydroblast",
+          "quantity": 4
+        },
+        {
+          "cardName": "Annul",
+          "quantity": 4
+        },
+        {
+          "cardName": "Blue Elemental Blast",
+          "quantity": 4
+        },
+        {
+          "cardName": "Gut Shot",
+          "quantity": 2
+        },
+        {
+          "cardName": "Steel Sabotage",
+          "quantity": 1
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "videre-deck-58693580": {
+      "playerId": "yahakara",
+      "mainboard": [
+        {
+          "cardName": "Grab the Prize",
+          "quantity": 4
+        },
+        {
+          "cardName": "Sneaky Snacker",
+          "quantity": 4
+        },
+        {
+          "cardName": "Highway Robbery",
+          "quantity": 4
+        },
+        {
+          "cardName": "Voldaren Epicure",
+          "quantity": 4
+        },
+        {
+          "cardName": "Fiery Temper",
+          "quantity": 4
+        },
+        {
+          "cardName": "Fireblast",
+          "quantity": 3
+        },
+        {
+          "cardName": "Vision of Love",
+          "quantity": 1
+        },
+        {
+          "cardName": "Faithless Looting",
+          "quantity": 4
+        },
+        {
+          "cardName": "Lightning Bolt",
+          "quantity": 4
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 18
+        },
+        {
+          "cardName": "Guttersnipe",
+          "quantity": 3
+        },
+        {
+          "cardName": "Lava Dart",
+          "quantity": 4
+        },
+        {
+          "cardName": "Clockwork Percussionist",
+          "quantity": 3
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Relic of Progenitus",
+          "quantity": 3
+        },
+        {
+          "cardName": "Red Elemental Blast",
+          "quantity": 4
+        },
+        {
+          "cardName": "Smash to Smithereens",
+          "quantity": 3
+        },
+        {
+          "cardName": "Smash to Smithereens",
+          "quantity": 1
+        },
+        {
+          "cardName": "Pyroblast",
+          "quantity": 4
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "videre-deck-58693581": {
+      "playerId": "Mirozel1",
+      "mainboard": [
+        {
+          "cardName": "Sneaky Snacker",
+          "quantity": 4
+        },
+        {
+          "cardName": "Highway Robbery",
+          "quantity": 4
+        },
+        {
+          "cardName": "Fireblast",
+          "quantity": 2
+        },
+        {
+          "cardName": "Grab the Prize",
+          "quantity": 2
+        },
+        {
+          "cardName": "Mountain",
+          "quantity": 19
+        },
+        {
+          "cardName": "Lightning Bolt",
+          "quantity": 4
+        },
+        {
+          "cardName": "Faithless Looting",
+          "quantity": 4
+        },
+        {
+          "cardName": "Guttersnipe",
+          "quantity": 4
+        },
+        {
+          "cardName": "Fiery Temper",
+          "quantity": 1
+        },
+        {
+          "cardName": "Lava Dart",
+          "quantity": 4
+        },
+        {
+          "cardName": "Searing Blaze",
+          "quantity": 3
+        },
+        {
+          "cardName": "Kiln Fiend",
+          "quantity": 4
+        },
+        {
+          "cardName": "Witch's Mark",
+          "quantity": 2
+        },
+        {
+          "cardName": "Twinned Vision",
+          "quantity": 1
+        },
+        {
+          "cardName": "Underworld Rage-Hound",
+          "quantity": 1
+        },
+        {
+          "cardName": "Vision of Love",
+          "quantity": 1
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Twinned Vision",
+          "quantity": 1
+        },
+        {
+          "cardName": "Smash to Smithereens",
+          "quantity": 4
+        },
+        {
+          "cardName": "End the Festivities",
+          "quantity": 2
+        },
+        {
+          "cardName": "Red Elemental Blast",
+          "quantity": 4
+        },
+        {
+          "cardName": "Martyr of Ashes",
+          "quantity": 2
+        },
+        {
+          "cardName": "Underworld Rage-Hound",
+          "quantity": 2
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "videre-deck-58693582": {
+      "playerId": "YSZzz",
+      "mainboard": [
+        {
+          "cardName": "Arms of Hadar",
+          "quantity": 1
+        },
+        {
+          "cardName": "Brainstorm",
+          "quantity": 4
+        },
+        {
+          "cardName": "Cast Down",
+          "quantity": 3
+        },
+        {
+          "cardName": "Bojuka Bog",
+          "quantity": 1
+        },
+        {
+          "cardName": "Snuff Out",
+          "quantity": 4
+        },
+        {
+          "cardName": "Lórien Revealed",
+          "quantity": 4
+        },
+        {
+          "cardName": "Contaminated Aquifer",
+          "quantity": 4
+        },
+        {
+          "cardName": "Augur of Bolas",
+          "quantity": 3
+        },
+        {
+          "cardName": "Dimir Aqueduct",
+          "quantity": 1
+        },
+        {
+          "cardName": "Dispel",
+          "quantity": 2
+        },
+        {
+          "cardName": "Extract a Confession",
+          "quantity": 1
+        },
+        {
+          "cardName": "Faerie Seer",
+          "quantity": 3
+        },
+        {
+          "cardName": "Island",
+          "quantity": 10
+        },
+        {
+          "cardName": "Ninja of the Deep Hours",
+          "quantity": 2
+        },
+        {
+          "cardName": "Mukotai Ambusher",
+          "quantity": 1
+        },
+        {
+          "cardName": "Thorn of the Black Rose",
+          "quantity": 2
+        },
+        {
+          "cardName": "Plunder the Trollshaws",
+          "quantity": 1
+        },
+        {
+          "cardName": "Seething Landscape",
+          "quantity": 1
+        },
+        {
+          "cardName": "Swamp",
+          "quantity": 1
+        },
+        {
+          "cardName": "Counterspell",
+          "quantity": 4
+        },
+        {
+          "cardName": "Spellstutter Sprite",
+          "quantity": 3
+        },
+        {
+          "cardName": "Baleful Strix",
+          "quantity": 4
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Annul",
+          "quantity": 3
+        },
+        {
+          "cardName": "Arms of Hadar",
+          "quantity": 1
+        },
+        {
+          "cardName": "Relic of Progenitus",
+          "quantity": 2
+        },
+        {
+          "cardName": "Campfire",
+          "quantity": 1
+        },
+        {
+          "cardName": "Hydroblast",
+          "quantity": 2
+        },
+        {
+          "cardName": "Okiba-Gang Shinobi",
+          "quantity": 1
+        },
+        {
+          "cardName": "Annul",
+          "quantity": 1
+        },
+        {
+          "cardName": "Blue Elemental Blast",
+          "quantity": 4
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "videre-deck-58693584": {
+      "playerId": "Bolllll",
+      "mainboard": [
+        {
+          "cardName": "Snap",
+          "quantity": 4
+        },
+        {
+          "cardName": "Snow-Covered Plains",
+          "quantity": 2
+        },
+        {
+          "cardName": "Contaminated Landscape",
+          "quantity": 3
+        },
+        {
+          "cardName": "Ephemerate",
+          "quantity": 3
+        },
+        {
+          "cardName": "Glacial Floodplain",
+          "quantity": 1
+        },
+        {
+          "cardName": "Glorious Gale",
+          "quantity": 2
+        },
+        {
+          "cardName": "God-Pharaoh's Faithful",
+          "quantity": 4
+        },
+        {
+          "cardName": "Stonehorn Dignitary",
+          "quantity": 1
+        },
+        {
+          "cardName": "Snow-Covered Island",
+          "quantity": 8
+        },
+        {
+          "cardName": "Murmuring Mystic",
+          "quantity": 2
+        },
+        {
+          "cardName": "Preordain",
+          "quantity": 4
+        },
+        {
+          "cardName": "Mortuary Mire",
+          "quantity": 1
+        },
+        {
+          "cardName": "Plunder the Trollshaws",
+          "quantity": 3
+        },
+        {
+          "cardName": "Negate",
+          "quantity": 3
+        },
+        {
+          "cardName": "Mulldrifter",
+          "quantity": 4
+        },
+        {
+          "cardName": "Lórien Revealed",
+          "quantity": 4
+        },
+        {
+          "cardName": "Azorius Chancery",
+          "quantity": 4
+        },
+        {
+          "cardName": "Sunscape Familiar",
+          "quantity": 4
+        },
+        {
+          "cardName": "Archaeomancer",
+          "quantity": 1
+        },
+        {
+          "cardName": "Archaeomancer",
+          "quantity": 2
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Destroy Evil",
+          "quantity": 2
+        },
+        {
+          "cardName": "Envelop",
+          "quantity": 1
+        },
+        {
+          "cardName": "Last Breath",
+          "quantity": 2
+        },
+        {
+          "cardName": "Stonehorn Dignitary",
+          "quantity": 2
+        },
+        {
+          "cardName": "Blue Elemental Blast",
+          "quantity": 2
+        },
+        {
+          "cardName": "Thraben Charm",
+          "quantity": 2
+        },
+        {
+          "cardName": "Hydroblast",
+          "quantity": 4
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "videre-deck-58693585": {
+      "playerId": "DrPP",
+      "mainboard": [
+        {
+          "cardName": "Island",
+          "quantity": 1
+        },
+        {
+          "cardName": "Island",
+          "quantity": 1
+        },
+        {
+          "cardName": "Cryptic Serpent",
+          "quantity": 4
+        },
+        {
+          "cardName": "Deem Inferior",
+          "quantity": 2
+        },
+        {
+          "cardName": "Thought Scour",
+          "quantity": 4
+        },
+        {
+          "cardName": "Force Spike",
+          "quantity": 2
+        },
+        {
+          "cardName": "Dispel",
+          "quantity": 2
+        },
+        {
+          "cardName": "Delver of Secrets",
+          "quantity": 4
+        },
+        {
+          "cardName": "Island",
+          "quantity": 6
+        },
+        {
+          "cardName": "Island",
+          "quantity": 4
+        },
+        {
+          "cardName": "Mental Note",
+          "quantity": 4
+        },
+        {
+          "cardName": "Counterspell",
+          "quantity": 4
+        },
+        {
+          "cardName": "Sleep of the Dead",
+          "quantity": 2
+        },
+        {
+          "cardName": "Brainstorm",
+          "quantity": 4
+        },
+        {
+          "cardName": "Deep Analysis",
+          "quantity": 1
+        },
+        {
+          "cardName": "Tolarian Terror",
+          "quantity": 4
+        },
+        {
+          "cardName": "Island",
+          "quantity": 1
+        },
+        {
+          "cardName": "Island",
+          "quantity": 1
+        },
+        {
+          "cardName": "Island",
+          "quantity": 1
+        },
+        {
+          "cardName": "Snow-Covered Island",
+          "quantity": 1
+        },
+        {
+          "cardName": "Lórien Revealed",
+          "quantity": 4
+        },
+        {
+          "cardName": "Ponder",
+          "quantity": 2
+        },
+        {
+          "cardName": "Spell Pierce",
+          "quantity": 1
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Steel Sabotage",
+          "quantity": 2
+        },
+        {
+          "cardName": "Blue Elemental Blast",
+          "quantity": 2
+        },
+        {
+          "cardName": "Gut Shot",
+          "quantity": 4
+        },
+        {
+          "cardName": "Hydroblast",
+          "quantity": 2
+        },
+        {
+          "cardName": "Murmuring Mystic",
+          "quantity": 2
+        },
+        {
+          "cardName": "Annul",
+          "quantity": 1
+        },
+        {
+          "cardName": "Hydroblast",
+          "quantity": 2
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    },
+    "videre-deck-58693586": {
+      "playerId": "therock988",
+      "mainboard": [
+        {
+          "cardName": "Barrels of Blasting Jelly",
+          "quantity": 4
+        },
+        {
+          "cardName": "Bojuka Bog",
+          "quantity": 1
+        },
+        {
+          "cardName": "Crop Rotation",
+          "quantity": 3
+        },
+        {
+          "cardName": "Bramble Wurm",
+          "quantity": 4
+        },
+        {
+          "cardName": "Conduit Pylons",
+          "quantity": 2
+        },
+        {
+          "cardName": "Forest",
+          "quantity": 2
+        },
+        {
+          "cardName": "Urza's Power Plant",
+          "quantity": 4
+        },
+        {
+          "cardName": "Plunder the Trollshaws",
+          "quantity": 4
+        },
+        {
+          "cardName": "Giant's Boulder",
+          "quantity": 4
+        },
+        {
+          "cardName": "Malevolent Rumble",
+          "quantity": 4
+        },
+        {
+          "cardName": "Nyxborn Hydra",
+          "quantity": 3
+        },
+        {
+          "cardName": "Urza's Mine",
+          "quantity": 4
+        },
+        {
+          "cardName": "Writhing Chrysalis",
+          "quantity": 4
+        },
+        {
+          "cardName": "Urza's Tower",
+          "quantity": 4
+        },
+        {
+          "cardName": "Expedition Map",
+          "quantity": 4
+        },
+        {
+          "cardName": "Bonder's Ornament",
+          "quantity": 4
+        },
+        {
+          "cardName": "Slippery Karst",
+          "quantity": 1
+        },
+        {
+          "cardName": "Pulse of Murasa",
+          "quantity": 2
+        },
+        {
+          "cardName": "Generous Ent",
+          "quantity": 2
+        }
+      ],
+      "sideboard": [
+        {
+          "cardName": "Vandalblast",
+          "quantity": 3
+        },
+        {
+          "cardName": "Blue Elemental Blast",
+          "quantity": 1
+        },
+        {
+          "cardName": "Bojuka Bog",
+          "quantity": 1
+        },
+        {
+          "cardName": "Hydroblast",
+          "quantity": 3
+        },
+        {
+          "cardName": "Pyroblast",
+          "quantity": 2
+        },
+        {
+          "cardName": "Serene Heart",
+          "quantity": 2
+        },
+        {
+          "cardName": "Breath Weapon",
+          "quantity": 2
+        },
+        {
+          "cardName": "Fiery Cannonade",
+          "quantity": 1
+        }
+      ],
+      "commanders": null,
+      "companion": null,
+      "reportedArchetype": null
+    }
+  },
+  "rounds": {
+    "1": {
+      "name": "Round 1",
+      "number": 1,
+      "isPlayoff": false,
+      "matches": [
+        {
+          "player1Id": "Beicodegeia",
+          "player2Id": "_blaze66",
+          "result": "2-1-0",
+          "winnerId": "Beicodegeia"
+        },
+        {
+          "player1Id": "Bolllll",
+          "player2Id": "YSZzz",
+          "result": "2-0-0",
+          "winnerId": "Bolllll"
+        },
+        {
+          "player1Id": "cabrabr12",
+          "player2Id": "boom_bust",
+          "result": "2-0-0",
+          "winnerId": "cabrabr12"
+        },
+        {
+          "player1Id": "discoverN",
+          "player2Id": "Varo",
+          "result": "2-0-0",
+          "winnerId": "discoverN"
+        },
+        {
+          "player1Id": "DJK3V1N",
+          "player2Id": "AlessandroPiraccini",
+          "result": "2-1-0",
+          "winnerId": "DJK3V1N"
+        },
+        {
+          "player1Id": "DrPP",
+          "player2Id": "Syns",
+          "result": "2-1-0",
+          "winnerId": "DrPP"
+        },
+        {
+          "player1Id": "fazparte",
+          "player2Id": "Spec23",
+          "result": "2-0-0",
+          "winnerId": "fazparte"
+        },
+        {
+          "player1Id": "Heisen01",
+          "player2Id": "albertosd87",
+          "result": "2-0-0",
+          "winnerId": "Heisen01"
+        },
+        {
+          "player1Id": "Ixidor29",
+          "player2Id": "boytriton",
+          "result": "2-0-0",
+          "winnerId": "Ixidor29"
+        },
+        {
+          "player1Id": "Kampo",
+          "player2Id": "hyde1234",
+          "result": "2-0-0",
+          "winnerId": "Kampo"
+        },
+        {
+          "player1Id": "LuffyDoChapeuDePalha",
+          "player2Id": "Univerce",
+          "result": "2-1-0",
+          "winnerId": "LuffyDoChapeuDePalha"
+        },
+        {
+          "player1Id": "Luminati",
+          "player2Id": "giggimille",
+          "result": "2-1-0",
+          "winnerId": "Luminati"
+        },
+        {
+          "player1Id": "manohito",
+          "player2Id": "barff",
+          "result": "2-0-0",
+          "winnerId": "manohito"
+        },
+        {
+          "player1Id": "Mirozel1",
+          "player2Id": "yuxiaoyu",
+          "result": "2-0-0",
+          "winnerId": "Mirozel1"
+        },
+        {
+          "player1Id": "MisterTwin",
+          "player2Id": "stu909090",
+          "result": "2-0-0",
+          "winnerId": "MisterTwin"
+        },
+        {
+          "player1Id": "mysteryman21",
+          "player2Id": "CrouchingPig",
+          "result": "2-0-0",
+          "winnerId": "mysteryman21"
+        },
+        {
+          "player1Id": "Niederschatten",
+          "player2Id": "helldude",
+          "result": "2-1-0",
+          "winnerId": "Niederschatten"
+        },
+        {
+          "player1Id": "RitualSinkhole",
+          "player2Id": "Keez",
+          "result": "2-1-0",
+          "winnerId": "RitualSinkhole"
+        },
+        {
+          "player1Id": "Shiib",
+          "player2Id": "asWerty",
+          "result": "2-0-0",
+          "winnerId": "Shiib"
+        },
+        {
+          "player1Id": "SirFailo",
+          "player2Id": "mami",
+          "result": "2-1-0",
+          "winnerId": "SirFailo"
+        },
+        {
+          "player1Id": "therock988",
+          "player2Id": "seasonofmists",
+          "result": "2-1-0",
+          "winnerId": "therock988"
+        },
+        {
+          "player1Id": "yahakara",
+          "player2Id": "FriskiFraska",
+          "result": "2-0-0",
+          "winnerId": "yahakara"
+        }
+      ]
+    },
+    "2": {
+      "name": "Round 2",
+      "number": 2,
+      "isPlayoff": false,
+      "matches": [
+        {
+          "player1Id": "barff",
+          "player2Id": "boytriton",
+          "result": "2-1-0",
+          "winnerId": "barff"
+        },
+        {
+          "player1Id": "Beicodegeia",
+          "player2Id": "Bolllll",
+          "result": "2-1-0",
+          "winnerId": "Beicodegeia"
+        },
+        {
+          "player1Id": "cabrabr12",
+          "player2Id": "Luminati",
+          "result": "2-1-0",
+          "winnerId": "cabrabr12"
+        },
+        {
+          "player1Id": "discoverN",
+          "player2Id": "Heisen01",
+          "result": "2-1-0",
+          "winnerId": "discoverN"
+        },
+        {
+          "player1Id": "FriskiFraska",
+          "player2Id": null,
+          "result": "bye",
+          "winnerId": "FriskiFraska"
+        },
+        {
+          "player1Id": "giggimille",
+          "player2Id": "Keez",
+          "result": "2-0-0",
+          "winnerId": "giggimille"
+        },
+        {
+          "player1Id": "helldude",
+          "player2Id": "Syns",
+          "result": "2-0-0",
+          "winnerId": "helldude"
+        },
+        {
+          "player1Id": "hyde1234",
+          "player2Id": "_blaze66",
+          "result": "2-1-0",
+          "winnerId": "hyde1234"
+        },
+        {
+          "player1Id": "Ixidor29",
+          "player2Id": "SirFailo",
+          "result": "2-0-0",
+          "winnerId": "Ixidor29"
+        },
+        {
+          "player1Id": "mami",
+          "player2Id": "seasonofmists",
+          "result": "2-0-0",
+          "winnerId": "mami"
+        },
+        {
+          "player1Id": "Mirozel1",
+          "player2Id": "DrPP",
+          "result": "2-0-0",
+          "winnerId": "Mirozel1"
+        },
+        {
+          "player1Id": "MisterTwin",
+          "player2Id": "Kampo",
+          "result": "2-1-0",
+          "winnerId": "MisterTwin"
+        },
+        {
+          "player1Id": "Niederschatten",
+          "player2Id": "fazparte",
+          "result": "2-0-0",
+          "winnerId": "Niederschatten"
+        },
+        {
+          "player1Id": "RitualSinkhole",
+          "player2Id": "LuffyDoChapeuDePalha",
+          "result": "2-0-0",
+          "winnerId": "RitualSinkhole"
+        },
+        {
+          "player1Id": "Shiib",
+          "player2Id": "mysteryman21",
+          "result": "2-1-0",
+          "winnerId": "Shiib"
+        },
+        {
+          "player1Id": "Spec23",
+          "player2Id": "Univerce",
+          "result": "2-1-0",
+          "winnerId": "Spec23"
+        },
+        {
+          "player1Id": "stu909090",
+          "player2Id": "CrouchingPig",
+          "result": "2-1-0",
+          "winnerId": "stu909090"
+        },
+        {
+          "player1Id": "therock988",
+          "player2Id": "manohito",
+          "result": "2-0-0",
+          "winnerId": "therock988"
+        },
+        {
+          "player1Id": "Varo",
+          "player2Id": "AlessandroPiraccini",
+          "result": "2-0-0",
+          "winnerId": "Varo"
+        },
+        {
+          "player1Id": "yahakara",
+          "player2Id": "DJK3V1N",
+          "result": "2-0-0",
+          "winnerId": "yahakara"
+        },
+        {
+          "player1Id": "YSZzz",
+          "player2Id": "boom_bust",
+          "result": "2-1-0",
+          "winnerId": "YSZzz"
+        },
+        {
+          "player1Id": "yuxiaoyu",
+          "player2Id": "asWerty",
+          "result": "2-0-0",
+          "winnerId": "yuxiaoyu"
+        }
+      ]
+    },
+    "3": {
+      "name": "Round 3",
+      "number": 3,
+      "isPlayoff": false,
+      "matches": [
+        {
+          "player1Id": "barff",
+          "player2Id": "Kampo",
+          "result": "2-0-0",
+          "winnerId": "barff"
+        },
+        {
+          "player1Id": "_blaze66",
+          "player2Id": "Syns",
+          "result": "2-1-0",
+          "winnerId": "_blaze66"
+        },
+        {
+          "player1Id": "boom_bust",
+          "player2Id": "giggimille",
+          "result": "2-0-0",
+          "winnerId": "boom_bust"
+        },
+        {
+          "player1Id": "boytriton",
+          "player2Id": "Keez",
+          "result": "2-0-0",
+          "winnerId": "boytriton"
+        },
+        {
+          "player1Id": "cabrabr12",
+          "player2Id": "Niederschatten",
+          "result": "2-1-0",
+          "winnerId": "cabrabr12"
+        },
+        {
+          "player1Id": "CrouchingPig",
+          "player2Id": "asWerty",
+          "result": "2-0-0",
+          "winnerId": "CrouchingPig"
+        },
+        {
+          "player1Id": "discoverN",
+          "player2Id": "yahakara",
+          "result": "2-1-0",
+          "winnerId": "discoverN"
+        },
+        {
+          "player1Id": "DrPP",
+          "player2Id": "Spec23",
+          "result": "2-1-0",
+          "winnerId": "DrPP"
+        },
+        {
+          "player1Id": "FriskiFraska",
+          "player2Id": "mysteryman21",
+          "result": "2-1-0",
+          "winnerId": "FriskiFraska"
+        },
+        {
+          "player1Id": "hyde1234",
+          "player2Id": "Heisen01",
+          "result": "2-1-0",
+          "winnerId": "hyde1234"
+        },
+        {
+          "player1Id": "Luminati",
+          "player2Id": "DJK3V1N",
+          "result": "2-1-0",
+          "winnerId": "Luminati"
+        },
+        {
+          "player1Id": "mami",
+          "player2Id": "Varo",
+          "result": "2-1-0",
+          "winnerId": "mami"
+        },
+        {
+          "player1Id": "manohito",
+          "player2Id": "LuffyDoChapeuDePalha",
+          "result": "2-1-0",
+          "winnerId": "manohito"
+        },
+        {
+          "player1Id": "Mirozel1",
+          "player2Id": "RitualSinkhole",
+          "result": "2-0-0",
+          "winnerId": "Mirozel1"
+        },
+        {
+          "player1Id": "MisterTwin",
+          "player2Id": "Beicodegeia",
+          "result": "2-0-0",
+          "winnerId": "MisterTwin"
+        },
+        {
+          "player1Id": "Shiib",
+          "player2Id": "Ixidor29",
+          "result": "2-0-0",
+          "winnerId": "Shiib"
+        },
+        {
+          "player1Id": "stu909090",
+          "player2Id": "helldude",
+          "result": "2-1-0",
+          "winnerId": "stu909090"
+        },
+        {
+          "player1Id": "therock988",
+          "player2Id": "Bolllll",
+          "result": "2-0-0",
+          "winnerId": "therock988"
+        },
+        {
+          "player1Id": "YSZzz",
+          "player2Id": "fazparte",
+          "result": "2-0-0",
+          "winnerId": "YSZzz"
+        },
+        {
+          "player1Id": "yuxiaoyu",
+          "player2Id": "SirFailo",
+          "result": "2-0-0",
+          "winnerId": "yuxiaoyu"
+        }
+      ]
+    },
+    "4": {
+      "name": "Round 4",
+      "number": 4,
+      "isPlayoff": false,
+      "matches": [
+        {
+          "player1Id": "asWerty",
+          "player2Id": "Syns",
+          "result": "2-0-0",
+          "winnerId": "asWerty"
+        },
+        {
+          "player1Id": "Beicodegeia",
+          "player2Id": "Ixidor29",
+          "result": "2-0-0",
+          "winnerId": "Beicodegeia"
+        },
+        {
+          "player1Id": "_blaze66",
+          "player2Id": "DrPP",
+          "result": "2-1-0",
+          "winnerId": "_blaze66"
+        },
+        {
+          "player1Id": "boom_bust",
+          "player2Id": "Heisen01",
+          "result": "2-1-0",
+          "winnerId": "boom_bust"
+        },
+        {
+          "player1Id": "boytriton",
+          "player2Id": "Bolllll",
+          "result": "2-1-0",
+          "winnerId": "boytriton"
+        },
+        {
+          "player1Id": "cabrabr12",
+          "player2Id": "therock988",
+          "result": "2-1-0",
+          "winnerId": "cabrabr12"
+        },
+        {
+          "player1Id": "CrouchingPig",
+          "player2Id": "SirFailo",
+          "result": "2-1-0",
+          "winnerId": "CrouchingPig"
+        },
+        {
+          "player1Id": "discoverN",
+          "player2Id": "Mirozel1",
+          "result": "2-0-0",
+          "winnerId": "discoverN"
+        },
+        {
+          "player1Id": "DJK3V1N",
+          "player2Id": "Varo",
+          "result": "2-0-0",
+          "winnerId": "DJK3V1N"
+        },
+        {
+          "player1Id": "FriskiFraska",
+          "player2Id": "Niederschatten",
+          "result": "2-0-0",
+          "winnerId": "FriskiFraska"
+        },
+        {
+          "player1Id": "helldude",
+          "player2Id": "fazparte",
+          "result": "2-0-0",
+          "winnerId": "helldude"
+        },
+        {
+          "player1Id": "Kampo",
+          "player2Id": "giggimille",
+          "result": "2-0-0",
+          "winnerId": "Kampo"
+        },
+        {
+          "player1Id": "Luminati",
+          "player2Id": "YSZzz",
+          "result": "2-1-0",
+          "winnerId": "Luminati"
+        },
+        {
+          "player1Id": "mami",
+          "player2Id": "barff",
+          "result": "2-1-0",
+          "winnerId": "mami"
+        },
+        {
+          "player1Id": "manohito",
+          "player2Id": "stu909090",
+          "result": "2-1-0",
+          "winnerId": "manohito"
+        },
+        {
+          "player1Id": "MisterTwin",
+          "player2Id": "Shiib",
+          "result": "2-0-0",
+          "winnerId": "MisterTwin"
+        },
+        {
+          "player1Id": "Spec23",
+          "player2Id": "LuffyDoChapeuDePalha",
+          "result": "2-0-0",
+          "winnerId": "Spec23"
+        },
+        {
+          "player1Id": "yahakara",
+          "player2Id": "hyde1234",
+          "result": "2-0-0",
+          "winnerId": "yahakara"
+        },
+        {
+          "player1Id": "yuxiaoyu",
+          "player2Id": "RitualSinkhole",
+          "result": "2-1-0",
+          "winnerId": "yuxiaoyu"
+        }
+      ]
+    },
+    "5": {
+      "name": "Round 5",
+      "number": 5,
+      "isPlayoff": false,
+      "matches": [
+        {
+          "player1Id": "asWerty",
+          "player2Id": "SirFailo",
+          "result": "2-0-0",
+          "winnerId": "asWerty"
+        },
+        {
+          "player1Id": "barff",
+          "player2Id": "helldude",
+          "result": "2-1-0",
+          "winnerId": "barff"
+        },
+        {
+          "player1Id": "Beicodegeia",
+          "player2Id": "stu909090",
+          "result": "2-0-0",
+          "winnerId": "Beicodegeia"
+        },
+        {
+          "player1Id": "_blaze66",
+          "player2Id": "Ixidor29",
+          "result": "2-0-0",
+          "winnerId": "_blaze66"
+        },
+        {
+          "player1Id": "Bolllll",
+          "player2Id": "LuffyDoChapeuDePalha",
+          "result": "1-0-0",
+          "winnerId": "Bolllll"
+        },
+        {
+          "player1Id": "boytriton",
+          "player2Id": "boom_bust",
+          "result": "2-1-0",
+          "winnerId": "boytriton"
+        },
+        {
+          "player1Id": "discoverN",
+          "player2Id": "MisterTwin",
+          "result": "2-1-0",
+          "winnerId": "discoverN"
+        },
+        {
+          "player1Id": "DrPP",
+          "player2Id": "DJK3V1N",
+          "result": "2-1-0",
+          "winnerId": "DrPP"
+        },
+        {
+          "player1Id": "fazparte",
+          "player2Id": "Heisen01",
+          "result": "2-0-0",
+          "winnerId": "fazparte"
+        },
+        {
+          "player1Id": "Luminati",
+          "player2Id": "mami",
+          "result": "2-1-0",
+          "winnerId": "Luminati"
+        },
+        {
+          "player1Id": "manohito",
+          "player2Id": "Shiib",
+          "result": "2-1-0",
+          "winnerId": "manohito"
+        },
+        {
+          "player1Id": "Mirozel1",
+          "player2Id": "cabrabr12",
+          "result": "2-1-0",
+          "winnerId": "Mirozel1"
+        },
+        {
+          "player1Id": "Niederschatten",
+          "player2Id": "hyde1234",
+          "result": "2-1-0",
+          "winnerId": "Niederschatten"
+        },
+        {
+          "player1Id": "Spec23",
+          "player2Id": "Kampo",
+          "result": "2-0-0",
+          "winnerId": "Spec23"
+        },
+        {
+          "player1Id": "therock988",
+          "player2Id": "FriskiFraska",
+          "result": "2-1-0",
+          "winnerId": "therock988"
+        },
+        {
+          "player1Id": "yahakara",
+          "player2Id": "yuxiaoyu",
+          "result": "2-0-0",
+          "winnerId": "yahakara"
+        },
+        {
+          "player1Id": "YSZzz",
+          "player2Id": "CrouchingPig",
+          "result": "2-1-0",
+          "winnerId": "YSZzz"
+        }
+      ]
+    },
+    "6": {
+      "name": "Round 6",
+      "number": 6,
+      "isPlayoff": false,
+      "matches": [
+        {
+          "player1Id": "asWerty",
+          "player2Id": "fazparte",
+          "result": "2-1-0",
+          "winnerId": "asWerty"
+        },
+        {
+          "player1Id": "Beicodegeia",
+          "player2Id": "therock988",
+          "result": "2-1-0",
+          "winnerId": "Beicodegeia"
+        },
+        {
+          "player1Id": "boom_bust",
+          "player2Id": "DJK3V1N",
+          "result": "2-0-0",
+          "winnerId": "boom_bust"
+        },
+        {
+          "player1Id": "CrouchingPig",
+          "player2Id": "Ixidor29",
+          "result": "2-1-0",
+          "winnerId": "CrouchingPig"
+        },
+        {
+          "player1Id": "DrPP",
+          "player2Id": "barff",
+          "result": "2-0-0",
+          "winnerId": "DrPP"
+        },
+        {
+          "player1Id": "Heisen01",
+          "player2Id": "SirFailo",
+          "result": "2-0-0",
+          "winnerId": "Heisen01"
+        },
+        {
+          "player1Id": "hyde1234",
+          "player2Id": "helldude",
+          "result": "2-0-0",
+          "winnerId": "hyde1234"
+        },
+        {
+          "player1Id": "Kampo",
+          "player2Id": "Bolllll",
+          "result": "2-0-0",
+          "winnerId": "Kampo"
+        },
+        {
+          "player1Id": "Luminati",
+          "player2Id": "discoverN",
+          "result": "2-0-0",
+          "winnerId": "Luminati"
+        },
+        {
+          "player1Id": "mami",
+          "player2Id": "Mirozel1",
+          "result": "2-1-0",
+          "winnerId": "mami"
+        },
+        {
+          "player1Id": "manohito",
+          "player2Id": "yahakara",
+          "result": "2-0-0",
+          "winnerId": "manohito"
+        },
+        {
+          "player1Id": "MisterTwin",
+          "player2Id": "cabrabr12",
+          "result": "2-0-0",
+          "winnerId": "MisterTwin"
+        },
+        {
+          "player1Id": "Niederschatten",
+          "player2Id": "YSZzz",
+          "result": "2-1-0",
+          "winnerId": "Niederschatten"
+        },
+        {
+          "player1Id": "Shiib",
+          "player2Id": "boytriton",
+          "result": "2-0-0",
+          "winnerId": "Shiib"
+        },
+        {
+          "player1Id": "Spec23",
+          "player2Id": "FriskiFraska",
+          "result": "2-0-0",
+          "winnerId": "Spec23"
+        },
+        {
+          "player1Id": "yuxiaoyu",
+          "player2Id": "_blaze66",
+          "result": "2-1-0",
+          "winnerId": "yuxiaoyu"
+        }
+      ]
+    },
+    "playoffs-qf": {
+      "name": "Quarterfinals",
+      "number": 900,
+      "isPlayoff": true,
+      "matches": [
+        {
+          "player1Id": "Beicodegeia",
+          "player2Id": "manohito",
+          "result": "2-1-0",
+          "winnerId": "Beicodegeia"
+        },
+        {
+          "player1Id": "cabrabr12",
+          "player2Id": "Luminati",
+          "result": "2-0-0",
+          "winnerId": "cabrabr12"
+        },
+        {
+          "player1Id": "discoverN",
+          "player2Id": "Mirozel1",
+          "result": "2-0-0",
+          "winnerId": "discoverN"
+        },
+        {
+          "player1Id": "MisterTwin",
+          "player2Id": "yahakara",
+          "result": "2-0-0",
+          "winnerId": "MisterTwin"
+        }
+      ]
+    },
+    "playoffs-sf": {
+      "name": "Semifinals",
+      "number": 950,
+      "isPlayoff": true,
+      "matches": [
+        {
+          "player1Id": "cabrabr12",
+          "player2Id": "discoverN",
+          "result": "2-0-0",
+          "winnerId": "cabrabr12"
+        },
+        {
+          "player1Id": "MisterTwin",
+          "player2Id": "Beicodegeia",
+          "result": "2-0-0",
+          "winnerId": "MisterTwin"
+        }
+      ]
+    },
+    "playoffs-f": {
+      "name": "Finals",
+      "number": 999,
+      "isPlayoff": true,
+      "matches": [
+        {
+          "player1Id": "MisterTwin",
+          "player2Id": "cabrabr12",
+          "result": "2-0-0",
+          "winnerId": "MisterTwin"
+        }
+      ]
+    }
+  }
+}
