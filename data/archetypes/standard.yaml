@@ -1,5 +1,5 @@
 format: Standard
-date: "2026-08-21"
+date: "2026-10-25"
 archetypes:
   - name: Orzhov Lifegain
     signatureCards:
@@ -182,15 +182,17 @@ archetypes:
 
   - name: Dimir Reanimator
     signatureCards:
-      - name: Deceit
+      - name: "Deceit"
         minCopies: 3
-      - name: Superior Spider-Man
+      - name: "Superior Spider-Man"
         minCopies: 3
-      - name: Requiting Hex
+      - name: "Requiting Hex"
         minCopies: 2
-      - name: Doomsday Excruciator
+      - name: "Doomsday Excruciator"
         exactCopies: 0
-      - name: "Bringer of the Last Gift"
+      - name: "Overgrown Tomb"
+        exactCopies: 0
+      - name: "Uldaros Theorix"
         exactCopies: 0
       - name: "Breeding Pool"
         exactCopies: 0
@@ -300,24 +302,24 @@ archetypes:
 
   - name: Mono-Red Aggro
     signatureCards:
-      - name: Hired Claw
+      - name: "Hired Claw"
         minCopies: 3
-      - name: Burst Lightning
+      - name: "Burst Lightning"
         minCopies: 3
-      - name: Colorstorm Stallion
+      - name: "Colorstorm Stallion"
+        exactCopies: 0
+      - name: "Blood Crypt"
         exactCopies: 0
 
   - name: Rakdos Discard
     signatureCards:
-      - name: Moonshadow
+      - name: "Moonshadow"
         minCopies: 3
-      - name: Marauding Mako
+      - name: "Marauding Mako"
         minCopies: 3
-      - name: Bloodghast
-        minCopies: 1
-      - name: Quantum Riddler
+      - name: "Quantum Riddler"
         exactCopies: 0
-      - name: Hardened Academic
+      - name: "Hardened Academic"
         exactCopies: 0
 
   - name: Mardu Discard
@@ -371,8 +373,6 @@ archetypes:
 
   - name: Azorius Control
     signatureCards:
-      - name: No More Lies
-        minCopies: 3
       - name: "Consult the Star Charts"
         minCopies: 3
       - name: "Hallowed Fountain"
@@ -427,12 +427,18 @@ archetypes:
 
   - name: Jeskai Artifacts
     signatureCards:
+      - name: "Weapons Manufacturing"
+        minCopies: 3
+      - name: "Legion Extruder"
+        minCopies: 3
+      - name: "Aang's Iceberg"
+        minCopies: 3
+      - name: "Sacred Foundry"
+        minCopies: 1
+      - name: "Hallowed Fountain"
+        minCopies: 1
       - name: "Simulacrum Synthesizer"
-        minCopies: 3
-      - name: "Repurposing Bay"
-        minCopies: 3
-      - name: "United Battlefront"
-        minCopies: 3
+        exactCopies: 0
 
   - name: 4-Color Allies
     signatureCards:
@@ -451,3 +457,106 @@ archetypes:
         minCopies: 3
       - name: "Swamp"
         minCopies: 8
+
+  - name: Azorius Artifacts
+    signatureCards:
+      - name: "Simulacrum Synthesizer"
+        minCopies: 3
+      - name: "Repurposing Bay"
+        minCopies: 2
+      - name: "Perilous Snare"
+        minCopies: 3
+      - name: "Hallowed Fountain"
+        minCopies: 3
+
+  - name: Dimir Uldaros
+    signatureCards:
+      - name: "Uldaros Theorix"
+        minCopies: 2
+      - name: "Superior Spider-Man"
+        minCopies: 3
+      - name: "Deceit"
+        minCopies: 2
+      - name: "Watery Grave"
+        minCopies: 3
+      - name: "Godless Shrine"
+        exactCopies: 0
+      - name: "Doomsday Excruciator"
+        exactCopies: 0
+      - name: "Overgrown Tomb"
+        exactCopies: 0
+      - name: "Breeding Pool"
+        exactCopies: 0
+      - name: "Blood Crypt"
+        exactCopies: 0
+
+  - name: Esper Uldaros
+    signatureCards:
+      - name: "Uldaros Theorix"
+        minCopies: 2
+      - name: "Cloak and Dagger, Entwined"
+        minCopies: 2
+      - name: "Superior Spider-Man"
+        minCopies: 3
+      - name: "Deceit"
+        minCopies: 2
+      - name: "Godless Shrine"
+        minCopies: 1
+      - name: "Doomsday Excruciator"
+        exactCopies: 0
+
+  - name: Grixis Reanimator
+    signatureCards:
+      - name: "Rewrite Regrets"
+        minCopies: 3
+      - name: "Superior Spider-Man"
+        minCopies: 3
+      - name: "Deceit"
+        minCopies: 3
+      - name: "Blood Crypt"
+        minCopies: 1
+      - name: "Watery Grave"
+        minCopies: 2
+
+  - name: Jeskai Superfriends
+    signatureCards:
+      - name: "Chandra, Chill of Compliance"
+        minCopies: 2
+      - name: "Ajani Unrelenting"
+        minCopies: 2
+      - name: "The Theorist, Jace Beleren"
+        minCopies: 2
+      - name: "Sacred Foundry"
+        minCopies: 1
+      - name: "Hallowed Fountain"
+        minCopies: 1
+  # Red lizard aggro splashing black: Iridescent Vinelasher and Master of Barbs on the Mono-Red
+  # Aggro core of Hired Claw and Burst Lightning. Mono-Red Aggro has Blood Crypt at zero.
+  - name: Rakdos Lizards
+    signatureCards:
+      - name: "Iridescent Vinelasher"
+        minCopies: 3
+      - name: "Master of Barbs"
+        minCopies: 3
+
+  - name: Selesnya Offense
+    signatureCards:
+      - name: "Practiced Offense"
+        minCopies: 3
+      - name: "Leatherhead, Swamp Stalker"
+        minCopies: 1
+      - name: "Temple Garden"
+        minCopies: 3
+      - name: "Hushwood Verge"
+        minCopies: 3
+
+  - name: Simic Landfall
+    signatureCards:
+      - name: "Sazh's Chocobo"
+        minCopies: 3
+      - name: "Earthbender Ascension"
+        minCopies: 3
+      - name: "Icetill Explorer"
+        minCopies: 3
+      - name: "Breeding Pool"
+        minCopies: 3

@@ -1,5 +1,5 @@
 format: Modern
-date: "2026-07-08"
+date: "2026-10-22"
 archetypes:
   # --- Energy family: Mardu (black marker) before Boros; Boros excludes blue/black ---
   - name: Mardu Energy
@@ -152,10 +152,10 @@ archetypes:
       # fail Esper Blink.
       - name: "Psychic Frog"
         exactCopies: 0
-  # Not a blink deck despite the Riddler/Solitude engine: only 46% run Ephemerate
-  # at 3+. Frog, Thoughtseize and Prismatic Ending make it a midrange shell.
-  # The gates below only exist to stop double-matches with Esper Reanimator,
-  # Esper Blink and 5c Omnath Ritual, which share that same engine.
+  # Not a blink deck despite the Riddler/Solitude engine: only 46% run Ephemerate at 3+. Frog,
+  # Thoughtseize and Prismatic Ending make it a midrange shell. The gates below only exist to
+  # stop double-matches with Esper Reanimator, Esper Blink and 5c Omnath Ritual, which share
+  # that same engine.
   - name: Esper Midrange
     signatureCards:
       - name: "Psychic Frog"
@@ -169,6 +169,8 @@ archetypes:
       - name: "Overlord of the Balemurk"
         exactCopies: 0
       - name: "Omnath, Locus of Creation"
+        exactCopies: 0
+      - name: "Persist"
         exactCopies: 0
   - name: Jeskai Blink
     signatureCards:
@@ -235,6 +237,20 @@ archetypes:
         minCopies: 3
       - name: "Goryo's Vengeance"
         minCopies: 3
+  # Second Esper Reanimator build: Persist into Archon of Cruelty on the Esper Midrange shell.
+  # It shares the label with the rule above on purpose. Solitude keeps out Grixis Reanimator,
+  # which also plays Persist and Archon. Overlord of the Balemurk at zero yields to Esper Blink;
+  # Esper Midrange has Persist at zero.
+  - name: Esper Reanimator
+    signatureCards:
+      - name: "Persist"
+        minCopies: 3
+      - name: "Archon of Cruelty"
+        minCopies: 2
+      - name: "Solitude"
+        minCopies: 3
+      - name: "Overlord of the Balemurk"
+        exactCopies: 0
   - name: Golgari Yawgmoth
     signatureCards:
       - name: "Yawgmoth, Thran Physician"
@@ -405,7 +421,8 @@ archetypes:
         minCopies: 3
       - name: "Lightning Bolt"
         minCopies: 4
-  # --- Control pair: partition on Galvanic Discharge (red) ---
+  # Control pair: partition on Galvanic Discharge (red). Omnath at zero yields the Wrenn and Six
+  # builds to 4c Omnath Control.
   - name: Jeskai Control
     signatureCards:
       - name: "Orim's Chant"
@@ -414,6 +431,8 @@ archetypes:
         minCopies: 2
       - name: "Galvanic Discharge"
         minCopies: 2
+      - name: "Omnath, Locus of Creation"
+        exactCopies: 0
   - name: Azorius Control
     signatureCards:
       - name: "Teferi, Time Raveler"
@@ -537,3 +556,27 @@ archetypes:
         minCopies: 3
       - name: "Codex Shredder"
         minCopies: 2
+  # Omnath and Wrenn and Six on top of the Jeskai Control shell. Birthing Ritual at zero leaves
+  # the ritual builds to 5c Omnath Ritual; Jeskai Control has Omnath at zero.
+  - name: 4c Omnath Control
+    signatureCards:
+      - name: "Omnath, Locus of Creation"
+        minCopies: 2
+      - name: "Wrenn and Six"
+        minCopies: 2
+      - name: "Birthing Ritual"
+        exactCopies: 0
+  # The Rakdos HollowOne shell without the discard engine: Nethergoyf and Moonshadow with
+  # Thoughtseize, Dark Matter Manipulator and Troll of Khazad-dum. Hollow One at zero splits it
+  # from Rakdos HollowOne. Blood Crypt keeps out the Dimir Midrange lists that play the same two
+  # creatures.
+  - name: Rakdos Midrange
+    signatureCards:
+      - name: "Nethergoyf"
+        minCopies: 3
+      - name: "Moonshadow"
+        minCopies: 3
+      - name: "Blood Crypt"
+        minCopies: 1
+      - name: "Hollow One"
+        exactCopies: 0
