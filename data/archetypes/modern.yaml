@@ -580,3 +580,47 @@ archetypes:
         minCopies: 1
       - name: "Hollow One"
         exactCopies: 0
+  - name: Dimir Reanimator
+    signatureCards:
+      - name: "Persist"
+        minCopies: 3
+      - name: "Archon of Cruelty"
+        minCopies: 3
+      - name: "Psychic Frog"
+        minCopies: 3
+      - name: "Faithless Looting"
+        exactCopies: 0
+      - name: "Solitude"
+        exactCopies: 0
+      - name: "Eyetwitch"
+        exactCopies: 0
+  - name: Eldrazi Breach
+    signatureCards:
+      - name: "Through the Breach"
+        minCopies: 3
+      - name: "Emrakul, the Aeons Torn"
+        minCopies: 2
+      - name: "Ugin's Labyrinth"
+        minCopies: 3
+      - name: "Primeval Titan"
+        exactCopies: 0
+  - name: Izzet Murktide
+    signatureCards:
+      - name: "Murktide Regent"
+        minCopies: 2
+      - name: "Expressive Iteration"
+        minCopies: 3
+      - name: "Dragon's Rage Channeler"
+        minCopies: 3
+      - name: "Psychic Frog"
+        exactCopies: 0
+  - name: Titan Shift
+    signatureCards:
+      - name: "Valakut, the Molten Pinnacle"
+        minCopies: 2
+      - name: "Hexhaven Invigorator"
+        minCopies: 3
+      - name: "Dryad of the Ilysian Grove"
+        minCopies: 1
+      - name: "Amulet of Vigor"
+        exactCopies: 0

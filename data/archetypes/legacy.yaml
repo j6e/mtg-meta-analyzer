@@ -376,3 +376,23 @@ archetypes:
         minCopies: 3
       - name: "Rite of Flame"
         minCopies: 3
+  - name: Creative Technique
+    signatureCards:
+      - name: "Creative Technique"
+        minCopies: 4
+      - name: "Throes of Chaos"
+        minCopies: 3
+      - name: "Tibalt's Trickery"
+        minCopies: 3
+      - name: "Show and Tell"
+        exactCopies: 0
+  - name: Elves
+    signatureCards:
+      - name: "Wirewood Symbiote"
+        minCopies: 3
+      - name: "Allosaurus Shepherd"
+        minCopies: 3
+      - name: "Formidable Speaker"
+        minCopies: 2
+      - name: "Wight of the Reliquary"
+        exactCopies: 0

@@ -560,3 +560,26 @@ archetypes:
         minCopies: 3
       - name: "Breeding Pool"
         minCopies: 3
+
+  - name: Jund Sacrifice
+    signatureCards:
+      - name: "Biotech Specialist"
+        minCopies: 3
+      - name: "The Sackville-Bagginses"
+        minCopies: 3
+      - name: "Greedy Freebooter"
+        minCopies: 3
+      # Orzhov/Mardu sacrifice shells share Sackville + Freebooter
+      - name: "Lake-town Lookout"
+        exactCopies: 0
+
+  - name: Golgari Midrange
+    signatureCards:
+      - name: "Vraska, the Cutting Glare"
+        minCopies: 3
+      - name: "Simulacrum Shaper"
+        minCopies: 3
+      - name: "Emeritus of Abundance"
+        minCopies: 2
+      - name: "Unholy Annex"
+        exactCopies: 0
