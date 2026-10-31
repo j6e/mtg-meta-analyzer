@@ -26,12 +26,14 @@ import { MtgoClient, MtgoFetchError, type MtgoListingEntry } from "./lib/mtgo-cl
 // via scripts/fetch-videre.ts (full pairings), which videre doesn't track for DC.
 const TARGET_FORMATS = new Set(["Duel Commander"]);
 
-/** Returns true for Challenge 32/64, Showcase Challenge, and Duel Commander Trial events. */
+/** Returns true for Challenge 32/64, Showcase Challenge, and Duel Commander Trial/Challenge events. */
 function isTargetEvent(title: string): boolean {
 	const lower = title.toLowerCase();
 	if (lower.includes("league")) return false;
 	if (lower.includes("preliminary")) return false;
 	if (lower.startsWith("duel commander trial")) return true;
+	// MTGO renamed the weekly DC Trial 16 to "Duel Commander Challenge 16" in Aug 2026.
+	if (lower.startsWith("duel commander challenge")) return true;
 	if (lower.includes("trial")) return false;
 	return (
 		lower.includes("challenge 32") ||
