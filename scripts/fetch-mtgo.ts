@@ -16,7 +16,12 @@ import { parseArgValue } from "./lib/cli-utils";
 import { cleanTournamentName, inferImportance, toFormatSlug } from "./lib/importance";
 import { countMatches, updateFormatIndex } from "./lib/index-utils";
 import { assembleMtgoTournament } from "./lib/mtgo-assembler";
-import { MtgoClient, MtgoFetchError, type MtgoListingEntry } from "./lib/mtgo-client";
+import {
+	INCOMPLETE_PAGE_STATUS,
+	MtgoClient,
+	MtgoFetchError,
+	type MtgoListingEntry,
+} from "./lib/mtgo-client";
 
 // ---------------------------------------------------------------------------
 // Target formats and event type filters
@@ -125,6 +130,13 @@ async function main() {
 		} catch (e) {
 			if (e instanceof MtgoFetchError && e.status === 404) {
 				console.log(`  No listing page for ${label} (404)`);
+			} else if (
+				e instanceof MtgoFetchError &&
+				e.status === INCOMPLETE_PAGE_STATUS &&
+				label === new Date().toISOString().slice(0, 7)
+			) {
+				// Early on the 1st the current month may legitimately list nothing yet.
+				console.warn(`  No events listed yet for ${label}`);
 			} else {
 				throw e;
 			}
@@ -223,6 +235,7 @@ async function main() {
 	// Summary
 	console.log("\n=== Summary ===");
 	console.log(`Fetched: ${fetched}, Skipped: ${skipped}, Failed: ${failed}`);
+	if (failed > 0) process.exit(1);
 }
 
 main().catch((e) => {

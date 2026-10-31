@@ -60,7 +60,7 @@ jobs:
             echo "No new MTGO tournaments found."
             exit 0
           fi
-          COUNT=$(git diff --cached --name-only | grep -v -e 'card-images\.json' -e 'card-images-status\.json' | grep -c '\.json$' || true)
+          COUNT=$(git diff --cached --name-only --diff-filter=A | grep -c 'mtgo-.*\.json$' || true)
           DATE=$(date -u +%Y-%m-%d)
           if [ "$COUNT" -gt 0 ]; then
             MESSAGE="data: fetch $COUNT MTGO tournaments ($DATE)"
