@@ -103,6 +103,49 @@ archetypes:
 		);
 	});
 
+	it("accepts usedInSideboard when it is a boolean", () => {
+		const yaml = `
+archetypes:
+  - name: Test
+    signatureCards:
+      - name: Negate
+        usedInSideboard: true
+`;
+		const result = validateArchetypeYaml(yaml);
+		expect(result.ok).toBe(true);
+	});
+
+	it("rejects non-boolean usedInSideboard values", () => {
+		const yaml = `
+archetypes:
+  - name: Test
+    signatureCards:
+      - name: Negate
+        usedInSideboard: yes
+`;
+		const result = validateArchetypeYaml(yaml);
+		expect(result.ok).toBe(false);
+		expect(result.errors).toContain(
+			'archetypes[0].signatureCards[0]: "usedInSideboard" must be a boolean',
+		);
+	});
+
+	it("rejects cards marked as both commander and sideboard", () => {
+		const yaml = `
+archetypes:
+  - name: Test
+    signatureCards:
+      - name: Aragorn, King of Gondor
+        usedAsCommander: true
+        usedInSideboard: true
+`;
+		const result = validateArchetypeYaml(yaml);
+		expect(result.ok).toBe(false);
+		expect(result.errors).toContain(
+			'archetypes[0].signatureCards[0]: "usedAsCommander" and "usedInSideboard" cannot both be true',
+		);
+	});
+
 	it("warns on missing format and date fields", () => {
 		const yaml = `
 archetypes:
