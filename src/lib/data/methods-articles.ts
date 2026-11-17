@@ -176,7 +176,7 @@ const archetypeClassification: MethodArticle = {
 	<li><code>minCopies: N</code> — the deck must contain &ge; N copies</li>
 	<li><code>exactCopies: N</code> — the deck must contain exactly N copies</li>
 	<li><code>usedAsCommander: true</code> — the card must be in the commander zone</li>
-	<li><code>usedInSideboard: true</code> — the card must be in the sideboard</li>
+	<li><code>usedInSideboard: true</code> — the copy count is checked in the sideboard instead of the mainboard (so <code>exactCopies: 0</code> means absent from the sideboard)</li>
 </ul>
 <p>
 	If multiple archetypes match (e.g. a deck matches both "Energy" and "Boros Energy"),

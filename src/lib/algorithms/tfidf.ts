@@ -6,7 +6,7 @@ import { getFrontFace } from "../utils/card-normalizer";
  * Stores the vocabulary (card name → index) and IDF values.
  */
 export interface TfIdfCorpus {
-	/** Map from card name to vocabulary index */
+	/** Map from term (card name, or `SB:<name>` for sideboard cards) to vocabulary index */
 	vocabulary: Map<string, number>;
 	/** IDF value for each vocabulary index */
 	idf: Float64Array;
