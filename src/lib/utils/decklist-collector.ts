@@ -1,28 +1,46 @@
-import type { DecklistInfo } from "../types/decklist";
-import type { TournamentData } from "../types/tournament";
+import type {
+	DecklistInfo,
+	DecklistPlayer,
+	DecklistTournament,
+} from "../types/decklist";
+import type { PlayerInfo, TournamentData } from "../types/tournament";
 
 export interface EnrichedDecklist {
 	decklist: DecklistInfo;
 	decklistId: string;
-	playerName: string;
-	playerId: string;
-	playerRank: number;
-	tournamentName: string;
-	tournamentId: string;
+	player: DecklistPlayer;
+	tournament: DecklistTournament;
+}
+
+/** A tournament player as decklists show them. */
+export function toDecklistPlayer(id: string, player: PlayerInfo): DecklistPlayer {
+	return { id, name: player.name, rank: player.rank, record: player.matchRecord };
 }
 
 /**
  * Collect all decklists for a given archetype across tournaments,
  * enriched with player and tournament metadata.
+ *
+ * `tournamentNames` maps tournament id → cleaned display name (as shown on the
+ * Tournaments page, see docs/tournament-naming.md); a tournament missing from
+ * it falls back to its raw name.
  */
 export function collectArchetypeDecklists(
 	tournaments: TournamentData[],
 	playerArchetypes: Map<string, string>,
 	archetypeName: string,
+	tournamentNames: Map<string, string>,
 ): EnrichedDecklist[] {
 	const result: EnrichedDecklist[] = [];
 
 	for (const t of tournaments) {
+		const tournament: DecklistTournament = {
+			id: t.meta.id,
+			name: tournamentNames.get(t.meta.id) ?? t.meta.name,
+			date: t.meta.date,
+			url: t.meta.url,
+			playerCount: t.meta.playerCount,
+		};
 		for (const [playerId, player] of Object.entries(t.players)) {
 			if (playerArchetypes.get(`${t.meta.id}:${playerId}`) !== archetypeName) continue;
 			for (const deckId of player.decklistIds) {
@@ -31,11 +49,8 @@ export function collectArchetypeDecklists(
 					result.push({
 						decklist: deck,
 						decklistId: deckId,
-						playerName: player.name,
-						playerId,
-						playerRank: player.rank,
-						tournamentName: t.meta.name,
-						tournamentId: t.meta.id,
+						player: toDecklistPlayer(playerId, player),
+						tournament,
 					});
 				}
 			}
@@ -43,19 +58,6 @@ export function collectArchetypeDecklists(
 	}
 
 	return result;
-}
-
-/**
- * Collect raw DecklistInfo[] for an archetype (no metadata).
- */
-export function collectRawDecklists(
-	tournaments: TournamentData[],
-	playerArchetypes: Map<string, string>,
-	archetypeName: string,
-): DecklistInfo[] {
-	return collectArchetypeDecklists(tournaments, playerArchetypes, archetypeName).map(
-		(e) => e.decklist,
-	);
 }
 
 /**
@@ -68,11 +70,11 @@ export function findBestDecklist(
 	if (enriched.length === 0) return null;
 
 	return enriched.reduce((best, curr) => {
-		if (curr.playerRank < best.playerRank) return curr;
-		if (curr.playerRank > best.playerRank) return best;
+		if (curr.player.rank < best.player.rank) return curr;
+		if (curr.player.rank > best.player.rank) return best;
 		// Same rank — tiebreak by tournament name, then player name
-		const tCmp = curr.tournamentName.localeCompare(best.tournamentName);
+		const tCmp = curr.tournament.name.localeCompare(best.tournament.name);
 		if (tCmp !== 0) return tCmp < 0 ? curr : best;
-		return curr.playerName.localeCompare(best.playerName) < 0 ? curr : best;
+		return curr.player.name.localeCompare(best.player.name) < 0 ? curr : best;
 	});
 }

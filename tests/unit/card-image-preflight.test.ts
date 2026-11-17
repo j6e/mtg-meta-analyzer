@@ -1,12 +1,13 @@
 import { describe, expect, it } from "vitest";
 import {
+	CARD_IMAGE_STATUS_SCHEMA_VERSION,
 	isCardImageIndexCurrent,
 	isValidCardImageStatus,
 	parseDefaultCardsManifest,
 } from "../../scripts/lib/card-image-index";
 
 const status = {
-	schemaVersion: 1,
+	schemaVersion: CARD_IMAGE_STATUS_SCHEMA_VERSION,
 	bulkDataUpdatedAt: "2026-07-13T00:00:00Z",
 	unresolved: ["Unknown Card"],
 };
@@ -90,6 +91,11 @@ describe("card image index preflight", () => {
 		expect(isValidCardImageStatus({ ...status, unresolved: "Unknown Card" })).toBe(
 			false,
 		);
-		expect(isValidCardImageStatus({ ...status, schemaVersion: 2 })).toBe(false);
+		expect(
+			isValidCardImageStatus({
+				...status,
+				schemaVersion: CARD_IMAGE_STATUS_SCHEMA_VERSION + 1,
+			}),
+		).toBe(false);
 	});
 });

@@ -1,5 +1,6 @@
 /**
- * Build data/card-images.json: card name → Scryfall CDN image URLs + artist.
+ * Build data/card-images.json: card name → Scryfall CDN image URLs, artist and
+ * land/creature kind (used to group decklists).
  *
  * Resolves every card name appearing in tournament decklists and archetype
  * signature definitions against Scryfall's default_cards bulk data, so the app
@@ -39,8 +40,13 @@ export interface ScryfallCard {
 	set?: string;
 	collector_number?: string;
 	id?: string;
+	type_line?: string;
 	image_uris?: Record<string, string>;
-	card_faces?: Array<{ image_uris?: Record<string, string>; artist?: string }>;
+	card_faces?: Array<{
+		image_uris?: Record<string, string>;
+		artist?: string;
+		type_line?: string;
+	}>;
 	artist?: string;
 }
 
@@ -202,14 +208,25 @@ async function selectPreferredCardsFromBulk(
 	return { selected, count };
 }
 
+/** Land or creature by the front face's card types (subtypes after "—" ignored). */
+export function cardKind(card: ScryfallCard): CardImageEntry["kind"] {
+	const frontTypeLine = card.card_faces?.[0]?.type_line ?? card.type_line ?? "";
+	const frontTypes = frontTypeLine.split("—")[0];
+	if (/\bLand\b/.test(frontTypes)) return "land";
+	if (/\bCreature\b/.test(frontTypes)) return "creature";
+	return undefined;
+}
+
 function extractEntry(card: ScryfallCard): CardImageEntry | null {
 	const imageUris = card.image_uris ?? card.card_faces?.[0]?.image_uris;
 	if (!imageUris?.normal) return null;
+	const kind = cardKind(card);
 	return {
 		normal: imageUris.normal,
 		// Rare cards have no art crop; keep the tooltip image regardless
 		...(imageUris.art_crop ? { art_crop: imageUris.art_crop } : {}),
 		artist: card.artist ?? card.card_faces?.[0]?.artist ?? "",
+		...(kind ? { kind } : {}),
 	};
 }
 

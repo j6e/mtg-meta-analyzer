@@ -1,21 +1,31 @@
 <script lang="ts">
-	import type { DecklistInfo } from '../types/decklist';
+	import type { DecklistInfo, DecklistPlayer, DecklistTournament } from '../types/decklist';
 	import type { ClassificationResult } from '../algorithms/archetype-classifier';
 	import CardTooltip from './CardTooltip.svelte';
+	import {
+		type CardKind,
+		cardImageIndex,
+		ensureCardImagesLoaded,
+		lookupCardType,
+	} from '../stores/card-images';
 
 	let {
 		decklist,
-		playerName = '',
+		player,
+		tournament,
 		archetype = '',
-		playerRank,
 		classificationResult,
 	}: {
 		decklist: DecklistInfo;
-		playerName?: string;
+		player?: DecklistPlayer;
+		tournament?: DecklistTournament;
 		archetype?: string;
-		playerRank?: number;
 		classificationResult?: ClassificationResult;
 	} = $props();
+
+	const playerCountSuffix = $derived(
+		tournament && tournament.playerCount > 0 ? `, ${tournament.playerCount} players` : '',
+	);
 
 	const sortByName = (cards: DecklistInfo['mainboard']) =>
 		[...cards].sort((a, b) => a.cardName.localeCompare(b.cardName));
@@ -24,6 +34,31 @@
 	const sortedCompanion = $derived(sortByName(decklist.companion ?? []));
 	const sortedMainboard = $derived(sortByName(decklist.mainboard));
 	const sortedSideboard = $derived(sortByName(decklist.sideboard));
+
+	$effect(() => {
+		void ensureCardImagesLoaded();
+	});
+
+	const MAINBOARD_GROUPS: { kind: CardKind; label: string }[] = [
+		{ kind: 'land', label: 'Lands' },
+		{ kind: 'creature', label: 'Creatures' },
+		{ kind: 'other', label: 'Other cards' },
+	];
+
+	// Without a usable index (loading, or failed) show one ungrouped list.
+	const mainboardGroups = $derived.by(() => {
+		const cardsWithType = sortedMainboard.map((card) => ({
+			card,
+			type: lookupCardType($cardImageIndex, card.cardName),
+		}));
+		if (cardsWithType.some(({ type }) => type === null)) {
+			return [{ label: 'Mainboard', cards: sortedMainboard }];
+		}
+		return MAINBOARD_GROUPS.map(({ kind, label }) => ({
+			label,
+			cards: cardsWithType.filter(({ type }) => type?.kind === kind).map(({ card }) => card),
+		})).filter((group) => group.cards.length > 0);
+	});
 
 	const mainboardCount = $derived(
 		decklist.mainboard.reduce((sum, c) => sum + c.quantity, 0),
@@ -34,10 +69,28 @@
 </script>
 
 <div class="decklist">
-	{#if playerName || archetype || playerRank != null}
+	{#snippet tournamentLink(t: DecklistTournament)}
+		{#if t.url}
+			<a href={t.url} target="_blank" rel="noopener">{t.name}</a>
+		{:else}
+			{t.name}
+		{/if}
+	{/snippet}
+
+	{#if player || archetype || tournament}
 		<div class="meta">
-			{#if playerRank != null}<span class="rank">#{playerRank}</span>{/if}
-			{#if playerName}<span class="player">{playerName}</span>{/if}
+			{#if tournament}
+				<div class="tournament-row">
+					<span class="tournament">{@render tournamentLink(tournament)}{playerCountSuffix}</span>
+					{#if tournament.date}
+						<time class="date" datetime={tournament.date}>{tournament.date}</time>
+					{/if}
+				</div>
+			{/if}
+			{#if player}
+				<span class="player">{player.name}</span>
+				<span class="rank">#{player.rank}{player.record ? ` (${player.record})` : ''}</span>
+			{/if}
 			{#if archetype}<span class="archetype">{archetype}</span>{/if}
 			{#if classificationResult?.method === 'signature'}
 				<span class="method-badge method-rules" title="Classified by signature cards">By rules</span>
@@ -89,16 +142,18 @@
 
 	<section>
 		<h3>Mainboard <span class="count">({mainboardCount})</span></h3>
-		<ul>
-			{#each sortedMainboard as card}
-				<li>
-					<span class="qty">{card.quantity}x</span>
-					<CardTooltip cardName={card.cardName}>
-						<span class="card-name">{card.cardName}</span>
-					</CardTooltip>
-				</li>
-			{/each}
-		</ul>
+		{#each mainboardGroups as group}
+			<ul aria-label={group.label}>
+				{#each group.cards as card}
+					<li>
+						<span class="qty">{card.quantity}x</span>
+						<CardTooltip cardName={card.cardName}>
+							<span class="card-name">{card.cardName}</span>
+						</CardTooltip>
+					</li>
+				{/each}
+			</ul>
+		{/each}
 	</section>
 
 	{#if decklist.sideboard.length > 0}
@@ -130,13 +185,40 @@
 
 	.meta {
 		margin-bottom: 0.75rem;
+		padding-bottom: 0.75rem;
+		border-bottom: 1px solid var(--color-border);
 		display: flex;
 		gap: 0.5rem;
 		align-items: center;
 		flex-wrap: wrap;
 	}
 
+	.tournament-row {
+		flex-basis: 100%;
+		display: flex;
+		justify-content: space-between;
+		align-items: baseline;
+		gap: 0.5rem;
+	}
+
+	.tournament {
+		min-width: 0;
+		overflow-wrap: anywhere;
+	}
+
+	.tournament a {
+		font-weight: 600;
+	}
+
+	.date {
+		white-space: nowrap;
+		font-family: var(--font-mono);
+		font-size: 0.75rem;
+		color: var(--color-text-muted);
+	}
+
 	.rank {
+		white-space: nowrap;
 		font-size: 0.75rem;
 		font-weight: 600;
 		color: var(--color-text-muted);
@@ -147,7 +229,10 @@
 	}
 
 	.player {
+		flex: 1;
+		min-width: 0;
 		font-weight: 600;
+		overflow-wrap: anywhere;
 	}
 
 	.archetype {
@@ -212,6 +297,10 @@
 		list-style: none;
 		padding: 0;
 		margin: 0;
+	}
+
+	ul + ul {
+		margin-top: 0.75rem;
 	}
 
 	li {

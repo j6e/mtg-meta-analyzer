@@ -5,6 +5,7 @@
 		metagameData,
 		playerArchetypes,
 		filteredTournaments,
+		tournamentList,
 	} from '$lib/stores/tournaments';
 	import { settingsQueryString } from '$lib/stores/url-settings';
 
@@ -101,12 +102,15 @@
 		return rows;
 	});
 
+	const tournamentNames = $derived(new Map($tournamentList.map((t) => [t.id, t.cleanName])));
+
 	// Enriched decklists for this archetype (with metadata)
 	const enrichedDecklists = $derived.by(() => {
 		return collectArchetypeDecklists(
 			$filteredTournaments,
 			$playerArchetypes,
 			archetypeName,
+			tournamentNames,
 		);
 	});
 
@@ -195,10 +199,10 @@
 	// Dropdown options sorted by rank
 	const decklistOptions = $derived.by(() => {
 		return [...enrichedDecklists]
-			.sort((a, b) => a.playerRank - b.playerRank || a.tournamentName.localeCompare(b.tournamentName))
+			.sort((a, b) => a.player.rank - b.player.rank || a.tournament.name.localeCompare(b.tournament.name))
 			.map((e) => ({
 				id: e.decklistId,
-				label: `${e.tournamentName} — ${e.playerName} (Rank #${e.playerRank})`,
+				label: `${e.tournament.name} — ${e.player.name} (Rank #${e.player.rank})`,
 			}));
 	});
 
@@ -224,7 +228,7 @@
 
 	// ── Decklists tab ──
 	let showAllDecklists = $state(false);
-	const sortedDecklists = $derived([...enrichedDecklists].sort((a, b) => a.playerRank - b.playerRank));
+	const sortedDecklists = $derived([...enrichedDecklists].sort((a, b) => a.player.rank - b.player.rank));
 	const visibleDecklists = $derived(showAllDecklists ? sortedDecklists : sortedDecklists.slice(0, 6));
 
 </script>
@@ -490,9 +494,8 @@
 					{#each visibleDecklists as d}
 						<DecklistView
 							decklist={d.decklist}
-							playerName={d.playerName}
-							archetype={archetypeName}
-							playerRank={d.playerRank}
+							player={d.player}
+							tournament={d.tournament}
 						/>
 					{/each}
 				</div>

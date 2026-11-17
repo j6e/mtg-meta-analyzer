@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url";
 import { parse as parseYaml } from "yaml";
 import { getFrontFace } from "../../src/lib/utils/card-normalizer";
 
-export const CARD_IMAGE_STATUS_SCHEMA_VERSION = 1;
+export const CARD_IMAGE_STATUS_SCHEMA_VERSION = 2;
 const USER_AGENT = "mtg-meta-analyzer/1.0";
 
 export interface DefaultCardsManifest {

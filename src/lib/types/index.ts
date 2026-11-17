@@ -6,6 +6,8 @@ export type {
 export type {
 	CardEntry,
 	DecklistInfo,
+	DecklistPlayer,
+	DecklistTournament,
 } from "./decklist.ts";
 
 export type {

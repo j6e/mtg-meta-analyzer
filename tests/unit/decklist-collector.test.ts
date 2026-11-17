@@ -3,9 +3,10 @@ import type { DecklistInfo } from "../../src/lib/types/decklist";
 import type { PlayerInfo, TournamentData } from "../../src/lib/types/tournament";
 import {
 	collectArchetypeDecklists,
-	collectRawDecklists,
 	findBestDecklist,
 } from "../../src/lib/utils/decklist-collector";
+
+const NO_NAMES = new Map<string, string>();
 
 function makePlayer(name: string, decklistIds: string[], rank = 1): PlayerInfo {
 	return {
@@ -73,10 +74,10 @@ describe("collectArchetypeDecklists", () => {
 			["melee-1:p2", "Control"],
 		]);
 
-		const result = collectArchetypeDecklists([t], archetypes, "Aggro");
+		const result = collectArchetypeDecklists([t], archetypes, "Aggro", NO_NAMES);
 		expect(result).toHaveLength(1);
-		expect(result[0].playerName).toBe("Alice");
-		expect(result[0].playerId).toBe("p1");
+		expect(result[0].player.name).toBe("Alice");
+		expect(result[0].player.id).toBe("p1");
 		expect(result[0].decklistId).toBe("d1");
 	});
 
@@ -89,12 +90,33 @@ describe("collectArchetypeDecklists", () => {
 		});
 		const archetypes = new Map([["melee-42:p1", "Aggro"]]);
 
-		const result = collectArchetypeDecklists([t], archetypes, "Aggro");
-		expect(result[0]).toMatchObject({
-			playerRank: 5,
-			tournamentName: "Pro Tour",
-			tournamentId: "melee-42",
+		const result = collectArchetypeDecklists([t], archetypes, "Aggro", NO_NAMES);
+		expect(result[0].player).toEqual({
+			id: "p1",
+			name: "Alice",
+			rank: 5,
+			record: "0-0-0",
 		});
+		expect(result[0].tournament).toEqual({
+			id: "melee-42",
+			name: "Pro Tour",
+			date: "2026-01-01",
+			url: "https://melee.gg/Tournament/View/42",
+			playerCount: 1,
+		});
+	});
+
+	it("uses the display name for known tournaments", () => {
+		const t = makeTournament({
+			name: "Pro Tour Raw Name",
+			players: { p1: makePlayer("Alice", ["d1"]) },
+			decklists: { d1: makeDecklist("p1") },
+		});
+		const archetypes = new Map([["melee-1:p1", "Aggro"]]);
+		const names = new Map([["melee-1", "Pro Tour"]]);
+
+		const result = collectArchetypeDecklists([t], archetypes, "Aggro", names);
+		expect(result[0].tournament.name).toBe("Pro Tour");
 	});
 
 	it("collects across multiple tournaments", () => {
@@ -115,9 +137,9 @@ describe("collectArchetypeDecklists", () => {
 			["melee-2:p2", "Aggro"],
 		]);
 
-		const result = collectArchetypeDecklists([t1, t2], archetypes, "Aggro");
+		const result = collectArchetypeDecklists([t1, t2], archetypes, "Aggro", NO_NAMES);
 		expect(result).toHaveLength(2);
-		expect(result.map((r) => r.playerName)).toEqual(["Alice", "Bob"]);
+		expect(result.map((r) => r.player.name)).toEqual(["Alice", "Bob"]);
 	});
 
 	it("handles players with multiple decklists", () => {
@@ -130,7 +152,7 @@ describe("collectArchetypeDecklists", () => {
 		});
 		const archetypes = new Map([["melee-1:p1", "Aggro"]]);
 
-		const result = collectArchetypeDecklists([t], archetypes, "Aggro");
+		const result = collectArchetypeDecklists([t], archetypes, "Aggro", NO_NAMES);
 		expect(result).toHaveLength(2);
 		expect(result.map((r) => r.decklistId)).toEqual(["d1", "d2"]);
 	});
@@ -142,11 +164,11 @@ describe("collectArchetypeDecklists", () => {
 		});
 		const archetypes = new Map([["melee-1:p1", "Control"]]);
 
-		expect(collectArchetypeDecklists([t], archetypes, "Aggro")).toEqual([]);
+		expect(collectArchetypeDecklists([t], archetypes, "Aggro", NO_NAMES)).toEqual([]);
 	});
 
 	it("returns empty array for empty input", () => {
-		expect(collectArchetypeDecklists([], new Map(), "Aggro")).toEqual([]);
+		expect(collectArchetypeDecklists([], new Map(), "Aggro", NO_NAMES)).toEqual([]);
 	});
 
 	it("skips missing decklists gracefully", () => {
@@ -156,33 +178,9 @@ describe("collectArchetypeDecklists", () => {
 		});
 		const archetypes = new Map([["melee-1:p1", "Aggro"]]);
 
-		const result = collectArchetypeDecklists([t], archetypes, "Aggro");
+		const result = collectArchetypeDecklists([t], archetypes, "Aggro", NO_NAMES);
 		expect(result).toHaveLength(1);
 		expect(result[0].decklistId).toBe("d1");
-	});
-});
-
-describe("collectRawDecklists", () => {
-	it("returns plain DecklistInfo array", () => {
-		const t = makeTournament({
-			players: {
-				p1: makePlayer("Alice", ["d1"]),
-				p2: makePlayer("Bob", ["d2"]),
-			},
-			decklists: {
-				d1: makeDecklist("p1"),
-				d2: makeDecklist("p2"),
-			},
-		});
-		const archetypes = new Map([
-			["melee-1:p1", "Aggro"],
-			["melee-1:p2", "Aggro"],
-		]);
-
-		const result = collectRawDecklists([t], archetypes, "Aggro");
-		expect(result).toHaveLength(2);
-		expect(result[0]).toHaveProperty("mainboard");
-		expect(result[0]).not.toHaveProperty("playerName");
 	});
 });
 
@@ -206,10 +204,10 @@ describe("findBestDecklist", () => {
 			["melee-1:p3", "Aggro"],
 		]);
 
-		const enriched = collectArchetypeDecklists([t], archetypes, "Aggro");
+		const enriched = collectArchetypeDecklists([t], archetypes, "Aggro", NO_NAMES);
 		const best = findBestDecklist(enriched);
-		expect(best?.playerName).toBe("Bob");
-		expect(best?.playerRank).toBe(3);
+		expect(best?.player.name).toBe("Bob");
+		expect(best?.player.rank).toBe(3);
 	});
 
 	it("breaks ties by tournament name", () => {
@@ -230,9 +228,9 @@ describe("findBestDecklist", () => {
 			["melee-2:p2", "Aggro"],
 		]);
 
-		const enriched = collectArchetypeDecklists([t1, t2], archetypes, "Aggro");
+		const enriched = collectArchetypeDecklists([t1, t2], archetypes, "Aggro", NO_NAMES);
 		const best = findBestDecklist(enriched);
-		expect(best?.tournamentName).toBe("Alpha Tour");
+		expect(best?.tournament.name).toBe("Alpha Tour");
 	});
 
 	it("returns null for empty input", () => {
