@@ -70,7 +70,7 @@
 		<div class="meta">
 			{#if tournamentName}
 				<div class="tournament-row">
-					<span class="tournament"><a href={tournamentUrl} target="_blank" rel="noopener">{tournamentName}</a>{tournamentPlayerCount != null ? `, ${tournamentPlayerCount} players` : ''}</span>
+					<span class="tournament">{#if tournamentUrl}<a href={tournamentUrl} target="_blank" rel="noopener">{tournamentName}</a>{:else}{tournamentName}{/if}{tournamentPlayerCount != null ? `, ${tournamentPlayerCount} players` : ''}</span>
 					{#if tournamentDate}<time class="date" datetime={tournamentDate}>{tournamentDate}</time>{/if}
 				</div>
 			{/if}

@@ -95,6 +95,20 @@ describe("DecklistView component", () => {
 		);
 	});
 
+	it("shows the tournament name without a link when it has no url", () => {
+		const { container } = render(DecklistView, {
+			props: {
+				decklist: sampleDecklist,
+				tournamentName: "Premodern Championship",
+				tournamentUrl: "",
+			},
+		});
+		expect(container.querySelector(".tournament")?.textContent).toBe(
+			"Premodern Championship",
+		);
+		expect(container.querySelector(".tournament a")).toBeNull();
+	});
+
 	it("hides metadata section when no player/archetype", () => {
 		const { container } = render(DecklistView, {
 			props: { decklist: sampleDecklist },
