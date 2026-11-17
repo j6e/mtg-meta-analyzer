@@ -161,6 +161,9 @@ export function extractTournamentJson(html: string): MtgoRawTournament | null {
 
 const BASE_URL = "https://www.mtgo.com";
 
+/** MtgoFetchError status for a 200 page that stayed incomplete through all retries. */
+export const INCOMPLETE_PAGE_STATUS = -1;
+
 const HTML_HEADERS: Record<string, string> = {
 	"User-Agent":
 		"Mozilla/5.0 (X11; Linux x86_64; rv:130.0) Gecko/20100101 Firefox/130.0",
@@ -191,17 +194,30 @@ export class MtgoClient {
 	/** Fetch and parse a monthly listing page. */
 	async fetchListingPage(year: number, month: number): Promise<MtgoListingEntry[]> {
 		const monthStr = String(month).padStart(2, "0");
-		const html = await this.getHtml(`/decklists/${year}/${monthStr}`);
+		const html = await this.getHtml(`/decklists/${year}/${monthStr}`, (h) =>
+			h.includes('class="decklists-item"'),
+		);
 		return parseListingHtml(html);
 	}
 
 	/** Fetch a tournament page and extract the embedded JSON. Returns null if data not yet published. */
 	async fetchTournamentData(href: string): Promise<MtgoRawTournament | null> {
-		const html = await this.getHtml(href);
+		const html = await this.getHtml(href, (h) =>
+			h.includes("window.MTGO.decklists.data = "),
+		);
 		return extractTournamentJson(html);
 	}
 
-	private async getHtml(path: string): Promise<string> {
+	/**
+	 * GET a page, retrying transient errors. mtgo.com intermittently serves a
+	 * 200 page with its content missing (an empty event list, or no embedded
+	 * tournament data); `isComplete` detects that so it is retried too, and
+	 * reported as an INCOMPLETE_PAGE_STATUS error once retries run out.
+	 */
+	private async getHtml(
+		path: string,
+		isComplete?: (html: string) => boolean,
+	): Promise<string> {
 		const url = `${BASE_URL}${path}`;
 
 		for (let attempt = 0; attempt <= this.maxRetries; attempt++) {
@@ -213,7 +229,19 @@ export class MtgoClient {
 					signal: AbortSignal.timeout(this.timeoutMs),
 				});
 
-				if (res.ok) return res.text();
+				if (res.ok) {
+					const html = await res.text();
+					if (!isComplete || isComplete(html)) return html;
+					if (attempt < this.maxRetries) {
+						const backoff = this.delayMs * 2 ** attempt;
+						console.warn(
+							`  Incomplete page for ${path}, retrying in ${backoff}ms (attempt ${attempt + 1}/${this.maxRetries})`,
+						);
+						await sleep(backoff);
+						continue;
+					}
+					throw new MtgoFetchError(url, INCOMPLETE_PAGE_STATUS, "page content missing");
+				}
 
 				if (attempt < this.maxRetries && isTransient(res.status)) {
 					const backoff = this.delayMs * 2 ** attempt;

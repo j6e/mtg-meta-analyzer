@@ -1,5 +1,5 @@
 format: Pauper
-date: "2026-10-03"
+date: "2026-10-22"
 archetypes:
   - name: Mono-Blue Terror
     signatureCards:
@@ -87,11 +87,10 @@ archetypes:
         minCopies: 2
       - name: "Kor Skyfisher"
         minCopies: 2
-  # Second Esper Affinity build, from mid 2026. Myr Enforcer and Thoughtcast with
-  # Springleaf Drum, Thraben Inspector or Moon-Circuit Hacker, and no Glint Hawk package.
-  # It shares the label with the rule above on purpose. Kor Skyfisher at zero keeps the
-  # two from matching the same deck. Ancient Den is the white marker, Great Furnace at
-  # zero yields the red builds to 4c Affinity.
+  # Glint Hawk builds with Myr Enforcer and no Kor Skyfisher, which the rule above misses. It
+  # shares the label with the rule above on purpose. Kor Skyfisher at zero keeps the two from
+  # matching the same deck. Ancient Den is the white marker, Great Furnace at zero yields the
+  # red builds to 4c Affinity, Springleaf Drum at zero yields the Drum builds to Esper Leonardo.
   - name: Esper Affinity
     signatureCards:
       - name: "Myr Enforcer"
@@ -101,6 +100,8 @@ archetypes:
       - name: "Great Furnace"
         exactCopies: 0
       - name: "Kor Skyfisher"
+        exactCopies: 0
+      - name: "Springleaf Drum"
         exactCopies: 0
   # Esper Affinity with a red splash in the main (Great Furnace, Galvanic Blast). Vault of
   # Whispers keeps it apart from Jeskai Affinity, which Boros Synthesizer already labels.
@@ -511,3 +512,17 @@ archetypes:
         minCopies: 3
       - name: "Battle Screech"
         exactCopies: 0
+  # Artifact aggro from mid 2026, split out of Esper Affinity. Springleaf Drum, Leonardo, Big
+  # Brother and Novice Inspector with Myr Enforcer and Thoughtcast, and no Glint Hawk package.
+  # Myr Enforcer keeps out the Selesnya Rally and Boros Bully lists that also play Drum,
+  # Leonardo and Novice Inspector.
+  - name: Esper Leonardo
+    signatureCards:
+      - name: "Springleaf Drum"
+        minCopies: 3
+      - name: "Leonardo, Big Brother"
+        minCopies: 2
+      - name: "Novice Inspector"
+        minCopies: 2
+      - name: "Myr Enforcer"
+        minCopies: 3

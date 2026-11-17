@@ -400,3 +400,43 @@ archetypes:
         minCopies: 3
       - name: "Shivan Devastator"
         minCopies: 3
+  - name: Esper Legends
+    signatureCards:
+      - name: "Raffine, Scheming Seer"
+        minCopies: 3
+      - name: "Nashi, Searcher in the Dark"
+        minCopies: 3
+      - name: "Plaza of Heroes"
+        minCopies: 3
+      - name: "Relic of Legends"
+        exactCopies: 0
+  - name: Jund Anvil
+    signatureCards:
+      - name: "Oni-Cult Anvil"
+        minCopies: 3
+      - name: "Shrapnel Blast"
+        minCopies: 3
+      - name: "Experimental Synthesizer"
+        minCopies: 3
+      - name: "Witch's Oven"
+        exactCopies: 0
+  - name: Rakdos Creativity
+    signatureCards:
+      - name: "Indomitable Creativity"
+        minCopies: 3
+      - name: "Hunt for Specimens"
+        minCopies: 3
+      - name: "Obsessive Pursuit"
+        minCopies: 3
+      - name: "Deduce"
+        exactCopies: 0
+  - name: Rakdos Sacrifice
+    signatureCards:
+      - name: "Witch's Oven"
+        minCopies: 3
+      - name: "Cauldron Familiar"
+        minCopies: 3
+      - name: "Bloodtithe Harvester"
+        minCopies: 3
+      - name: "Ygra, Eater of All"
+        exactCopies: 0

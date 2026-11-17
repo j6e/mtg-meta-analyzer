@@ -83,6 +83,7 @@ Spotlight TMNT - Richmond
 ```
 
 - Use the **set acronym**, not the long set name. Known acronyms:
+  - `FRA` = Reality Fracture
   - `HOB` = The Hobbit
   - `SOS` = Secrets of Strixhaven
   - `TMNT` = Teenage Mutant Ninja Turtles
