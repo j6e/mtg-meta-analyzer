@@ -406,6 +406,60 @@ describe("classifyBySignatureCards", () => {
 			classifyBySignatureCards([], cards(["Disdainful Stroke", 2]), null, defs),
 		).toBe("Exact Sideboard");
 	});
+
+	describe("companion in the sideboard (Azorius Control with/without Yorion)", () => {
+		// Yorion is a companion: decklists store it in the sideboard.
+		const defs: ArchetypeDefinition[] = [
+			{
+				name: "Azorius Control (Yorion)",
+				signatureCards: [
+					{ name: "Supreme Verdict", minCopies: 2 },
+					{ name: "Yorion, Sky Nomad", minCopies: 1, usedInSideboard: true },
+				],
+			},
+			{
+				name: "Azorius Control",
+				signatureCards: [
+					{ name: "Supreme Verdict", minCopies: 2 },
+					{ name: "Yorion, Sky Nomad", exactCopies: 0, usedInSideboard: true },
+				],
+			},
+		];
+		const mainboard = cards(["Supreme Verdict", 3], ["Plains", 4], ["Island", 4]);
+
+		it("classifies a deck with Yorion in the sideboard as the Yorion variant", () => {
+			const sideboard = cards(["Yorion, Sky Nomad", 1], ["Rest in Peace", 2]);
+			expect(classifyBySignatureCards(mainboard, sideboard, null, defs)).toBe(
+				"Azorius Control (Yorion)",
+			);
+		});
+
+		it("classifies a deck without Yorion as plain Azorius Control", () => {
+			const sideboard = cards(["Rest in Peace", 2]);
+			expect(classifyBySignatureCards(mainboard, sideboard, null, defs)).toBe(
+				"Azorius Control",
+			);
+		});
+
+		it("ignores Yorion in the mainboard (only the sideboard counts)", () => {
+			const withMainboardYorion = [...mainboard, ...cards(["Yorion, Sky Nomad", 1])];
+			expect(
+				classifyBySignatureCards(
+					withMainboardYorion,
+					cards(["Rest in Peace", 2]),
+					null,
+					defs,
+				),
+			).toBe("Azorius Control");
+		});
+
+		it("matches neither variant without the shared mainboard card", () => {
+			const sideboard = cards(["Yorion, Sky Nomad", 1]);
+			expect(
+				classifyBySignatureCards(cards(["Plains", 4]), sideboard, null, defs),
+			).toBeNull();
+		});
+	});
 });
 
 describe("classifyAll", () => {
