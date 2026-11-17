@@ -101,6 +101,18 @@ export function validateArchetypeYaml(yamlContent: string): ValidationResult {
 				errors.push(`${cardPrefix}: missing or invalid "name"`);
 			}
 
+			for (const flag of ["usedAsCommander", "usedInSideboard"] as const) {
+				if (card[flag] !== undefined && typeof card[flag] !== "boolean") {
+					errors.push(`${cardPrefix}: "${flag}" must be a boolean`);
+				}
+			}
+
+			if (card.usedAsCommander === true && card.usedInSideboard === true) {
+				errors.push(
+					`${cardPrefix}: "usedAsCommander" and "usedInSideboard" cannot both be true`,
+				);
+			}
+
 			const hasMin = card.minCopies !== undefined;
 			const hasExact = card.exactCopies !== undefined;
 

@@ -47,11 +47,12 @@ function makeDecklist(
 	mainboard: CardEntry[],
 	id = "player1",
 	commanders: CardEntry[] | null = null,
+	sideboard: CardEntry[] = [],
 ): DecklistInfo {
 	return {
 		playerId: id,
 		mainboard,
-		sideboard: [],
+		sideboard,
 		commanders,
 		companion: null,
 		reportedArchetype: null,
@@ -145,6 +146,23 @@ archetypes:
 			minCopies: 1,
 		});
 	});
+
+	it("parses usedInSideboard on signature cards", () => {
+		const yaml = `
+format: Standard
+date: "2026-01-10"
+archetypes:
+  - name: Sideboard Control
+    signatureCards:
+      - name: Negate
+        usedInSideboard: true
+`;
+		const result = parseArchetypeYaml(yaml);
+		expect(result.archetypes[0].signatureCards[0]).toEqual({
+			name: "Negate",
+			usedInSideboard: true,
+		});
+	});
 });
 
 describe("classifyBySignatureCards", () => {
@@ -154,7 +172,7 @@ describe("classifyBySignatureCards", () => {
 			["Goblin Guide", 4],
 			["Mountain", 16],
 		);
-		const result = classifyBySignatureCards(mainboard, null, archetypeDefs);
+		const result = classifyBySignatureCards(mainboard, [], null, archetypeDefs);
 		expect(result).toBe("Mono Red");
 	});
 
@@ -164,18 +182,18 @@ describe("classifyBySignatureCards", () => {
 			["Goblin Guide", 2], // needs 3
 			["Mountain", 16],
 		);
-		const result = classifyBySignatureCards(mainboard, null, archetypeDefs);
+		const result = classifyBySignatureCards(mainboard, [], null, archetypeDefs);
 		expect(result).toBeNull();
 	});
 
 	it("returns null when a signature card is missing", () => {
 		const mainboard = cards(["Lightning Bolt", 4], ["Mountain", 20]);
-		const result = classifyBySignatureCards(mainboard, null, archetypeDefs);
+		const result = classifyBySignatureCards(mainboard, [], null, archetypeDefs);
 		expect(result).toBeNull();
 	});
 
 	it("returns null for empty mainboard", () => {
-		const result = classifyBySignatureCards([], null, archetypeDefs);
+		const result = classifyBySignatureCards([], [], null, archetypeDefs);
 		expect(result).toBeNull();
 	});
 
@@ -200,7 +218,7 @@ describe("classifyBySignatureCards", () => {
 			["Mountain", 16],
 		);
 
-		const result = classifyBySignatureCards(mainboard, null, defs);
+		const result = classifyBySignatureCards(mainboard, [], null, defs);
 		expect(result).toBe("Mono Red"); // more signature cards
 	});
 
@@ -215,7 +233,7 @@ describe("classifyBySignatureCards", () => {
 			},
 		];
 		const mainboard = cards(["Combo Piece", 4], ["Enabler", 3], ["Land", 17]);
-		expect(classifyBySignatureCards(mainboard, null, defs)).toBe("Exact Combo");
+		expect(classifyBySignatureCards(mainboard, [], null, defs)).toBe("Exact Combo");
 	});
 
 	it("rejects when deck has more copies than exactCopies", () => {
@@ -226,7 +244,7 @@ describe("classifyBySignatureCards", () => {
 			},
 		];
 		const mainboard = cards(["Combo Piece", 4], ["Land", 20]);
-		expect(classifyBySignatureCards(mainboard, null, defs)).toBeNull();
+		expect(classifyBySignatureCards(mainboard, [], null, defs)).toBeNull();
 	});
 
 	it("rejects when deck has fewer copies than exactCopies", () => {
@@ -237,7 +255,7 @@ describe("classifyBySignatureCards", () => {
 			},
 		];
 		const mainboard = cards(["Combo Piece", 3], ["Land", 21]);
-		expect(classifyBySignatureCards(mainboard, null, defs)).toBeNull();
+		expect(classifyBySignatureCards(mainboard, [], null, defs)).toBeNull();
 	});
 
 	it("exactCopies 0 matches when card is absent from deck", () => {
@@ -251,7 +269,7 @@ describe("classifyBySignatureCards", () => {
 			},
 		];
 		const mainboard = cards(["Key Card", 4], ["Land", 20]);
-		expect(classifyBySignatureCards(mainboard, null, defs)).toBe("No Combo");
+		expect(classifyBySignatureCards(mainboard, [], null, defs)).toBe("No Combo");
 	});
 
 	it("exactCopies 0 rejects when card is present in deck", () => {
@@ -265,7 +283,7 @@ describe("classifyBySignatureCards", () => {
 			},
 		];
 		const mainboard = cards(["Key Card", 4], ["Banned Card", 1], ["Land", 19]);
-		expect(classifyBySignatureCards(mainboard, null, defs)).toBeNull();
+		expect(classifyBySignatureCards(mainboard, [], null, defs)).toBeNull();
 	});
 
 	// --- usedAsCommander tests ---
@@ -278,7 +296,7 @@ describe("classifyBySignatureCards", () => {
 			},
 		];
 		const commanders = cards(["Aragorn, King of Gondor", 1]);
-		const result = classifyBySignatureCards([], commanders, defs);
+		const result = classifyBySignatureCards([], [], commanders, defs);
 		expect(result).toBe("Aragorn Deck");
 	});
 
@@ -290,7 +308,7 @@ describe("classifyBySignatureCards", () => {
 			},
 		];
 		const commanders = cards(["Lumra, Bellow of the Woods", 1]);
-		const result = classifyBySignatureCards([], commanders, defs);
+		const result = classifyBySignatureCards([], [], commanders, defs);
 		expect(result).toBeNull();
 	});
 
@@ -301,7 +319,7 @@ describe("classifyBySignatureCards", () => {
 				signatureCards: [{ name: "Aragorn, King of Gondor", usedAsCommander: true }],
 			},
 		];
-		const result = classifyBySignatureCards([], null, defs);
+		const result = classifyBySignatureCards([], [], null, defs);
 		expect(result).toBeNull();
 	});
 
@@ -312,7 +330,7 @@ describe("classifyBySignatureCards", () => {
 				signatureCards: [{ name: "Aragorn, King of Gondor", usedAsCommander: true }],
 			},
 		];
-		const result = classifyBySignatureCards([], [], defs);
+		const result = classifyBySignatureCards([], [], [], defs);
 		expect(result).toBeNull();
 	});
 
@@ -324,7 +342,7 @@ describe("classifyBySignatureCards", () => {
 			},
 		];
 		const commanders = cards(["Aclazotz, Deepest Betrayal // Temple of the Dead", 1]);
-		const result = classifyBySignatureCards([], commanders, defs);
+		const result = classifyBySignatureCards([], [], commanders, defs);
 		expect(result).toBe("Aclazotz Deck");
 	});
 
@@ -341,17 +359,127 @@ describe("classifyBySignatureCards", () => {
 		const commanders = cards(["Aragorn, King of Gondor", 1]);
 
 		// Has commander but missing mainboard card
-		expect(classifyBySignatureCards([], commanders, defs)).toBeNull();
+		expect(classifyBySignatureCards([], [], commanders, defs)).toBeNull();
 
 		// Has both commander and mainboard card
 		const mainboard = cards(["Lightning Greaves", 1], ["Land", 98]);
-		expect(classifyBySignatureCards(mainboard, commanders, defs)).toBe(
+		expect(classifyBySignatureCards(mainboard, [], commanders, defs)).toBe(
 			"Aragorn Voltron",
 		);
+	});
+
+	it("matches signature cards marked for the sideboard", () => {
+		const defs: ArchetypeDefinition[] = [
+			{
+				name: "Sideboard Control",
+				signatureCards: [{ name: "Negate", minCopies: 2, usedInSideboard: true }],
+			},
+		];
+
+		expect(classifyBySignatureCards([], cards(["Negate", 2]), null, defs)).toBe(
+			"Sideboard Control",
+		);
+	});
+
+	it("does not match sideboard signatures found only in the mainboard", () => {
+		const defs: ArchetypeDefinition[] = [
+			{
+				name: "Sideboard Control",
+				signatureCards: [{ name: "Negate", minCopies: 2, usedInSideboard: true }],
+			},
+		];
+
+		expect(classifyBySignatureCards(cards(["Negate", 2]), [], null, defs)).toBeNull();
+	});
+
+	it("applies exactCopies to sideboard signatures", () => {
+		const defs: ArchetypeDefinition[] = [
+			{
+				name: "Exact Sideboard",
+				signatureCards: [
+					{ name: "Disdainful Stroke", exactCopies: 2, usedInSideboard: true },
+				],
+			},
+		];
+
+		expect(
+			classifyBySignatureCards([], cards(["Disdainful Stroke", 2]), null, defs),
+		).toBe("Exact Sideboard");
+	});
+
+	describe("companion in the sideboard (Azorius Control with/without Yorion)", () => {
+		// Yorion is a companion: decklists store it in the sideboard.
+		const defs: ArchetypeDefinition[] = [
+			{
+				name: "Azorius Control (Yorion)",
+				signatureCards: [
+					{ name: "Supreme Verdict", minCopies: 2 },
+					{ name: "Yorion, Sky Nomad", minCopies: 1, usedInSideboard: true },
+				],
+			},
+			{
+				name: "Azorius Control",
+				signatureCards: [
+					{ name: "Supreme Verdict", minCopies: 2 },
+					{ name: "Yorion, Sky Nomad", exactCopies: 0, usedInSideboard: true },
+				],
+			},
+		];
+		const mainboard = cards(["Supreme Verdict", 3], ["Plains", 4], ["Island", 4]);
+
+		it("classifies a deck with Yorion in the sideboard as the Yorion variant", () => {
+			const sideboard = cards(["Yorion, Sky Nomad", 1], ["Rest in Peace", 2]);
+			expect(classifyBySignatureCards(mainboard, sideboard, null, defs)).toBe(
+				"Azorius Control (Yorion)",
+			);
+		});
+
+		it("classifies a deck without Yorion as plain Azorius Control", () => {
+			const sideboard = cards(["Rest in Peace", 2]);
+			expect(classifyBySignatureCards(mainboard, sideboard, null, defs)).toBe(
+				"Azorius Control",
+			);
+		});
+
+		it("ignores Yorion in the mainboard (only the sideboard counts)", () => {
+			const withMainboardYorion = [...mainboard, ...cards(["Yorion, Sky Nomad", 1])];
+			expect(
+				classifyBySignatureCards(
+					withMainboardYorion,
+					cards(["Rest in Peace", 2]),
+					null,
+					defs,
+				),
+			).toBe("Azorius Control");
+		});
+
+		it("matches neither variant without the shared mainboard card", () => {
+			const sideboard = cards(["Yorion, Sky Nomad", 1]);
+			expect(
+				classifyBySignatureCards(cards(["Plains", 4]), sideboard, null, defs),
+			).toBeNull();
+		});
 	});
 });
 
 describe("classifyAll", () => {
+	it("passes sideboard cards to signature classification", () => {
+		const defs: ArchetypeDefinition[] = [
+			{
+				name: "Sideboard Control",
+				signatureCards: [{ name: "Negate", minCopies: 2, usedInSideboard: true }],
+			},
+		];
+		const decklists = {
+			d1: makeDecklist([], "player1", null, cards(["Negate", 2])),
+		};
+
+		expect(classifyAll(decklists, defs)[0]).toMatchObject({
+			archetype: "Sideboard Control",
+			method: "signature",
+		});
+	});
+
 	it("classifies decklists by signature cards first", () => {
 		const decklists: Record<string, DecklistInfo> = {
 			d1: makeDecklist(
@@ -417,6 +545,67 @@ describe("classifyAll", () => {
 		expect(d5Result!.archetype).toBe("Mono Red");
 		expect(d5Result!.method).toBe("centroid");
 		expect(d5Result!.confidence).toBeGreaterThan(0);
+	});
+
+	describe("KNN features include the sideboard", () => {
+		// Same mainboard; only the sideboard (companion Yorion) differs.
+		const yorionDefs: ArchetypeDefinition[] = [
+			{
+				name: "Azorius Control (Yorion)",
+				signatureCards: [
+					{ name: "Supreme Verdict", minCopies: 4 },
+					{ name: "Yorion, Sky Nomad", minCopies: 1, usedInSideboard: true },
+				],
+			},
+			{
+				name: "Azorius Control",
+				signatureCards: [
+					{ name: "Supreme Verdict", minCopies: 4 },
+					{ name: "Yorion, Sky Nomad", exactCopies: 0, usedInSideboard: true },
+				],
+			},
+		];
+		const main = (verdicts: number) =>
+			cards(["Supreme Verdict", verdicts], ["Plains", 10], ["Island", 10]);
+		const withYorion = cards(["Yorion, Sky Nomad", 1], ["Rest in Peace", 2]);
+		const withoutYorion = cards(["Rest in Peace", 2], ["Negate", 2]);
+
+		// u1/u2 miss the signature (3 Verdicts) so they fall through to KNN.
+		const decklists: Record<string, DecklistInfo> = {
+			y1: makeDecklist(main(4), "y1", null, withYorion),
+			y2: makeDecklist(main(4), "y2", null, withYorion),
+			n1: makeDecklist(main(4), "n1", null, withoutYorion),
+			n2: makeDecklist(main(4), "n2", null, withoutYorion),
+			u1: makeDecklist(main(3), "u1", null, withYorion),
+			u2: makeDecklist(main(3), "u2", null, withoutYorion),
+		};
+
+		it("classifyAll separates decks that differ only in the sideboard", () => {
+			const results = classifyAll(decklists, yorionDefs, { minConfidence: 0 });
+			const byId = new Map(results.map((r) => [r.decklistId, r]));
+
+			expect(byId.get("u1")).toMatchObject({
+				archetype: "Azorius Control (Yorion)",
+				method: "centroid",
+			});
+			expect(byId.get("u2")).toMatchObject({
+				archetype: "Azorius Control",
+				method: "centroid",
+			});
+		});
+
+		it("classifyAllPooled separates decks that differ only in the sideboard", () => {
+			const { u1, u2, ...labeled } = decklists;
+			const pooled = new Map([
+				["t1", labeled],
+				["t2", { u1, u2 }],
+			]);
+			const results = classifyAllPooled(pooled, yorionDefs, { minConfidence: 0 });
+			const byId = new Map(results.get("t2")!.map((r) => [r.decklistId, r]));
+
+			expect(byId.get("u1")!.archetype).toBe("Azorius Control (Yorion)");
+			expect(byId.get("u2")!.archetype).toBe("Azorius Control");
+		});
 	});
 
 	it("marks unclassifiable decklists as Unknown", () => {

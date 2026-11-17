@@ -1,5 +1,24 @@
 import "@testing-library/jest-dom/vitest";
-import { vi } from "vitest";
+import { beforeEach, vi } from "vitest";
+
+const storage = new Map<string, string>();
+
+vi.stubGlobal("localStorage", {
+	getItem: (key: string) => storage.get(key) ?? null,
+	setItem: (key: string, value: string) => storage.set(key, String(value)),
+	removeItem: (key: string) => storage.delete(key),
+	clear: () => storage.clear(),
+	key: (index: number) => [...storage.keys()][index] ?? null,
+	get length() {
+		return storage.size;
+	},
+});
+
+// One Map backs localStorage for the whole run; reset it so state written by
+// one test never leaks into the next.
+beforeEach(() => {
+	storage.clear();
+});
 
 // Mock the data loader so tests neither bundle the real per-format indexes
 // nor hit the network for tournament data. One tiny fixture keeps

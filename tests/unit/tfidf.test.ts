@@ -1,5 +1,10 @@
 import { describe, expect, it } from "vitest";
-import { buildCorpus, toDense, vectorize } from "../../src/lib/algorithms/tfidf";
+import {
+	buildCorpus,
+	deckFeatures,
+	toDense,
+	vectorize,
+} from "../../src/lib/algorithms/tfidf";
 import type { CardEntry } from "../../src/lib/types/decklist";
 
 function cards(...entries: [string, number][]): CardEntry[] {
@@ -123,6 +128,61 @@ describe("vectorize", () => {
 		const corpus = buildCorpus([cards(["Mountain", 20])]);
 		const vec = vectorize(cards(["Island", 20]), corpus);
 		expect(vec).toEqual([]);
+	});
+});
+
+describe("deckFeatures", () => {
+	it("keeps mainboard names and namespaces sideboard cards", () => {
+		const features = deckFeatures({
+			mainboard: cards(["Supreme Verdict", 4]),
+			sideboard: cards(["Yorion, Sky Nomad", 1]),
+		});
+		expect(features).toEqual(
+			cards(["Supreme Verdict", 4], ["SB:Yorion, Sky Nomad", 1]),
+		);
+	});
+
+	it("normalizes sideboard DFC names to their front face", () => {
+		const features = deckFeatures({
+			mainboard: cards(["Fable of the Mirror-Breaker // Reflection of Kiki-Jiki", 4]),
+			sideboard: cards(["Wear/Tear", 1]),
+		});
+		const corpus = buildCorpus([features]);
+
+		expect([...corpus.vocabulary.keys()]).toEqual([
+			"Fable of the Mirror-Breaker",
+			"SB:Wear",
+		]);
+	});
+
+	it("treats the same card in mainboard and sideboard as different terms", () => {
+		const yorionMain = deckFeatures({
+			mainboard: cards(["Yorion, Sky Nomad", 1], ["Island", 20]),
+			sideboard: [],
+		});
+		const yorionSide = deckFeatures({
+			mainboard: cards(["Island", 20]),
+			sideboard: cards(["Yorion, Sky Nomad", 1]),
+		});
+		const corpus = buildCorpus([yorionMain, yorionSide]);
+
+		expect(corpus.vocabulary.has("Yorion, Sky Nomad")).toBe(true);
+		expect(corpus.vocabulary.has("SB:Yorion, Sky Nomad")).toBe(true);
+		const main = vectorize(yorionMain, corpus);
+		const side = vectorize(yorionSide, corpus);
+		expect(main.map(([idx]) => idx)).not.toEqual(side.map(([idx]) => idx));
+	});
+
+	it("vectorizes sideboard names containing a literal slash", () => {
+		const features = deckFeatures({
+			mainboard: cards(["Mountain", 20]),
+			sideboard: cards(["Summon: Choco/Mog", 2]),
+		});
+		const corpus = buildCorpus([features, cards(["Island", 20])]);
+		const idx = corpus.vocabulary.get("SB:Summon: Choco/Mog");
+
+		expect(idx).toBeDefined();
+		expect(vectorize(features, corpus).some(([i]) => i === idx)).toBe(true);
 	});
 });
 

@@ -1,4 +1,4 @@
-import type { CardEntry } from "../types/decklist";
+import type { CardEntry, DecklistInfo } from "../types/decklist";
 import { getFrontFace } from "../utils/card-normalizer";
 
 /**
@@ -6,7 +6,7 @@ import { getFrontFace } from "../utils/card-normalizer";
  * Stores the vocabulary (card name → index) and IDF values.
  */
 export interface TfIdfCorpus {
-	/** Map from card name to vocabulary index */
+	/** Map from term (card name, or `SB:<name>` for sideboard cards) to vocabulary index */
 	vocabulary: Map<string, number>;
 	/** IDF value for each vocabulary index */
 	idf: Float64Array;
@@ -18,6 +18,43 @@ export interface TfIdfCorpus {
  * Sparse TF-IDF vector: array of [vocabIndex, tfidfValue] pairs.
  */
 export type SparseVector = [number, number][];
+
+/** Prefix that namespaces sideboard cards as features distinct from mainboard cards. */
+export const SIDEBOARD_FEATURE_PREFIX = "SB:";
+
+/**
+ * Turn a decklist into the card entries used as TF-IDF terms: mainboard cards
+ * as-is, sideboard cards as `SB:<card name>`.
+ *
+ * Keeping the zones apart means "Yorion, Sky Nomad in the sideboard" (a
+ * companion) and "Yorion, Sky Nomad in the mainboard" are different features,
+ * while each sideboard copy still counts towards the deck's total for TF.
+ */
+export function deckFeatures(
+	decklist: Pick<DecklistInfo, "mainboard" | "sideboard">,
+): CardEntry[] {
+	return [
+		...decklist.mainboard,
+		...decklist.sideboard.map((entry) => ({
+			cardName: SIDEBOARD_FEATURE_PREFIX + entry.cardName,
+			quantity: entry.quantity,
+		})),
+	];
+}
+
+/**
+ * Vocabulary key for a card entry: its front-face name, keeping any
+ * sideboard prefix outside the normalization (so it cannot affect it).
+ */
+function termOf(cardName: string): string {
+	if (cardName.startsWith(SIDEBOARD_FEATURE_PREFIX)) {
+		return (
+			SIDEBOARD_FEATURE_PREFIX +
+			getFrontFace(cardName.slice(SIDEBOARD_FEATURE_PREFIX.length))
+		);
+	}
+	return getFrontFace(cardName);
+}
 
 /**
  * Build a TF-IDF corpus from a collection of decklists.
@@ -33,7 +70,7 @@ export function buildCorpus(decklists: CardEntry[][]): TfIdfCorpus {
 	for (const decklist of decklists) {
 		const seen = new Set<string>();
 		for (const entry of decklist) {
-			const card = getFrontFace(entry.cardName);
+			const card = termOf(entry.cardName);
 
 			if (!vocabulary.has(card)) {
 				vocabulary.set(card, vocabulary.size);
@@ -71,7 +108,7 @@ export function vectorize(decklist: CardEntry[], corpus: TfIdfCorpus): SparseVec
 	const vector: SparseVector = [];
 
 	for (const entry of decklist) {
-		const idx = corpus.vocabulary.get(getFrontFace(entry.cardName));
+		const idx = corpus.vocabulary.get(termOf(entry.cardName));
 		if (idx === undefined) continue;
 
 		const tf = entry.quantity / totalCards;

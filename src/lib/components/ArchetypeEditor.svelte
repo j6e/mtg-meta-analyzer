@@ -274,6 +274,8 @@
 				<tr><td><code>&nbsp;&nbsp;&nbsp;&nbsp;.name</code></td><td>string*</td><td>Card name</td></tr>
 				<tr><td><code>&nbsp;&nbsp;&nbsp;&nbsp;.minCopies</code></td><td>number</td><td>Deck must have &ge; N copies</td></tr>
 				<tr><td><code>&nbsp;&nbsp;&nbsp;&nbsp;.exactCopies</code></td><td>number</td><td>Exactly N copies (0 = absent)</td></tr>
+				<tr><td><code>&nbsp;&nbsp;&nbsp;&nbsp;.usedAsCommander</code></td><td>boolean</td><td>Card must be in the commander zone</td></tr>
+				<tr><td><code>&nbsp;&nbsp;&nbsp;&nbsp;.usedInSideboard</code></td><td>boolean</td><td>Count copies in the sideboard instead of the mainboard</td></tr>
 				<tr><td><code>&nbsp;&nbsp;.strictMode</code></td><td>boolean</td><td>If true, KNN cannot produce this label</td></tr>
 			</tbody>
 		</table>
@@ -283,8 +285,9 @@
 			<ul>
 				<li><code>minCopies</code>: &ge; N copies required; <code>exactCopies</code>: exactly N (0 = card absent)</li>
 				<li>Neither set → defaults to <code>minCopies: 1</code></li>
+				<li><code>usedInSideboard: true</code>: apply the copy constraint to the sideboard instead of the mainboard</li>
 				<li>ALL signature cards must match (AND); most cards wins ties</li>
-				<li>Unmatched decks go to KNN (k=5, min confidence 0.3)</li>
+				<li>Unmatched decks go to the nearest archetype centroid (min similarity 0.4)</li>
 			</ul>
 		</section>
 
@@ -296,7 +299,10 @@
   - name: Mono-Green
     signatureCards:
       - name: Stomping Ground
-        exactCopies: 0  # absent`}</pre>
+        exactCopies: 0  # absent
+      - name: Pick Your Poison
+        minCopies: 2
+        usedInSideboard: true`}</pre>
 	</div>
 </div>
 

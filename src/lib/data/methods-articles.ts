@@ -176,6 +176,7 @@ const archetypeClassification: MethodArticle = {
 	<li><code>minCopies: N</code> — the deck must contain &ge; N copies</li>
 	<li><code>exactCopies: N</code> — the deck must contain exactly N copies</li>
 	<li><code>usedAsCommander: true</code> — the card must be in the commander zone</li>
+	<li><code>usedInSideboard: true</code> — the copy count is checked in the sideboard instead of the mainboard (so <code>exactCopies: 0</code> means absent from the sideboard)</li>
 </ul>
 <p>
 	If multiple archetypes match (e.g. a deck matches both "Energy" and "Boros Energy"),
@@ -224,6 +225,12 @@ const archetypeClassification: MethodArticle = {
 <p>
 	Each decklist becomes a sparse vector in card-space, normalized to unit length
 	(L2 norm). This means cosine similarity reduces to a simple dot product.
+</p>
+<p>
+	Both the mainboard and the sideboard contribute, as <strong>separate
+	features</strong>: a card in the sideboard is a different term from the same
+	card in the mainboard (so a companion like Yorion in the sideboard is not
+	confused with a maindeck copy). "Total cards" counts both zones.
 </p>
 <p><strong>Centroid building:</strong> For each already-classified archetype, we
 	average the TF-IDF vectors of all its labeled decklists and re-normalize to

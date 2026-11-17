@@ -139,6 +139,7 @@
 						<tr>
 							<th>Card Name</th>
 							<th class="num">Copies</th>
+							<th>Zone</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -154,6 +155,15 @@
 										= {card.exactCopies}
 									{:else}
 										≥ {card.minCopies ?? 1}
+									{/if}
+								</td>
+								<td>
+									{#if card.usedAsCommander}
+										Commander
+									{:else if card.usedInSideboard}
+										Sideboard
+									{:else}
+										Mainboard
 									{/if}
 								</td>
 							</tr>

@@ -8,7 +8,7 @@ import type { CardEntry, DecklistInfo } from "../types/decklist";
 import { getCommanderShortName, getFrontFace } from "../utils/card-normalizer";
 import { buildCentroids, classifyCentroid } from "./centroid";
 import type { LabeledPoint } from "./knn";
-import { buildCorpus, vectorize } from "./tfidf";
+import { buildCorpus, deckFeatures, vectorize } from "./tfidf";
 
 export interface ClassificationResult {
 	decklistId: string;
@@ -32,22 +32,30 @@ export function parseArchetypeYaml(yamlContent: string): ParsedArchetypeConfig {
 }
 
 /**
- * Rule-based classification: check if a decklist contains all signature cards
- * at the required minimum copies.
+ * Rule-based classification: check if a decklist satisfies every signature
+ * card of an archetype.
+ *
+ * Each signature card is checked in one zone:
+ * - `usedAsCommander: true` → the card must be among the commanders
+ *   (copy counts are ignored);
+ * - `usedInSideboard: true` → the copy constraint applies to the sideboard;
+ * - otherwise → the copy constraint applies to the mainboard.
+ *
+ * The copy constraint is `exactCopies: N` (exactly N copies in that zone;
+ * 0 means absent) when set, else `minCopies: N` (at least N, default 1).
+ * Card names are compared by front face.
  *
  * Returns the archetype name if matched, null otherwise.
- * If multiple archetypes match, returns the one with the most signature card matches.
+ * If multiple archetypes match, returns the one with the most signature cards.
  */
 export function classifyBySignatureCards(
 	mainboard: CardEntry[],
+	sideboard: CardEntry[],
 	commanders: CardEntry[] | null,
 	archetypeDefs: ArchetypeDefinition[],
 ): string | null {
-	const cardQuantities = new Map<string, number>();
-	for (const entry of mainboard) {
-		const name = getFrontFace(entry.cardName);
-		cardQuantities.set(name, (cardQuantities.get(name) ?? 0) + entry.quantity);
-	}
+	const mainboardQuantities = countCards(mainboard);
+	const sideboardQuantities = countCards(sideboard);
 
 	const commanderNames = new Set<string>();
 	if (commanders) {
@@ -64,6 +72,9 @@ export function classifyBySignatureCards(
 			if (sig.usedAsCommander) {
 				return commanderNames.has(sig.name);
 			}
+			const cardQuantities = sig.usedInSideboard
+				? sideboardQuantities
+				: mainboardQuantities;
 			const qty = cardQuantities.get(sig.name) ?? 0;
 			if (sig.exactCopies !== undefined) {
 				return qty === sig.exactCopies;
@@ -78,6 +89,15 @@ export function classifyBySignatureCards(
 	}
 
 	return bestMatch;
+}
+
+function countCards(cards: CardEntry[]): Map<string, number> {
+	const quantities = new Map<string, number>();
+	for (const entry of cards) {
+		const name = getFrontFace(entry.cardName);
+		quantities.set(name, (quantities.get(name) ?? 0) + entry.quantity);
+	}
+	return quantities;
 }
 
 interface DeterministicResult {
@@ -103,6 +123,7 @@ function classifyDeterministic(
 	for (const [id, decklist] of Object.entries(decklists)) {
 		const archetype = classifyBySignatureCards(
 			decklist.mainboard,
+			decklist.sideboard,
 			decklist.commanders,
 			archetypeDefs,
 		);
@@ -185,10 +206,8 @@ export function classifyAll(
 	}
 
 	// Pass 3: KNN classification
-	// Build TF-IDF corpus from all decklists
-	const decklistEntries = Object.entries(decklists);
-	const allMainboards = decklistEntries.map(([, d]) => d.mainboard);
-	const corpus = buildCorpus(allMainboards);
+	// Build TF-IDF corpus from all decklists (mainboard + sideboard features)
+	const corpus = buildCorpus(Object.values(decklists).map(deckFeatures));
 
 	// Build labeled training set from signature-classified decklists,
 	// excluding strict-mode archetypes so KNN cannot produce those labels
@@ -199,7 +218,7 @@ export function classifyAll(
 	for (const [id, archetype] of classified) {
 		if (strictArchetypes.has(archetype)) continue;
 		const decklist = decklists[id];
-		const vector = vectorize(decklist.mainboard, corpus);
+		const vector = vectorize(deckFeatures(decklist), corpus);
 		labeledPoints.push({ vector, label: archetype });
 	}
 
@@ -208,7 +227,7 @@ export function classifyAll(
 
 	for (const id of unclassifiedIds) {
 		const decklist = decklists[id];
-		const vector = vectorize(decklist.mainboard, corpus);
+		const vector = vectorize(deckFeatures(decklist), corpus);
 		const result = classifyCentroid(vector, centroids);
 
 		if (result && result.confidence >= minConfidence) {
@@ -317,12 +336,9 @@ export function classifyAllPooled(
 		return resultMap;
 	}
 
-	// Build pooled TF-IDF corpus from ALL mainboards across all tournaments
-	const allMainboards: CardEntry[][] = [];
-	for (const decklist of allDecklists.values()) {
-		allMainboards.push(decklist.mainboard);
-	}
-	const corpus = buildCorpus(allMainboards);
+	// Build pooled TF-IDF corpus from ALL decklists across all tournaments
+	// (mainboard + sideboard features)
+	const corpus = buildCorpus([...allDecklists.values()].map(deckFeatures));
 
 	// Build pooled labeled training set (excluding strictMode archetypes)
 	const strictArchetypes = new Set(
@@ -332,7 +348,7 @@ export function classifyAllPooled(
 	for (const [id, archetype] of allClassified) {
 		if (strictArchetypes.has(archetype)) continue;
 		const decklist = allDecklists.get(id)!;
-		const vector = vectorize(decklist.mainboard, corpus);
+		const vector = vectorize(deckFeatures(decklist), corpus);
 		labeledPoints.push({ vector, label: archetype });
 	}
 
@@ -341,7 +357,7 @@ export function classifyAllPooled(
 
 	for (const { tournamentId, decklistId } of allUnclassified) {
 		const decklist = allDecklists.get(decklistId)!;
-		const vector = vectorize(decklist.mainboard, corpus);
+		const vector = vectorize(deckFeatures(decklist), corpus);
 		const result = classifyCentroid(vector, centroids);
 
 		if (result && result.confidence >= minConfidence) {
