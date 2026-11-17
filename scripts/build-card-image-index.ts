@@ -1,5 +1,6 @@
 /**
- * Build data/card-images.json: card name → Scryfall CDN image URLs + artist.
+ * Build data/card-images.json: card name → Scryfall CDN image URLs, artist and
+ * land/creature kind (used to group decklists).
  *
  * Resolves every card name appearing in tournament decklists and archetype
  * signature definitions against Scryfall's default_cards bulk data, so the app

@@ -36,6 +36,14 @@ Deviations from the plan below, accepted after review:
 - If fetching `card-images.json` fails at runtime, the store settles on an
   empty index so previews fall back to text instead of loading forever
   (`null` strictly means "loading"); the next preview interaction retries.
+- Entries also carry an optional `kind` (`"land"` | `"creature"`, from the front
+  face's `type_line`; absent for everything else) so decklists can group the
+  mainboard. Bumping it required `CARD_IMAGE_STATUS_SCHEMA_VERSION` 2, which makes the
+  ingestion preflight rebuild any older index.
+- `DecklistView` loads the index as soon as it renders, not on first hover, because
+  the mainboard grouping needs `kind`. Until the index arrives (or if it fails), the
+  mainboard renders as a single list. Pages that show decklists almost always end up
+  loading the index anyway, so this was accepted over shipping a separate kind index.
 
 Ingestion wiring: each tournament-fetch workflow (`fetch-mtgo.yml`,
 `fetch-videre.yml`, `fetch-tournament.yml`) rebuilds the index after a fetch
