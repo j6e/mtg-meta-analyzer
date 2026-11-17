@@ -101,11 +101,10 @@ export function validateArchetypeYaml(yamlContent: string): ValidationResult {
 				errors.push(`${cardPrefix}: missing or invalid "name"`);
 			}
 
-			if (
-				card.usedInSideboard !== undefined &&
-				typeof card.usedInSideboard !== "boolean"
-			) {
-				errors.push(`${cardPrefix}: "usedInSideboard" must be a boolean`);
+			for (const flag of ["usedAsCommander", "usedInSideboard"] as const) {
+				if (card[flag] !== undefined && typeof card[flag] !== "boolean") {
+					errors.push(`${cardPrefix}: "${flag}" must be a boolean`);
+				}
 			}
 
 			if (card.usedAsCommander === true && card.usedInSideboard === true) {

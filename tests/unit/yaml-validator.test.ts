@@ -130,6 +130,33 @@ archetypes:
 		);
 	});
 
+	it("accepts usedAsCommander when it is a boolean", () => {
+		const yaml = `
+archetypes:
+  - name: Test
+    signatureCards:
+      - name: Aragorn, King of Gondor
+        usedAsCommander: true
+`;
+		const result = validateArchetypeYaml(yaml);
+		expect(result.ok).toBe(true);
+	});
+
+	it("rejects non-boolean usedAsCommander values", () => {
+		const yaml = `
+archetypes:
+  - name: Test
+    signatureCards:
+      - name: Aragorn, King of Gondor
+        usedAsCommander: "true"
+`;
+		const result = validateArchetypeYaml(yaml);
+		expect(result.ok).toBe(false);
+		expect(result.errors).toContain(
+			'archetypes[0].signatureCards[0]: "usedAsCommander" must be a boolean',
+		);
+	});
+
 	it("rejects cards marked as both commander and sideboard", () => {
 		const yaml = `
 archetypes:
