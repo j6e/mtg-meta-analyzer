@@ -11,7 +11,7 @@
 	import { activeArchetypeDefs } from '$lib/stores/archetype-configs';
 	import DecklistView from '$lib/components/DecklistView.svelte';
 	import CardTooltip from '$lib/components/CardTooltip.svelte';
-	import type { DecklistInfo } from '$lib/types/decklist';
+	import type { DecklistInfo, DecklistPlayer } from '$lib/types/decklist';
 	import type { ClassificationResult } from '$lib/algorithms/archetype-classifier';
 	import { computeCardComposition } from '$lib/utils/card-composition';
 
@@ -27,9 +27,7 @@
 		const resultsMap = $classificationResults;
 		const tournaments = $filteredTournaments;
 		const result: {
-			playerName: string;
-			playerRank: number;
-			tournamentName: string;
+			player: DecklistPlayer;
 			decklistId: string;
 			decklist: DecklistInfo;
 			classificationResult: ClassificationResult | undefined;
@@ -55,9 +53,12 @@
 					if (reported !== reportedName) continue;
 
 					result.push({
-						playerName: player.name,
-						playerRank: player.rank,
-						tournamentName: t.meta.name,
+						player: {
+							id: playerId,
+							name: player.name,
+							rank: player.rank,
+							record: player.matchRecord,
+						},
 						decklistId: deckId,
 						decklist: deck,
 						classificationResult: classResult,
@@ -65,7 +66,7 @@
 				}
 			}
 		}
-		result.sort((a, b) => a.playerRank - b.playerRank);
+		result.sort((a, b) => a.player.rank - b.player.rank);
 		return result;
 	});
 
@@ -202,9 +203,8 @@
 				{#each visibleDecklists as d}
 					<DecklistView
 						decklist={d.decklist}
-						playerName={d.playerName}
+						player={d.player}
 						archetype={classifiedName}
-						playerRank={d.playerRank}
 						classificationResult={d.classificationResult}
 					/>
 				{/each}

@@ -1,18 +1,15 @@
-import type { DecklistInfo } from "../types/decklist";
+import type {
+	DecklistInfo,
+	DecklistPlayer,
+	DecklistTournament,
+} from "../types/decklist";
 import type { TournamentData } from "../types/tournament";
 
 export interface EnrichedDecklist {
 	decklist: DecklistInfo;
 	decklistId: string;
-	playerName: string;
-	playerId: string;
-	playerRank: number;
-	matchRecord: string;
-	tournamentName: string;
-	tournamentDate: string;
-	tournamentUrl: string;
-	tournamentPlayerCount: number;
-	tournamentId: string;
+	player: DecklistPlayer;
+	tournament: DecklistTournament;
 }
 
 /**
@@ -31,6 +28,13 @@ export function collectArchetypeDecklists(
 	const result: EnrichedDecklist[] = [];
 
 	for (const t of tournaments) {
+		const tournament: DecklistTournament = {
+			id: t.meta.id,
+			name: tournamentNames.get(t.meta.id) ?? t.meta.name,
+			date: t.meta.date,
+			url: t.meta.url,
+			playerCount: t.meta.playerCount,
+		};
 		for (const [playerId, player] of Object.entries(t.players)) {
 			if (playerArchetypes.get(`${t.meta.id}:${playerId}`) !== archetypeName) continue;
 			for (const deckId of player.decklistIds) {
@@ -39,15 +43,13 @@ export function collectArchetypeDecklists(
 					result.push({
 						decklist: deck,
 						decklistId: deckId,
-						playerName: player.name,
-						playerId,
-						playerRank: player.rank,
-						matchRecord: player.matchRecord,
-						tournamentName: tournamentNames.get(t.meta.id) ?? t.meta.name,
-						tournamentDate: t.meta.date,
-						tournamentUrl: t.meta.url,
-						tournamentPlayerCount: t.meta.playerCount,
-						tournamentId: t.meta.id,
+						player: {
+							id: playerId,
+							name: player.name,
+							rank: player.rank,
+							record: player.matchRecord,
+						},
+						tournament,
 					});
 				}
 			}
@@ -80,11 +82,11 @@ export function findBestDecklist(
 	if (enriched.length === 0) return null;
 
 	return enriched.reduce((best, curr) => {
-		if (curr.playerRank < best.playerRank) return curr;
-		if (curr.playerRank > best.playerRank) return best;
+		if (curr.player.rank < best.player.rank) return curr;
+		if (curr.player.rank > best.player.rank) return best;
 		// Same rank — tiebreak by tournament name, then player name
-		const tCmp = curr.tournamentName.localeCompare(best.tournamentName);
+		const tCmp = curr.tournament.name.localeCompare(best.tournament.name);
 		if (tCmp !== 0) return tCmp < 0 ? curr : best;
-		return curr.playerName.localeCompare(best.playerName) < 0 ? curr : best;
+		return curr.player.name.localeCompare(best.player.name) < 0 ? curr : best;
 	});
 }

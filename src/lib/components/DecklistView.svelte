@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { DecklistInfo } from '../types/decklist';
+	import type { DecklistInfo, DecklistPlayer, DecklistTournament } from '../types/decklist';
 	import type { ClassificationResult } from '../algorithms/archetype-classifier';
 	import CardTooltip from './CardTooltip.svelte';
 	import {
@@ -11,27 +11,21 @@
 
 	let {
 		decklist,
-		playerName = '',
+		player,
+		tournament,
 		archetype = '',
-		playerRank,
-		tournamentName = '',
-		tournamentDate = '',
-		tournamentUrl = '',
-		tournamentPlayerCount,
-		matchRecord = '',
 		classificationResult,
 	}: {
 		decklist: DecklistInfo;
-		playerName?: string;
+		player?: DecklistPlayer;
+		tournament?: DecklistTournament;
 		archetype?: string;
-		playerRank?: number;
-		tournamentName?: string;
-		tournamentDate?: string;
-		tournamentUrl?: string;
-		tournamentPlayerCount?: number;
-		matchRecord?: string;
 		classificationResult?: ClassificationResult;
 	} = $props();
+
+	const playerCountSuffix = $derived(
+		tournament && tournament.playerCount > 0 ? `, ${tournament.playerCount} players` : '',
+	);
 
 	const sortByName = (cards: DecklistInfo['mainboard']) =>
 		[...cards].sort((a, b) => a.cardName.localeCompare(b.cardName));
@@ -75,17 +69,27 @@
 </script>
 
 <div class="decklist">
-	{#if playerName || archetype || playerRank != null || tournamentName}
+	{#snippet tournamentLink(t: DecklistTournament)}
+		{#if t.url}
+			<a href={t.url} target="_blank" rel="noopener">{t.name}</a>
+		{:else}
+			{t.name}
+		{/if}
+	{/snippet}
+
+	{#if player || archetype || tournament}
 		<div class="meta">
-			{#if tournamentName}
+			{#if tournament}
 				<div class="tournament-row">
-					<span class="tournament">{#if tournamentUrl}<a href={tournamentUrl} target="_blank" rel="noopener">{tournamentName}</a>{:else}{tournamentName}{/if}{tournamentPlayerCount != null ? `, ${tournamentPlayerCount} players` : ''}</span>
-					{#if tournamentDate}<time class="date" datetime={tournamentDate}>{tournamentDate}</time>{/if}
+					<span class="tournament">{@render tournamentLink(tournament)}{playerCountSuffix}</span>
+					{#if tournament.date}
+						<time class="date" datetime={tournament.date}>{tournament.date}</time>
+					{/if}
 				</div>
 			{/if}
-			{#if playerName}<span class="player">{playerName}</span>{/if}
-			{#if playerRank != null}
-				<span class="rank">#{playerRank}{matchRecord ? ` (${matchRecord})` : ''}</span>
+			{#if player}
+				<span class="player">{player.name}</span>
+				<span class="rank">#{player.rank}{player.record ? ` (${player.record})` : ''}</span>
 			{/if}
 			{#if archetype}<span class="archetype">{archetype}</span>{/if}
 			{#if classificationResult?.method === 'signature'}

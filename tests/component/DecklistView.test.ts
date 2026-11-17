@@ -4,7 +4,11 @@ import { cleanup, render } from "@testing-library/svelte";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import DecklistView from "../../src/lib/components/DecklistView.svelte";
 import { cardImageIndex } from "../../src/lib/stores/card-images";
-import type { DecklistInfo } from "../../src/lib/types/decklist";
+import type {
+	DecklistInfo,
+	DecklistPlayer,
+	DecklistTournament,
+} from "../../src/lib/types/decklist";
 
 beforeEach(() => {
 	vi.stubGlobal(
@@ -18,6 +22,16 @@ afterEach(() => {
 	vi.unstubAllGlobals();
 	cardImageIndex.set(null);
 });
+
+const alice: DecklistPlayer = { id: "p1", name: "Alice", rank: 3, record: "6-1-0" };
+
+const championship: DecklistTournament = {
+	id: "melee-42",
+	name: "Premodern Championship",
+	date: "2026-09-08",
+	url: "https://melee.gg/Tournament/View/42",
+	playerCount: 32,
+};
 
 const sampleDecklist: DecklistInfo = {
 	playerId: "p1",
@@ -62,7 +76,7 @@ describe("DecklistView component", () => {
 		const { container } = render(DecklistView, {
 			props: {
 				decklist: sampleDecklist,
-				playerName: "Alice",
+				player: alice,
 				archetype: "Mono-Red Aggro",
 			},
 		});
@@ -74,12 +88,8 @@ describe("DecklistView component", () => {
 		const { container } = render(DecklistView, {
 			props: {
 				decklist: sampleDecklist,
-				tournamentName: "Premodern Championship",
-				tournamentDate: "2026-09-08",
-				tournamentUrl: "https://melee.gg/Tournament/View/42",
-				tournamentPlayerCount: 32,
-				playerRank: 3,
-				matchRecord: "6-1-0",
+				tournament: championship,
+				player: alice,
 			},
 		});
 		expect(container.querySelector(".meta")?.textContent).toContain(
@@ -99,8 +109,7 @@ describe("DecklistView component", () => {
 		const { container } = render(DecklistView, {
 			props: {
 				decklist: sampleDecklist,
-				tournamentName: "Premodern Championship",
-				tournamentUrl: "",
+				tournament: { ...championship, url: "", playerCount: 0 },
 			},
 		});
 		expect(container.querySelector(".tournament")?.textContent).toBe(

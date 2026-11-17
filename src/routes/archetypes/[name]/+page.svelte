@@ -199,10 +199,10 @@
 	// Dropdown options sorted by rank
 	const decklistOptions = $derived.by(() => {
 		return [...enrichedDecklists]
-			.sort((a, b) => a.playerRank - b.playerRank || a.tournamentName.localeCompare(b.tournamentName))
+			.sort((a, b) => a.player.rank - b.player.rank || a.tournament.name.localeCompare(b.tournament.name))
 			.map((e) => ({
 				id: e.decklistId,
-				label: `${e.tournamentName} — ${e.playerName} (Rank #${e.playerRank})`,
+				label: `${e.tournament.name} — ${e.player.name} (Rank #${e.player.rank})`,
 			}));
 	});
 
@@ -228,7 +228,7 @@
 
 	// ── Decklists tab ──
 	let showAllDecklists = $state(false);
-	const sortedDecklists = $derived([...enrichedDecklists].sort((a, b) => a.playerRank - b.playerRank));
+	const sortedDecklists = $derived([...enrichedDecklists].sort((a, b) => a.player.rank - b.player.rank));
 	const visibleDecklists = $derived(showAllDecklists ? sortedDecklists : sortedDecklists.slice(0, 6));
 
 </script>
@@ -494,13 +494,8 @@
 					{#each visibleDecklists as d}
 						<DecklistView
 							decklist={d.decklist}
-							playerName={d.playerName}
-							playerRank={d.playerRank}
-							tournamentName={d.tournamentName}
-							tournamentDate={d.tournamentDate}
-							tournamentUrl={d.tournamentUrl}
-							tournamentPlayerCount={d.tournamentPlayerCount}
-							matchRecord={d.matchRecord}
+							player={d.player}
+							tournament={d.tournament}
 						/>
 					{/each}
 				</div>
