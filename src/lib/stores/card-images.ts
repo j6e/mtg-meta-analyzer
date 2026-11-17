@@ -97,7 +97,15 @@ export function lookupCardType(
 	return { kind: index[getFrontFace(cardName)]?.kind ?? "other" };
 }
 
+// Counting keys walks all ~10k entries; remember the answer per index object
+// so per-card lookups stay O(1).
+const indexHasEntries = new WeakMap<object, boolean>();
+
 function hasEntries(index: Record<string, CardImageEntry>): boolean {
-	for (const _ in index) return true;
-	return false;
+	let known = indexHasEntries.get(index);
+	if (known === undefined) {
+		known = Object.keys(index).length > 0;
+		indexHasEntries.set(index, known);
+	}
+	return known;
 }
