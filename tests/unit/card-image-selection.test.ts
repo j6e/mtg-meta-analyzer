@@ -44,10 +44,25 @@ describe("cardKind", () => {
 		["Land Creature — Forest Dryad", "land"],
 		["Artifact Land", "land"],
 		["Artifact Creature — Construct", "creature"],
-		["Creature — Human Wizard // Sorcery — Adventure", "creature"],
-		["Sorcery // Land", undefined],
 		["Legendary Planeswalker — Jace", undefined],
 	])("classifies %s as %s", (typeLine, kind) => {
 		expect(cardKind(card({ type_line: typeLine }))).toBe(kind);
+	});
+
+	it.each([
+		// Adventure (Bonecrusher Giant)
+		[["Creature — Giant", "Instant — Adventure"], "creature"],
+		// Modal DFC spell // land (Emeria's Call)
+		[["Sorcery", "Land"], undefined],
+		// Modal DFC with a land front face
+		[["Land", "Instant"], "land"],
+		// Split card (Fire // Ice)
+		[["Instant", "Instant"], undefined],
+	])("uses the front face for multi-face cards %j", (faces, kind) => {
+		const multiFace = card({
+			type_line: faces.join(" // "),
+			card_faces: faces.map((type_line) => ({ type_line })),
+		});
+		expect(cardKind(multiFace)).toBe(kind);
 	});
 });

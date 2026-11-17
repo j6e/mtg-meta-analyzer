@@ -42,7 +42,11 @@ export interface ScryfallCard {
 	id?: string;
 	type_line?: string;
 	image_uris?: Record<string, string>;
-	card_faces?: Array<{ image_uris?: Record<string, string>; artist?: string }>;
+	card_faces?: Array<{
+		image_uris?: Record<string, string>;
+		artist?: string;
+		type_line?: string;
+	}>;
 	artist?: string;
 }
 
@@ -204,8 +208,10 @@ async function selectPreferredCardsFromBulk(
 	return { selected, count };
 }
 
+/** Land or creature by the front face's card types (subtypes after "—" ignored). */
 export function cardKind(card: ScryfallCard): CardImageEntry["kind"] {
-	const frontTypes = (card.type_line ?? "").split(" // ")[0].split("—")[0];
+	const frontTypeLine = card.card_faces?.[0]?.type_line ?? card.type_line ?? "";
+	const frontTypes = frontTypeLine.split("—")[0];
 	if (/\bLand\b/.test(frontTypes)) return "land";
 	if (/\bCreature\b/.test(frontTypes)) return "creature";
 	return undefined;
