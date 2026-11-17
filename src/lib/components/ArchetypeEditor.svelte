@@ -298,10 +298,10 @@
   - name: Mono-Green
     signatureCards:
       - name: Stomping Ground
-				exactCopies: 0  # absent
-			- name: Pick Your Poison
-				minCopies: 2
-				usedInSideboard: true`}</pre>
+        exactCopies: 0  # absent
+      - name: Pick Your Poison
+        minCopies: 2
+        usedInSideboard: true`}</pre>
 	</div>
 </div>
 
