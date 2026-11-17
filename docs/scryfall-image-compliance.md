@@ -38,7 +38,7 @@ Deviations from the plan below, accepted after review:
   (`null` strictly means "loading"); the next preview interaction retries.
 - Entries also carry an optional `kind` (`"land"` | `"creature"`, from the front
   face's `type_line`; absent for everything else) so decklists can group the
-  mainboard. Bumping it required `CARD_IMAGE_STATUS_SCHEMA_VERSION` 2, which makes the
+  mainboard. Adding it bumped `CARD_IMAGE_STATUS_SCHEMA_VERSION` to 2, which makes the
   ingestion preflight rebuild any older index.
 - `DecklistView` loads the index as soon as it renders, not on first hover, because
   the mainboard grouping needs `kind`. Until the index arrives (or if it fails), the
@@ -115,7 +115,8 @@ Run it as part of ingestion (hook into the weekly melee pipeline / after
 ### 2. Runtime changes
 
 - Load `card-images.json` lazily (same pattern as per-format tournament data —
-  it's only needed by pages that render previews).
+  it's only needed by pages that render previews). Decklists now load it eagerly;
+  see the deviations above.
 - `getScryfallImageUrl(name, version)` becomes a lookup against the index.
   Miss → return `null`; `CardTooltip` shows its existing text fallback and the charts
   fall back to the plain colored point. **No live `/cards/named` fallback** — a miss
