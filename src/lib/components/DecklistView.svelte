@@ -2,7 +2,12 @@
 	import type { DecklistInfo } from '../types/decklist';
 	import type { ClassificationResult } from '../algorithms/archetype-classifier';
 	import CardTooltip from './CardTooltip.svelte';
-	import { cardImageIndex, ensureCardImagesLoaded, lookupCardImage } from '../stores/card-images';
+	import {
+		type CardKind,
+		cardImageIndex,
+		ensureCardImagesLoaded,
+		lookupCardType,
+	} from '../stores/card-images';
 
 	let {
 		decklist,
@@ -40,21 +45,20 @@
 		void ensureCardImagesLoaded();
 	});
 
+	const MAINBOARD_GROUPS: { kind: CardKind; label: string }[] = [
+		{ kind: 'land', label: 'Lands' },
+		{ kind: 'creature', label: 'Creatures' },
+		{ kind: 'other', label: 'Other cards' },
+	];
+
 	const mainboardGroups = $derived(
-		(
-			[
-				['Lands', 'land'],
-				['Creatures', 'creature'],
-				['Other cards', undefined],
-			] as const
-		)
-			.map(([label, kind]) => ({
-				label,
-				cards: sortedMainboard.filter(
-					(card) => lookupCardImage($cardImageIndex, card.cardName)?.kind === kind,
-				),
-			}))
-			.filter((group) => group.cards.length > 0),
+		MAINBOARD_GROUPS.map(({ kind, label }) => ({
+			label,
+			cards: sortedMainboard.filter(
+				(card) =>
+					(lookupCardType($cardImageIndex, card.cardName)?.kind ?? 'other') === kind,
+			),
+		})).filter((group) => group.cards.length > 0),
 	);
 
 	const mainboardCount = $derived(

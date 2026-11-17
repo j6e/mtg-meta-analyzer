@@ -12,13 +12,21 @@ import { writable } from "svelte/store";
 import { base } from "$app/paths";
 import { getFrontFace } from "../utils/card-normalizer";
 
+/** What decklists group a card by, from its front face's card types. */
+export type CardKind = "land" | "creature" | "other";
+
+/** Card type information decklists need, as returned by lookupCardType. */
+export interface CardTypeInfo {
+	kind: CardKind;
+}
+
 export interface CardImageEntry {
 	normal: string;
 	/** Absent for the rare cards whose Scryfall record has no art crop. */
 	art_crop?: string;
 	artist: string;
-	/** Front-face type; absent for cards that are neither lands nor creatures. */
-	kind?: "land" | "creature";
+	/** Front-face type; absent ("other") for cards that are neither lands nor creatures. */
+	kind?: Exclude<CardKind, "other">;
 }
 
 /** Front-face card name → image entry; null until the index is fetched. */
@@ -73,4 +81,23 @@ export function lookupCardImage(
 ): CardImageEntry | null {
 	if (!cardName) return null;
 	return index?.[getFrontFace(cardName)] ?? null;
+}
+
+/**
+ * Look up a card's type info by name (front face for DFCs). Returns null when
+ * the index is not usable yet — still loading, or empty after a failed fetch —
+ * so callers can skip type-based layout. A card missing from a loaded index is
+ * "other".
+ */
+export function lookupCardType(
+	index: Record<string, CardImageEntry> | null,
+	cardName: string,
+): CardTypeInfo | null {
+	if (!index || !hasEntries(index)) return null;
+	return { kind: index[getFrontFace(cardName)]?.kind ?? "other" };
+}
+
+function hasEntries(index: Record<string, CardImageEntry>): boolean {
+	for (const _ in index) return true;
+	return false;
 }

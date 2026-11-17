@@ -4,6 +4,7 @@ import {
 	cardImageIndex,
 	ensureCardImagesLoaded,
 	lookupCardImage,
+	lookupCardType,
 } from "../../src/lib/stores/card-images";
 import { CARD_IMAGE_INDEX } from "../fixtures/card-image-index";
 
@@ -32,6 +33,32 @@ describe("lookupCardImage", () => {
 
 	it("returns null while the index has not loaded", () => {
 		expect(lookupCardImage(null, "Lightning Bolt")).toBeNull();
+	});
+});
+
+describe("lookupCardType", () => {
+	const image = { normal: "https://example.test/normal.jpg", artist: "" };
+	const index = {
+		Mountain: { ...image, kind: "land" as const },
+		"Bonecrusher Giant": { ...image, kind: "creature" as const },
+		"Lightning Bolt": image,
+	};
+
+	it("returns the stored land/creature kind", () => {
+		expect(lookupCardType(index, "Mountain")).toEqual({ kind: "land" });
+		expect(lookupCardType(index, "Bonecrusher Giant // Stomp")).toEqual({
+			kind: "creature",
+		});
+	});
+
+	it("treats cards without a stored kind, or missing ones, as other", () => {
+		expect(lookupCardType(index, "Lightning Bolt")).toEqual({ kind: "other" });
+		expect(lookupCardType(index, "Storm Crow")).toEqual({ kind: "other" });
+	});
+
+	it("returns null while the index is loading or empty after a failed fetch", () => {
+		expect(lookupCardType(null, "Mountain")).toBeNull();
+		expect(lookupCardType({}, "Mountain")).toBeNull();
 	});
 });
 
