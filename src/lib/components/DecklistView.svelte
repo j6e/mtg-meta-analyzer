@@ -51,15 +51,20 @@
 		{ kind: 'other', label: 'Other cards' },
 	];
 
-	const mainboardGroups = $derived(
-		MAINBOARD_GROUPS.map(({ kind, label }) => ({
+	// Without a usable index (loading, or failed) show one ungrouped list.
+	const mainboardGroups = $derived.by(() => {
+		const typed = sortedMainboard.map((card) => ({
+			card,
+			type: lookupCardType($cardImageIndex, card.cardName),
+		}));
+		if (typed.some(({ type }) => type === null)) {
+			return [{ label: 'Mainboard', cards: sortedMainboard }];
+		}
+		return MAINBOARD_GROUPS.map(({ kind, label }) => ({
 			label,
-			cards: sortedMainboard.filter(
-				(card) =>
-					(lookupCardType($cardImageIndex, card.cardName)?.kind ?? 'other') === kind,
-			),
-		})).filter((group) => group.cards.length > 0),
-	);
+			cards: typed.filter(({ type }) => type?.kind === kind).map(({ card }) => card),
+		})).filter((group) => group.cards.length > 0);
+	});
 
 	const mainboardCount = $derived(
 		decklist.mainboard.reduce((sum, c) => sum + c.quantity, 0),

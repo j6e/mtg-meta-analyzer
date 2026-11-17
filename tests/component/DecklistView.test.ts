@@ -171,4 +171,20 @@ describe("DecklistView component", () => {
 			["Other cards", "Lightning Bolt"],
 		]);
 	});
+
+	it.each([
+		["loading", null],
+		["failed to load", {}],
+	])("shows one ungrouped mainboard list while the index is %s", (_state, index) => {
+		cardImageIndex.set(index);
+		const { container } = render(DecklistView, {
+			props: { decklist: sampleDecklist },
+		});
+		const lists = container.querySelectorAll("section:first-of-type ul");
+		expect(lists).toHaveLength(1);
+		expect(lists[0].getAttribute("aria-label")).toBe("Mainboard");
+		expect(lists[0].querySelectorAll(".card-name")).toHaveLength(
+			sampleDecklist.mainboard.length,
+		);
+	});
 });
