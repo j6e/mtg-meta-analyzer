@@ -1,5 +1,5 @@
 import "@testing-library/jest-dom/vitest";
-import { vi } from "vitest";
+import { beforeEach, vi } from "vitest";
 
 const storage = new Map<string, string>();
 
@@ -12,6 +12,12 @@ vi.stubGlobal("localStorage", {
 	get length() {
 		return storage.size;
 	},
+});
+
+// One Map backs localStorage for the whole run; reset it so state written by
+// one test never leaks into the next.
+beforeEach(() => {
+	storage.clear();
 });
 
 // Mock the data loader so tests neither bundle the real per-format indexes
