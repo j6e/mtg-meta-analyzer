@@ -17,13 +17,14 @@ export interface EnrichedDecklist {
  * enriched with player and tournament metadata.
  *
  * `tournamentNames` maps tournament id → cleaned display name (as shown on the
- * Tournaments page); tournaments missing from it keep their raw name.
+ * Tournaments page, see docs/tournament-naming.md); a tournament missing from
+ * it falls back to its raw name.
  */
 export function collectArchetypeDecklists(
 	tournaments: TournamentData[],
 	playerArchetypes: Map<string, string>,
 	archetypeName: string,
-	tournamentNames: Map<string, string> = new Map(),
+	tournamentNames: Map<string, string>,
 ): EnrichedDecklist[] {
 	const result: EnrichedDecklist[] = [];
 
@@ -57,19 +58,6 @@ export function collectArchetypeDecklists(
 	}
 
 	return result;
-}
-
-/**
- * Collect raw DecklistInfo[] for an archetype (no metadata).
- */
-export function collectRawDecklists(
-	tournaments: TournamentData[],
-	playerArchetypes: Map<string, string>,
-	archetypeName: string,
-): DecklistInfo[] {
-	return collectArchetypeDecklists(tournaments, playerArchetypes, archetypeName).map(
-		(e) => e.decklist,
-	);
 }
 
 /**
