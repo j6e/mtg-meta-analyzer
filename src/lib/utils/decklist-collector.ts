@@ -15,6 +15,13 @@ export interface EnrichedDecklist {
 	tournamentId: string;
 }
 
+/**
+ * Collect all decklists for a given archetype across tournaments,
+ * enriched with player and tournament metadata.
+ *
+ * `tournamentNames` maps tournament id → cleaned display name (as shown on the
+ * Tournaments page); tournaments missing from it keep their raw name.
+ */
 export function collectArchetypeDecklists(
 	tournaments: TournamentData[],
 	playerArchetypes: Map<string, string>,
