@@ -32,11 +32,21 @@ export function parseArchetypeYaml(yamlContent: string): ParsedArchetypeConfig {
 }
 
 /**
- * Rule-based classification: check if a decklist contains all signature cards
- * at the required minimum copies.
+ * Rule-based classification: check if a decklist satisfies every signature
+ * card of an archetype.
+ *
+ * Each signature card is checked in one zone:
+ * - `usedAsCommander: true` → the card must be among the commanders
+ *   (copy counts are ignored);
+ * - `usedInSideboard: true` → the copy constraint applies to the sideboard;
+ * - otherwise → the copy constraint applies to the mainboard.
+ *
+ * The copy constraint is `exactCopies: N` (exactly N copies in that zone;
+ * 0 means absent) when set, else `minCopies: N` (at least N, default 1).
+ * Card names are compared by front face.
  *
  * Returns the archetype name if matched, null otherwise.
- * If multiple archetypes match, returns the one with the most signature card matches.
+ * If multiple archetypes match, returns the one with the most signature cards.
  */
 export function classifyBySignatureCards(
 	mainboard: CardEntry[],
