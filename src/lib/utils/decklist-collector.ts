@@ -3,13 +3,18 @@ import type {
 	DecklistPlayer,
 	DecklistTournament,
 } from "../types/decklist";
-import type { TournamentData } from "../types/tournament";
+import type { PlayerInfo, TournamentData } from "../types/tournament";
 
 export interface EnrichedDecklist {
 	decklist: DecklistInfo;
 	decklistId: string;
 	player: DecklistPlayer;
 	tournament: DecklistTournament;
+}
+
+/** A tournament player as decklists show them. */
+export function toDecklistPlayer(id: string, player: PlayerInfo): DecklistPlayer {
+	return { id, name: player.name, rank: player.rank, record: player.matchRecord };
 }
 
 /**
@@ -44,12 +49,7 @@ export function collectArchetypeDecklists(
 					result.push({
 						decklist: deck,
 						decklistId: deckId,
-						player: {
-							id: playerId,
-							name: player.name,
-							rank: player.rank,
-							record: player.matchRecord,
-						},
+						player: toDecklistPlayer(playerId, player),
 						tournament,
 					});
 				}

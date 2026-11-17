@@ -47,16 +47,16 @@
 
 	// Without a usable index (loading, or failed) show one ungrouped list.
 	const mainboardGroups = $derived.by(() => {
-		const typed = sortedMainboard.map((card) => ({
+		const cardsWithType = sortedMainboard.map((card) => ({
 			card,
 			type: lookupCardType($cardImageIndex, card.cardName),
 		}));
-		if (typed.some(({ type }) => type === null)) {
+		if (cardsWithType.some(({ type }) => type === null)) {
 			return [{ label: 'Mainboard', cards: sortedMainboard }];
 		}
 		return MAINBOARD_GROUPS.map(({ kind, label }) => ({
 			label,
-			cards: typed.filter(({ type }) => type?.kind === kind).map(({ card }) => card),
+			cards: cardsWithType.filter(({ type }) => type?.kind === kind).map(({ card }) => card),
 		})).filter((group) => group.cards.length > 0);
 	});
 

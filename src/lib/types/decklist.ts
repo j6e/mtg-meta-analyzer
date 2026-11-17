@@ -1,3 +1,5 @@
+import type { TournamentMeta } from "./tournament.ts";
+
 export interface CardEntry {
 	cardName: string;
 	quantity: number;
@@ -22,10 +24,9 @@ export interface DecklistPlayer {
 }
 
 /** The tournament a decklist comes from; `name` is the cleaned display name. */
-export interface DecklistTournament {
-	id: string;
+export type DecklistTournament = Pick<
+	TournamentMeta,
+	"id" | "date" | "url" | "playerCount"
+> & {
 	name: string;
-	date: string;
-	url: string;
-	playerCount: number;
-}
+};

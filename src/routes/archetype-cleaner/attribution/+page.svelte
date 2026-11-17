@@ -14,6 +14,7 @@
 	import type { DecklistInfo, DecklistPlayer } from '$lib/types/decklist';
 	import type { ClassificationResult } from '$lib/algorithms/archetype-classifier';
 	import { computeCardComposition } from '$lib/utils/card-composition';
+	import { toDecklistPlayer } from '$lib/utils/decklist-collector';
 
 	const classifiedName = $derived(page.url.searchParams.get('classified') ?? '');
 	const reportedName = $derived(page.url.searchParams.get('reported') ?? '');
@@ -53,12 +54,7 @@
 					if (reported !== reportedName) continue;
 
 					result.push({
-						player: {
-							id: playerId,
-							name: player.name,
-							rank: player.rank,
-							record: player.matchRecord,
-						},
+						player: toDecklistPlayer(playerId, player),
 						decklistId: deckId,
 						decklist: deck,
 						classificationResult: classResult,
