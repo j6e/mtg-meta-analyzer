@@ -10,7 +10,12 @@ import {
 	classifyAllPooled,
 	parseArchetypeYaml,
 } from "../src/lib/algorithms/archetype-classifier";
-import { buildCorpus, type SparseVector, vectorize } from "../src/lib/algorithms/tfidf";
+import {
+	buildCorpus,
+	deckFeatures,
+	type SparseVector,
+	vectorize,
+} from "../src/lib/algorithms/tfidf";
 import type {
 	TournamentData,
 	TournamentImportance,
@@ -197,7 +202,7 @@ const { classifyBySignatureCards } = await import(
 
 import type { CardEntry } from "../src/lib/types/decklist";
 
-const allDecklists = new Map<string, { mainboard: CardEntry[]; label?: string }>();
+const allDecklists = new Map<string, CardEntry[]>(); // id → TF-IDF features
 const classifiedIds: { id: string; label: string }[] = [];
 const unclassifiedIds: string[] = [];
 
@@ -209,7 +214,7 @@ for (const t of filtered) {
 			dl.commanders,
 			config.archetypes,
 		);
-		allDecklists.set(id, { mainboard: dl.mainboard });
+		allDecklists.set(id, deckFeatures(dl));
 		if (archetype) {
 			classifiedIds.push({ id, label: archetype });
 		} else {
@@ -219,8 +224,7 @@ for (const t of filtered) {
 }
 
 // Build corpus and vectorize
-const allMainboards = [...allDecklists.values()].map((d) => d.mainboard);
-const corpus = buildCorpus(allMainboards);
+const corpus = buildCorpus([...allDecklists.values()]);
 
 const strictArchetypes = new Set(
 	config.archetypes.filter((d) => d.strictMode).map((d) => d.name),
@@ -228,8 +232,8 @@ const strictArchetypes = new Set(
 const labeledVectors: { label: string; vector: SparseVector }[] = [];
 for (const { id, label } of classifiedIds) {
 	if (strictArchetypes.has(label)) continue;
-	const dl = allDecklists.get(id)!;
-	labeledVectors.push({ label, vector: vectorize(dl.mainboard, corpus) });
+	const features = allDecklists.get(id)!;
+	labeledVectors.push({ label, vector: vectorize(features, corpus) });
 }
 
 const centroids = buildCentroids(labeledVectors);
@@ -237,8 +241,7 @@ const centroids = buildCentroids(labeledVectors);
 // Classify unclassified decks with centroid
 const centroidConfidences: { label: string; confidence: number }[] = [];
 for (const id of unclassifiedIds) {
-	const dl = allDecklists.get(id)!;
-	const vector = vectorize(dl.mainboard, corpus);
+	const vector = vectorize(allDecklists.get(id)!, corpus);
 	const result = classifyWithCentroid(vector, centroids);
 	centroidConfidences.push(result);
 }

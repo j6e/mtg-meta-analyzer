@@ -547,6 +547,67 @@ describe("classifyAll", () => {
 		expect(d5Result!.confidence).toBeGreaterThan(0);
 	});
 
+	describe("KNN features include the sideboard", () => {
+		// Same mainboard; only the sideboard (companion Yorion) differs.
+		const yorionDefs: ArchetypeDefinition[] = [
+			{
+				name: "Azorius Control (Yorion)",
+				signatureCards: [
+					{ name: "Supreme Verdict", minCopies: 4 },
+					{ name: "Yorion, Sky Nomad", minCopies: 1, usedInSideboard: true },
+				],
+			},
+			{
+				name: "Azorius Control",
+				signatureCards: [
+					{ name: "Supreme Verdict", minCopies: 4 },
+					{ name: "Yorion, Sky Nomad", exactCopies: 0, usedInSideboard: true },
+				],
+			},
+		];
+		const main = (verdicts: number) =>
+			cards(["Supreme Verdict", verdicts], ["Plains", 10], ["Island", 10]);
+		const withYorion = cards(["Yorion, Sky Nomad", 1], ["Rest in Peace", 2]);
+		const withoutYorion = cards(["Rest in Peace", 2], ["Negate", 2]);
+
+		// u1/u2 miss the signature (3 Verdicts) so they fall through to KNN.
+		const decklists: Record<string, DecklistInfo> = {
+			y1: makeDecklist(main(4), "y1", null, withYorion),
+			y2: makeDecklist(main(4), "y2", null, withYorion),
+			n1: makeDecklist(main(4), "n1", null, withoutYorion),
+			n2: makeDecklist(main(4), "n2", null, withoutYorion),
+			u1: makeDecklist(main(3), "u1", null, withYorion),
+			u2: makeDecklist(main(3), "u2", null, withoutYorion),
+		};
+
+		it("classifyAll separates decks that differ only in the sideboard", () => {
+			const results = classifyAll(decklists, yorionDefs, { minConfidence: 0 });
+			const byId = new Map(results.map((r) => [r.decklistId, r]));
+
+			expect(byId.get("u1")).toMatchObject({
+				archetype: "Azorius Control (Yorion)",
+				method: "centroid",
+			});
+			expect(byId.get("u2")).toMatchObject({
+				archetype: "Azorius Control",
+				method: "centroid",
+			});
+		});
+
+		it("classifyAllPooled separates decks that differ only in the sideboard", () => {
+			const { u1, u2, ...labeled } = decklists;
+			const pooled = new Map([
+				["t1", labeled],
+				["t2", { u1, u2 }],
+			]);
+			const results = classifyAllPooled(pooled, yorionDefs, { minConfidence: 0 });
+			const byId = new Map(results.get("t2")!.map((r) => [r.decklistId, r]));
+
+			expect(byId.get("u1")!.archetype).toBe("Azorius Control (Yorion)");
+			expect(byId.get("u2")!.archetype).toBe("Azorius Control");
+		});
+	});
+
 	it("marks unclassifiable decklists as Unknown", () => {
 		const decklists: Record<string, DecklistInfo> = {
 			// No signature match possible

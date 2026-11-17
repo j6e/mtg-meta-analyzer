@@ -226,6 +226,12 @@ const archetypeClassification: MethodArticle = {
 	Each decklist becomes a sparse vector in card-space, normalized to unit length
 	(L2 norm). This means cosine similarity reduces to a simple dot product.
 </p>
+<p>
+	Both the mainboard and the sideboard contribute, as <strong>separate
+	features</strong>: a card in the sideboard is a different term from the same
+	card in the mainboard (so a companion like Yorion in the sideboard is not
+	confused with a maindeck copy). "Total cards" counts both zones.
+</p>
 <p><strong>Centroid building:</strong> For each already-classified archetype, we
 	average the TF-IDF vectors of all its labeled decklists and re-normalize to
 	unit length. This gives one representative vector per archetype.
