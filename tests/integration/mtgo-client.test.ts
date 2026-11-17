@@ -1,7 +1,13 @@
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
-import { describe, expect, it } from "vitest";
-import { extractTournamentJson, parseListingHtml } from "../../scripts/lib/mtgo-client";
+import { afterEach, describe, expect, it, vi } from "vitest";
+import {
+	extractTournamentJson,
+	INCOMPLETE_PAGE_STATUS,
+	MtgoClient,
+	MtgoFetchError,
+	parseListingHtml,
+} from "../../scripts/lib/mtgo-client";
 
 const FIXTURES = resolve(__dirname, "../fixtures");
 
@@ -104,5 +110,62 @@ describe("extractTournamentJson", () => {
 window.MTGO.decklists.data = {"event_id":"123","starttime":"2026-01-01 00:00:00.0"};
 </script></body></html>`;
 		expect(extractTournamentJson(noDecks)).toBeNull();
+	});
+});
+
+describe("MtgoClient incomplete-page retries", () => {
+	const listingHtml = readFileSync(resolve(FIXTURES, "mtgo-listing.html"), "utf-8");
+	// mtgo.com intermittently serves the page shell with the event list missing.
+	const emptyListingHtml = '<html><body><ul class="decklists-list"></ul></body></html>';
+
+	function stubPages(...pages: string[]) {
+		const fetchMock = vi.fn();
+		for (const page of pages) {
+			fetchMock.mockResolvedValueOnce(new Response(page, { status: 200 }));
+		}
+		vi.stubGlobal("fetch", fetchMock);
+		return fetchMock;
+	}
+
+	afterEach(() => {
+		vi.unstubAllGlobals();
+		vi.restoreAllMocks();
+	});
+
+	it("retries an empty listing page until the events appear", async () => {
+		vi.spyOn(console, "warn").mockImplementation(() => {});
+		const fetchMock = stubPages(emptyListingHtml, listingHtml);
+		const client = new MtgoClient({ delayMs: 0 });
+
+		const entries = await client.fetchListingPage(2026, 3);
+
+		expect(entries).toHaveLength(6);
+		expect(fetchMock).toHaveBeenCalledTimes(2);
+	});
+
+	it("throws INCOMPLETE_PAGE_STATUS when the listing stays empty", async () => {
+		vi.spyOn(console, "warn").mockImplementation(() => {});
+		stubPages(emptyListingHtml, emptyListingHtml, emptyListingHtml);
+		const client = new MtgoClient({ delayMs: 0, maxRetries: 2 });
+
+		const error = await client.fetchListingPage(2026, 3).catch((e) => e);
+
+		expect(error).toBeInstanceOf(MtgoFetchError);
+		expect(error.status).toBe(INCOMPLETE_PAGE_STATUS);
+	});
+
+	it("retries a tournament page missing its embedded data", async () => {
+		vi.spyOn(console, "warn").mockImplementation(() => {});
+		const tournamentHtml = readFileSync(
+			resolve(FIXTURES, "mtgo-tournament.html"),
+			"utf-8",
+		);
+		const fetchMock = stubPages("<html><body></body></html>", tournamentHtml);
+		const client = new MtgoClient({ delayMs: 0 });
+
+		const data = await client.fetchTournamentData("/decklist/x");
+
+		expect(data).not.toBeNull();
+		expect(fetchMock).toHaveBeenCalledTimes(2);
 	});
 });

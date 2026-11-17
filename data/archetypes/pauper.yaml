@@ -1,5 +1,5 @@
 format: Pauper
-date: "2026-07-08"
+date: "2026-10-22"
 archetypes:
   - name: Mono-Blue Terror
     signatureCards:
@@ -74,6 +74,9 @@ archetypes:
       # no white: yield the Esper builds to Esper Affinity
       - name: "Glint Hawk"
         exactCopies: 0
+      # no white: the Esper builds without Glint Hawk still run Ancient Den
+      - name: "Ancient Den"
+        exactCopies: 0
   - name: Esper Affinity
     signatureCards:
       - name: "Glint Hawk"
@@ -84,6 +87,36 @@ archetypes:
         minCopies: 2
       - name: "Kor Skyfisher"
         minCopies: 2
+  # Glint Hawk builds with Myr Enforcer and no Kor Skyfisher, which the rule above misses. It
+  # shares the label with the rule above on purpose. Kor Skyfisher at zero keeps the two from
+  # matching the same deck. Ancient Den is the white marker, Great Furnace at zero yields the
+  # red builds to 4c Affinity, Springleaf Drum at zero yields the Drum builds to Esper Leonardo.
+  - name: Esper Affinity
+    signatureCards:
+      - name: "Myr Enforcer"
+        minCopies: 3
+      - name: "Ancient Den"
+        minCopies: 1
+      - name: "Great Furnace"
+        exactCopies: 0
+      - name: "Kor Skyfisher"
+        exactCopies: 0
+      - name: "Springleaf Drum"
+        exactCopies: 0
+  # Esper Affinity with a red splash in the main (Great Furnace, Galvanic Blast). Vault of
+  # Whispers keeps it apart from Jeskai Affinity, which Boros Synthesizer already labels.
+  # Glint Hawk runs here but Kor Skyfisher does not, so the Glint Hawk Esper Affinity rule
+  # never matches these decks.
+  - name: 4c Affinity
+    signatureCards:
+      - name: "Myr Enforcer"
+        minCopies: 3
+      - name: "Ancient Den"
+        minCopies: 1
+      - name: "Great Furnace"
+        minCopies: 1
+      - name: "Vault of Whispers"
+        minCopies: 1
   - name: Azorius Caw-Gates
     signatureCards:
       - name: "Squadron Hawk"
@@ -212,6 +245,24 @@ archetypes:
         minCopies: 2
       - name: "Crop Rotation"
         minCopies: 1
+  # Second Green Tron build, from mid 2026. Bramble Wurm and Giant's Boulder replace
+  # Maelstrom Colossus. It shares the label with the rule above on purpose. Maelstrom
+  # Colossus at zero keeps the two from matching the same deck. Mysidian Elder and Ghostly
+  # Flicker at zero yield the flicker builds to Grixis Flicker Tron and Ephemerate Tron.
+  - name: Green Tron
+    signatureCards:
+      - name: "Urza's Tower"
+        minCopies: 2
+      - name: "Bramble Wurm"
+        minCopies: 3
+      - name: "Giant's Boulder"
+        minCopies: 3
+      - name: "Maelstrom Colossus"
+        exactCopies: 0
+      - name: "Mysidian Elder"
+        exactCopies: 0
+      - name: "Ghostly Flicker"
+        exactCopies: 0
   # Golem Foundry is a flexible slot (0-4 across the corpus), so it stays out. Myr
   # Retriever is the stable half of the engine: all 92 historical Altar decks run 4.
   - name: Altar Tron
@@ -243,8 +294,6 @@ archetypes:
       - name: "Ghostly Flicker"
         minCopies: 2
       - name: "Urza's Tower"
-        minCopies: 2
-      - name: "Black Mage's Rod"
         minCopies: 2
   - name: Turbo Fog
     signatureCards:
@@ -387,3 +436,93 @@ archetypes:
         minCopies: 1
       - name: "Thraben Charm"
         minCopies: 2
+  # Draw-go Dimir with Thorn of the Black Rose and no faerie or Terror threats. Some lists
+  # splash red, but only in the sideboard (Mountain, Hydroblast), so they keep this name.
+  # Spellstutter Sprite, Tolarian Terror and Ephemerate at zero keep it apart from Dimir
+  # Faeries, the Terror decks and Esper Ephemerate, which share the Counterspell and
+  # Lórien Revealed core.
+  - name: Dimir Control
+    signatureCards:
+      - name: "Counterspell"
+        minCopies: 4
+      - name: "Lórien Revealed"
+        minCopies: 4
+      - name: "Thorn of the Black Rose"
+        minCopies: 1
+      - name: "Spellstutter Sprite"
+        exactCopies: 0
+      - name: "Tolarian Terror"
+        exactCopies: 0
+      - name: "Ephemerate"
+        exactCopies: 0
+  # Ephemerate and Archaeomancer value with Counterspell, in black and white. Skred and
+  # Lightning Bolt at zero yield the red builds to Jeskai Ephemerate. Some lists play the
+  # affinity lands with Dispatch, they are still this deck.
+  - name: Esper Ephemerate
+    signatureCards:
+      - name: "Ephemerate"
+        minCopies: 2
+      - name: "Archaeomancer"
+        minCopies: 2
+      - name: "Counterspell"
+        minCopies: 4
+      - name: "Skred"
+        exactCopies: 0
+      - name: "Lightning Bolt"
+        exactCopies: 0
+  - name: Mono-Green Infect
+    signatureCards:
+      - name: "Glistener Elf"
+        minCopies: 3
+      - name: "Blight Mamba"
+        minCopies: 2
+  # Lava Dart alone is not enough, Mono-Red Madness runs Kiln Fiend and Lava Dart too.
+  # Manamorphose and Mutagenic Growth are the free spells only this deck plays.
+  - name: Mono-Red Kiln Fiend
+    signatureCards:
+      - name: "Kiln Fiend"
+        minCopies: 3
+      - name: "Manamorphose"
+        minCopies: 3
+      - name: "Mutagenic Growth"
+        minCopies: 3
+  - name: Mono-White Heroic
+    signatureCards:
+      - name: "Ethereal Armor"
+        minCopies: 3
+      - name: "Hyena Umbra"
+        minCopies: 3
+  - name: Poison Storm
+    signatureCards:
+      - name: "Infectious Inquiry"
+        minCopies: 3
+      - name: "Pentad Prism"
+        minCopies: 3
+  # Artifact creature swarm with Search Party Captain, Martyr's Soul and Salt Road
+  # Packbeast, from late August 2026. Most lists splash green for Winding Way; the
+  # mono-white lists without it are the same deck and keep this name. Battle Screech at
+  # zero leaves the hybrid lists to Mono-White Aggro (Battle Screech and Kor Skyfisher).
+  - name: Selesnya Rally
+    signatureCards:
+      - name: "Search Party Captain"
+        minCopies: 3
+      - name: "Martyr's Soul"
+        minCopies: 3
+      - name: "Salt Road Packbeast"
+        minCopies: 3
+      - name: "Battle Screech"
+        exactCopies: 0
+  # Artifact aggro from mid 2026, split out of Esper Affinity. Springleaf Drum, Leonardo, Big
+  # Brother and Novice Inspector with Myr Enforcer and Thoughtcast, and no Glint Hawk package.
+  # Myr Enforcer keeps out the Selesnya Rally and Boros Bully lists that also play Drum,
+  # Leonardo and Novice Inspector.
+  - name: Esper Leonardo
+    signatureCards:
+      - name: "Springleaf Drum"
+        minCopies: 3
+      - name: "Leonardo, Big Brother"
+        minCopies: 2
+      - name: "Novice Inspector"
+        minCopies: 2
+      - name: "Myr Enforcer"
+        minCopies: 3

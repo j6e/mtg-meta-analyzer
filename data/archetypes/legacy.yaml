@@ -1,5 +1,5 @@
 format: Legacy
-date: "2026-08-21"
+date: "2026-10-03"
 archetypes:
   # --- Rebuilt from post-ban decklists. The Fantasticar was banned in the 2026-08-10
   # announcement and appears in no Legacy decklist from 2026-08-11 on, so Dimir Car is gone.
@@ -182,6 +182,30 @@ archetypes:
         minCopies: 3
       - name: "Planar Nexus"
         minCopies: 3
+      - name: "Urza's Tower"
+        minCopies: 3
+      - name: "Force of Will"
+        minCopies: 3
+  # The colorless Karn prison build (Chalice, Trinisphere, Manifold Key, Disruptor Flute)
+  # shares the Tron land base and the Karn/The One Ring/Ugin core but runs no blue card,
+  # so it never matches Mono-Blue Tron. The Workshop, Saga, Stock Up and Force of Will
+  # gates keep it clear of Workshop Stompy and Mono-Blue Tron.
+  - name: Colorless Tron
+    signatureCards:
+      - name: "Karn, the Great Creator"
+        minCopies: 3
+      - name: "The One Ring"
+        minCopies: 3
+      - name: "Urza's Tower"
+        minCopies: 3
+      - name: "Urza's Workshop"
+        exactCopies: 0
+      - name: "Urza's Saga"
+        exactCopies: 0
+      - name: "Stock Up"
+        exactCopies: 0
+      - name: "Force of Will"
+        exactCopies: 0
   - name: Izzet Delver
     signatureCards:
       - name: "Dragon's Rage Channeler"
@@ -352,3 +376,23 @@ archetypes:
         minCopies: 3
       - name: "Rite of Flame"
         minCopies: 3
+  - name: Creative Technique
+    signatureCards:
+      - name: "Creative Technique"
+        minCopies: 4
+      - name: "Throes of Chaos"
+        minCopies: 3
+      - name: "Tibalt's Trickery"
+        minCopies: 3
+      - name: "Show and Tell"
+        exactCopies: 0
+  - name: Elves
+    signatureCards:
+      - name: "Wirewood Symbiote"
+        minCopies: 3
+      - name: "Allosaurus Shepherd"
+        minCopies: 3
+      - name: "Formidable Speaker"
+        minCopies: 2
+      - name: "Wight of the Reliquary"
+        exactCopies: 0

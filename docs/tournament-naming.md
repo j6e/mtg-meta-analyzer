@@ -52,9 +52,21 @@ RC SEA T12 - Kuala Lumpur
 - **Region codes in use:** `USA`, `Canada`, `Europe`, `ANZ`, `CAMS`,
   `SEA`, `SK & JP`, `South America`, `China`, `Taiwan`.
 - **Cycle number (`T<n>`):** for SCG CON RCs the raw name carries a
-  `Season N - Round M` segment that maps to the cycle as **`T(M + 9)`** —
-  i.e. `Round 2 → T11`, `Round 3 → T12`. For other regions, match the cycle of
-  the RCs already in the index for the same date window.
+  `Season N - Round M` segment. Each season runs 3 rounds, so the cycle is
+  **`T((N - 4) x 3 + M + 9)`**:
+
+  | Raw segment | Cycle | Example |
+  |-------------|-------|---------|
+  | `Season 4 - Round 2` | `T11` | RC USA T11 - Milwaukee (2026-02-21) |
+  | `Season 4 - Round 3` | `T12` | RC USA T12 - Cincinnati (2026-05-16) |
+  | `Season 5 - Round 1` | `T13` | RC USA T13 - Baltimore (2026-09-12) |
+
+  Note the season term: without it the formula breaks at a season rollover
+  (`Season 5 - Round 1` would wrongly give `T10` instead of `T13`).
+
+  For other regions, match the cycle of the RCs already in the index for the
+  same date window. Some regions number their own events in step with the
+  cycle — e.g. China's `MTG China Open S13` is `RC China T13`.
 - **USA and Canada hold two RCs per cycle.** Two entries sharing the same
   `T<n>` is expected — the **city** disambiguates them (e.g. `RC USA T12 -
   Cincinnati` and `RC USA T12 - Washington DC`). Not a bug.
@@ -71,6 +83,7 @@ Spotlight TMNT - Richmond
 ```
 
 - Use the **set acronym**, not the long set name. Known acronyms:
+  - `FRA` = Reality Fracture
   - `HOB` = The Hobbit
   - `SOS` = Secrets of Strixhaven
   - `TMNT` = Teenage Mutant Ninja Turtles
